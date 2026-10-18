@@ -314,9 +314,8 @@ for(const side of ['hot','cold']){$(side+'-fluid').addEventListener('change',()=
 $('exchanger-type').addEventListener('change',()=>{if($('exchanger-type').value!=='double'&&$('tube-count').readOnly)$('tube-count').value=80;syncControls();update()});
 $('tube-material').addEventListener('change',()=>{syncDropdowns();update()});
 for(const b of document.querySelectorAll('[data-flow]'))b.addEventListener('click',()=>{flow=b.dataset.flow;syncControls(true);update()});
-$('example').addEventListener('click',()=>{applyState(defaults);save();toast('Пример загружен: кожухотрубный аппарат, вода / вода')});
 $('reset').addEventListener('click',()=>{applyState({...defaults,thi:'',tho:'',tci:'',tco:'',mh:'',ph:'',pc:''});save();$('thi').focus();toast('Параметры потоков очищены')});
-$('help').addEventListener('click',()=>$('help-dialog').showModal());$('close-help').addEventListener('click',()=>$('help-dialog').close());$('help-dialog').addEventListener('click',e=>{if(e.target===$('help-dialog')){const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.target.close()}});
+$('close-help').addEventListener('click',()=>$('help-dialog').close());$('help-dialog').addEventListener('click',e=>{if(e.target===$('help-dialog')){const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.target.close()}});
 $('export').addEventListener('click',()=>{update();if(lastError||!currentResult||!currentGeometry){validateAllNumericFields();toast('Для экспорта исправьте исходные данные');return}const r=currentResult,g=currentGeometry,s=getState();const rows=[['PhysNow — предварительный расчёт'],['Параметр','Значение','Единица'],['Тип аппарата',typeNames[s['exchanger-type']],''],['Неизвестный параметр',unknownParameter?findParameterName(unknownParameter):'Все параметры заданы',''],['Схема',flow==='counter'?'Противоток':'Прямоток',''],['Предельная длина теплообменника',g.length,'мм'],['Предельный внешний диаметр теплообменника',g['exchanger-diameter'],'мм'],['Материал труб',materialNames[$('tube-material').value],''],['Наружный диаметр трубы',g['tube-diameter'],'мм'],['Толщина стенки',g['tube-wall'],'мм'],['Межтрубное пространство',$('hot-fluid').selectedOptions[0].textContent,''],['Трубное пространство',$('cold-fluid').selectedOptions[0].textContent,''],['Температура на входе межтрубного пространства',r.thi,'°C'],['Температура на выходе межтрубного пространства',r.tho,'°C'],['Температура на входе трубного пространства',r.tci,'°C'],['Температура на выходе трубного пространства',r.tco,'°C'],['Абсолютное давление на входе межтрубного пространства',r.ph,'МПа'],['Абсолютное давление на входе трубного пространства',r.pc,'МПа'],['Массовый расход в межтрубном пространстве',r.mh,'кг/с'],['Массовый расход в трубном пространстве',r.mc,'кг/с'],['Расход на входе межтрубного пространства',Number(s.mh),flowUnitName(s['hot-flow-unit'])],['Расход на входе трубного пространства',massToFlow(r.mc,s['cold-flow-unit'],s.tci,s['cold-fluid']),flowUnitName(s['cold-flow-unit'])],['Теплоёмкость теплоносителя межтрубного пространства',r.cph,'кДж/(кг·К)'],['Теплоёмкость теплоносителя трубного пространства',r.cpc,'кДж/(кг·К)'],['Коэффициент теплопередачи',r.u,'Вт/(м²·К)'],['Тепловая нагрузка',r.q,'кВт'],['Температурный напор',r.dt,'К'],['Требуемая площадь теплообмена',r.area,'м²'],['Допущения','Постоянные cₚ и K, без фазового перехода и теплопотерь. Габариты и материал не определяют K автоматически. Гидравлика и геометрия вариантов — в таблице ниже.','']];rows.push(...variantExportRows());const csv='\uFEFF'+rows.map(row=>row.map(x=>'"'+String(typeof x==='number'?fmt(x,6):x).replaceAll('"','""')+'"').join(';')).join('\r\n');const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='physnow-calculation.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Параметры аппарата и результаты экспортированы в CSV')});
 function fitDiagram(){
  const box=document.querySelector('.diagram').getBoundingClientRect(),svg=document.querySelector('.process-svg');
@@ -414,7 +413,7 @@ for(const root of document.querySelectorAll('[data-dd]'))animatedDropdowns.push(
 try{const saved=JSON.parse(localStorage.getItem('thermoflow-v2')||localStorage.getItem('thermoflow-v1'));applyState(saved&&typeof saved==='object'?{...defaults,...saved}:defaults)}catch{applyState(defaults)}
 fitDiagram();document.fonts.ready.then(fitDiagram);
 
-// Header actions reuse the existing calculation storage and CSV export.
+// Calculation tools reuse the existing storage and CSV export on either page.
 $('header-save').addEventListener('click',()=>toast(save()?'Листы расчёта сохранены в этом браузере':'Браузер не разрешил сохранить расчёт'));
 $('header-download').addEventListener('click',()=>headerNavigation.dataset.activeSection==='verification'?exportCoilGeometry():$('export').click());
 
@@ -425,9 +424,9 @@ function positionHeaderUnderline(animate=true){
  const selected=headerNavigation.querySelector('.is-active');
  if(!selected)return;
  if(!animate)headerNavigation.classList.add('is-measuring');
- headerNavigation.style.setProperty('--nav-line-x',`${selected.offsetLeft+6}px`);
- headerNavigation.style.setProperty('--nav-line-width',`${Math.max(0,selected.offsetWidth-12)}px`);
- headerNavigation.style.setProperty('--nav-line-y',`${selected.offsetTop+selected.offsetHeight-3}px`);
+ headerNavigation.style.setProperty('--nav-line-x',`${selected.offsetLeft}px`);
+ headerNavigation.style.setProperty('--nav-line-width',`${selected.offsetWidth}px`);
+ headerNavigation.style.setProperty('--nav-line-y',`${headerNavigation.clientHeight-2}px`);
  if(!animate){void headerNavigation.offsetWidth;headerNavigation.classList.remove('is-measuring')}
 }
 function selectHeaderSection(button){
@@ -939,6 +938,8 @@ function syncPageView(){
  if(!verificationUIReady)return;
  const verification=headerNavigation.dataset.activeSection==='verification';
  $('design-page').hidden=verification;$('verification-page').hidden=!verification;
+ const actionsTarget=document.querySelector(verification?'.verification-heading-actions':'.heading-actions');
+ actionsTarget.append($('calculation-actions'));
  if(verification){if(!verificationState)verificationState=seedCoilGeometry(getState());fillVerificationInputs();document.title='PhysNow — поверочный расчёт'}
  else{document.title='PhysNow — проектировочный расчёт';requestAnimationFrame(fitDiagram)}
 }

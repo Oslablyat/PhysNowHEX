@@ -20,10 +20,10 @@ dialog{background:#212121;color:#d8d8d8;border:1px solid #545454;border-radius:1
 /* Neutral graphite panels on a white canvas. */
 :root{--bg:#202020;--panel:#2B2B2B;--card:#3c3c3c;--ink:#f0f0f0;--muted:#b9b9b9;--line:#505050;--green:#e4e4e4;--hot:#dddddd;--cold:#b4b4b4}
 html,body{background:#202020}.rail{inset:8px auto 8px 8px;width:46px;background:#2B2B2B;border:0;border-radius:16px}.brand-mark{height:43px}.brand-mark svg{stroke:#ededed;width:23px;height:23px}.rail-line{background:#626262;margin:8px 0 13px}.rail-btn{background:#5d5d5d;border-color:#777777;color:#f1f1f1;border-radius:10px;width:32px;height:32px}.rail-btn:hover{background:#707070}.version{color:#a7a7a7}.avatar{background:#525252;border-color:#777777;color:#e7e7e7}.app{margin-left:60px;padding:8px 8px 8px 0;min-height:630px}.topbar{background:#2B2B2B;border:0;border-radius:14px;height:41px;padding:0 17px}.wordmark{color:#f2f2f2}.top-project{color:#d3d3d3}.tiny-square{background:#c9c9c9}.local-status{color:#c1c1c1}.local-status i,.balance-status i{background:#d1d1d1}.slash{color:#888888}.muted{color:#b8b8b8}
-main{padding:6px 0 0;gap:6px;max-width:none}.heading{background:#2B2B2B;border-radius:18px;padding:10px 16px;min-height:61px}.heading p{color:#b9b9b9}h1{font-size:22px;color:#f1f1f1}.button{border-radius:10px}.light{background:#4b4b4b;border-color:#606060;color:#eeeeee}.light:hover{background:#5c5c5c;border-color:#8a8a8a}.icon-button{color:#cecece;border-color:#676767;border-radius:9px}.icon-button:hover{background:#555555}.workspace{grid-template-columns:248px minmax(0,1fr);column-gap:6px;background:transparent;border:0;border-radius:0;overflow:visible;min-height:362px}.construction{grid-column:1;grid-row:1;background:#2B2B2B;border:0;border-radius:18px;overflow:hidden}.thermal{grid-column:2;grid-row:1;background:#2B2B2B;border-radius:18px;overflow:hidden;min-height:0}.construction-heading{border-color:#505050;height:43px}.construction-heading h2{color:#e3e3e3}.construction-heading>svg{stroke:#a9a9a9}.step{border-color:#717171;color:#d4d4d4;border-radius:6px}.construction-body>label,.group-label{color:#c3c3c3}.group-label>span{color:#999999}.construction-body>select{background:#454545;border-color:#646464;color:#f0f0f0;border-radius:9px}.construction .input-wrap{background:#404040;border-color:#5e5e5e;border-radius:8px}.construction .input-wrap input{color:#eeeeee}.construction .input-wrap>span,.dimension-grid label,.tube-grid label{color:#b7b7b7}.surface-summary{border-color:#626262}.surface-summary>span:first-child{color:#bebebe}.surface-summary b{color:#eeeeee}.surface-status{color:#d3d3d3}.surface-status.shortage,.surface-status.invalid{color:#ffffff}.surface-status.shortage::before,.surface-status.invalid::before{content:'!';display:inline-grid;place-items:center;border:1px solid #dddddd;border-radius:50%;width:11px;height:11px;font-size:8px;margin-right:5px}.construction-note{color:#a7a7a7}.workspace-toolbar{border-color:#505050}.segmented{background:#272727;border-color:#555555;border-radius:9px}.segmented button{color:#b5b5b5;border-radius:6px}.segmented button.selected{background:#e0e0e0;color:#313131}.reset{color:#bcbcbc}.scheme-intro{color:#c4c4c4}.scheme-note{color:#989898}.legend-dot.hot{background:#dddddd}.legend-dot.cold{background:transparent;border:1px dashed #cccccc;width:7px;height:7px}
+main{padding:6px 0 0;gap:6px;max-width:none}.heading{background:#2B2B2B;border-radius:18px;padding:10px 16px;min-height:61px}.heading p{color:#b9b9b9}h1{font-size:22px;color:#f1f1f1}.button{border-radius:10px}.light{background:#4b4b4b;border-color:#606060;color:#eeeeee}.light:hover{background:#5c5c5c;border-color:#8a8a8a}.icon-button{color:#cecece;border-color:#676767;border-radius:9px}.icon-button:hover{background:#555555}.workspace{grid-template-columns:390px minmax(0,1fr);column-gap:10px;background:transparent;border:0;border-radius:0;overflow:visible;min-height:362px}.construction{grid-column:1;grid-row:1;background:#2B2B2B;border:0;border-radius:18px;overflow:hidden}.thermal{grid-column:2;grid-row:1;background:#2B2B2B;border-radius:18px;overflow:hidden;min-height:0}.construction-heading{border-color:#505050;height:43px}.construction-heading h2{color:#e3e3e3}.construction-heading>svg{stroke:#a9a9a9}.step{border-color:#717171;color:#d4d4d4;border-radius:6px}.construction-body>label,.group-label{color:#c3c3c3}.group-label>span{color:#999999}.construction-body>select{background:#454545;border-color:#646464;color:#f0f0f0;border-radius:9px}.construction .input-wrap{background:#404040;border-color:#5e5e5e;border-radius:8px}.construction .input-wrap input{color:#eeeeee}.construction .input-wrap>span,.dimension-grid label,.tube-grid label{color:#b7b7b7}.surface-summary{border-color:#626262}.surface-summary>span:first-child{color:#bebebe}.surface-summary b{color:#eeeeee}.surface-status{color:#d3d3d3}.surface-status.shortage,.surface-status.invalid{color:#ffffff}.surface-status.shortage::before,.surface-status.invalid::before{content:'!';display:inline-grid;place-items:center;border:1px solid #dddddd;border-radius:50%;width:11px;height:11px;font-size:8px;margin-right:5px}.construction-note{color:#a7a7a7}.workspace-toolbar{border-color:#505050}.segmented{background:#272727;border-color:#555555;border-radius:9px}.segmented button{color:#b5b5b5;border-radius:6px}.segmented button.selected{background:#e0e0e0;color:#313131}.reset{color:#bcbcbc}.scheme-intro{color:#c4c4c4}.scheme-note{color:#989898}.legend-dot.hot{background:#dddddd}.legend-dot.cold{background:transparent;border:1px dashed #cccccc;width:7px;height:7px}
 .port-card{background:#3d3d3d;border-color:#626262;border-radius:14px}.port-card:focus-within{box-shadow:0 0 0 2px #ffffff18}.hot-card:focus-within,.cold-card:focus-within{border-color:#cdcdcd}h3{color:#efefef}.hot-card .port-icon,.cold-card .port-icon{background:#565656;color:#eeeeee}.port-icon{border-radius:6px}.port-code,.cold-card .port-code{background:#4b4b4b;border-color:#767676;color:#e2e2e2;border-radius:5px}.fluid-label select,select{background:#303030;border-color:#686868;color:#dddddd;border-radius:7px}option{background:#2B2B2B;color:#eeeeee}label{color:#bcbcbc}.input-wrap{background:#303030;border-color:#686868;border-radius:8px}.input-wrap input{color:#f0f0f0}.input-wrap>span{color:#afafaf}.input-wrap:focus-within,.cp-row input:focus,select:focus,.compact-input:focus-within{border-color:#dddddd;box-shadow:0 0 0 1px #ffffff15}.readonly{background:#484848;border-color:#767676}.readonly input{color:#ededed}.auto-label{color:#ececec;background:#636363;border-radius:3px}.cp-row label{color:#b3b3b3}.cp-row>div{color:#a7a7a7}.cp-row input{background:#454545;border-color:#656565;color:#dedede;border-radius:5px}.derived-row{border-color:#5c5c5c;color:#acacac}.derived-row>span:last-child,.derived-row b{color:#d9d9d9}.derived-row small{color:#a8a8a8}.pipe{stroke-width:1.8}.hot-pipe{stroke:#d2d2d2}.cold-pipe{stroke:#b2b2b2;stroke-dasharray:5 4}.hot-arrow,.cold-arrow{stroke:#dddddd}.svg-port-label{fill:#afafaf}.svg-temp{fill:#dfdfdf}.exchanger-name{fill:#d2d2d2}.exchanger-sub{fill:#a5a5a5}.diagram-chip{background:#444444;border-color:#686868;color:#cfcfcf;border-radius:20px}.diagram-chip>span{background:#d6d6d6}.conditions{background:#393939;border-color:#545454}.conditions>div{color:#c2c2c2}.conditions-icon{color:#c3c3c3}.conditions label{color:#b8b8b8}.conditions-divider{background:#686868}.compact-input{background:#494949;border-color:#717171;border-radius:7px}.compact-input input{color:#ececec}.compact-input span{color:#bbbbbb}.assumption{color:#a3a3a3}
 .results{background:#2B2B2B;border:0;border-radius:18px;padding:13px 16px}.result-top h2{color:#e2e2e2}.balance-status,.balance-status.invalid{color:#cccccc}.metric{border-color:#5e5e5e}.metric-label{color:#bebebe}.metric-label>span{color:#a1a1a1}.metric-value{color:#ededed}.metric-value small{color:#bebebe}.metric-foot{color:#9f9f9f}.export-button{color:#c8c8c8}.export-button:hover{color:#ffffff}.error-message{background:#545454;border-color:#bdbdbd;color:#ffffff;border-radius:10px}footer{padding:0 3px;color:#727272;font-size:7px;min-height:11px}.info-circle{border-color:#949494}dialog{background:#2B2B2B;border-color:#767676;border-radius:20px;color:#ededed}.formula{background:#464646;color:#e3e3e3;border-radius:10px}dialog::backdrop{background:#111111aa}.dialog-head .icon-button{border-radius:50%}#toast{background:#e2e2e2;color:#323232;border-radius:12px}
-@media(min-width:1600px){.workspace{grid-template-columns:280px minmax(0,1fr)}main{padding-top:6px;gap:6px}.heading{min-height:66px}}
+@media(min-width:1600px){.workspace{grid-template-columns:390px minmax(0,1fr)}main{padding-top:6px;gap:6px}.heading{min-height:66px}}
 @media(max-width:1250px){.workspace{grid-template-columns:232px minmax(0,1fr)}main{padding:6px 0 0;gap:6px}.results{padding:12px}.topbar{padding:0 15px}}
 @media(max-width:1000px){.app{margin-left:0;padding:6px}.workspace{grid-template-columns:218px minmax(0,1fr)}.heading{min-height:61px}.results{padding:11px 12px}}
 @media(max-height:700px) and (min-width:1001px){.app{min-height:610px}.topbar{height:36px}.heading{min-height:55px;padding-top:8px;padding-bottom:8px}h1{font-size:21px}main{gap:6px;padding-top:6px}.workspace{min-height:350px}.results{padding-top:10px;padding-bottom:10px}}
@@ -230,7 +230,7 @@ button.cad-tool:hover,a.cad-tool:hover{background:#ffffff24}
 .cad-static{cursor:default}
 .cad-separator{height:15px;width:1px;flex-shrink:0;background:#ffffff40;margin:0 10px}
 .cad-navigation{height:100%;display:flex;align-items:center;flex-shrink:0;gap:2px;position:relative}
-.cad-nav-item{display:flex;align-items:center;height:36px;position:relative;padding:0 12px;color:#fff;font-family:inherit;font-size:13px;line-height:1;white-space:nowrap;cursor:pointer;border:0;border-radius:4px;background:transparent}
+.cad-nav-item{display:flex;align-items:center;height:36px;position:relative;padding:0 12px;color:#fff;font-family:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;font-size:13px;font-weight:500;line-height:1;white-space:nowrap;cursor:pointer;border:0;border-radius:4px;background:transparent}
 .cad-navigation::after{content:"";position:absolute;top:var(--nav-line-y,39px);left:0;width:var(--nav-line-width,0px);transform:translateX(var(--nav-line-x,0px));height:3px;background:#4a9eff;pointer-events:none;transition:transform 250ms cubic-bezier(.22,1,.36,1),width 250ms cubic-bezier(.22,1,.36,1)}
 .cad-navigation.is-measuring::after{transition:none}
 .cad-nav-item:hover{background:#ffffff0d}.cad-nav-item:active{transform:none}.cad-nav-item:focus-visible{outline:2px solid #4a9eff;outline-offset:-3px}
@@ -244,9 +244,9 @@ button.cad-tool:hover,a.cad-tool:hover{background:#ffffff24}
 .cad-document-new .cad-icon{width:19px;height:19px}
 .cad-github{display:grid;place-items:center;flex-shrink:0;width:30px;height:32px;margin-left:12px;cursor:default}
 .cad-github .cad-icon{width:25px;height:25px}
-@media(max-width:1200px){.cad-header .wordmark{margin-right:10px}.cad-nav-item{padding:0 8px;font-size:12px}.cad-documents{padding-left:12px;flex-basis:220px}.cad-separator{margin:0 6px}}
-@media(max-width:1000px){.topbar.cad-header{padding:0 8px}.cad-header .physnow-name{font-size:21px}.cad-header .wordmark{gap:7px;margin-right:6px}.cad-tool{width:27px;padding:6px}.cad-nav-item{font-size:11px;padding:0 6px}.cad-documents{padding-left:8px}.cad-github{margin-left:5px}.cad-document{font-size:10px}}
-@media(max-width:780px){.topbar.cad-header{flex-wrap:wrap;height:auto;min-height:88px;padding:4px 9px;row-gap:3px}.cad-header .wordmark{order:0;margin-right:auto}.cad-actions{order:1}.cad-separator{display:none}.cad-github{order:2;margin-left:8px}.cad-navigation{order:3;height:33px;flex:1}.cad-nav-item{font-size:11px;height:31px;padding:0 7px}.cad-documents{order:4;flex:0 1 190px;padding-left:6px;margin:0}.cad-document{height:27px}.cad-document-new{width:23px}.cad-header .physnow-logo{width:29px;height:33px}}
+@media(max-width:1200px){.cad-header .wordmark{margin-right:10px}.cad-nav-item{padding:0 8px}.cad-documents{padding-left:12px;flex-basis:220px}.cad-separator{margin:0 6px}}
+@media(max-width:1000px){.topbar.cad-header{padding:0 8px}.cad-header .physnow-name{font-size:21px}.cad-header .wordmark{gap:7px;margin-right:6px}.cad-tool{width:27px;padding:6px}.cad-nav-item{padding:0 6px}.cad-documents{padding-left:8px}.cad-github{margin-left:5px}.cad-document{font-size:10px}}
+@media(max-width:780px){.topbar.cad-header{flex-wrap:wrap;height:auto;min-height:88px;padding:4px 9px;row-gap:3px}.cad-header .wordmark{order:0;margin-right:auto}.cad-actions{order:1}.cad-separator{display:none}.cad-github{order:2;margin-left:8px}.cad-navigation{order:3;height:33px;flex:1}.cad-nav-item{height:31px;padding:0 7px}.cad-documents{order:4;flex:0 1 190px;padding-left:6px;margin:0}.cad-document{height:27px}.cad-document-new{width:23px}.cad-header .physnow-logo{width:29px;height:33px}}
 @media(max-width:560px){.topbar.cad-header{min-height:117px}.cad-navigation{flex:0 0 100%;justify-content:space-between}.cad-documents{flex:0 0 100%;padding-left:0}.cad-document{flex:0 1 220px}.cad-tool{width:26px}.cad-header .wordmark{gap:6px}.cad-header .physnow-name{font-size:20px}.cad-github{margin-left:3px;width:25px}.cad-header .cad-github .cad-icon{width:22px;height:22px}}
 @media(min-width:781px){.construction-body{padding-top:13px;padding-bottom:13px}}
 @media(min-width:781px){.construction-body{padding-top:11px;padding-bottom:11px}.construction-body .construction-note{font-size:6px;line-height:1.4}}
@@ -322,7 +322,7 @@ button.cad-document-new:hover{background:#ffffff20}
 /* Keep the original calculator layout above an independent comparison panel. */
 .app{height:auto;min-height:100dvh}
 main{flex:none}
-.calculator-overview{height:calc(100dvh - 66px);min-height:680px;display:flex;flex-direction:column;gap:6px;flex-shrink:0;min-width:0}
+.calculator-overview{height:calc(100dvh - 66px);min-height:680px;display:flex;flex-direction:column;gap:10px;flex-shrink:0;min-width:0}
 .calculator-overview>.workspace{flex:1}
 /* Scoped adaptation of the supplied Transitions.dev selectable table. */
 .variants-panel{--icon-swap-dur:250ms;--icon-swap-blur:2px;--icon-swap-start-scale:.25;--icon-swap-ease:ease-in-out;--press-scale:.99;--press-dur:150ms;--ease-smooth-out:cubic-bezier(.22,1,.36,1);--chip:rgba(255,255,255,.07);--soft:rgba(0,115,229,.16);--soft-ink:rgba(122,168,255,.95);background:#2b2b2b;color:#eee;border-radius:24px;padding:24px 16px 16px;min-width:0;flex-shrink:0;box-shadow:0 0 0 1px #ffffff04,0 8px 32px -4px #0000000f}
@@ -385,7 +385,8 @@ main{flex:none}
 :root{--bg:#111111;--panel:#191919;--card:#1b1b1b;--ink:#f4f4f4;--muted:#969696;--line:#2b2b2b;--green:#e7e7e7;--tabs-text-muted:#989898;--tabs-text-active:#f7f7f7;--tabs-bar-bg:#111111;--tabs-pill-bg:#333333}
 html,body{background:#111111;color:#f4f4f4}
 .topbar.cad-header,.heading,.construction,.thermal,.results,.variants-panel{background:#191919}
-.thermal>.process{background:#131313}
+.thermal>.process{background-color:#131313;background-image:radial-gradient(circle at 1px 1px,#2d2d2d .7px,transparent .7px);background-size:16px 16px}
+.process-svg>rect:first-of-type{fill:none}
 h1,.wordmark,.cad-header .physnow-name,.construction-heading h2,.thermal .workspace-toolbar h2,.thermal .port-heading h3,.result-top h2,.variants-heading h2{color:#f4f4f4}
 .heading p,.muted{color:#949494}
 .construction-heading,.workspace-toolbar,.construction .construction-body .dimension-heading{border-color:#303030}
@@ -417,6 +418,8 @@ option{background:#1e1e1e;color:#e2e2e2}
 .icon-button{background:transparent;border-color:#373737;color:#bdbdbd}
 .icon-button:hover{background:#2b2b2b}
 .cad-tool,.cad-nav-item,.cad-sheet-tab,button.cad-document-close,button.cad-document-new,.cad-github{color:#e9e9e9}
+.cad-nav-item{color:#909090}
+.cad-nav-item.is-active{color:#fff;font-weight:500}
 .cad-header .wordmark:hover,.cad-nav-item:hover{background:#ffffff06}
 button.cad-tool:hover,a.cad-tool:hover,button.cad-document-close:hover,button.cad-document-new:hover{background:#ffffff0c}
 .cad-separator{background:#373737}
@@ -600,3 +603,48 @@ html{scroll-padding-top:calc(var(--cad-header-top) + var(--cad-header-height) + 
 .coil-preview-column{top:calc(var(--cad-header-top) + var(--cad-header-height) + 10px)}
 @media(max-width:1000px){:root{--cad-header-top:6px}}
 @media(max-width:560px){:root{--cad-header-top:5px}}
+
+/* Reference dimensions in CSS pixels (60/84 screen pixels at 125% zoom). */
+:root{--cad-header-top:0px;--cad-header-height:48px}
+.app{padding:0 10px 8px}
+main{padding-top:0}
+.topbar.cad-header{height:48px;min-height:48px;margin:0 -10px;padding:0 16px;flex-wrap:nowrap;gap:0;background:#141414;border:0;border-bottom:1px solid #2a2a2a;border-radius:0;outline:0;box-shadow:none;font-family:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+.cad-header .wordmark{order:0;margin-right:36px;padding:0;gap:10px}
+.cad-header .physnow-logo{width:24px;height:27px}
+.cad-header .physnow-name{font-family:inherit;font-size:18px;font-weight:700;letter-spacing:-.3px}
+.cad-navigation{order:1;align-self:stretch;height:auto;flex:0 0 auto;gap:20px;margin:0}
+.cad-nav-item{height:100%;min-height:0;padding:0;border-radius:0;font-size:13px;line-height:normal;color:#888}
+.cad-nav-item.is-active{color:#f0f0f0}
+.cad-navigation::after{height:2px;background:#3b82f6}
+.cad-separator{order:2;margin:0 20px}
+.cad-actions{order:3;gap:4px}
+.cad-tool{width:32px;height:32px}
+.calculation-actions{display:flex;align-items:center;gap:4px;flex-shrink:0}
+.calculation-actions .cad-icon{display:block;width:16px;height:16px;fill:currentColor;stroke:none;flex-shrink:0}
+.calculation-actions .cad-tool:hover{background:#ffffff0c}
+.cad-documents{order:4;margin-left:0;margin-right:auto;padding-left:0}
+.cad-github{order:5}
+.calculator-overview>.heading,.verification-heading{height:67.2px;min-height:67.2px;flex:none;align-items:center;margin:0 -10px;padding:12px 20px;background:#141414;border-radius:0;border:0;border-bottom:1px solid #2a2a2a;outline:0;gap:16px}
+/* The reference uses the system fallback; its Inter family is not web-loaded. */
+.calculator-overview>.heading h1,.verification-heading h1{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;font-size:18px;font-weight:600;line-height:normal;letter-spacing:0;color:#f0f0f0;margin:0 0 2px;max-width:none}
+.calculator-overview>.heading p,.verification-heading p{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;font-size:12px;font-weight:400;line-height:normal;margin:0;max-width:none;color:#888}
+.verification-heading-actions{max-width:none}
+@media(max-width:1100px){
+ .topbar.cad-header{padding:0 16px}
+ .cad-separator{margin:0 8px}
+ .cad-actions{gap:0}
+ .cad-tool{width:26px;padding:5px}
+ .cad-documents{flex:1 1 100px;padding-left:0;margin:0}
+}
+@media(max-width:780px){
+ .topbar.cad-header{overflow-x:auto;scrollbar-width:none}
+ .topbar.cad-header::-webkit-scrollbar{display:none}
+ .cad-navigation{justify-content:flex-start}
+ .cad-separator{display:block}
+ .cad-documents{flex:0 0 160px}
+ .cad-header .physnow-name{font-size:18px}
+ .cad-github{width:30px;margin-left:12px}
+ .cad-header .cad-github .cad-icon{width:25px;height:25px}
+ .calculator-overview>.heading,.verification-heading{height:auto;min-height:67.2px;padding:12px 20px;flex-wrap:wrap}
+ .verification-heading-actions{width:auto;justify-content:flex-end}
+}
