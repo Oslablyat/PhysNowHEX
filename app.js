@@ -940,8 +940,8 @@ function syncPageView(){
  $('design-page').hidden=verification;$('verification-page').hidden=!verification;
  const actionsTarget=document.querySelector(verification?'.verification-heading-actions':'.heading-actions');
  actionsTarget.append($('calculation-actions'));
- if(verification){if(!verificationState)verificationState=seedCoilGeometry(getState());fillVerificationInputs();document.title='PhysNow — поверочный расчёт'}
- else{document.title='PhysNow — проектировочный расчёт';requestAnimationFrame(fitDiagram)}
+ if(verification){if(!verificationState)verificationState=seedCoilGeometry(getState());fillVerificationInputs();document.title='PhysNow'}
+ else{document.title='PhysNow';requestAnimationFrame(fitDiagram)}
 }
 function exportCoilGeometry(){
  const g=currentCoilGeometry;if(!g){toast('Проверьте геометрию перед экспортом');return}
