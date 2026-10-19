@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Синий центр и красный змеевик — 10 версий · PhysNow</title>
+<style>
+:root{color-scheme:dark;--bg:#111;--panel:#191919;--border:#2c2c2c;--muted:#929292;--red:#ef4444;--blue:#3b82f6}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#eee;font:13px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}button,a{-webkit-tap-highlight-color:transparent}button{font:inherit;color:inherit;cursor:pointer}a{color:inherit;text-decoration:none}button:focus-visible,a:focus-visible{outline:2px solid #7aabed;outline-offset:4px}button:disabled{cursor:default}.page{max-width:1500px;margin:auto;padding:26px 24px 42px}.intro{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:22px}.intro h1{font-size:24px;font-weight:600;letter-spacing:-.5px;margin:0 0 7px}.intro p{margin:0;color:var(--muted);line-height:1.6}.intro-links{display:flex;align-items:center;gap:10px;flex-shrink:0}.text-link{color:#aaa;padding:9px 12px;border:1px solid var(--border);border-radius:8px;background:#181818}.text-link:hover{border-color:#555;color:#fff}.tag{font-size:11px;color:#a8a8a8;white-space:nowrap}.viewer{border:1px solid var(--border);border-radius:14px;overflow:hidden;background:#141414}.viewer-heading{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:15px 20px;border-bottom:1px solid var(--border);min-height:77px}.selected-title{display:flex;gap:11px;align-items:baseline}.selected-title h2{font-size:16px;font-weight:600;margin:0}.number{font-size:12px;color:#888;font-variant-numeric:tabular-nums}.description{margin:5px 0 0;color:#929292;font-size:12px;line-height:1.5}.navigation{display:flex;align-items:center;gap:8px;flex-shrink:0}.navigation button{width:34px;height:34px;border:1px solid #353535;border-radius:8px;background:#202020;font-size:18px}.navigation button:hover{background:#2c2c2c}.count{color:#999;font-size:12px;margin:0 7px;font-variant-numeric:tabular-nums}.scene-scroll{overflow:auto}.scene{position:relative;width:100%;aspect-ratio:1340 / 676;min-width:880px;background-color:#131313;background-image:radial-gradient(circle at 1px 1px,#2d2d2d .7px,transparent .7px);background-size:16px 16px}.scene>svg{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none}.stream-card{position:absolute;width:29.25%;background:#1b1b1b;border:1px solid #303030;border-radius:14px;padding:16px;z-index:1}.top-left{left:2.09%;top:4.14%}.top-right{right:2.09%;top:4.14%}.bottom-left{left:2.09%;bottom:3.85%}.bottom-right{right:2.09%;bottom:3.85%}.card-title{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;margin-bottom:17px}.corner{display:grid;place-items:center;width:22px;height:22px;background:#282828;border-radius:5px;color:#ccc;font-size:15px}.fluid{display:flex;justify-content:space-between;align-items:center;color:#929292;margin-bottom:12px;font-size:11px}.select{padding:5px 11px;border:1px solid #343434;border-radius:7px;color:#eee;background:#222;min-width:94px;display:flex;justify-content:space-between;gap:20px;font-weight:500}.fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}.label{display:flex;justify-content:space-between;align-items:center;color:#929292;font-size:11px;margin-bottom:5px}.find{font-size:9px;border:1px solid #393939;border-radius:9px;padding:2px 7px;color:#bbb;background:#242424}.input{height:33px;border:1px solid #333;background:#141414;border-radius:8px;display:flex;align-items:center;justify-content:space-between;padding:0 10px;font-size:12px;font-weight:500}.unit{font-size:10px;color:#888;font-weight:400}.pressure{margin-top:11px}.bottom-left .card-title,.bottom-right .card-title{margin-bottom:15px}.scene-note{padding:11px 20px;border-top:1px solid var(--border);color:#777;font-size:11px;line-height:1.5}.gallery-heading{display:flex;justify-content:space-between;align-items:baseline;gap:20px;margin:30px 0 13px}.gallery-heading h2{font-size:17px;font-weight:600;margin:0}.gallery-heading p{font-size:12px;color:#888;margin:0}.gallery{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}.variant{display:flex;flex-direction:column;text-align:left;padding:0;overflow:hidden;border:1px solid #2b2b2b;border-radius:12px;background:#181818;transition:border-color .15s,background .15s}.variant:hover{border-color:#565656;background:#1c1c1c}.variant[aria-pressed=true]{border-color:#6d8ebd;box-shadow:inset 0 0 0 1px #6d8ebd}.variant svg{display:block;width:100%;aspect-ratio:1.35;background-color:#131313;background-image:radial-gradient(circle at 1px 1px,#292929 .7px,transparent .7px);background-size:16px 16px}.variant-copy{padding:12px 13px 14px;border-top:1px solid #252525;flex:1;width:100%}.variant-name{display:flex;align-items:baseline;gap:8px;font-size:12px;font-weight:600}.variant-name span{color:#828282;font-size:10px;font-weight:400}.variant-copy p{margin:6px 0 0;color:#8a8a8a;font-size:11px;line-height:1.5}.footer{font-size:11px;color:#656565;margin:20px 0 0;line-height:1.6}.stream-path{fill:none;stroke-width:3;stroke-linecap:butt}.port{fill:#131313;stroke-width:2}.temperature{font-size:13px;text-anchor:middle;font-weight:400}.coil{fill:none;stroke-linejoin:round;stroke-linecap:round}
+@media(max-width:1100px){.gallery{grid-template-columns:repeat(3,minmax(0,1fr))}.page{padding:20px 16px}.intro{align-items:flex-start}.intro-links{flex-direction:column;align-items:flex-end}.card-title{font-size:11px;gap:6px}.stream-card{padding:12px}.fluid,.label{font-size:10px}.input{height:29px}.select{padding:4px 8px;min-width:78px}.card-title{margin-bottom:12px}.corner{width:18px;height:18px;font-size:13px}.pressure{margin-top:8px}}
+@media(max-width:650px){.page{padding:18px 12px 28px}.intro{display:block;margin-bottom:16px}.intro h1{font-size:21px}.intro-links{flex-direction:row;justify-content:space-between;align-items:center;margin-top:15px}.viewer-heading{padding:13px;gap:8px;align-items:flex-start}.selected-title{gap:7px}.selected-title h2{font-size:14px}.description{font-size:11px;max-width:240px}.navigation{gap:4px}.navigation button{width:29px;height:29px}.count{display:none}.gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.gallery-heading{display:block;margin-top:23px}.gallery-heading p{margin-top:7px}.variant-copy{padding:10px}.variant-name{font-size:11px;gap:5px}.scene-note{padding:10px 13px}}
+#reference{width:auto;min-width:102px;padding:0 10px;font-size:11px;white-space:nowrap}#reference[aria-pressed=true]{border-color:#887077;background:#302228}.intro-links{flex-wrap:wrap;justify-content:flex-end}@media(max-width:650px){.viewer-heading{flex-wrap:wrap}.navigation{margin-left:auto}.intro h1{font-size:20px}}
+</style>
+</head>
+<body>
+<main class="page">
+ <header class="intro"><div><h1>Синий центр · красный змеевик</h1><p>10 спокойных версий: приглушённая синяя заливка и обязательный внешний контур.</p></div><div class="intro-links"><a class="text-link" href="center-variants.html">← Первые 10</a><a class="text-link" href="#gallery">Все новые версии ↓</a></div></header>
+ <section class="viewer" aria-label="Крупный просмотр варианта">
+  <div class="viewer-heading"><div aria-live="polite"><div class="selected-title"><span class="number" id="selected-number">4.1</span><h2 id="selected-title"></h2></div><p class="description" id="selected-description"></p></div><div class="navigation"><button type="button" id="reference" aria-pressed="false">Исходный №4</button><span class="count" id="count">1 / 10</span><button type="button" id="previous" aria-label="Предыдущий вариант">←</button><button type="button" id="next" aria-label="Следующий вариант">→</button></div></div>
+  <div class="scene-scroll"><div class="scene" id="scene">
+   <div class="stream-card top-left"><div class="card-title"><span class="corner">↘</span>Вход межтрубного пространства</div><div class="fluid">Теплоноситель <span class="select">Вода <span>⌄</span></span></div><div class="fields"><div><div class="label">Температура <span class="find">Найти</span></div><div class="input">90 <span class="unit">°C</span></div></div><div><div class="label">Расход <span class="find">Найти</span></div><div class="input">2,5 <span class="unit">кг/с</span></div></div></div><div class="pressure"><div class="label">Давление, абс.</div><div class="input">0,6 <span class="unit">МПа</span></div></div></div>
+   <div class="stream-card top-right"><div class="card-title"><span class="corner">↙</span>Вход трубного пространства</div><div class="fluid">Теплоноситель <span class="select">Вода <span>⌄</span></span></div><div class="fields"><div><div class="label">Температура <span class="find">Найти</span></div><div class="input">20 <span class="unit">°C</span></div></div><div><div class="label">Расход <span class="find">Найти</span></div><div class="input">3,75 <span class="unit">кг/с</span></div></div></div><div class="pressure"><div class="label">Давление, абс.</div><div class="input">0,4 <span class="unit">МПа</span></div></div></div>
+   <div class="stream-card bottom-left"><div class="card-title"><span class="corner">↖</span>Выход трубного пространства</div><div class="label">Температура <span class="find">Найти</span></div><div class="input">40 <span class="unit">°C</span></div></div>
+   <div class="stream-card bottom-right"><div class="card-title"><span class="corner">↗</span>Выход межтрубного пространства</div><div class="label">Температура <span class="find">Найти</span></div><div class="input">60 <span class="unit">°C</span></div></div>
+  </div></div>
+  <p class="scene-note">Выберите вариант ниже или переключайте стрелками ← →. На узком экране крупную схему можно прокрутить по горизонтали.</p>
+ </section>
+ <div class="gallery-heading" id="gallery"><h2>Синий внутри, красный зигзаг</h2><p>Приглушённая заливка. Внешний контур есть у всех версий.</p></div>
+ <section class="gallery" id="variants" aria-label="Десять вариантов центрального элемента"></section>
+ <p class="footer">Кнопка «Исходный №4» показывает предыдущий вариант для сравнения. Номер новой версии — от 4.1 до 4.10. <a class="text-link" href="../">К расчёту →</a></p>
+</main>
+<script>
+'use strict';
+const red='#ef4444',blue='#3b82f6';
+const coilPath='M-86 0H-58L-34-41L0 41L34-41L60 0H86';
+const circle=(fill,stroke='#353535',width=1.5,r=92)=>`<circle r="${r}" fill="${fill}" stroke="${stroke}" stroke-width="${width}"/>`;
+const coil=(color='#d9d9d9',width=3)=>`<path class="coil" d="${coilPath}" stroke="${color}" stroke-width="${width}"/>`;
+const warmBody=(id,center,edge,stroke='none',width=0)=>`<defs><radialGradient id="${id}-warm"><stop stop-color="${center}"/><stop offset="1" stop-color="${edge}"/></radialGradient></defs>`+circle(`url(#${id}-warm)`,stroke,width)+coil('#78a7df');
+const reference={name:'Исходный «Тёплый графит»',description:'Первоначальный вариант №4: прежняя красная заливка и заметный тёплый контур.',render:id=>warmBody(id,'#2c1b1b','#1b1515','#433030',1.5)};
+function blueBody(id,opacity,outline='#42464c',width=1.5,gradient='',endOpacity=opacity){
+ let paint=blue,defs='';
+ if(gradient){
+  const tag=gradient==='radial'?'radialGradient':'linearGradient';
+  const direction=gradient==='vertical'?' x1="0" y1="0" x2="0" y2="1"':'';
+  defs=`<defs><${tag} id="${id}-blue"${direction}><stop stop-color="${blue}" stop-opacity="${opacity}"/><stop offset="1" stop-color="${blue}" stop-opacity="${endOpacity}"/></${tag}></defs>`;
+  paint=`url(#${id}-blue)`;
+ }
+ return defs+circle('#171717','none',0)+`<circle class="blue-fill" r="92" fill="${paint}" fill-opacity="${gradient?1:opacity}"/><circle class="outer-contour" r="92" fill="none" stroke="${outline}" stroke-width="${width}"/>`+coil(red);
+}
+const variants=[
+ {name:'Синий · 8%',description:'Едва заметная синяя заливка, серый контур и красный зигзаг.',short:'Почти графит · красный зигзаг',render:id=>blueBody(id,.08)},
+ {name:'Синий · 12%',description:'Лёгкий синий оттенок без яркой заливки.',short:'Мягкий синий · серый контур',render:id=>blueBody(id,.12)},
+ {name:'Синий · 16%',description:'Спокойная синяя заливка и красный змеевик в цвет горячих стрелок.',short:'Спокойный синий · красный зигзаг',render:id=>blueBody(id,.16)},
+ {name:'Синий · 20%',description:'Чуть более заметный синий, сохраняя тёмную основу.',short:'Тёмный синий · серый контур',render:id=>blueBody(id,.2)},
+ {name:'Синий · 24%',description:'Самая плотная синяя заливка этой подборки, всё ещё приглушённая.',short:'Плотнее, но без яркой заливки',render:id=>blueBody(id,.24)},
+ {name:'Мягкий объём',description:'Приглушённый синий плавно ослабевает от центра к краю.',short:'Синий градиент · красный зигзаг',render:id=>blueBody(id,.25,'#42464c',1.5,'radial',.08)},
+ {name:'Мягкий свет сверху',description:'Тёмный синий с небольшим усилением у верхней части круга.',short:'Плавный переход · серый контур',render:id=>blueBody(id,.24,'#42464c',1.5,'vertical',.08)},
+ {name:'Чёрный контур',description:'Спокойный синий центр, почти чёрный внешний контур и красный змеевик.',short:'Синий центр · чёрная обводка',render:id=>blueBody(id,.16,'#090909',3)},
+ {name:'Серый контур',description:'Тонкий светло-серый край делает границу круга заметнее без яркой заливки.',short:'Мягкий синий · светлее контур',render:id=>blueBody(id,.12,'#626970',1.25)},
+ {name:'Синий контур',description:'Приглушённая синяя обводка поддерживает синий фон внутри круга.',short:'Синий центр и контур · красный зигзаг',render:id=>blueBody(id,.12,'#45648c',1.5)}
+];
+function sceneSvg(variant,index,small=false){
+ const id=(small?'thumb':'main')+'-'+index;
+ return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${small?'500 185 340 330':'0 0 1340 676'}" role="img" aria-label="${variant.name}: ${variant.description}">
+ <defs><marker id="${id}-hot" viewBox="0 0 12 12" refX="6" refY="6" markerWidth="12" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 0L12 6L0 12Z" fill="${red}"/></marker><marker id="${id}-cold" viewBox="0 0 12 12" refX="6" refY="6" markerWidth="12" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto"><path d="M0 0L12 6L0 12Z" fill="${blue}"/></marker></defs>
+ <path class="stream-path" d="M420 148C560 148 670 155 670 252" stroke="${red}" marker-end="url(#${id}-hot)"/>
+ <path class="stream-path" d="M920 148C800 148 860 350 768 350" stroke="${blue}" marker-end="url(#${id}-cold)"/>
+ <path class="stream-path" d="M572 350C480 350 540 576 424 576" stroke="${blue}" marker-end="url(#${id}-cold)"/>
+ <path class="stream-path" d="M670 448C670 555 770 576 916 576" stroke="${red}" marker-end="url(#${id}-hot)"/>
+ <g class="central-element" transform="translate(670 350)">${variant.render(id)}<circle class="port" cy="-86" r="4.5" stroke="${red}"/><circle class="port" cy="86" r="4.5" stroke="${red}"/><circle class="port" cx="86" r="4.5" stroke="${blue}"/><circle class="port" cx="-86" r="4.5" stroke="${blue}"/></g>
+ ${small?'':`<g class="temperatures"><text class="temperature" x="565" y="132" fill="#ff6b6b">90 °C</text><text class="temperature" x="775" y="132" fill="#7d96ff">20 °C</text><text class="temperature" x="565" y="602" fill="#7d96ff">40 °C</text><text class="temperature" x="775" y="602" fill="#ff6b6b">60 °C</text></g>`}</svg>`;
+}
+let selected=0;
+const scene=document.getElementById('scene'),gallery=document.getElementById('variants');
+gallery.innerHTML=variants.map((variant,index)=>`<button class="variant" type="button" data-index="${index}" aria-pressed="false" aria-label="Версия 4.${index+1}: ${variant.name}">${sceneSvg(variant,index,true)}<div class="variant-copy"><div class="variant-name"><span>4.${index+1}</span>${variant.name}</div><p>${variant.short}</p></div></button>`).join('');
+function selectVariant(index){
+ selected=index===-1?-1:(index+variants.length)%variants.length;
+ const variant=selected===-1?reference:variants[selected];
+ document.getElementById('selected-title').textContent=variant.name;
+ document.getElementById('selected-number').textContent=selected===-1?'4':'4.'+(selected+1);
+ document.getElementById('selected-description').textContent=variant.description;
+ document.getElementById('count').textContent=selected===-1?'Исходный':(selected+1)+' / '+variants.length;
+ document.getElementById('reference').setAttribute('aria-pressed',String(selected===-1));
+ scene.querySelector('svg')?.remove();scene.insertAdjacentHTML('afterbegin',sceneSvg(variant,selected));
+ gallery.querySelectorAll('button').forEach((button,index)=>button.setAttribute('aria-pressed',String(index===selected)));
+}
+gallery.addEventListener('click',event=>{const button=event.target.closest('button[data-index]');if(button){selectVariant(Number(button.dataset.index));document.querySelector('.viewer').scrollIntoView({block:'start'})}});
+document.getElementById('reference').addEventListener('click',()=>selectVariant(-1));
+document.getElementById('previous').addEventListener('click',()=>selectVariant(selected<=0?9:selected-1));
+document.getElementById('next').addEventListener('click',()=>selectVariant(selected+1));
+document.addEventListener('keydown',event=>{if(event.altKey||event.ctrlKey||event.metaKey)return;if(event.key==='ArrowRight'||event.key==='ArrowLeft'){event.preventDefault();selectVariant(event.key==='ArrowRight'?(selected+1)%10:selected<=0?9:selected-1)}});
+selectVariant(0);
+</script>
+</body>
+</html>
