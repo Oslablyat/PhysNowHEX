@@ -524,7 +524,7 @@ footer{color:#737373}
 @media(prefers-reduced-motion:reduce){.exchanger-card-dialog[open]{animation:none}}
 
 /* A separate geometry workspace. The design calculator keeps its existing layout. */
-#design-page{display:flex;flex-direction:column;gap:6px;min-width:0}
+#design-page{display:flex;flex-direction:column;gap:10px;min-width:0}
 #design-page[hidden],#verification-page[hidden]{display:none!important}
 .verification-page{display:flex;flex-direction:column;gap:10px;min-width:0}
 .verification-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:76px}
