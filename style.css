@@ -35,14 +35,18 @@ main{padding:6px 0 0;gap:6px;max-width:none}.heading{background:#2B2B2B;border-r
 @media(max-width:560px){.app{padding:5px}.heading{min-height:72px;padding:11px 12px}.heading p{font-size:8px}h1{font-size:19px}.workspace{gap:5px}.thermal{grid-template-rows:auto auto}.construction,.thermal,.heading,.results{border-radius:17px}.results{padding:12px}.topbar{height:40px}.metric:nth-child(2),.result-action{border-color:#5e5e5e}}
 
 /* Color is reserved for the exchanger and its two streams. */
-.hot-pipe,.hot-arrow{stroke:#ff3b3b}.cold-pipe,.cold-arrow{stroke:#4169ff}.cold-pipe{stroke-dasharray:none}
-#hot-arrow path{stroke:#ff3b3b}#cold-arrow path{stroke:#4169ff}
-#body stop:first-child{stop-color:#52664b}#body stop:last-child{stop-color:#35472f}
-.process-svg>circle:first-of-type{fill:#2B2B2B}.process-svg>circle:nth-of-type(2){stroke:#b3cb94}.process-svg>circle:nth-of-type(3){stroke:#7d966b}
-.process-svg>circle:nth-of-type(3)+path{stroke:#d8e8b8}
-.process-svg g[fill] circle{fill:#2B2B2B}.process-svg g[fill] circle:nth-child(1),.process-svg g[fill] circle:nth-child(4){stroke:#ff3b3b}.process-svg g[fill] circle:nth-child(2),.process-svg g[fill] circle:nth-child(3){stroke:#4169ff}
-.svg-temp text:nth-child(1),.svg-temp text:nth-child(4){fill:#ff6b6b}.svg-temp text:nth-child(2),.svg-temp text:nth-child(3){fill:#7d96ff}
-.legend-dot.hot{background:#ff3b3b}.legend-dot.cold{background:#4169ff;border:0;width:5px;height:5px}
+.hot-pipe,.hot-arrow{stroke:#3b82f6}.cold-pipe,.cold-arrow{stroke:#ef4444}.cold-pipe{stroke-dasharray:none}
+.process-svg .pipe{stroke-width:3;stroke-linecap:butt}
+.process-svg .hot-pipe{stroke:#3b82f6}.process-svg .cold-pipe{stroke:#ef4444}
+.process-svg .hot-pipe{marker-end:url(#hot-arrow)}.process-svg .cold-pipe{marker-end:url(#cold-arrow)}
+#hot-arrow path{fill:#3b82f6;stroke:none}#cold-arrow path{fill:#ef4444;stroke:none}
+/* Selected preview 4.9: 12% blue over graphite, a grey rim, and a red coil. */
+.process-svg .exchanger-shell{fill:#171717;stroke:none}
+.process-svg .exchanger-fluid{fill:#3b82f6;fill-opacity:.12;stroke:#626970;stroke-width:1.25}
+.process-svg .exchanger-coil{stroke:#ef4444;stroke-width:3;stroke-linecap:round}
+.process-svg g[fill] circle{fill:#2B2B2B}.process-svg g[fill] circle:nth-child(1),.process-svg g[fill] circle:nth-child(4){stroke:#3b82f6}.process-svg g[fill] circle:nth-child(2),.process-svg g[fill] circle:nth-child(3){stroke:#ef4444}
+.svg-temp text:nth-child(1),.svg-temp text:nth-child(4){fill:#7d96ff}.svg-temp text:nth-child(2),.svg-temp text:nth-child(3){fill:#ff6b6b}
+.legend-dot.hot{background:#3b82f6}.legend-dot.cold{background:#ef4444;border:0;width:5px;height:5px}
 .exchanger-name{fill:#c5d7ae}footer{justify-content:flex-end}
 
 .inlet-extra{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;margin-top:9px;align-items:end}
@@ -456,10 +460,7 @@ dialog::backdrop{background:#000000b8}
 #toast{background:#eeeeee;color:#151515}
 footer{color:#737373}
 .process-svg #grid circle{fill:#2d2d2d}
-.process-svg>circle:first-of-type,.process-svg g[fill] circle{fill:#131313}
-#body stop:first-child{stop-color:#2d3b28}#body stop:last-child{stop-color:#1e2a1c}
-.process-svg>circle:nth-of-type(2){stroke:#8fa47b}.process-svg>circle:nth-of-type(3){stroke:#60714f}
-.process-svg>circle:nth-of-type(3)+path{stroke:#cbdcb6}
+.process-svg g[fill] circle{fill:#131313}
 
 /* Subtle reference-style panel outlines without changing panel dimensions. */
 .topbar.cad-header,.heading,.construction,.thermal,.results,.variants-panel{outline:1px solid #2b2b2b;outline-offset:-1px}

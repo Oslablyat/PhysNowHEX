@@ -321,23 +321,25 @@ function fitDiagram(){
  const box=document.querySelector('.diagram').getBoundingClientRect(),svg=document.querySelector('.process-svg');
  const w=box.width,h=box.height;if(w<=0||h<=0)return;
  const standalone=innerWidth<=560,cx=w/2,cy=standalone?h*.48:h*.5,r=Math.min(68,w*.28,h*.22);
- const top=standalone?48:$('hot-in').getBoundingClientRect().top+$('hot-in').offsetHeight/2-box.top;
+ const inletAnchor=$('hot-in').getBoundingClientRect().top+$('hot-in').offsetHeight/2-box.top;
+ const top=standalone?48:Math.min(inletAnchor,Math.max(24,cy-r-12-76));
  const bottom=standalone?h-53:$('hot-out').getBoundingClientRect().top+$('hot-out').offsetHeight/2-box.top;
- const left=(cx-r)/2,right=(cx+r+w)/2;
  svg.setAttribute('viewBox',`0 0 ${w} ${h}`);
  const set=(e,attrs)=>{for(const[k,v]of Object.entries(attrs))e.setAttribute(k,String(v))};
  set(svg.querySelector('rect'),{width:w,height:h});
  const pipes=svg.querySelectorAll('.pipe');
- set(pipes[0],{d:`M0 ${top}H${cx-10}Q${cx} ${top} ${cx} ${top+10}V${cy-r}`});
- set(pipes[1],{d:`M${w} ${top}H${right+8}Q${right} ${top} ${right} ${top+8}V${cy-8}Q${right} ${cy} ${right-8} ${cy}H${cx+r}`});
- set(pipes[2],{d:`M${cx-r} ${cy}H${left+8}Q${left} ${cy} ${left} ${cy+8}V${bottom-8}Q${left} ${bottom} ${left-8} ${bottom}H0`});
- set(pipes[3],{d:`M${cx} ${cy+r}V${bottom-8}Q${cx} ${bottom} ${cx+8} ${bottom}H${w}`});
- const arrows=svg.querySelectorAll('.flow-arrow');
- set(arrows[0],{d:`M${cx} ${cy-r-20}v15`});set(arrows[1],{d:`M${cx+r+21} ${cy}h-15`});set(arrows[2],{d:`M24 ${bottom}H7`});set(arrows[3],{d:`M${w-25} ${bottom}h17`});
- const circles=svg.querySelectorAll(':scope > circle');set(circles[0],{cx,cy,r:r+6});set(circles[1],{cx,cy,r});set(circles[2],{cx,cy,r:r-8});
- const zig=circles[2].nextElementSibling;set(zig,{d:`M${cx-r} ${cy}h${r*.33}l${r*.28} ${-r*.48} ${r*.39} ${r*.96} ${r*.39} ${-r*.96} ${r*.3} ${r*.48}H${cx+r}`});
- const joints=svg.querySelectorAll('g[fill] circle');[[cx,cy-r],[cx+r,cy],[cx-r,cy],[cx,cy+r]].forEach(([x,y],i)=>set(joints[i],{cx:x,cy:y}));
- const temps=svg.querySelectorAll('.svg-temp text');[[w*.29,top-12],[w*.71,top-12],[w*.29,bottom+18],[w*.71,bottom+18]].forEach(([x,y],i)=>set(temps[i],{x,y,'text-anchor':'middle'}));
+ const shellRadius=r+6,hotIn=cy-shellRadius-12,hotOut=cy+shellRadius+6,coldIn=cx+shellRadius+12,coldOut=cx-shellRadius-6;
+ // Control-point ratios come from reference variant 3 (1340 x 676 canvas).
+ const coldInSpan=w-coldIn,coldOutSpan=coldOut-6,hotOutSpan=w-6-cx;
+ set(pipes[0],{d:`M0 ${top}C${cx*140/250} ${top} ${cx} ${top+(hotIn-top)*7/104} ${cx} ${hotIn}`});
+ set(pipes[1],{d:`M${w} ${top}C${w-coldInSpan*120/152} ${top} ${w-coldInSpan*60/152} ${cy} ${coldIn} ${cy}`});
+ set(pipes[2],{d:`M${coldOut} ${cy}C${coldOut-coldOutSpan*92/148} ${cy} ${coldOut-coldOutSpan*32/148} ${bottom} 6 ${bottom}`});
+ set(pipes[3],{d:`M${cx} ${hotOut}C${cx} ${hotOut+(bottom-hotOut)*107/128} ${cx+hotOutSpan*100/246} ${bottom} ${w-6} ${bottom}`});
+ set(svg.querySelector('.exchanger-shell'),{cx,cy,r:shellRadius});set(svg.querySelector('.exchanger-fluid'),{cx,cy,r:shellRadius});
+ set(svg.querySelector('.exchanger-coil'),{transform:`translate(${cx} ${cy}) scale(${shellRadius/92})`});
+ const joints=svg.querySelectorAll('.exchanger-ports circle');[[cx,cy-shellRadius],[cx+shellRadius,cy],[cx-shellRadius,cy],[cx,cy+shellRadius]].forEach(([x,y],i)=>set(joints[i],{cx:x,cy:y}));
+ const temps=svg.querySelectorAll('.svg-temp text');
+ [[w*.29,top-12],[w*.71,top-12],[w*.29,bottom+18],[w*.71,bottom+18]].forEach(([x,y],i)=>set(temps[i],{x,y,'text-anchor':'middle'}));
 
 }
 new ResizeObserver(fitDiagram).observe(document.querySelector('.process'));
