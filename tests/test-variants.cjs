@@ -2,10 +2,10 @@ const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/st
 const app=fs.readFileSync(require('node:path').join(__dirname,'..','app.js'),'utf8');
 const model=vm.runInNewContext(app.slice(app.indexOf('function variantProfiles('),app.indexOf('function renderExchangerVariants('))+'\n({selectExchangerVariants,waterProperties,hydraulicEstimate})');
 const state={length:2000,'exchanger-diameter':600,'exchanger-type':'shell','hot-fluid':'water','cold-fluid':'water','refine-tubes':false,'tube-diameter':20,'tube-wall':2};
-const r={thi:90,tho:60,tci:20,tco:40,mh:2.5,mc:3.75,ph:.6,pc:.4,area:313500/(800*(10/Math.log(50/40)))};
+const r={thi:90,tho:60,tci:20,tco:40,mh:2.5,mc:3.75,ph:.6,pc:.4,area:313500/(800*(10/Math.log(50/40)))};r.designArea=r.area*1.1;
 const result=model.selectExchangerVariants(state,r);assert.equal(result.rows.length,4);assert(result.candidates.length>100);
 for(const c of result.candidates){
- assert(c.area>=r.area);assert(c.length<=2&&c.diameter<=.6);assert(Number.isInteger(c.n)&&c.n>0);
+ assert(c.area>=r.designArea);assert(c.length<=2&&c.diameter<=.6);assert(Number.isInteger(c.n)&&c.n>0);
  assert(c.dpt>0&&c.dps>0&&c.dpt<r.pc*1e6&&c.dps<r.ph*1e6);assert(c.vt>0&&c.vs>0);
  assert(c.b>=(c.diameter-.01)*.4-1e-10&&c.b<=(c.diameter-.01)*.6+1e-10);
  assert(c.res>=400&&c.res<=1e6);assert(c.ret<=2300||c.ret>=4000&&c.ret<=300000);

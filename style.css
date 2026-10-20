@@ -198,6 +198,7 @@ html[data-theme="dark"] {
 .type-dropdown-label{display:block;color:#c3c3c3;font-size:9px;line-height:11px;margin-bottom:4px}
 .dd{width:100%;height:36px;color:#eee;--stage-fg:#eee;--stage-muted:#bcbcbc;--stage-surface:#404040;--stage-accent:#ddd;--chip:rgba(255,255,255,.07);--chip-hover:rgba(255,255,255,.1);--menu-shadow:0 10px 28px #0004,0 0 0 1px #626262}
 .dd .dd-trigger{height:36px;max-width:100%;padding:0 10px 0 12px;background:var(--chip);border-radius:40px;font-size:10px;line-height:20px;font-weight:500;color:#eee}
+.type-dropdown-field .dd,.type-dropdown-field .dd .dd-trigger{height:30px}
 .dd .dd-trigger .hi{fill:currentColor;stroke:none;width:14px;height:14px}
 .dd-label{overflow:hidden;text-overflow:ellipsis}
 .dd-menu{left:0;top:calc(100% + 8px);width:100%;padding:6px;background:var(--stage-surface);border-radius:12px;z-index:10}
@@ -264,6 +265,8 @@ button.cad-tool:hover,a.cad-tool:hover{background:#ffffff24}
 .cad-document{flex:1 1 0;min-width:0;width:0;padding:0 4px 0 0;gap:0;background:#3c3c3c}
 .cad-document.is-selected{background:#5d5d5d}
 .cad-sheet-tab{flex:1;min-width:0;height:30px;padding:0 7px 0 11px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;background:transparent;border:0;border-radius:6px;color:#fff;text-align:left;font:inherit;cursor:pointer}
+.cad-sheet-tab:focus-visible{outline:1px solid #4a9eff;outline-offset:-3px}
+.cad-sheet-name-input{flex:1;min-width:0;width:0;height:30px;padding:0 7px 0 11px;border:0;border-radius:6px;background:#171717;color:#fff;font:inherit;box-shadow:inset 0 0 0 1px #3b82f6;outline:none}
 button.cad-document-close{border:0;background:transparent;border-radius:4px;color:#fff;padding:4px;cursor:pointer;width:22px;height:24px}
 button.cad-document-close:hover{background:#ffffff20}
 button.cad-document-new{padding:5px;border:0;border-radius:5px;background:transparent;color:#fff;cursor:pointer}
@@ -302,6 +305,7 @@ button.cad-document-new:hover{background:#ffffff20}
 .construction .construction-body .construction-note{font-size:9px;line-height:12px;color:#ababab}
 .construction .surface-status{line-height:12px}
 .construction .dimension-grid{align-items:end}
+.construction .dimension-grid .reserve-factor-field{grid-column:1/-1}
 /* Optional tube sizing; folding the fields does not discard their values. */
 .construction .tube-grid[hidden]{display:none!important}
 .construction .construction-body>.tube-refinement{display:flex;align-items:center;justify-content:flex-start;gap:7px;margin:12px 0 7px;font-size:10px;line-height:15px;color:#c4c4c4;cursor:pointer;flex-shrink:0}
@@ -527,6 +531,23 @@ footer{color:#737373}
 /* A separate geometry workspace. The design calculator keeps its existing layout. */
 #design-page{display:flex;flex-direction:column;gap:10px;min-width:0}
 #design-page[hidden],#verification-page[hidden]{display:none!important}
+/* Fit the final section below the sticky header at the end of page scrolling:
+   section heading 67.2px, section gap 10px, footer gap 6px, footer 11px,
+   page bottom padding 8px. */
+.design-detail-workspace{flex:none;height:calc(100dvh - var(--cad-header-height) - 67.2px - 16px - 11px - 8px);min-height:0}
+.design-detail-panel{min-width:0;border-radius:18px;background:#191919;outline:1px solid #2b2b2b;outline-offset:-1px;overflow:hidden}
+.design-detail-settings{position:relative;z-index:1;overflow:visible}
+.detail-mode-field{position:relative;flex:1;min-width:0}
+.rectangular-dropdown-field .dd{height:29px}
+.rectangular-dropdown-field .dd .dd-trigger{width:100%!important;height:29px;justify-content:space-between;padding:3px 8px;border:1px solid #343434;border-radius:7px;background:#222;color:#eee;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;font-size:12px;line-height:normal;font-weight:400}
+.rectangular-dropdown-field .dd .dd-trigger:hover{background:#222}
+.rectangular-dropdown-field .dd .dd-trigger .hi{width:14px;height:14px;color:#e2e2e2;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.detail-mode-field .dd-menu{min-width:240px;max-width:calc(100vw - 64px)}
+.detail-mode-field .dd .dd-item{font-size:11px;font-weight:500}
+.preview-mode-field{flex:0 1 360px}
+.preview-mode-field .dd .dd-item{height:auto;min-height:32px;padding-top:6px;padding-bottom:6px}
+@media(max-width:780px){.design-detail-workspace{height:auto;min-height:0}.design-detail-settings{min-height:390px}.design-detail-preview{min-height:570px}}
+@media(max-width:560px){.design-detail-panel{border-radius:17px}}
 .verification-page{display:flex;flex-direction:column;gap:10px;min-width:0}
 .verification-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:76px}
 .verification-heading h1{font-size:22px}.verification-heading p{font-size:11px;margin-top:5px;color:#999}
@@ -629,10 +650,11 @@ main{padding-top:0}
 .calculation-actions .cad-tool:hover{background:#ffffff0c}
 .cad-documents{order:4;margin-left:0;margin-right:auto;padding-left:0}
 .cad-github{order:5}
-.calculator-overview>.heading,.verification-heading{height:67.2px;min-height:67.2px;flex:none;align-items:center;margin:0 -10px;padding:12px 20px;background:#141414;border-radius:0;border:0;border-bottom:1px solid #2a2a2a;outline:0;gap:16px}
+.calculator-overview>.heading,.verification-heading,.design-section-heading{height:67.2px;min-height:67.2px;flex:none;align-items:center;margin:0 -10px;padding:12px 20px;background:#141414;border-radius:0;border:0;border-bottom:1px solid #2a2a2a;outline:0;gap:16px}
+.design-section-heading{border-top:1px solid #2a2a2a}
 /* The reference uses the system fallback; its Inter family is not web-loaded. */
-.calculator-overview>.heading h1,.verification-heading h1{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;font-size:18px;font-weight:600;line-height:normal;letter-spacing:0;color:#f0f0f0;margin:0 0 2px;max-width:none}
-.calculator-overview>.heading p,.verification-heading p{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;font-size:12px;font-weight:400;line-height:normal;margin:0;max-width:none;color:#888}
+.calculator-overview>.heading h1,.verification-heading h1,.design-section-heading h2{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;font-size:18px;font-weight:600;line-height:normal;letter-spacing:0;color:#f0f0f0;margin:0 0 2px;max-width:none}
+.calculator-overview>.heading p,.verification-heading p,.design-section-heading p{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;font-size:12px;font-weight:400;line-height:normal;margin:0;max-width:none;color:#888}
 .verification-heading-actions{max-width:none}
 @media(max-width:1100px){
  .topbar.cad-header{padding:0 16px}
@@ -650,6 +672,6 @@ main{padding-top:0}
  .cad-header .physnow-name{font-size:18px}
  .cad-github{width:30px;margin-left:12px}
  .cad-header .cad-github .cad-icon{width:25px;height:25px}
- .calculator-overview>.heading,.verification-heading{height:auto;min-height:67.2px;padding:12px 20px;flex-wrap:wrap}
+ .calculator-overview>.heading,.verification-heading,.design-section-heading{height:auto;min-height:67.2px;padding:12px 20px;flex-wrap:wrap}
  .verification-heading-actions{width:auto;justify-content:flex-end}
 }

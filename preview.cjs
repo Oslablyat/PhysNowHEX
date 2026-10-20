@@ -6,7 +6,7 @@ const server=http.createServer((req,res)=>{
  try{
   if(!['GET','HEAD'].includes(req.method)){res.writeHead(405,{'Allow':'GET, HEAD'});return res.end()}
   const route=decodeURIComponent(new URL(req.url,'http://localhost').pathname),file=route==='/'?'/index.html':route;
-  if(!['/index.html','/style.css','/app.js'].includes(file)&&!file.startsWith('/assets/')){res.writeHead(404);return res.end('Not found')}
+  if(!['/index.html','/header-comparison.html','/style.css','/app.js'].includes(file)&&!file.startsWith('/assets/')){res.writeHead(404);return res.end('Not found')}
   const resolved=path.resolve(root,'.'+file);
   if(!resolved.startsWith(root+path.sep)||file.startsWith('/assets/')&&!resolved.startsWith(path.join(root,'assets')+path.sep)){res.writeHead(403);return res.end('Forbidden')}
   const data=fs.readFileSync(resolved);res.writeHead(200,{'Content-Type':mime[path.extname(resolved)]||'application/octet-stream','Content-Length':data.length,'Cache-Control':'no-store'});res.end(req.method==='HEAD'?undefined:data);

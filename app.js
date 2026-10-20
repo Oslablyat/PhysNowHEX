@@ -1,9 +1,10 @@
 const $ = id => document.getElementById(id);
+document.querySelector('.dimension-grid').insertAdjacentHTML('beforeend','<label class="reserve-factor-field" title="Запас относительно расчётной площади без запаса">Коэффициент запаса по площади<div class="input-wrap"><input id="area-reserve-percent" type="number" min="0" step="any" value="10" aria-label="Коэффициент запаса по площади теплообмена в процентах"><span>%</span></div></label>');
 const thermalIds = ['thi','tho','tci','tco','mh','mc','cph','cpc','u','ph','pc'];
-const geometryIds = ['length','exchanger-diameter','tube-diameter','tube-wall','tube-length','tube-count'];
-const selectIds = ['hot-fluid','cold-fluid','exchanger-type','tube-material','hot-flow-unit','cold-flow-unit'];
+const geometryIds = ['length','exchanger-diameter','area-reserve-percent','tube-diameter','tube-wall','tube-length','tube-count'];
+const selectIds = ['hot-fluid','cold-fluid','exchanger-type','tube-material','hot-flow-unit','cold-flow-unit','detail-parameter-mode','detail-preview-mode'];
 const fieldIds = [...thermalIds,...geometryIds,...selectIds];
-const defaults = {thi:90,tho:60,tci:20,tco:40,mh:2.5,mc:3.75,unknown:'mc',ph:0.6,pc:0.4,cph:4.18,cpc:4.18,u:800,'hot-fluid':'water','cold-fluid':'water','hot-flow-unit':'kg-s','cold-flow-unit':'kg-s',flow:'counter','exchanger-type':'shell',length:2000,'exchanger-diameter':600,'tube-material':'12x18','tube-diameter':20,'tube-wall':2,'tube-length':1800,'tube-count':80,'refine-tubes':false};
+const defaults = {thi:90,tho:60,tci:20,tco:40,mh:2.5,mc:3.75,unknown:'mc',ph:0.6,pc:0.4,cph:4.18,cpc:4.18,u:800,'hot-fluid':'water','cold-fluid':'water','hot-flow-unit':'kg-s','cold-flow-unit':'kg-s',flow:'counter','exchanger-type':'shell',length:2000,'exchanger-diameter':600,'area-reserve-percent':10,'tube-material':'12x18','tube-diameter':20,'tube-wall':2,'tube-length':1800,'tube-count':80,'refine-tubes':false,'detail-parameter-mode':'construction','detail-preview-mode':'layout'};
 const typeNames = {shell:'Кожухотрубный',double:'Труба в трубе',coil:'Змеевиковый'};
 const materialNames = {"316":"Нерж. сталь AISI 316L","12x18":"Нерж. сталь 12Х18Н10Т","steel20":"Углеродистая сталь 20","copper":"Медь М1","titanium":"Титан ВТ1-0"};
 const fmt = (n,d=2) => new Intl.NumberFormat('ru-RU',{maximumFractionDigits:d}).format(n);
@@ -123,7 +124,7 @@ function solve(state){
  return {...n,q,dt,area,imbalance,unknown,flow:state.flow};
 }
 
-function geometry(state){let n;try{n=numericValues(state,geometryIds)}catch{throw Error('Заполните размеры аппарата и труб.')}if(Object.values(n).some(v=>v<=0))throw Error('Размеры и количество труб должны быть больше нуля.');if(!Number.isInteger(n['tube-count']))throw Error('Количество труб должно быть целым числом.');if(2*n['tube-wall']>=n['tube-diameter'])throw Error('Стенка трубы должна быть тоньше половины наружного диаметра.');const surface=Math.PI*n['tube-diameter']/1000*n['tube-length']/1000*n['tube-count'];if(!Number.isFinite(surface))throw Error('Проверьте габаритные размеры.');return {...n,surface}}
+function geometry(state){let n;try{n=numericValues(state,geometryIds)}catch{throw Error('Заполните размеры аппарата и труб.')}if(n['area-reserve-percent']<0)throw Error('Коэффициент запаса по площади не может быть отрицательным.');if(Object.entries(n).some(([id,v])=>id!=='area-reserve-percent'&&v<=0))throw Error('Размеры и количество труб должны быть больше нуля.');if(!Number.isInteger(n['tube-count']))throw Error('Количество труб должно быть целым числом.');if(2*n['tube-wall']>=n['tube-diameter'])throw Error('Стенка трубы должна быть тоньше половины наружного диаметра.');const surface=Math.PI*n['tube-diameter']/1000*n['tube-length']/1000*n['tube-count'];if(!Number.isFinite(surface))throw Error('Проверьте габаритные размеры.');return {...n,surface}}
 function syncUnknownControls(){
  for(const id of findableParameters()){
   const input=$(id),active=id===unknownParameter,group=input.closest('.find-field'),button=group.querySelector('.find-button');
@@ -138,6 +139,12 @@ function calculatedDisplayValue(result,id,state){
  const value=id==='mh'?massToFlow(result.mh,state['hot-flow-unit'],result.thi,state['hot-fluid']):id==='mc'?massToFlow(result.mc,state['cold-flow-unit'],result.tci,state['cold-fluid']):result[id];
  return String(Number(value.toPrecision(12)));
 }
+function areaReservePercent(state){
+ const reserve=Number(state['area-reserve-percent']);
+ if(state['area-reserve-percent']===''||!Number.isFinite(reserve))throw Error('Задайте коэффициент запаса по площади теплообмена.');
+ if(reserve<0)throw Error('Коэффициент запаса по площади не может быть отрицательным.');
+ return reserve;
+}
 function selectUnknownParameter(id){
  unknownParameter=unknownParameter===id?null:id;
  syncUnknownControls();update();
@@ -145,13 +152,13 @@ function selectUnknownParameter(id){
 function update(persist=true){
  syncUnknownControls();const state=getState();lastError='';
  try{
-  currentResult=solve(state);
+  const reservePercent=areaReservePercent(state);currentResult={...solve(state),reservePercent};currentResult.designArea=currentResult.area*(1+reservePercent/100);
   if(unknownParameter){const input=$(unknownParameter),exact=calculatedDisplayValue(currentResult,unknownParameter,state);input.dataset.exactValue=exact;const unit=unknownParameter==='mh'?state['hot-flow-unit']:state['cold-flow-unit'];input.value=fmt(Number(exact),['mh','mc'].includes(unknownParameter)?unit==='m3-s'?6:3:2)}
-  $('result-q').textContent=fmt(currentResult.q);$('result-dt').textContent=fmt(currentResult.dt);$('result-area').textContent=fmt(currentResult.area);
+  $('result-q').textContent=fmt(currentResult.q);$('result-dt').textContent=fmt(currentResult.dt);$('result-area').textContent=fmt(currentResult.designArea);$('result-area-note').textContent='Требуемая поверхность · запас '+fmt(currentResult.reservePercent)+' %';
   $('balance-status').classList.remove('invalid');$('balance-status').innerHTML='<i></i> Тепловой баланс соблюдён';$('balance-status').title=unknownParameter?'Найдено: '+findParameterName(unknownParameter):'Все параметры заданы; расхождение баланса не более 0,1 %';
  }catch(error){
   currentResult=null;lastError=error.message;if(unknownParameter){$(unknownParameter).value='';delete $(unknownParameter).dataset.exactValue}
-  for(const id of ['result-q','result-dt','result-area'])$(id).textContent='—';
+  for(const id of ['result-q','result-dt','result-area'])$(id).textContent='—';$('result-area-note').textContent='Требуемая поверхность · с учётом запаса';
   const message=lastError.startsWith('Заполните')?'Заполните известные параметры':lastError.startsWith('Тепловой баланс')?'Тепловой баланс не сходится':'Проверьте известные параметры';
   $('balance-status').classList.add('invalid');$('balance-status').innerHTML='<i></i> '+message;$('balance-status').title=lastError;
  }
@@ -212,7 +219,7 @@ function selectExchangerVariants(state,r){
   const radii=[];for(let iy=-36;iy<=36;iy++)for(let ix=-36;ix<=36;ix++)radii.push(Math.hypot((ix+(Math.abs(iy)%2)/2)*pitch,iy*Math.sqrt(3)*pitch/2));
   radii.sort((a,b)=>a-b);
   for(const length of lengths){
-   const lt=.9*length,minN=Math.ceil(r.area/(Math.PI*outside*lt));
+   const lt=.9*length,minN=Math.ceil((r.designArea??r.area)/(Math.PI*outside*lt));
    if(minN>3000)continue;
    for(const factor of [1,1.3,1.75]){
     const n=Math.ceil(minN*factor);if(n>3000)continue;
@@ -283,7 +290,7 @@ function syncVariantSelection(){
 function verificationCandidate(){
  const row=currentVariants?.rows.find(item=>item.id===selectedVariant);
  if(!row?.design)return null;
- const inputs=getState();delete inputs['verification-design'];delete inputs['verification-state'];
+ const inputs=getState();delete inputs['verification-design'];delete inputs['verification-state'];delete inputs['detail-parameter-mode'];delete inputs['detail-preview-mode'];
  return {profile:row.id,name:row.name,design:{...row.design},inputs};
 }
 function syncVerificationChoice(){
@@ -313,10 +320,11 @@ for(const id of [...thermalIds,...geometryIds])$(id).addEventListener('input',()
 for(const side of ['hot','cold']){$(side+'-fluid').addEventListener('change',()=>changeFlowFluid(side));$(side+'-flow-unit').addEventListener('change',()=>changeFlowUnit(side))}
 $('exchanger-type').addEventListener('change',()=>{if($('exchanger-type').value!=='double'&&$('tube-count').readOnly)$('tube-count').value=80;syncControls();update()});
 $('tube-material').addEventListener('change',()=>{syncDropdowns();update()});
+for(const id of ['detail-parameter-mode','detail-preview-mode'])$(id).addEventListener('change',()=>{syncDropdowns();save()});
 for(const b of document.querySelectorAll('[data-flow]'))b.addEventListener('click',()=>{flow=b.dataset.flow;syncControls(true);update()});
 $('reset').addEventListener('click',()=>{applyState({...defaults,thi:'',tho:'',tci:'',tco:'',mh:'',ph:'',pc:''});save();$('thi').focus();toast('Параметры потоков очищены')});
 $('close-help').addEventListener('click',()=>$('help-dialog').close());$('help-dialog').addEventListener('click',e=>{if(e.target===$('help-dialog')){const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.target.close()}});
-$('export').addEventListener('click',()=>{update();if(lastError||!currentResult||!currentGeometry){validateAllNumericFields();toast('Для экспорта исправьте исходные данные');return}const r=currentResult,g=currentGeometry,s=getState();const rows=[['PhysNow — предварительный расчёт'],['Параметр','Значение','Единица'],['Тип аппарата',typeNames[s['exchanger-type']],''],['Неизвестный параметр',unknownParameter?findParameterName(unknownParameter):'Все параметры заданы',''],['Схема',flow==='counter'?'Противоток':'Прямоток',''],['Предельная длина теплообменника',g.length,'мм'],['Предельный внешний диаметр теплообменника',g['exchanger-diameter'],'мм'],['Материал труб',materialNames[$('tube-material').value],''],['Наружный диаметр трубы',g['tube-diameter'],'мм'],['Толщина стенки',g['tube-wall'],'мм'],['Межтрубное пространство',$('hot-fluid').selectedOptions[0].textContent,''],['Трубное пространство',$('cold-fluid').selectedOptions[0].textContent,''],['Температура на входе межтрубного пространства',r.thi,'°C'],['Температура на выходе межтрубного пространства',r.tho,'°C'],['Температура на входе трубного пространства',r.tci,'°C'],['Температура на выходе трубного пространства',r.tco,'°C'],['Абсолютное давление на входе межтрубного пространства',r.ph,'МПа'],['Абсолютное давление на входе трубного пространства',r.pc,'МПа'],['Массовый расход в межтрубном пространстве',r.mh,'кг/с'],['Массовый расход в трубном пространстве',r.mc,'кг/с'],['Расход на входе межтрубного пространства',Number(s.mh),flowUnitName(s['hot-flow-unit'])],['Расход на входе трубного пространства',massToFlow(r.mc,s['cold-flow-unit'],s.tci,s['cold-fluid']),flowUnitName(s['cold-flow-unit'])],['Теплоёмкость теплоносителя межтрубного пространства',r.cph,'кДж/(кг·К)'],['Теплоёмкость теплоносителя трубного пространства',r.cpc,'кДж/(кг·К)'],['Коэффициент теплопередачи',r.u,'Вт/(м²·К)'],['Тепловая нагрузка',r.q,'кВт'],['Температурный напор',r.dt,'К'],['Требуемая площадь теплообмена',r.area,'м²'],['Допущения','Постоянные cₚ и K, без фазового перехода и теплопотерь. Габариты и материал не определяют K автоматически. Гидравлика и геометрия вариантов — в таблице ниже.','']];rows.push(...variantExportRows());const csv='\uFEFF'+rows.map(row=>row.map(x=>'"'+String(typeof x==='number'?fmt(x,6):x).replaceAll('"','""')+'"').join(';')).join('\r\n');const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='physnow-calculation.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Параметры аппарата и результаты экспортированы в CSV')});
+$('export').addEventListener('click',()=>{update();if(lastError||!currentResult||!currentGeometry){validateAllNumericFields();toast('Для экспорта исправьте исходные данные');return}const r=currentResult,g=currentGeometry,s=getState();const rows=[['PhysNow — предварительный расчёт'],['Параметр','Значение','Единица'],['Тип аппарата',typeNames[s['exchanger-type']],''],['Неизвестный параметр',unknownParameter?findParameterName(unknownParameter):'Все параметры заданы',''],['Схема',flow==='counter'?'Противоток':'Прямоток',''],['Предельная длина теплообменника',g.length,'мм'],['Предельный внешний диаметр теплообменника',g['exchanger-diameter'],'мм'],['Коэффициент запаса по площади',r.reservePercent,'%'],['Материал труб',materialNames[$('tube-material').value],''],['Наружный диаметр трубы',g['tube-diameter'],'мм'],['Толщина стенки',g['tube-wall'],'мм'],['Межтрубное пространство',$('hot-fluid').selectedOptions[0].textContent,''],['Трубное пространство',$('cold-fluid').selectedOptions[0].textContent,''],['Температура на входе межтрубного пространства',r.thi,'°C'],['Температура на выходе межтрубного пространства',r.tho,'°C'],['Температура на входе трубного пространства',r.tci,'°C'],['Температура на выходе трубного пространства',r.tco,'°C'],['Абсолютное давление на входе межтрубного пространства',r.ph,'МПа'],['Абсолютное давление на входе трубного пространства',r.pc,'МПа'],['Массовый расход в межтрубном пространстве',r.mh,'кг/с'],['Массовый расход в трубном пространстве',r.mc,'кг/с'],['Расход на входе межтрубного пространства',Number(s.mh),flowUnitName(s['hot-flow-unit'])],['Расход на входе трубного пространства',massToFlow(r.mc,s['cold-flow-unit'],s.tci,s['cold-fluid']),flowUnitName(s['cold-flow-unit'])],['Теплоёмкость теплоносителя межтрубного пространства',r.cph,'кДж/(кг·К)'],['Теплоёмкость теплоносителя трубного пространства',r.cpc,'кДж/(кг·К)'],['Коэффициент теплопередачи',r.u,'Вт/(м²·К)'],['Тепловая нагрузка',r.q,'кВт'],['Температурный напор',r.dt,'К'],['Расчётная площадь без запаса',r.area,'м²'],['Требуемая площадь с запасом',r.designArea,'м²'],['Допущения','Постоянные cₚ и K, без фазового перехода и теплопотерь. Габариты и материал не определяют K автоматически. Гидравлика и геометрия вариантов — в таблице ниже.','']];rows.push(...variantExportRows());const csv='\uFEFF'+rows.map(row=>row.map(x=>'"'+String(typeof x==='number'?fmt(x,6):x).replaceAll('"','""')+'"').join(';')).join('\r\n');const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='physnow-calculation.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Параметры аппарата и результаты экспортированы в CSV')});
 function fitDiagram(){
  const box=document.querySelector('.diagram').getBoundingClientRect(),svg=document.querySelector('.process-svg');
  const w=box.width,h=box.height;if(w<=0||h<=0)return;
@@ -382,7 +390,7 @@ function createAnimatedDropdown(root){
   if(root.dataset.value!==value)swap(active.querySelector('span').textContent,Boolean(root.dataset.value));root.dataset.value=value;
  }
  function position(){
-  const bounds=root.closest('.construction').getBoundingClientRect(),anchor=root.getBoundingClientRect();menu.style.maxHeight='';
+  const bounds=root.closest('.construction,.design-detail-panel').getBoundingClientRect(),anchor=root.getBoundingClientRect();menu.style.maxHeight='';
   const height=menu.offsetHeight,below=Math.min(innerHeight-8,bounds.bottom-8)-anchor.bottom-8,above=anchor.top-Math.max(8,bounds.top+8)-8;
   const upward=below<height&&above>below;menu.dataset.origin=upward?'bottom-left':'top-left';
   if(height>(upward?above:below))menu.style.maxHeight=Math.max(60,upward?above:below)+'px';
@@ -465,14 +473,32 @@ function createCalculationSheet(state){
  const number=calculationSheets.nextNumber++;
  return {id:crypto.randomUUID(),name:`Неопределённый ${number}`,state:{...defaults,...state},section:'design'};
 }
+function renameCalculationSheet(sheet,tab){
+ const input=document.createElement('input');input.type='text';input.className='cad-sheet-name-input';input.id=tab.id;input.value=sheet.name;input.setAttribute('aria-label','Название листа');
+ let finished=false;
+ const finish=commit=>{
+  if(finished)return;finished=true;
+  const name=input.value.trim();
+  if(commit&&name){sheet.name=name;tab.textContent=name;const close=input.parentElement?.querySelector('.cad-document-close');if(close){close.title='Закрыть '+name;close.setAttribute('aria-label',close.title)}save()}
+  if(input.isConnected)input.replaceWith(tab);
+ };
+ input.addEventListener('blur',()=>finish(true));
+ input.addEventListener('keydown',event=>{
+  event.stopPropagation();if(event.isComposing)return;
+  if(event.key==='Enter'){event.preventDefault();finish(true)}
+  else if(event.key==='Escape'){event.preventDefault();finish(false)}
+ });
+ tab.replaceWith(input);input.focus();input.select();
+}
 function renderCalculationSheets(){
  const list=$('calculation-sheets');list.parentElement.style.setProperty('--sheet-count',calculationSheets.sheets.length);list.replaceChildren();
  for(const sheet of calculationSheets.sheets){
   const active=sheet.id===calculationSheets.activeId;
   const wrapper=document.createElement('div');wrapper.className='cad-document'+(active?' is-selected':'');
   const tab=document.createElement('button');tab.type='button';tab.className='cad-sheet-tab';tab.id='sheet-'+sheet.id;
-  tab.textContent=sheet.name;tab.title=sheet.name;tab.setAttribute('role','tab');tab.setAttribute('aria-selected',String(active));tab.setAttribute('aria-controls','calculation-sheet-panel');tab.tabIndex=active?0:-1;
+  tab.textContent=sheet.name;tab.setAttribute('role','tab');tab.setAttribute('aria-selected',String(active));tab.setAttribute('aria-controls','calculation-sheet-panel');tab.tabIndex=active?0:-1;
   tab.addEventListener('click',()=>activateCalculationSheet(sheet.id));
+  tab.addEventListener('dblclick',event=>{event.preventDefault();renameCalculationSheet(sheet,tab)});
   tab.addEventListener('keydown',event=>{
    const index=calculationSheets.sheets.findIndex(item=>item.id===sheet.id),count=calculationSheets.sheets.length;let next;
    if(event.key==='ArrowRight')next=(index+1)%count;else if(event.key==='ArrowLeft')next=(index-1+count)%count;
@@ -487,23 +513,34 @@ function renderCalculationSheets(){
  }
  positionHeaderUnderline(false);
 }
-function loadCalculationSheet(focus=false){
+function loadCalculationSheet(focus=false,renderTabs=true){
  const sheet=calculationSheets.sheets.find(item=>item.id===calculationSheets.activeId);
  for(const dropdown of animatedDropdowns)dropdown.close();
  applyState(sheet.state);
  for(const item of headerSections){const active=item.dataset.section===sheet.section;item.classList.toggle('is-active',active);item.setAttribute('aria-pressed',String(active));item.tabIndex=active?0:-1}
  headerNavigation.dataset.activeSection=sheet.section;syncPageView();
- renderCalculationSheets();fitDiagram();save();
+ if(renderTabs)renderCalculationSheets();
+ else{
+  for(const tab of $('calculation-sheets').querySelectorAll('.cad-sheet-tab')){const active=tab.id==='sheet-'+sheet.id;tab.parentElement.classList.toggle('is-selected',active);tab.setAttribute('aria-selected',String(active));tab.tabIndex=active?0:-1}
+  calculationPanel.setAttribute('aria-labelledby','sheet-'+sheet.id);
+ }
+ fitDiagram();save();
  const activeTab=$('sheet-'+sheet.id);activeTab.scrollIntoView({block:'nearest',inline:'nearest'});if(focus)activeTab.focus();
 }
 function activateCalculationSheet(id,focus=false){
  if(!calculationSheets.sheets.some(item=>item.id===id))return;
- captureCalculationSheet();calculationSheets.activeId=id;loadCalculationSheet(focus);
+ if(calculationSheets.activeId===id){if(focus)$('sheet-'+id).focus();return}
+ captureCalculationSheet();calculationSheets.activeId=id;loadCalculationSheet(focus,false);
 }
 function addCalculationSheet(){
  captureCalculationSheet();
  const sheet=createCalculationSheet({thi:'',tho:'',tci:'',tco:'',mh:'',ph:'',pc:''});
  calculationSheets.sheets.push(sheet);calculationSheets.activeId=sheet.id;loadCalculationSheet(true);
+}
+function loadCalculationExample(){
+ applyState({...getState(),...defaults,'selected-variant':'balanced'});
+ selectHeaderSection(headerSections.find(button=>button.dataset.section==='design'));
+ toast('Данные примера загружены в текущий расчёт');
 }
 function closeCalculationSheet(id){
  captureCalculationSheet();const index=calculationSheets.sheets.findIndex(item=>item.id===id);if(index<0)return;
@@ -530,6 +567,7 @@ function initializeCalculationSheets(){
  loadCalculationSheet();
 }
 $('new-calculation-sheet').addEventListener('click',addCalculationSheet);
+$('header-example').addEventListener('click',loadCalculationExample);
 document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.shiftKey&&event.code==='KeyT'&&calculationSheets.closed.length){event.preventDefault();restoreCalculationSheet()}});
 initializeCalculationSheets();
 // Adapted from the supplied Transitions.dev error-state shake, without message labels.
@@ -542,6 +580,8 @@ function numericFieldErrors(state){
   const value=Number(state[id]);numbers[id]=value;
   if(['thi','tho','tci','tco'].includes(id)){
    if(value<=-273.15)errors[id]='Температура должна быть выше −273,15 °C';
+  }else if(id==='area-reserve-percent'){
+   if(value<0)errors[id]='Коэффициент запаса не может быть отрицательным';
   }else if(value<=0)errors[id]='Значение должно быть больше нуля';
  }
  if(Number.isFinite(numbers['tube-count'])&&!Number.isInteger(numbers['tube-count']))errors['tube-count']='Введите целое количество труб';
@@ -652,8 +692,10 @@ function exchangerCardData(candidate,r){
    value('Теплоноситель трубного пространства','Вода'),
    value('Тепловая нагрузка Q',r.q,'кВт'),
    value('Температурный напор ΔTₗₘ',r.dt,'К'),
-   value('Требуемая площадь теплообмена',r.area,'м²'),
-   value('Запас поверхности',(c.area/r.area-1)*100,'%'),
+   value('Расчётная площадь без запаса',r.area,'м²'),
+   value('Коэффициент запаса по площади',r.reservePercent,'%'),
+   value('Требуемая площадь с запасом',r.designArea,'м²'),
+   value('Превышение подобранной площади',(c.area/r.designArea-1)*100,'%'),
    value('Коэффициент теплопередачи K',r.u,'Вт/(м²·К)',0),
    value('Температура на входе · межтрубное',r.thi,'°C'),
    value('Температура на выходе · межтрубное',r.tho,'°C'),
