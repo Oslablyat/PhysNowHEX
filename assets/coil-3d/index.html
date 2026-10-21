@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>PhysNow · Параметрическая 3D-компоновка</title>
+  <link rel="icon" href="../physnow-logo.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header"><a class="brand" href="../../"><img src="../physnow-logo.png" alt="">PhysNow</a><span class="header-tag">Лаборатория компоновки</span><a class="back-link" href="../../">К расчёту ↗</a></header>
+  <main>
+    <section class="intro"><div><p class="eyebrow">От 1 до 8 рядов · два представления</p><h1>3D-модель. Несколько змеевиков.</h1><p>Концентрические ряды в одном корпусе. Меняйте параметры каждого змеевика — оба вида обновятся. Камера закреплена.</p></div><span class="tech-badge"><i></i> Three.js <span id="three-version">r186</span></span></section>
+    <div class="examples-toolbar"><span>Загрузить пример</span><div class="example-buttons" role="group" aria-label="Готовые примеры геометрии"><button type="button" data-example="1">1 ряд</button><button type="button" data-example="3">3 ряда</button><button type="button" data-example="8">8 рядов</button><button type="button" data-example="3" data-starts="3">3 ряда × 3 змеевика</button></div><small id="preset-note">В каждом ряду может быть несколько змеевиков. Размеры трубы общие.</small></div>
+    <div class="workspace">
+      <aside class="parameters panel" aria-labelledby="parameters-title">
+        <div class="panel-heading"><span class="number">01</span><h2 id="parameters-title">Геометрия аппарата</h2><button type="button" id="reset" aria-label="Восстановить размеры примера" title="Размеры примера">↺</button></div>
+        <form id="geometry-form" novalidate>
+          <fieldset><legend>Корпус</legend><label>Наружный диаметр <span class="input-wrap"><input name="shellDiameter" type="number" min="200" max="1600" step="10" value="600"><span>мм</span></span></label><div class="field-pair"><label>Высота <span class="input-wrap"><input name="height" type="number" min="400" max="4000" step="10" value="1400"><span>мм</span></span></label><label>Стенка <span class="input-wrap"><input name="shellWall" type="number" min="2" max="30" step="1" value="8"><span>мм</span></span></label></div></fieldset>
+          <fieldset><legend>Вытеснительная труба</legend><label>Наружный диаметр <span class="input-wrap"><input name="coreDiameter" type="number" min="40" max="1400" step="10" value="200"><span>мм</span></span></label><div class="field-pair"><label>Длина <span class="input-wrap"><input name="coreLength" type="number" min="100" max="3900" step="10" value="1240"><span>мм</span></span></label><label>Стенка <span class="input-wrap"><input name="coreWall" type="number" min="1" max="30" step="1" value="6"><span>мм</span></span></label></div></fieldset>
+          <fieldset><legend>Трубы змеевиков <span>Общие размеры</span></legend><div class="field-pair"><label>Диаметр трубы <span class="input-wrap"><input name="tubeDiameter" type="number" min="10" max="100" step="1" value="32"><span>мм</span></span></label><label>Стенка трубы <span class="input-wrap"><input name="tubeWall" type="number" min="1" max="15" step="0.5" value="2"><span>мм</span></span></label></div></fieldset>
+          <fieldset class="rows-fieldset"><legend>Ряды змеевиков <span>Многозаходная навивка</span></legend><div class="row-count-line"><label for="row-count">Число рядов</label><select id="row-count" name="rowCount" aria-label="Число рядов змеевиков"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select></div><div id="row-tabs" class="row-tabs" role="group" aria-label="Выбрать редактируемый ряд"></div><p id="selected-row-title" class="selected-row-title">Параметры ряда 1</p><label>Змеевиков в ряду <span class="input-wrap"><input name="count" type="number" min="1" max="8" step="1" value="1"><span>шт.</span></span></label><p id="row-start-info" class="row-start-info">Один змеевик в ряду</p><label>Диаметр навивки по оси трубы <span class="input-wrap"><input name="coilDiameter" type="number" min="100" max="1500" step="1" value="280"><span>мм</span></span></label><div class="field-pair"><label>Витков на змеевик <span class="input-wrap"><input name="turns" type="number" min="1" max="24" step="1" value="12"><span>шт.</span></span></label><label>Шаг одного змеевика <span class="input-wrap"><input name="pitch" type="number" min="15" max="250" step="1" value="90"><span>мм</span></span></label></div><p class="row-help">Шаг — подъём одной трубы за полный оборот (360°). Змеевики одного ряда равномерно сдвинуты по окружности.</p><button type="button" class="spread-rows" id="spread-rows">Распределить диаметры</button><p class="row-help">При смене числа рядов диаметры распределяются заново внутри текущего корпуса. Кнопки примеров заменяют все размеры.</p></fieldset>
+        </form>
+        <p id="validation-error" class="validation-error" role="alert" hidden></p>
+        <div class="parameter-note">Ряд — общий диаметр навивки. Змеевики в нём — отдельные трубы (заходы). Листы расчёта и их данные не изменяются.</div>
+      </aside>
+      <section class="views" aria-label="Сравнение целой модели и разреза">
+        <article class="view-panel panel"><div class="view-heading"><div><span class="number">02</span><h2>Без разреза</h2></div><span class="view-state">Целый корпус</span></div><div class="viewport" id="whole-view"><span class="canvas-label">Ортографическая проекция</span><span class="loading">Подготавливаем 3D-модель…</span></div><div class="view-footer"><span class="swatch shell"></span>Непрозрачный корпус скрывает внутренние детали</div></article>
+        <article class="view-panel panel"><div class="view-heading"><div><span class="number">03</span><h2 id="section-title">Вырез корпуса</h2></div><div class="mode-switch" role="group" aria-label="Способ раскрытия аппарата"><button type="button" data-section-mode="cutaway" aria-pressed="true">Вырез</button><button type="button" data-section-mode="section" aria-pressed="false">Разрез</button></div></div><div class="viewport" id="section-view"><span class="canvas-label" id="cut-label">Передняя половина корпуса удалена</span><span class="loading">Подготавливаем 3D-модель…</span></div><div class="view-footer" id="section-description"><span class="swatch cut"></span>Корпус вскрыт · змеевик и вытеснительная труба целые</div></article>
+        <div class="view-meta"><div class="legend"><span><i class="shell"></i>Корпус</span><span><i class="coil"></i>Змеевик</span><span><i class="core"></i>Вытеснительная труба</span><span><i class="cut"></i>Срез материала</span></div><span id="render-status" role="status">Загрузка Three.js…</span></div>
+        <div id="row-legend" class="row-legend" role="group" aria-label="Цвета и параметры рядов"></div>
+        <section class="metrics" aria-label="Геометрические показатели"><div><span>Максимальная высота навивки</span><strong id="metric-height">—</strong></div><div><span>Суммарная длина труб по оси</span><strong id="metric-length">—</strong></div><div><span>Радиальный зазор до корпуса</span><strong id="metric-shell-gap">—</strong></div><div><span>Радиальный зазор до вытеснителя</span><strong id="metric-core-gap">—</strong></div></section>
+        <div class="layout-summary"><span id="row-summary">3 ряда · 3 змеевика</span><span id="row-gap-summary">Между рядами: —</span><span id="row-start-gap-summary"></span><span id="update-timing">Перестроение: —</span></div>
+      </section>
+    </div>
+    <footer class="page-note"><strong>Параметрическая визуализация, не твердотельная CAD-модель.</strong> Проверяется размещение навивок и непересечение радиальных огибающих рядов — это консервативное ограничение, не поиск минимального 3D-зазора. Полые стенки и сечения построены геометрически; тепловой и гидравлический расчёты не выполняются. Торцевые крышки и патрубки не моделируются. Схема вытеснителя в этом примере — открытая полая труба. <a href="https://threejs.org/" target="_blank" rel="noopener">Three.js</a> · <a href="../vendor/three-0.186.1/LICENSE">MIT</a>.</footer>
+    <noscript><p class="validation-error">Для примера требуется JavaScript и браузер с WebGL 2.</p></noscript>
+  </main>
+  <script type="module" src="demo.js"></script>
+</body>
+</html>

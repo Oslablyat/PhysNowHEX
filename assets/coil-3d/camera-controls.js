@@ -1,0 +1,27 @@
+export const MIN_ZOOM=.5,MAX_ZOOM=100;
+export const DEFAULT_AZIMUTH=Math.atan2(.9,2.6),DEFAULT_POLAR=Math.acos(.48/Math.hypot(.9,.48,2.6));
+
+export function orbitByPixels(state,dx,dy,width,height){
+  if(![dx,dy,width,height].every(Number.isFinite)||width<=0||height<=0)return {...state};
+  const tau=2*Math.PI,azimuth=((state.azimuth-tau*dx/width)%tau+tau)%tau;
+  return {azimuth,polar:Math.min(Math.PI-.01,Math.max(.01,state.polar-tau*dy/height))};
+}
+
+export function wheelZoom(current,delta,mode=0,height=600){
+  if(!Number.isFinite(delta))return current;
+  const pixels=delta*(mode===1?16:mode===2?Math.max(1,height):1);
+  return Math.min(MAX_ZOOM,Math.max(MIN_ZOOM,current*Math.exp(-Math.min(240,Math.max(-240,pixels))*.0018)));
+}
+
+// Pan is in units of the fitted camera's half width/height. This keeps the same
+// normalized location when the viewport or model dimensions change.
+export function zoomAtPoint(state,target,x=0,y=0){
+  if(!Number.isFinite(target))return {...state};
+  const zoom=Math.min(MAX_ZOOM,Math.max(MIN_ZOOM,target));
+  return {zoom,x:state.x+x*(1/state.zoom-1/zoom),y:state.y+y*(1/state.zoom-1/zoom)};
+}
+
+export function panByPixels(state,dx,dy,width,height){
+  if(![dx,dy,width,height].every(Number.isFinite)||width<=0||height<=0)return {...state};
+  return {...state,x:state.x-2*dx/(width*state.zoom),y:state.y+2*dy/(height*state.zoom)};
+}

@@ -10,6 +10,7 @@ const materialNames = {"316":"Нерж. сталь AISI 316L","12x18":"Нерж.
 const fmt = (n,d=2) => new Intl.NumberFormat('ru-RU',{maximumFractionDigits:d}).format(n);
 let flow='counter',currentResult=null,currentGeometry=null,lastError='',toastTimer;
 let calculationSheets=null,currentVariants=null,selectedVariant='balanced',unknownParameter='mc',verificationSelection=null,verificationState=null,verificationUIReady=false,currentCoilGeometry=null,coilDrawingView='top',coilHighlightedRow=null,coilHighlightedNumber=null,detailCoilRow=0;
+let designLayout3d=null,designLayout3dLoading=null,designLayoutGeometry=null,designLayoutSectionMode='section',designLayoutMainObserver=null;
 const fieldFeedback=new Map(),touchedNumericFields=new Set();
 let fieldFeedbackReady=false,submittedNumericFields=false;
 
@@ -1033,9 +1034,28 @@ function coilSideSvg(g,highlightRow=coilHighlightedRow,dimOpacity=.12,compact=fa
  out+='<path class="coil-dimension-line" d="M'+(x-6)+' '+y0+'h14m-14 '+height+'h14M'+x+' '+y0+'v'+height+'"/><text class="coil-dimension-text" transform="translate('+(x+20)+','+(y0+height/2)+') rotate(90)" text-anchor="middle">H = '+fmt(g.height,1)+' мм</text><text class="coil-dimension-text" x="320" y="'+(compact?y0+height+36:562)+'" text-anchor="middle">Труба Ø '+fmt(g.tubeDiameter)+' × '+fmt(g.tubeWall)+' мм · '+g.totalCount+' змеевиков</text>';
  return out;
 }
-function syncDesignLayoutVisibility(){const panel=$('design-layout');if(panel)panel.hidden=$('detail-preview-mode').value!=='layout'}
+function syncDesignLayoutVisibility(){const panel=$('design-layout');if(panel)panel.hidden=$('detail-preview-mode').value!=='layout';designLayout3d?.setVisible(!!panel&&!panel.hidden&&!$('design-page').hidden)}
+function designLayout3dStatus(state,message=''){
+ const host=$('layout-main-3d');host.dataset.status=state;
+ $('layout-main-3d-state').textContent=state==='error'?'3D недоступно — показана схема. '+message:state==='loading'?'Обновление 3D…':'';
+ $('layout-main-fallback').hidden=state!=='error';
+ if($('design-layout-dialog').open&&$('design-layout-dialog').dataset.view==='main')fillDesignLayoutDialog('main',false);
+}
+function ensureDesignLayout3d(){
+ if(designLayout3dLoading||!designLayoutGeometry)return;
+ designLayout3dLoading=import('./assets/coil-3d/design-view.js?v=smooth-3d-20261021').then(module=>{
+  designLayout3d=module.createDesignView($('layout-main-3d'),designLayout3dStatus);
+  syncDesignLayoutVisibility();designLayout3d.update(designLayoutGeometry,designLayoutSectionMode,detailCoilRow);
+ }).catch(error=>designLayout3dStatus('error',error.message));
+}
+function restoreDesignLayout3d(){const host=$('layout-main-3d'),slot=$('layout-main-slot');if(host&&slot&&host.parentElement!==slot){slot.prepend(host);designLayout3d?.resize()}}
+function syncDesignLayoutSectionMode(){
+ for(const button of document.querySelectorAll('[data-design-section-mode]'))button.setAttribute('aria-pressed',String(button.dataset.designSectionMode===designLayoutSectionMode));
+ $('layout-main-title').textContent=designLayoutSectionMode==='section'?'Продольный разрез':'Вырез корпуса';
+}
 function renderDesignLayout(g,errorMessage=''){
  const panel=$('design-layout');if(!panel)return;syncDesignLayoutVisibility();
+ designLayoutGeometry=g;designLayout3d?.update(g,designLayoutSectionMode,detailCoilRow);
  const message=$('design-layout-error');message.hidden=!!g;message.textContent=g?'':'Проверьте геометрию слева. '+errorMessage;$('design-layout-grid').hidden=!g;
  for(const key of ['main','top','tube','gap'])if(!g)$('layout-'+key+'-svg').replaceChildren();
  if(!g){$('design-layout-selection').textContent='Змеевиковый аппарат · геометрия не задана';if($('design-layout-dialog').open)$('design-layout-dialog').close();return}
@@ -1047,13 +1067,21 @@ function renderDesignLayout(g,errorMessage=''){
  $('layout-top-svg').innerHTML=coilTopSvg(g,row.index,null,.4);
  $('layout-tube-svg').innerHTML=PhysNowCoilLayout.tubeSvg(g);
  $('layout-gap-svg').innerHTML=PhysNowCoilLayout.gapSvg(m);
- $('layout-main-note').textContent='Ряд '+(row.index+1)+' · '+row.count+' змеевиков · '+fmt(row.turns)+' витков · шаг '+fmt(row.pitch)+' мм';
+ $('layout-main-note').textContent='Ряд '+(row.index+1)+' · '+row.count+' змеевиков · '+fmt(row.turns)+' витков · шаг '+fmt(row.pitch)+' мм. '+(designLayoutSectionMode==='section'?'Срезаны все детали; полости труб открыты.':'Вскрыт корпус; змеевики и вытеснитель целые.');
  $('layout-tube-note').textContent='Ø '+fmt(g.tubeDiameter)+' × '+fmt(g.tubeWall)+' мм · внутри Ø '+fmt(g.tubeInside)+' мм';
  const value=n=>n==null?'—':fmt(n);
  $('layout-gap-note').textContent=(m.neighbourIndex==null?'Один ряд: горизонтальная пара не задана. ':'Ряды '+(row.index+1)+' и '+(m.neighbourIndex+1)+'. ')+(m.ay==null?'Нет второго сечения по высоте. ':'')+'aₓ '+value(m.ax)+' · aᵧ '+value(m.ay)+' · sₓ '+value(m.sx)+' · sᵧ '+value(m.sy)+' мм';
  if($('design-layout-dialog').open)fillDesignLayoutDialog($('design-layout-dialog').dataset.view);
 }
-function fillDesignLayoutDialog(key){
+function fillDesignLayoutDialog(key,resize3d=true){
+ if(key==='main'){
+  const dialog=$('design-layout-dialog'),content=$('design-layout-dialog-content'),host=$('layout-main-3d');
+  $('design-layout-dialog-title').textContent=designLayoutSectionMode==='section'?'Продольный 3D-разрез':'3D — вырез корпуса';
+  if(!content.contains(host)){restoreDesignLayout3d();const wrap=document.createElement('div');wrap.className='layout-3d-expanded';const toolbar=document.createElement('div');toolbar.className='layout-section-switch';toolbar.setAttribute('role','group');toolbar.setAttribute('aria-label','Представление увеличенной 3D-модели');for(const [mode,label] of [['cutaway','Вырез'],['section','Разрез']]){const button=document.createElement('button');button.type='button';button.dataset.designSectionMode=mode;button.textContent=label;toolbar.append(button)}wrap.append(toolbar,host);content.replaceChildren(wrap);}
+  const oldFallback=content.querySelector('.layout-dialog-fallback');if(host.dataset.status==='error'){if(!oldFallback){const fallback=document.createElement('div');fallback.className='layout-svg-wrap layout-dialog-fallback';const svg=$('layout-main-svg').cloneNode(true);svg.removeAttribute('id');fallback.append(svg);content.firstChild.append(fallback);}}else oldFallback?.remove();
+  syncDesignLayoutSectionMode();$('design-layout-dialog-note').textContent=$('layout-main-note').textContent+' Вытеснитель закрыт торцевыми стенками. ЛКМ — вращение, ПКМ — перемещение, колесо — масштаб. Тепловой и гидравлический расчёты не выполняются.';if(resize3d)designLayout3d?.resize();return;
+ }
+ restoreDesignLayout3d();
  const source=$('layout-'+key+'-svg'),titles={main:'Вертикальный разрез',top:'Вид сверху',tube:'Сечение трубы',gap:'Расстояние между змеевиками'};
  if(!source?.firstChild)return;
  $('design-layout-dialog-title').textContent=titles[key];$('design-layout-dialog-content').replaceChildren(source.cloneNode(true));$('design-layout-dialog-content').firstChild.removeAttribute('id');
@@ -1062,18 +1090,22 @@ function fillDesignLayoutDialog(key){
 function initializeDesignLayout(){
  const dialog=$('design-layout-dialog');let opener=null;
  const handle=event=>{
+  const mode=event.target.closest('[data-design-section-mode]');if(mode){if(event.type!=='click')return;designLayoutSectionMode=mode.dataset.designSectionMode;syncDesignLayoutSectionMode();renderDesignGeometryFeedback();return}
   const expand=event.target.closest('[data-layout-expand]');if(expand){if(event.type!=='click')return;opener=expand;dialog.dataset.view=expand.dataset.layoutExpand;fillDesignLayoutDialog(dialog.dataset.view);dialog.showModal();return}
   const node=event.target.closest('[data-coil-row]');if(!node)return;
   if(event.type==='keydown'&&!['Enter',' '].includes(event.key))return;
   event.preventDefault();detailCoilRow=Number(node.dataset.coilRow);renderDesignGeometry();if(dialog.open)$('close-layout-dialog').focus();else $('detail-geometry').querySelector('[data-detail-row="'+detailCoilRow+'"]').focus({preventScroll:true});
  };
  $('design-layout').addEventListener('click',handle);$('design-layout').addEventListener('keydown',handle);dialog.addEventListener('click',handle);dialog.addEventListener('keydown',handle);
- $('close-layout-dialog').addEventListener('click',()=>dialog.close());dialog.addEventListener('close',()=>opener?.focus({preventScroll:true}));
+ $('close-layout-dialog').addEventListener('click',()=>dialog.close());dialog.addEventListener('close',()=>{restoreDesignLayout3d();opener?.focus({preventScroll:true})});
+ designLayoutMainObserver=new IntersectionObserver(entries=>{if(entries.some(entry=>entry.isIntersecting))ensureDesignLayout3d()},{rootMargin:'150px'});designLayoutMainObserver.observe($('layout-main-slot'));
+ window.addEventListener('pagehide',event=>{if(!event.persisted){designLayoutMainObserver.disconnect();designLayout3d?.dispose()}},{once:true});
 }
 function syncPageView(){
  if(!verificationUIReady)return;
  const verification=headerNavigation.dataset.activeSection==='verification';
  $('design-page').hidden=verification;$('verification-page').hidden=!verification;
+ syncDesignLayoutVisibility();
  const actionsTarget=document.querySelector(verification?'.verification-heading-actions':'.heading-actions');
  actionsTarget.append($('calculation-actions'));
  if(verification){if(!verificationState)verificationState=seedCoilGeometry(getState());fillVerificationInputs();document.title='PhysNow'}
