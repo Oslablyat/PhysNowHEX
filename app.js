@@ -320,7 +320,7 @@ for(const id of [...thermalIds,...geometryIds])$(id).addEventListener('input',()
 for(const side of ['hot','cold']){$(side+'-fluid').addEventListener('change',()=>changeFlowFluid(side));$(side+'-flow-unit').addEventListener('change',()=>changeFlowUnit(side))}
 $('exchanger-type').addEventListener('change',()=>{if($('exchanger-type').value!=='double'&&$('tube-count').readOnly)$('tube-count').value=80;syncControls();update()});
 $('tube-material').addEventListener('change',()=>{syncDropdowns();update()});
-for(const id of ['detail-parameter-mode','detail-preview-mode'])$(id).addEventListener('change',()=>{syncDropdowns();syncDesignGeometryVisibility();save()});
+for(const id of ['detail-parameter-mode','detail-preview-mode'])$(id).addEventListener('change',()=>{syncDropdowns();syncDesignGeometryVisibility();syncDesignLayoutVisibility();save()});
 for(const b of document.querySelectorAll('[data-flow]'))b.addEventListener('click',()=>{flow=b.dataset.flow;syncControls(true);update()});
 $('reset').addEventListener('click',()=>{applyState({...defaults,thi:'',tho:'',tci:'',tco:'',mh:'',ph:'',pc:''});save();$('thi').focus();toast('Параметры потоков очищены')});
 $('close-help').addEventListener('click',()=>$('help-dialog').close());$('help-dialog').addEventListener('click',e=>{if(e.target===$('help-dialog')){const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.target.close()}});
@@ -882,8 +882,10 @@ function renderDesignGeometry(){
 function renderDesignGeometryFeedback(){
  const panel=$('detail-geometry'),message=$('detail-geometry-error');if(!message||!verificationState)return;
  for(const field of panel.querySelectorAll('[data-detail-coil-field]')){field.removeAttribute('aria-invalid');field.removeAttribute('aria-describedby');field.closest('.input-wrap')?.classList.remove('is-error')}
- try{calculateCoilGeometry(verificationState);message.hidden=true;message.textContent=''}
- catch(error){message.hidden=false;message.textContent=error.message;for(const key of error.keys||[]){const field=panel.querySelector('[data-detail-coil-field="'+key+'"]');if(field){field.setAttribute('aria-invalid','true');field.setAttribute('aria-describedby','detail-geometry-error');field.closest('.input-wrap')?.classList.add('is-error')}}}
+ let g=null,errorMessage='';
+ try{g=calculateCoilGeometry(verificationState);message.hidden=true;message.textContent=''}
+ catch(error){errorMessage=error.message;message.hidden=false;message.textContent=error.message;for(const key of error.keys||[]){const field=panel.querySelector('[data-detail-coil-field="'+key+'"]');if(field){field.setAttribute('aria-invalid','true');field.setAttribute('aria-describedby','detail-geometry-error');field.closest('.input-wrap')?.classList.add('is-error')}}}
+ renderDesignLayout(g,errorMessage);
 }
 function initializeDesignGeometry(){
  const panel=$('detail-geometry');
@@ -990,15 +992,15 @@ function renderCoilDrawing(){
  svg.setAttribute('aria-label',coilDrawingView==='top'?'Вид сверху: '+g.rows.length+' ряда, '+g.totalCount+' змеевиков':'Вид сбоку: навивки '+g.totalCount+' змеевиков');
  svg.innerHTML=coilDrawingView==='top'?coilTopSvg(g):coilSideSvg(g);
 }
-function coilTopSvg(g){
+function coilTopSvg(g,highlightRow=coilHighlightedRow,highlightNumber=coilHighlightedNumber,dimOpacity=.2){
  const scale=480/g.diameter,cx=320,cy=288,R=g.diameter/2*scale,inside=g.shellInside/2*scale,core=g.coreDiameter/2*scale;
  let out='<title>Вид сверху — входы змеевиков</title><circle class="coil-shell-wall" cx="'+cx+'" cy="'+cy+'" r="'+R+'"/><circle class="coil-shell-inside" cx="'+cx+'" cy="'+cy+'" r="'+inside+'"/>';
  if(core>0)out+='<circle class="coil-core" cx="'+cx+'" cy="'+cy+'" r="'+core+'"/><circle cx="'+cx+'" cy="'+cy+'" r="'+Math.max(0,core-g.coreWall*scale)+'" fill="none" stroke="#555" stroke-width=".8"/><text class="coil-core-label" x="'+cx+'" y="'+(cy-3)+'" text-anchor="middle">Вставка</text><text class="coil-core-value" x="'+cx+'" y="'+(cy+17)+'" text-anchor="middle">Ø '+fmt(g.coreDiameter,1)+'</text>';
  for(const row of g.rows){
-  const r=row.diameter/2*scale,color=coilRowColor(row.index),opacity=coilHighlightedRow===null||coilHighlightedRow===row.index?1:.2;
+  const r=row.diameter/2*scale,color=coilRowColor(row.index),opacity=highlightRow===null||highlightRow===row.index?1:dimOpacity;
   out+='<g opacity="'+opacity+'"><circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="'+color+'" stroke-width="1.2" stroke-dasharray="9 7" opacity=".6"/>';
   for(let j=0;j<row.count;j++){
-   const angle=2*Math.PI*j/row.count+row.phase*Math.PI/180,x=cx+r*Math.cos(angle),y=cy+r*Math.sin(angle),number=row.firstNumber+j,selected=number===coilHighlightedNumber;
+   const angle=2*Math.PI*j/row.count+row.phase*Math.PI/180,x=cx+r*Math.cos(angle),y=cy+r*Math.sin(angle),number=row.firstNumber+j,selected=number===highlightNumber;
    const marker=Math.min(17,Math.max(13,g.tubeDiameter/2*scale),row.count>1?r*Math.sin(Math.PI/row.count)*.8:17),font=marker<10?9:12;
    out+='<g class="coil-node" role="button" tabindex="0" data-coil-row="'+row.index+'" data-coil-number="'+number+'" aria-label="Змеевик '+number+', ряд '+(row.index+1)+'"><title>Змеевик '+number+' · ряд '+(row.index+1)+'</title><circle cx="'+x+'" cy="'+y+'" r="'+marker+'" fill="'+(selected?color:'#1a2226')+'" stroke="'+color+'" stroke-width="'+(selected?3:2)+'"/><text x="'+x+'" y="'+y+'" dy=".34em" text-anchor="middle" fill="'+(selected?'#111':color)+'" font-size="'+font+'">'+number+'</text></g>';
   }
@@ -1007,12 +1009,12 @@ function coilTopSvg(g){
  out+='<path class="coil-dimension-line" d="M80 538v22m480-22v22M80 550h480"/><text class="coil-dimension-text" x="320" y="578" text-anchor="middle">Корпус Ø '+fmt(g.diameter,1)+' мм · внутри Ø '+fmt(g.shellInside,1)+' мм</text>';
  return out;
 }
-function coilSideSvg(g){
+function coilSideSvg(g,highlightRow=coilHighlightedRow,dimOpacity=.12,compact=false){
  const scale=Math.min(450/g.height,440/g.diameter),cx=320,y0=60,width=g.diameter*scale,height=g.height*scale,x0=cx-width/2,core=g.coreDiameter*scale;
- let out='<title>Вид сбоку — навивки змеевиков</title><rect class="coil-shell-wall" x="'+x0+'" y="'+y0+'" width="'+width+'" height="'+height+'" rx="8"/>';
+ let out='<title>Вертикальный разрез — навивки змеевиков</title><rect class="coil-shell-wall" x="'+x0+'" y="'+y0+'" width="'+width+'" height="'+height+'" rx="8"/><path class="coil-shell-inside" fill="none" d="M'+(cx-g.shellInside*scale/2)+' '+y0+'v'+height+'M'+(cx+g.shellInside*scale/2)+' '+y0+'v'+height+'"/>';
  if(core>0)out+='<rect class="coil-core" x="'+(cx-core/2)+'" y="'+y0+'" width="'+core+'" height="'+(g.coreLength*scale)+'"/><rect x="'+(cx-core/2+g.coreWall*scale)+'" y="'+(y0+g.coreWall*scale)+'" width="'+Math.max(0,core-2*g.coreWall*scale)+'" height="'+Math.max(0,(g.coreLength-2*g.coreWall)*scale)+'" fill="none" stroke="#555" stroke-width=".7"/>';
  for(const row of [...g.rows].reverse()){
-  const color=coilRowColor(row.index),radius=row.diameter*scale/2,opacity=coilHighlightedRow===null||coilHighlightedRow===row.index?1:.12,stroke=Math.max(1.1,Math.min(3,g.tubeDiameter*scale*.35));
+  const color=coilRowColor(row.index),radius=row.diameter*scale/2,opacity=highlightRow===null||highlightRow===row.index?1:dimOpacity,stroke=Math.max(1.1,Math.min(3,g.tubeDiameter*scale*.35));
   out+='<g opacity="'+opacity+'">';
   for(let j=0;j<row.count;j++){
    let front='',back='';const steps=Math.ceil(row.turns*4),phase=j/row.count*2*Math.PI+row.phase*Math.PI/180,handed=row.direction==='left'?-1:1;
@@ -1028,8 +1030,45 @@ function coilSideSvg(g){
   out+='</g>';
  }
  const x=x0+width+24;
- out+='<path class="coil-dimension-line" d="M'+(x-6)+' '+y0+'h14m-14 '+height+'h14M'+x+' '+y0+'v'+height+'"/><text class="coil-dimension-text" transform="translate('+(x+20)+','+(y0+height/2)+') rotate(90)" text-anchor="middle">H = '+fmt(g.height,1)+' мм</text><text class="coil-dimension-text" x="320" y="562" text-anchor="middle">Труба Ø '+fmt(g.tubeDiameter)+' × '+fmt(g.tubeWall)+' мм · '+g.totalCount+' змеевиков</text>';
+ out+='<path class="coil-dimension-line" d="M'+(x-6)+' '+y0+'h14m-14 '+height+'h14M'+x+' '+y0+'v'+height+'"/><text class="coil-dimension-text" transform="translate('+(x+20)+','+(y0+height/2)+') rotate(90)" text-anchor="middle">H = '+fmt(g.height,1)+' мм</text><text class="coil-dimension-text" x="320" y="'+(compact?y0+height+36:562)+'" text-anchor="middle">Труба Ø '+fmt(g.tubeDiameter)+' × '+fmt(g.tubeWall)+' мм · '+g.totalCount+' змеевиков</text>';
  return out;
+}
+function syncDesignLayoutVisibility(){const panel=$('design-layout');if(panel)panel.hidden=$('detail-preview-mode').value!=='layout'}
+function renderDesignLayout(g,errorMessage=''){
+ const panel=$('design-layout');if(!panel)return;syncDesignLayoutVisibility();
+ const message=$('design-layout-error');message.hidden=!!g;message.textContent=g?'':'Проверьте геометрию слева. '+errorMessage;$('design-layout-grid').hidden=!g;
+ for(const key of ['main','top','tube','gap'])if(!g)$('layout-'+key+'-svg').replaceChildren();
+ if(!g){$('design-layout-selection').textContent='Змеевиковый аппарат · геометрия не задана';if($('design-layout-dialog').open)$('design-layout-dialog').close();return}
+ const row=g.rows[Math.max(0,Math.min(detailCoilRow,g.rows.length-1))],m=PhysNowCoilLayout.measurements(g,row.index);
+ $('design-layout-selection').textContent='Змеевиковый аппарат · ряд '+(row.index+1)+' из '+g.rows.length;
+ const drawingScale=Math.min(450/g.height,440/g.diameter),drawingWidth=g.diameter*drawingScale,drawingHeight=g.height*drawingScale;
+ $('layout-main-svg').setAttribute('viewBox',(320-drawingWidth/2-38)+' 40 '+(drawingWidth+114)+' '+(drawingHeight+75));
+ $('layout-main-svg').innerHTML=coilSideSvg(g,row.index,.4,true);
+ $('layout-top-svg').innerHTML=coilTopSvg(g,row.index,null,.4);
+ $('layout-tube-svg').innerHTML=PhysNowCoilLayout.tubeSvg(g);
+ $('layout-gap-svg').innerHTML=PhysNowCoilLayout.gapSvg(m);
+ $('layout-main-note').textContent='Ряд '+(row.index+1)+' · '+row.count+' змеевиков · '+fmt(row.turns)+' витков · шаг '+fmt(row.pitch)+' мм';
+ $('layout-tube-note').textContent='Ø '+fmt(g.tubeDiameter)+' × '+fmt(g.tubeWall)+' мм · внутри Ø '+fmt(g.tubeInside)+' мм';
+ const value=n=>n==null?'—':fmt(n);
+ $('layout-gap-note').textContent=(m.neighbourIndex==null?'Один ряд: горизонтальная пара не задана. ':'Ряды '+(row.index+1)+' и '+(m.neighbourIndex+1)+'. ')+(m.ay==null?'Нет второго сечения по высоте. ':'')+'aₓ '+value(m.ax)+' · aᵧ '+value(m.ay)+' · sₓ '+value(m.sx)+' · sᵧ '+value(m.sy)+' мм';
+ if($('design-layout-dialog').open)fillDesignLayoutDialog($('design-layout-dialog').dataset.view);
+}
+function fillDesignLayoutDialog(key){
+ const source=$('layout-'+key+'-svg'),titles={main:'Вертикальный разрез',top:'Вид сверху',tube:'Сечение трубы',gap:'Расстояние между змеевиками'};
+ if(!source?.firstChild)return;
+ $('design-layout-dialog-title').textContent=titles[key];$('design-layout-dialog-content').replaceChildren(source.cloneNode(true));$('design-layout-dialog-content').firstChild.removeAttribute('id');
+ $('design-layout-dialog-note').textContent=key==='gap'?$('layout-gap-note').textContent+'. sₓ и sᵧ — зазоры между поверхностями; aₓ и aᵧ — межосевые расстояния. Ячейка условная: aᵧ = шаг / число навивок выбранного ряда; это осевая проекция, не минимальный 3D-зазор.':key==='main'?$('layout-main-note').textContent:key==='tube'?$('layout-tube-note').textContent:'Входы змеевиков пронумерованы. Выбранный ряд выделен цветом.';
+}
+function initializeDesignLayout(){
+ const dialog=$('design-layout-dialog');let opener=null;
+ const handle=event=>{
+  const expand=event.target.closest('[data-layout-expand]');if(expand){if(event.type!=='click')return;opener=expand;dialog.dataset.view=expand.dataset.layoutExpand;fillDesignLayoutDialog(dialog.dataset.view);dialog.showModal();return}
+  const node=event.target.closest('[data-coil-row]');if(!node)return;
+  if(event.type==='keydown'&&!['Enter',' '].includes(event.key))return;
+  event.preventDefault();detailCoilRow=Number(node.dataset.coilRow);renderDesignGeometry();if(dialog.open)$('close-layout-dialog').focus();else $('detail-geometry').querySelector('[data-detail-row="'+detailCoilRow+'"]').focus({preventScroll:true});
+ };
+ $('design-layout').addEventListener('click',handle);$('design-layout').addEventListener('keydown',handle);dialog.addEventListener('click',handle);dialog.addEventListener('keydown',handle);
+ $('close-layout-dialog').addEventListener('click',()=>dialog.close());dialog.addEventListener('close',()=>opener?.focus({preventScroll:true}));
 }
 function syncPageView(){
  if(!verificationUIReady)return;
@@ -1049,6 +1088,7 @@ function exportCoilGeometry(){
 }
 initializeVerificationPage();
 initializeDesignGeometry();
+initializeDesignLayout();
 
 // Account for wrapped navigation on narrow screens when scrolling to controls.
 const stickyHeaderObserver=new ResizeObserver(()=>document.documentElement.style.setProperty('--cad-header-height',Math.ceil(document.querySelector('.cad-header').getBoundingClientRect().height)+'px'));

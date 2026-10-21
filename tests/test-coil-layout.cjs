@@ -1,0 +1,23 @@
+const fs=require('node:fs'),vm=require('node:vm'),path=require('node:path'),assert=require('node:assert/strict');
+const app=fs.readFileSync(path.join(__dirname,'..','app.js'),'utf8');
+const model=app.slice(app.indexOf('function coilGeometryError('),app.indexOf('function coilFieldDefinitions('));
+const calculate=vm.runInNewContext(model+';calculateCoilGeometry');
+const {measurements,tubeSvg,gapSvg}=require('../assets/coil-layout.js');
+const state={diameter:600,height:2000,shellWall:4,coreDiameter:180,tubeDiameter:20,tubeWall:2,clearance:5,rows:[{diameter:300,count:2,turns:10,pitch:60},{diameter:420,count:2,turns:10,pitch:60}]};
+const geometry=calculate(state),m=measurements(geometry,0);
+assert.equal(m.ax,60);assert.equal(m.ay,30);assert.equal(m.sx,40);assert.equal(m.sy,10);
+assert.equal(m.neighbourIndex,1);assert.equal(m.diameter,20);assert.equal(m.inside,16);
+assert.equal(measurements(geometry,1).neighbourIndex,0);
+assert.equal(measurements(calculate({...state,rows:[state.rows[1],state.rows[0]]}),0).ax,60);
+assert.equal(measurements(calculate({...state,rows:[{...state.rows[0],pitch:80},state.rows[1]]})).ay,40);
+assert.equal(measurements(calculate({...state,tubeWall:3})).inside,14);
+const single=measurements(calculate({...state,rows:[state.rows[0]]}));assert.equal(single.ax,null);assert.equal(single.sx,null);assert.equal(single.ay,30);
+const short=measurements(calculate({...state,rows:[{...state.rows[0],count:1,turns:.5}]}));assert.equal(short.ay,null);assert.equal(short.sy,null);
+for(const data of [m,single,short]){const svg=gapSvg(data);assert.equal((svg.match(/data-gap-tube/g)||[]).length,4);for(const label of ['sₓ','sᵧ','aₓ','aᵧ'])assert(svg.includes(label));assert(!/NaN|Infinity/.test(svg))}
+assert(gapSvg(single).includes('layout-ghost'));
+assert(tubeSvg(geometry).includes('δ = 2 мм'));assert(tubeSvg(geometry).includes('dᵢ = 16'));
+assert.notEqual(tubeSvg(geometry),tubeSvg(calculate({...state,tubeWall:3})));
+assert.notEqual(gapSvg(m),gapSvg(measurements(calculate({...state,rows:[{...state.rows[0],diameter:320},state.rows[1]]}))));
+assert.equal(m.sy,state.rows[0].pitch/state.rows[0].count-state.tubeDiameter);
+assert.notEqual(m.normalGap,m.sy,'Axial projected gap must not be confused with normal inter-helix clearance.');
+console.log('Coil layout passed: surface gaps, added centre distances, adjacent-row selection, axial projection, 4 tube sections, live dimensions, single-row/short-coil unavailable values and tube-wall rendering.');

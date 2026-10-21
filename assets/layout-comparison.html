@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark">
+<title>PhysNow · 10 вариантов компоновки</title>
+<link rel="icon" href="physnow-logo.png"><link rel="stylesheet" href="layout-comparison.css">
+<script src="layout-comparison.js" defer></script>
+</head>
+<body>
+<header class="page-header"><div class="header-inner"><a class="brand" href="../"><img src="physnow-logo.png" alt="">PhysNow</a><span class="header-label">Компоновка аппарата · сравнение интерфейсов</span><a class="back-link" href="../">Вернуться к расчёту ↗</a></div></header>
+<main>
+<div class="intro"><p class="eyebrow">Проработка конструкции / блок 05</p><h1>Как показать изменение геометрии?</h1><p>10 вариантов организации поля «Компоновка аппарата». Здесь сравниваем <strong>расположение блоков и реакцию интерфейса</strong>: проекции, увеличенные детали и размеры. Подробные чертежи пока заменены простыми эскизами и подписями.</p></div>
+<section class="scenario" aria-labelledby="scenario-title">
+<div class="scenario-heading"><h2 id="scenario-title">Попробуйте изменить параметр</h2><span>Один сценарий для всех 10 вариантов</span></div>
+<div class="scenario-fields"><label class="parameter-picker">Конструктивный параметр<select id="parameter" aria-describedby="scenario-hint"></select></label><label class="scenario-value">Было<div class="value-wrap"><input id="before" type="text" inputmode="decimal" autocomplete="off"><span class="value-unit"></span></div></label><span class="change-arrow" aria-hidden="true">→</span><label class="scenario-value">Стало<div class="value-wrap"><input id="after" type="text" inputmode="decimal" autocomplete="off"><span class="value-unit"></span></div></label><button type="button" id="reset-scenario" class="quiet-button">Сбросить пример</button></div>
+<p id="scenario-hint"></p><p class="scenario-disclaimer">Это макеты интерфейса: подсветка и подписи показывают, где будет видно изменение. Значения не управляют расчётом или точным масштабом эскизов.</p>
+</section>
+<div class="toolbar"><div class="view-switch" aria-label="Размер макетов"><button type="button" data-view="grid" aria-pressed="true">По два</button><button type="button" data-view="large" aria-pressed="false">Крупно</button></div><span class="active-scenario" id="active-scenario" aria-live="polite"></span><button id="filter" type="button" class="quiet-button" aria-pressed="false">Выбранные · 0</button><button id="clear" type="button" class="text-button">Снять выбор</button></div>
+<nav class="quick-nav" aria-label="Перейти к варианту" id="quick-nav"></nav>
+<div class="legend"><span><i class="legend-active"></i>Здесь видно изменение выбранного параметра</span><span><i></i>Контекст и остальные размеры</span></div>
+<div class="gallery" id="gallery"></div>
+<footer><strong>Для начала я бы выбрал 02 или 05.</strong> Вариант 02 сохраняет постоянную структуру поля. Вариант 05 даёт больше места выбранному узлу. В обоих случаях общий аппарат остаётся виден.<p>Минимальный зазор — требование, а не команда передвинуть трубы. Для него показываем допустимую зону и соответствие геометрии; автоматическая перестройка требует отдельного решения.</p><small>Самостоятельная сравнительная страница. Основной расчёт и его данные не меняются. Теплогидравлических прогнозов здесь нет.</small></footer>
+</main>
+</body>
+</html>
