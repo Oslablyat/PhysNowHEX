@@ -7,6 +7,6 @@
     "dev": "node preview.cjs",
     "start": "node preview.cjs",
     "check": "node --check app.js && node --check preview.cjs && node --check assets/coil-variants.js && node --check assets/spring-variants.js",
-    "test": "node tests/test-coil-geometry.cjs && node tests/test-unknown-parameter.cjs && node tests/test-variants.cjs && node tests/test-flow-units.cjs && node tests/test-numeric-feedback.cjs"
+    "test": "node tests/test-coil-geometry.cjs && node tests/test-design-detail-geometry.cjs && node tests/test-unknown-parameter.cjs && node tests/test-variants.cjs && node tests/test-flow-units.cjs && node tests/test-numeric-feedback.cjs"
   }
 }
