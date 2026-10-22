@@ -1,4 +1,4 @@
-import {createDesignView} from './design-view.js?v=rows-sidebar-20261022';
+import {createDesignView} from './design-view.js?v=plane-panel-20261022';
 
 const COLORS=['#72bddc','#e5ad71','#76c6a6','#aa9ae5','#da95b7','#b9ca71','#79b4ed','#c99a76'];
 const EYE='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 8s3-5 7-5 7 5 7 5-3 5-7 5-7-5-7-5Z"/><circle cx="8" cy="8" r="2"/><path class="eye-slash" d="m2 2 12 12"/></svg>';

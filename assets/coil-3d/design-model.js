@@ -8,6 +8,11 @@ export function setDesignRowVisible(group,rowIndex,visible){
   group.traverse(part=>{if(part.isMesh&&part.userData.rowIndex===rowIndex)part.visible=visible;});
 }
 
+export function setDesignPartVisible(group,name,visible){
+  if(!['shell','core'].includes(name))return;
+  group.traverse(part=>{if(part.isMesh&&(part.name===name||part.name===name+'-section'))part.visible=visible;});
+}
+
 // Same row palette as coilRowColor() in the main editor and its top view.
 const COLORS=[0x72bddc,0xe5ad71,0x76c6a6,0xaa9ae5,0xda95b7,0xb9ca71,0x79b4ed,0xc99a76];
 const COIL_RADIAL_SEGMENTS=32,COIL_STEPS_PER_TURN=128;
@@ -59,12 +64,13 @@ export function buildDesignModel(g,mode='section',cache=new GeometryCache(),sele
     for(const part of parts){
       const geometry=cache.get(part.key,()=>({geometry:part.create()})).geometry,phase=part.phase??0;
       const bodyMaterial=material(part.rowIndex==null?part.name:'row'+part.rowIndex,part.color,part.rowIndex===selectedRow);
-      if(mode==='section'||part.name==='shell'){
+      if(mode==='section'||mode==='cutaway'&&part.name==='shell'){
         const section=cache.get('cut|'+part.key+'|'+phase,()=>{if(!phase)return sectionGeometry(geometry);const rotated=geometry.clone().rotateY(-phase);try{return sectionGeometry(rotated);}finally{rotated.dispose();}});
         const body=new THREE.Mesh(section.body,bodyMaterial),cap=new THREE.Mesh(section.caps,material('cut',0xe8b36d));body.name=part.name;cap.name=part.name+'-section';body.position.y=cap.position.y=part.y;body.userData={rowIndex:part.rowIndex,startIndex:part.startIndex,phase};cap.userData={...body.userData};group.add(body,cap);
       }else{const mesh=new THREE.Mesh(geometry,bodyMaterial);mesh.name=part.name;mesh.rotation.y=-phase;mesh.position.y=part.y;mesh.userData={rowIndex:part.rowIndex,startIndex:part.startIndex,phase};group.add(mesh);}
     }
     g.rows.forEach((row,index)=>setDesignRowVisible(group,index,!row.hidden));
+    for(const name of ['shell','core'])setDesignPartVisible(group,name,!g[name+'Hidden']);
     group.userData={height:top-bottom,centerY:(top+bottom)/2,shellHeight:p.height,diameter:p.shellDiameter,totalCount:p.totalCount,mode,selectedRow,entryAngles,portsInside};return group;
   }catch(error){disposeModel(group);for(const m of materials.values())m.dispose();throw error;}
 }

@@ -782,6 +782,7 @@ function restoreCoilGeometry(value){
  if(!value||typeof value!=='object'||!Array.isArray(value.rows)||value.rows.length<1||value.rows.length>8||value.rows.some(r=>!r||typeof r!=='object'))return null;
  const clean={};for(const key of ['diameter','height','shellWall','coreDiameter','tubeDiameter','tubeWall','clearance'])clean[key]=['number','string'].includes(typeof value[key])?value[key]:'';
  for(const [key,fallback] of Object.entries(coilConstructionDefaults(clean)))clean[key]=['number','string'].includes(typeof value[key])?value[key]:fallback;
+ for(const key of ['shellHidden','coreHidden'])clean[key]=value[key]===true;
  clean.rows=value.rows.map(row=>({...Object.fromEntries(['diameter','count','turns','pitch'].map(key=>[key,['number','string'].includes(typeof row[key])?row[key]:''])),offset:['number','string'].includes(typeof row.offset)?row.offset:0,phase:['number','string'].includes(typeof row.phase)?row.phase:0,direction:row.direction==='left'?'left':'right',hidden:row.hidden===true}));
  return clean;
 }
@@ -801,6 +802,7 @@ function seedCoilGeometry(source={}){
 }
 function calculateCoilGeometry(state){
  const fields=['diameter','height','shellWall','coreDiameter','tubeDiameter','tubeWall','clearance'],n={};
+ for(const key of ['shellHidden','coreHidden'])n[key]=state[key]===true;
  for(const key of fields){
   if(state[key]===''||state[key]==null||!Number.isFinite(Number(state[key])))coilGeometryError('Заполните геометрию аппарата.',[key]);
   n[key]=Number(state[key]);
@@ -1045,15 +1047,16 @@ function designLayout3dStatus(state,message=''){
 }
 function ensureDesignLayout3d(){
  if(designLayout3dLoading||!designLayoutGeometry)return;
- designLayout3dLoading=import('./assets/coil-3d/design-view.js?v=rows-sidebar-20261022').then(module=>{
+ designLayout3dLoading=import('./assets/coil-3d/design-view.js?v=plane-panel-20261022').then(module=>{
   designLayout3d=module.createDesignView($('layout-main-3d'),designLayout3dStatus);
   syncDesignLayoutVisibility();designLayout3d.update(designLayoutGeometry,designLayoutSectionMode,detailCoilRow);
  }).catch(error=>designLayout3dStatus('error',error.message));
 }
 function syncDesignLayoutSectionMode(){
- for(const button of document.querySelectorAll('[data-design-section-mode]'))button.setAttribute('aria-pressed',String(button.dataset.designSectionMode===designLayoutSectionMode));
+ $('layout-section-toggle').setAttribute('aria-pressed',String(designLayoutSectionMode==='section'));
 }
 function renderDesignRowVisibility(g){
+ for(const button of document.querySelectorAll('[data-layout-part]')){const part=button.dataset.layoutPart,available=!!g&&(part==='shell'||g.coreDiameter>0),shown=available&&!g[part+'Hidden'],label=part==='shell'?'корпус':'вытеснительную трубу';button.disabled=!available;button.setAttribute('aria-pressed',String(shown));button.setAttribute('aria-label',(shown?'Скрыть ':'Показать ')+label);button.title=available?'':part==='core'?'Вытеснительная труба не задана в геометрии':'Проверьте геометрию аппарата'}
  const list=$('layout-row-visibility'),count=$('layout-visible-count'),showAll=$('layout-show-all');if(!g){list.replaceChildren();count.textContent='—';showAll.disabled=true;return}
  const shown=g.rows.filter(row=>!row.hidden).length;count.textContent=shown+' / '+g.rows.length;showAll.disabled=shown===g.rows.length;
  if(list.children.length!==g.rows.length)list.innerHTML=g.rows.map((_,i)=>'<button type="button" data-layout-row="'+i+'" aria-controls="layout-main-3d"><span class="layout-row-check" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="m2 6 3 3 5-6"/></svg></span><span class="layout-row-dot" aria-hidden="true"></span><span>Ряд '+(i+1)+'</span></button>').join('');
@@ -1064,10 +1067,19 @@ function renderDesignLayout(g,errorMessage=''){
  designLayoutGeometry=g;renderDesignRowVisibility(g);designLayout3d?.update(g,designLayoutSectionMode,detailCoilRow);
  const message=$('design-layout-error');message.hidden=!!g;message.textContent=g?'':'Проверьте геометрию слева. '+errorMessage;$('design-layout-grid').hidden=!g;
 }
+function initializeLayoutSidebar(){
+ const slot=$('layout-main-slot'),toggle=$('layout-sidebar-toggle'),content=$('layout-sidebar-content'),storageKey='physnow-layout-sidebar-v1';
+ let collapsed=false;try{collapsed=JSON.parse(localStorage.getItem(storageKey))?.collapsed===true}catch{}
+ function apply(){slot.dataset.sidebarCollapsed=String(collapsed);content.hidden=collapsed;content.inert=collapsed;toggle.setAttribute('aria-expanded',String(!collapsed));toggle.setAttribute('aria-label',collapsed?'Развернуть панель конструкции':'Свернуть панель конструкции');toggle.title=collapsed?'Развернуть панель':'Свернуть панель'}
+ function persist(){try{localStorage.setItem(storageKey,JSON.stringify({collapsed}))}catch{}}
+ toggle.addEventListener('click',()=>{collapsed=!collapsed;apply();persist()});apply();persist();
+}
 function initializeDesignLayout(){
+ initializeLayoutSidebar();syncDesignLayoutSectionMode();
  $('design-layout').addEventListener('click',event=>{
-  const mode=event.target.closest('[data-design-section-mode]');if(mode){designLayoutSectionMode=mode.dataset.designSectionMode;syncDesignLayoutSectionMode();renderDesignGeometryFeedback();return}
+  if(event.target.closest('#layout-section-toggle')){designLayoutSectionMode=designLayoutSectionMode==='section'?'full':'section';syncDesignLayoutSectionMode();renderDesignGeometryFeedback();return}
   if(event.target.closest('#layout-show-all')){if(!designLayoutGeometry)return;verificationState.rows.forEach((row,index)=>{row.hidden=false;designLayoutGeometry.rows[index].hidden=false;designLayout3d?.setRowVisible(index,true)});renderDesignRowVisibility(designLayoutGeometry);save();return}
+  const partButton=event.target.closest('[data-layout-part]');if(partButton){if(!designLayoutGeometry||partButton.disabled)return;const part=partButton.dataset.layoutPart,key=part+'Hidden';verificationState[key]=!verificationState[key];designLayoutGeometry[key]=verificationState[key];designLayout3d?.setPartVisible(part,!verificationState[key]);renderDesignRowVisibility(designLayoutGeometry);save();return}
   const button=event.target.closest('[data-layout-row]');if(!button||!designLayoutGeometry)return;
   const index=Number(button.dataset.layoutRow),row=verificationState.rows[index];row.hidden=!row.hidden;designLayoutGeometry.rows[index].hidden=row.hidden;designLayout3d?.setRowVisible(index,!row.hidden);renderDesignRowVisibility(designLayoutGeometry);save();
  });

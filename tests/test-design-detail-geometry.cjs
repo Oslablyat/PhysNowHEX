@@ -10,6 +10,7 @@ assert.equal(legacy.rows[0].offset,0);assert.equal(legacy.rows[0].phase,0);asser
 assert.equal(legacy.leadBendRadius,40);assert.equal(legacy.leadStraightLength,40);
 assert.equal(legacy.rows[0].hidden,false);const hiddenState=restore({...base,rows:[{...base.rows[0],hidden:true}]});assert.equal(hiddenState.rows[0].hidden,true);assert.equal(calculate(hiddenState).rows[0].hidden,true);assert.equal(calculate(hiddenState).totalLength,old.totalLength);assert.equal(calculate(hiddenState).totalArea,old.totalArea);assert.equal(restore(JSON.parse(JSON.stringify(hiddenState))).rows[0].hidden,true);
 assert.equal(calculate(legacy).shellVolume,old.shellVolume);
+for(const key of ['shellHidden','coreHidden']){assert.equal(legacy[key],false);const hidden=restore({...base,[key]:true}),geometry=calculate(hidden);assert.equal(geometry[key],true);assert.equal(restore(JSON.parse(JSON.stringify(hidden)))[key],true);for(const metric of ['shellVolume','tubeVolume','totalLength','totalArea','totalCount'])assert.equal(geometry[metric],old[metric],'Visibility must not alter '+metric);assert.equal(restore({...base,[key]:'true'})[key],false);}
 const revised={...base,coreLength:1500,coreWall:3,coreClearance:8,shellClearance:7,rowClearance:9,leadBendRadius:60,leadStraightLength:125,rows:[{...base.rows[0],offset:100,phase:45,direction:'left'}]};
 const roundTrip=restore(JSON.parse(JSON.stringify(revised))),result=calculate(roundTrip);
 assert.equal(result.coreLength,1500);assert.equal(result.coreWall,3);assert.equal(result.coreClearance,8);

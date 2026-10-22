@@ -4,8 +4,16 @@ export const DEFAULT_AZIMUTH=0,DEFAULT_POLAR=Math.PI/2;
 
 export function orbitByPixels(state,dx,dy,width,height){
   if(![dx,dy,width,height].every(Number.isFinite)||width<=0||height<=0)return {...state};
-  const tau=2*Math.PI,azimuth=((state.azimuth-tau*dx/width)%tau+tau)%tau;
-  return {azimuth,polar:Math.min(Math.PI-.01,Math.max(.01,state.polar-tau*dy/height))};
+  // Periodic normalization, not a clamp: either axis can turn indefinitely.
+  const tau=2*Math.PI,wrap=angle=>((angle%tau)+tau)%tau;
+  return {azimuth:wrap(state.azimuth-tau*dx/width),polar:wrap(state.polar-tau*dy/height)};
+}
+
+export function orbitFrame({azimuth,polar}){
+  const sa=Math.sin(azimuth),ca=Math.cos(azimuth),sp=Math.sin(polar),cp=Math.cos(polar);
+  // Rotate the camera's up vector too. It remains perpendicular to the view
+  // through both poles, avoiding lookAt's singularity and a 180-degree flip.
+  return {direction:[sp*sa,cp,sp*ca],up:[-cp*sa,sp,-cp*ca]};
 }
 
 export function wheelZoom(current,delta,mode=0,height=600){

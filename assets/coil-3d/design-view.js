@@ -1,6 +1,7 @@
 import * as THREE from '../vendor/three-0.186.1/three.module.min.js';
-import {GeometryCache,buildDesignModel,disposeModel,setDesignRowVisible} from './design-model.js?v=rows-sidebar-20261022';
-import {wheelZoom,zoomAtPoint,panByPixels,orbitByPixels,DEFAULT_AZIMUTH,DEFAULT_POLAR} from './camera-controls.js?v=rows-sidebar-20261022';
+import {GeometryCache,buildDesignModel,disposeModel,setDesignRowVisible,setDesignPartVisible} from './design-model.js?v=plane-panel-20261022';
+import {wheelZoom,zoomAtPoint,panByPixels,orbitByPixels,orbitFrame,DEFAULT_AZIMUTH,DEFAULT_POLAR} from './camera-controls.js?v=plane-panel-20261022';
+import {createOrientationGizmo,planeOrbit,ISOMETRIC_VIEW} from './orientation-gizmo.js?v=plane-panel-20261022';
 
 export function createDesignView(host,onStatus){
   const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'low-power'});
@@ -14,13 +15,14 @@ export function createDesignView(host,onStatus){
   let latest=null,group=null,visible=false,allowed=true,timer=0,resizeFrame=0,version=0,renderedVersion=-1,lost=false,disposed=false,lastSize='';
   let zoomState={zoom:1,x:0,y:0},zoomFrame=0,drag=null;host.dataset.zoom='1';host.dataset.panX='0';host.dataset.panY='0';
   let orbitState={azimuth:DEFAULT_AZIMUTH,polar:DEFAULT_POLAR};host.dataset.azimuth=String(orbitState.azimuth);host.dataset.polar=String(orbitState.polar);
-  function syncRowVisibility(){host.dataset.hiddenRows=JSON.stringify(latest?.g.rows.flatMap((row,i)=>row.hidden?[i]:[])??[]);host.dataset.visibleCoilCount=String(latest?.g.rows.reduce((sum,row)=>sum+(row.hidden?0:row.count),0)??0);}
+  const orientationGizmo=createOrientationGizmo(host,plane=>{endDrag();orbitState=plane==='iso'?{...ISOMETRIC_VIEW}:planeOrbit(plane,orbitState);redrawZoom();});orientationGizmo.update(orbitState);
+  function syncRowVisibility(){host.dataset.hiddenRows=JSON.stringify(latest?.g.rows.flatMap((row,i)=>row.hidden?[i]:[])??[]);host.dataset.visibleCoilCount=String(latest?.g.rows.reduce((sum,row)=>sum+(row.hidden?0:row.count),0)??0);host.dataset.shellVisible=String(!!latest&&!latest.g.shellHidden);host.dataset.coreVisible=String(!!latest&&latest.g.coreDiameter>0&&!latest.g.coreHidden);}
   function frame(){
     if(disposed||lost||!group||!allowed||document.hidden||!host.isConnected)return;
     const width=host.clientWidth,height=host.clientHeight;if(width<2||height<2)return;
     const size=width+'x'+height;if(size!==lastSize){renderer.setSize(width,height,false);lastSize=size;}
     const {height:h,diameter:d,centerY=0,shellHeight=h}=group.userData,aspect=width/height,distance=Math.max(h,d)*5;
-    camera.position.set(distance*Math.sin(orbitState.polar)*Math.sin(orbitState.azimuth),centerY+distance*Math.cos(orbitState.polar),distance*Math.sin(orbitState.polar)*Math.cos(orbitState.azimuth));camera.lookAt(0,centerY,0);camera.updateMatrixWorld(true);
+    const orientation=orbitFrame(orbitState);camera.position.fromArray(orientation.direction).multiplyScalar(distance);camera.position.y+=centerY;camera.up.fromArray(orientation.up);camera.lookAt(0,centerY,0);camera.updateMatrixWorld(true);
     // Fit uses the original view, not the current orbit: rotation never silently
     // changes scale or recentres the detail the user has zoomed into.
     fitCamera.position.set(0,centerY,distance);fitCamera.lookAt(0,centerY,0);fitCamera.updateMatrixWorld(true);
@@ -30,6 +32,7 @@ export function createDesignView(host,onStatus){
   }
   function redrawZoom(){
     host.dataset.zoom=String(zoomState.zoom);host.dataset.panX=String(zoomState.x);host.dataset.panY=String(zoomState.y);host.dataset.azimuth=String(orbitState.azimuth);host.dataset.polar=String(orbitState.polar);
+    orientationGizmo.update(orbitState);
     if(!zoomFrame)zoomFrame=requestAnimationFrame(()=>{zoomFrame=0;if(visible)frame();});
   }
   function resetScale(){endDrag();zoomState={zoom:1,x:0,y:0};orbitState={azimuth:DEFAULT_AZIMUTH,polar:DEFAULT_POLAR};redrawZoom();}
@@ -69,7 +72,7 @@ export function createDesignView(host,onStatus){
     try{
       const next=buildDesignModel(latest.g,latest.mode,cache,latest.selectedRow);
       if(group){scene.remove(group);disposeModel(group);}group=next;scene.add(group);cache.sweep();renderedVersion=version;
-      canvas.setAttribute('aria-label',latest.mode==='section'?'Продольный разрез всех деталей: корпуса, закрытого вытеснителя и змеевиков':'Вырез передней половины корпуса, целые змеевики и закрытый вытеснитель');
+      canvas.setAttribute('aria-label',latest.mode==='section'?'Продольный разрез всех деталей: корпуса, закрытого вытеснителя и змеевиков':latest.mode==='full'?'Целая 3D-модель: корпус, вытеснительная труба и змеевики без разреза':'Вырез передней половины корпуса, целые змеевики и закрытый вытеснитель');
       host.dataset.mode=latest.mode;host.dataset.coilCount=String(group.userData.totalCount);host.dataset.selectedRow=String(latest.selectedRow);syncRowVisibility();frame();
       host.dataset.updateMs=String(performance.now()-started);onStatus('ready','',group.userData);
     }catch(error){host.dataset.coilCount='0';onStatus('error',error.message);}
@@ -83,8 +86,9 @@ export function createDesignView(host,onStatus){
   return {
     update(g,mode,selectedRow){version++;latest=g?{g,mode,selectedRow}:null;if(!g){endDrag();if(timer)clearTimeout(timer);timer=0;if(group){scene.remove(group);disposeModel(group);group=null;}cache.dispose();host.dataset.coilCount='0';syncRowVisibility();}else{onStatus('loading','');schedule();}},
     setRowVisible(rowIndex,shown){if(!latest?.g.rows[rowIndex])return;latest.g.rows[rowIndex].hidden=!shown;if(group)setDesignRowVisible(group,rowIndex,shown);syncRowVisibility();redrawZoom();},
+    setPartVisible(name,shown){if(!latest||!['shell','core'].includes(name))return;latest.g[name+'Hidden']=!shown;if(group)setDesignPartVisible(group,name,shown);syncRowVisibility();redrawZoom();},
     setVisible(value){allowed=value;if(!allowed){endDrag();if(timer)clearTimeout(timer);timer=0;}else schedule(0);},
     resize(){if(version!==renderedVersion)schedule(0);else frame();},
-    dispose(){endDrag();disposed=true;if(timer)clearTimeout(timer);if(resizeFrame)cancelAnimationFrame(resizeFrame);if(zoomFrame)cancelAnimationFrame(zoomFrame);intersection.disconnect();observer.disconnect();document.removeEventListener('visibilitychange',visibility);window.removeEventListener('blur',endDrag);canvas.removeEventListener('wheel',wheel);canvas.removeEventListener('keydown',keyboard);canvas.removeEventListener('pointerdown',startDrag);canvas.removeEventListener('pointermove',moveDrag);canvas.removeEventListener('pointerup',endDrag);canvas.removeEventListener('pointercancel',endDrag);canvas.removeEventListener('lostpointercapture',endDrag);canvas.removeEventListener('contextmenu',contextMenu);if(group)disposeModel(group);cache.dispose();grid.geometry.dispose();grid.material.dispose();renderer.dispose();canvas.remove();}
+    dispose(){endDrag();disposed=true;orientationGizmo.dispose();if(timer)clearTimeout(timer);if(resizeFrame)cancelAnimationFrame(resizeFrame);if(zoomFrame)cancelAnimationFrame(zoomFrame);intersection.disconnect();observer.disconnect();document.removeEventListener('visibilitychange',visibility);window.removeEventListener('blur',endDrag);canvas.removeEventListener('wheel',wheel);canvas.removeEventListener('keydown',keyboard);canvas.removeEventListener('pointerdown',startDrag);canvas.removeEventListener('pointermove',moveDrag);canvas.removeEventListener('pointerup',endDrag);canvas.removeEventListener('pointercancel',endDrag);canvas.removeEventListener('lostpointercapture',endDrag);canvas.removeEventListener('contextmenu',contextMenu);if(group)disposeModel(group);cache.dispose();grid.geometry.dispose();grid.material.dispose();renderer.dispose();canvas.remove();}
   };
 }
