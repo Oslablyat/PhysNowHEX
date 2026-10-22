@@ -1,5 +1,6 @@
 export const MIN_ZOOM=.5,MAX_ZOOM=100;
-export const DEFAULT_AZIMUTH=Math.atan2(.9,2.6),DEFAULT_POLAR=Math.acos(.48/Math.hypot(.9,.48,2.6));
+// Front orthographic view: look along -Z, with the apparatus axis vertical.
+export const DEFAULT_AZIMUTH=0,DEFAULT_POLAR=Math.PI/2;
 
 export function orbitByPixels(state,dx,dy,width,height){
   if(![dx,dy,width,height].every(Number.isFinite)||width<=0||height<=0)return {...state};

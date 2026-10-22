@@ -83,7 +83,7 @@ export class HelixCurve extends THREE.Curve {
 // TubeGeometry supplies continuous radial/Frenet normals. Keep those normals
 // when expanding triangles; do not weld end caps into the curved walls, since
 // the flat annular rims must retain their sharp engineering edges.
-function smoothHollowSweep(path,steps,outside,inside,radialSegments){
+export function smoothHollowSweep(path,steps,outside,inside,radialSegments){
   const outer=new THREE.TubeGeometry(path,steps,outside,radialSegments,false),inner=new THREE.TubeGeometry(path,steps,inside,radialSegments,false),positions=[],normals=[];
   for(const [surface,inverted] of [[outer,false],[inner,true]]){
     const p=surface.getAttribute('position'),n=surface.getAttribute('normal'),indices=surface.index;

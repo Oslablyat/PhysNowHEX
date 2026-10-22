@@ -1,9 +1,16 @@
 import * as THREE from '../vendor/three-0.186.1/three.module.min.js';
-import {GeometryCache,hollowCylinder,coilGeometry,sectionGeometry,disposeModel} from './model.js';
+import {GeometryCache,hollowCylinder,smoothHollowSweep,sectionGeometry,disposeModel} from './model.js?v=rows-sidebar-20261022';
+import {leadPath} from './lead-path.js?v=rows-sidebar-20261022';
 export {GeometryCache,disposeModel};
+
+// Visibility is a display flag only: retain geometry, dimensions and camera fit.
+export function setDesignRowVisible(group,rowIndex,visible){
+  group.traverse(part=>{if(part.isMesh&&part.userData.rowIndex===rowIndex)part.visible=visible;});
+}
 
 // Same row palette as coilRowColor() in the main editor and its top view.
 const COLORS=[0x72bddc,0xe5ad71,0x76c6a6,0xaa9ae5,0xda95b7,0xb9ca71,0x79b4ed,0xc99a76];
+const COIL_RADIAL_SEGMENTS=32,COIL_STEPS_PER_TURN=128;
 
 // Receives calculateCoilGeometry's validated result, not the standalone demo's
 // narrower input limits. The renderer never rewrites sheet data or geometry.
@@ -14,10 +21,8 @@ export function designParameters(g){
     if(![r.diameter,r.turns,r.pitch,r.count,r.offset??0,r.phase??0].every(Number.isFinite)||r.count<1||r.count>64||!Number.isInteger(r.count)||r.turns<.5||r.turns>100)throw Error('Проверьте параметры ряда '+(i+1)+'.');
     return {coilDiameter:r.diameter,turns:r.turns,pitch:r.pitch,count:r.count,phase:(r.phase??0)*Math.PI/180,handedness:r.direction==='left'?-1:1,centerY:g.height/2-(r.offset??0)-g.tubeDiameter/2-r.turns*r.pitch/2,index:i};
   });
-  const totalTurns=rows.reduce((sum,r)=>sum+r.count*r.turns,0),stepsPerTurn=Math.max(16,Math.min(96,Math.floor(650000/Math.max(1,totalTurns*64))));
-  // Keep a safe visual budget; an explicit 2D fallback retains all valid data.
-  if(totalTurns*stepsPerTurn*64>1800000)throw Error('Слишком много навивок для подробного 3D на этом устройстве. Показана схема без изменения геометрии.');
-  return {shellDiameter:g.diameter,height:g.height,shellWall:g.shellWall,coreDiameter:g.coreDiameter,coreWall:g.coreWall,coreLength:g.coreLength,tubeDiameter:g.tubeDiameter,tubeWall:g.tubeWall,rows,stepsPerTurn,totalCount:rows.reduce((sum,r)=>sum+r.count,0)};
+  const stepsPerTurn=COIL_STEPS_PER_TURN;
+  return {shellDiameter:g.diameter,height:g.height,shellWall:g.shellWall,coreDiameter:g.coreDiameter,coreWall:g.coreWall,coreLength:g.coreLength,tubeDiameter:g.tubeDiameter,tubeWall:g.tubeWall,leadBendRadius:g.leadBendRadius??2*g.tubeDiameter,leadStraightLength:g.leadStraightLength??Math.max(40,2*g.tubeDiameter),rows,stepsPerTurn,totalCount:rows.reduce((sum,r)=>sum+r.count,0)};
 }
 
 export function closedCoreGeometry(diameter,wall,height){
@@ -41,20 +46,25 @@ export function buildDesignModel(g,mode='section',cache=new GeometryCache(),sele
   };
   const parts=[{name:'shell',key:['shell',p.shellDiameter,p.shellWall,p.height].join('|'),color:0x8f9caa,create:()=>hollowCylinder(p.shellDiameter,p.shellWall,p.height),y:0}];
   if(p.coreDiameter>0)parts.push({name:'core',key:['closed-core',p.coreDiameter,p.coreWall,p.coreLength].join('|'),color:0x71a89e,create:()=>closedCoreGeometry(p.coreDiameter,p.coreWall,p.coreLength),y:p.height/2-p.coreLength/2});
-  for(const row of p.rows){
-    const settings={...p,...row,startAngle:0,verticalDirection:-1,geometrySteps:Math.max(16,Math.ceil(row.turns*p.stepsPerTurn)),crossSegments:16};
-    const key=['design-coil',p.tubeDiameter,p.tubeWall,row.coilDiameter,row.turns,row.pitch,row.handedness,settings.geometrySteps].join('|');
-    for(let j=0;j<row.count;j++)parts.push({name:'row-'+row.index+'-coil-'+j,key,color:COLORS[row.index],rowIndex:row.index,startIndex:j,phase:row.phase+2*Math.PI*j/row.count,y:row.centerY,create:()=>coilGeometry(settings)});
-  }
+  let bottom=-p.height/2,top=p.height/2,portsInside=0;const entryAngles=[];
   try{
+    for(const row of p.rows){
+      const path=leadPath(p,row);
+      entryAngles[row.index]=Math.atan2(path.top.z,path.top.x);
+      if(path.top.y+row.centerY<p.height/2||path.bottom.y+row.centerY>-p.height/2)portsInside+=row.count;
+      bottom=Math.min(bottom,path.bottom.y+row.centerY-p.tubeDiameter/2);top=Math.max(top,path.top.y+row.centerY+p.tubeDiameter/2);
+      const key=['design-leaded-coil',p.tubeDiameter,p.tubeWall,row.coilDiameter,row.turns,row.pitch,row.handedness,path.steps,path.radius,path.top.y,path.bottom.y,COIL_RADIAL_SEGMENTS].join('|');
+      for(let j=0;j<row.count;j++)parts.push({name:'row-'+row.index+'-coil-'+j,key,color:COLORS[row.index],rowIndex:row.index,startIndex:j,phase:row.phase+2*Math.PI*j/row.count,y:row.centerY,create:()=>smoothHollowSweep(path,path.steps,p.tubeDiameter/2,p.tubeDiameter/2-p.tubeWall,COIL_RADIAL_SEGMENTS)});
+    }
     for(const part of parts){
       const geometry=cache.get(part.key,()=>({geometry:part.create()})).geometry,phase=part.phase??0;
       const bodyMaterial=material(part.rowIndex==null?part.name:'row'+part.rowIndex,part.color,part.rowIndex===selectedRow);
       if(mode==='section'||part.name==='shell'){
         const section=cache.get('cut|'+part.key+'|'+phase,()=>{if(!phase)return sectionGeometry(geometry);const rotated=geometry.clone().rotateY(-phase);try{return sectionGeometry(rotated);}finally{rotated.dispose();}});
-        const body=new THREE.Mesh(section.body,bodyMaterial),cap=new THREE.Mesh(section.caps,material('cut',0xe8b36d));body.name=part.name;cap.name=part.name+'-section';body.position.y=cap.position.y=part.y;body.userData={rowIndex:part.rowIndex,startIndex:part.startIndex,phase};group.add(body,cap);
+        const body=new THREE.Mesh(section.body,bodyMaterial),cap=new THREE.Mesh(section.caps,material('cut',0xe8b36d));body.name=part.name;cap.name=part.name+'-section';body.position.y=cap.position.y=part.y;body.userData={rowIndex:part.rowIndex,startIndex:part.startIndex,phase};cap.userData={...body.userData};group.add(body,cap);
       }else{const mesh=new THREE.Mesh(geometry,bodyMaterial);mesh.name=part.name;mesh.rotation.y=-phase;mesh.position.y=part.y;mesh.userData={rowIndex:part.rowIndex,startIndex:part.startIndex,phase};group.add(mesh);}
     }
-    group.userData={height:p.height,diameter:p.shellDiameter,totalCount:p.totalCount,mode,selectedRow};return group;
+    g.rows.forEach((row,index)=>setDesignRowVisible(group,index,!row.hidden));
+    group.userData={height:top-bottom,centerY:(top+bottom)/2,shellHeight:p.height,diameter:p.shellDiameter,totalCount:p.totalCount,mode,selectedRow,entryAngles,portsInside};return group;
   }catch(error){disposeModel(group);for(const m of materials.values())m.dispose();throw error;}
 }

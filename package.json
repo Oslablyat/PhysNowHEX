@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node preview.cjs",
     "start": "node preview.cjs",
-    "check": "node --check app.js && node --check preview.cjs && node --check assets/coil-layout.js && node --check assets/coil-variants.js && node --check assets/spring-variants.js && node --check assets/coil-3d/model.js && node --check assets/coil-3d/demo.js && node --check assets/coil-3d/design-model.js && node --check assets/coil-3d/design-view.js && node --check assets/coil-3d/camera-controls.js",
+    "check": "node --check app.js && node --check preview.cjs && node --check assets/coil-layout.js && node --check assets/coil-variants.js && node --check assets/spring-variants.js && node --check assets/coil-3d/model.js && node --check assets/coil-3d/demo.js && node --check assets/coil-3d/design-model.js && node --check assets/coil-3d/lead-path.js && node --check assets/coil-3d/design-view.js && node --check assets/coil-3d/camera-controls.js && node --check assets/coil-3d/row-controls-comparison.js",
     "test": "node tests/test-coil-geometry.cjs && node tests/test-design-detail-geometry.cjs && node tests/test-coil-layout.cjs && node tests/test-coil-3d.cjs && node tests/test-design-3d.cjs && node tests/test-unknown-parameter.cjs && node tests/test-variants.cjs && node tests/test-flow-units.cjs && node tests/test-numeric-feedback.cjs"
   }
 }
