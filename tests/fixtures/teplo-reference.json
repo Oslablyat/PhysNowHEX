@@ -1,0 +1,1509 @@
+{
+  "source": "Teplo.zip / heat_exchanger_method.py + CoolProp 8.0.0 (Python); not the obsolete teplo_report.txt",
+  "cases": [
+    {
+      "name": "default",
+      "inputs": {},
+      "expected": {
+        "t_hot_out_c": 33.66276311613868,
+        "t_cold_out_c": 38.03072164155867,
+        "heat_duty_w": 6497.263853157324,
+        "ua_w_k": 298.2497732699888,
+        "overall_u_w_m2k": 810.5304348732946,
+        "area_m2": 0.36796862947732795,
+        "alpha_hot_w_m2k": 3095.033156312254,
+        "mass_flow_hot_kg_s": 0.02175,
+        "mass_flow_cold_kg_s": 0.19363313105225916,
+        "volume_flow_hot_inlet_m3_h": 0.08197486552150628,
+        "volume_flow_cold_inlet_m3_h": 0.7,
+        "hot_velocity_m_s": 0.28299033161693926,
+        "t_wall_c": 54.60760168835914,
+        "heat_balance_error_w": -2.7284841053187847e-12,
+        "hot_properties": {
+          "rho": 978.5832590024831,
+          "mu": 0.00040751044657767174,
+          "cp": 4187.501337403058,
+          "lambda": 0.6597524018388579,
+          "pr": 2.586501444016739
+        },
+        "cold_properties": {
+          "rho": 994.5449368167716,
+          "mu": 0.0007335275553954698,
+          "cp": 4178.267712587336,
+          "lambda": 0.6205190666531276,
+          "pr": 4.939210840906015
+        },
+        "valid": false,
+        "outlet_iterations": 3,
+        "wall_iterations": 3,
+        "shell": {
+          "free_area_m2": 0.006022433116931636,
+          "limiting_row": 1,
+          "diameter_effective_m": 0.014,
+          "s1_m": null,
+          "s2_m": 0.021,
+          "row_winding_steps_m": [
+            0.021
+          ],
+          "adjacent_radius_steps_m": [],
+          "relative_pitch": null,
+          "spacing_correction": 1,
+          "bundle_correction": 0.9838709677419354,
+          "volume_flow_mean_m3_h": 0.7009027405229837,
+          "velocity_m_s": 0.03232833008198253,
+          "re_cold": 613.6479463817818,
+          "regime": "laminar",
+          "correlation_c": 0.56,
+          "re_exponent": 0.5,
+          "pr_exponent": 0.36,
+          "nu_base": 27.30467263558974,
+          "nu_cold": 26.86427468985442,
+          "alpha_cold_w_m2k": 1190.6996183472645,
+          "valid": true
+        },
+        "rows": [
+          {
+            "row": 1,
+            "area_m2": 0.36796862947732795,
+            "alpha_hot_w_m2k": 3095.033156312254,
+            "row_correction": 0.9838709677419355,
+            "crossflow_tube_count": 31,
+            "projection_m2": 0.00439822971502571,
+            "free_area_m2": 0.006022433116931636,
+            "height_m": 0.651
+          }
+        ],
+        "coils": [
+          {
+            "row": 1,
+            "length_m": 9.760671047344475,
+            "area_m2": 0.36796862947732795,
+            "nu_hot": 46.91204075477097,
+            "alpha_hot_w_m2k": 3095.0331563122536,
+            "re_hot": 6795.644217359099,
+            "re_critical": 8778.8555585601,
+            "radius_ratio": 5,
+            "length_ratio": 976.0671047344475,
+            "length_correction": 1,
+            "angle_correction": 1,
+            "k_linear_w_mk": 30.55627751650659,
+            "k_w_m2k": 810.5304348732946,
+            "ua_w_k": 298.2497732699888,
+            "heat_duty_w": 6497.263853157324,
+            "wall_inner_c": 62.489797925439554,
+            "wall_outer_c": 46.725405451278725,
+            "valid": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "8+10",
+      "inputs": {
+        "row_count": 2,
+        "shell_inner_diameter_m": 0.2,
+        "displacer_outer_diameter_m": 0.06,
+        "coil_rows": [
+          {
+            "count": 8,
+            "radius_m": 0.055,
+            "pitch_m": 0.12,
+            "turns": 31,
+            "tube_outer_diameter_m": 0.014
+          },
+          {
+            "count": 10,
+            "radius_m": 0.08,
+            "pitch_m": 0.14,
+            "turns": 31,
+            "tube_outer_diameter_m": 0.014
+          }
+        ]
+      },
+      "expected": {
+        "t_hot_out_c": 30.00000844887022,
+        "t_cold_out_c": 38.44098202562266,
+        "heat_duty_w": 6829.168695437989,
+        "ua_w_k": 1629.2946924605176,
+        "overall_u_w_m2k": 171.17771862612346,
+        "area_m2": 9.518147020168726,
+        "alpha_hot_w_m2k": 277.46710841133455,
+        "mass_flow_hot_kg_s": 0.02175,
+        "mass_flow_cold_kg_s": 0.19363313105225916,
+        "volume_flow_hot_inlet_m3_h": 0.08197486552150628,
+        "volume_flow_cold_inlet_m3_h": 0.7,
+        "hot_velocity_m_s": 0.01570513238569794,
+        "t_wall_c": 49.80770263272565,
+        "heat_balance_error_w": 3.637978807091713e-12,
+        "hot_properties": {
+          "rho": 979.6146542659557,
+          "mu": 0.00041804726278610554,
+          "cp": 4186.464039696476,
+          "lambda": 0.6582412243445643,
+          "pr": 2.6588122527425324
+        },
+        "cold_properties": {
+          "rho": 994.4755768142413,
+          "mu": 0.0007304862789051485,
+          "cp": 4178.257460756915,
+          "lambda": 0.6208125155319921,
+          "pr": 4.916395318158993
+        },
+        "valid": false,
+        "outlet_iterations": 3,
+        "wall_iterations": 2,
+        "shell": {
+          "free_area_m2": 0.021551325603625982,
+          "limiting_row": 2,
+          "diameter_effective_m": 0.014,
+          "s1_m": 0.025,
+          "s2_m": 0.13,
+          "row_winding_steps_m": [
+            0.12,
+            0.14
+          ],
+          "adjacent_radius_steps_m": [
+            0.025
+          ],
+          "relative_pitch": 0.19230769230769232,
+          "spacing_correction": 0.7809073283712266,
+          "bundle_correction": 0.9845627175643338,
+          "volume_flow_mean_m3_h": 0.7009516251984746,
+          "velocity_m_s": 0.00903465468242912,
+          "re_cold": 172.19544241309367,
+          "regime": "laminar",
+          "correlation_c": 0.56,
+          "re_exponent": 0.5,
+          "pr_exponent": 0.36,
+          "nu_base": 14.115346716310983,
+          "nu_cold": 13.897444122373937,
+          "alpha_cold_w_m2k": 616.264803219733,
+          "valid": true
+        },
+        "rows": [
+          {
+            "row": 1,
+            "area_m2": 3.420163782178847,
+            "alpha_hot_w_m2k": 291.68505479704737,
+            "row_correction": 0.9979838709677419,
+            "crossflow_tube_count": 248,
+            "projection_m2": 0.00483805268652828,
+            "free_area_m2": 0.023750440461138844,
+            "height_m": 3.7199999999999998
+          },
+          {
+            "row": 2,
+            "area_m2": 6.0979832379898795,
+            "alpha_hot_w_m2k": 269.4927169793559,
+            "row_correction": 0.9983870967741936,
+            "crossflow_tube_count": 310,
+            "projection_m2": 0.0070371675440411416,
+            "free_area_m2": 0.021551325603625982,
+            "height_m": 4.340000000000001
+          }
+        ],
+        "coils": [
+          {
+            "row": 1,
+            "length_m": 11.340332752450749,
+            "area_m2": 0.4275204727723559,
+            "nu_hot": 4.431279051042256,
+            "alpha_hot_w_m2k": 291.68505479704737,
+            "re_hot": 368.02005901634845,
+            "re_critical": 8596.228664652976,
+            "radius_ratio": 5.5,
+            "length_ratio": 1134.033275245075,
+            "length_correction": 1,
+            "angle_correction": 0.9817011760747155,
+            "k_linear_w_mk": 6.453247959529082,
+            "k_w_m2k": 171.17771862612346,
+            "ua_w_k": 73.18197919513361,
+            "heat_duty_w": 306.7413671095056,
+            "wall_inner_c": 64.39697996776727,
+            "wall_outer_c": 35.21842529768404,
+            "valid": false
+          },
+          {
+            "row": 2,
+            "length_m": 16.175402920293514,
+            "area_m2": 0.6097983237989879,
+            "nu_hot": 4.094133077849993,
+            "alpha_hot_w_m2k": 269.4927169793559,
+            "re_hot": 368.02005901634845,
+            "re_critical": 7926.810678315539,
+            "radius_ratio": 8,
+            "length_ratio": 1617.5402920293513,
+            "length_correction": 1,
+            "angle_correction": 0.9888727109694204,
+            "k_linear_w_mk": 6.453247959529082,
+            "k_w_m2k": 171.17771862612346,
+            "ua_w_k": 104.38388588994488,
+            "heat_duty_w": 437.5237758561945,
+            "wall_inner_c": 64.39697996776727,
+            "wall_outer_c": 35.21842529768404,
+            "valid": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "crossflow",
+      "inputs": {
+        "row_count": 2,
+        "shell_inner_diameter_m": 0.2,
+        "displacer_outer_diameter_m": 0.06,
+        "coil_rows": [
+          {
+            "count": 8,
+            "radius_m": 0.055,
+            "pitch_m": 0.12,
+            "turns": 31,
+            "tube_outer_diameter_m": 0.014
+          },
+          {
+            "count": 10,
+            "radius_m": 0.08,
+            "pitch_m": 0.14,
+            "turns": 31,
+            "tube_outer_diameter_m": 0.014
+          }
+        ],
+        "volume_flow_cold_m3_h": 10
+      },
+      "expected": {
+        "t_hot_out_c": 30.00000003613478,
+        "t_cold_out_c": 30.59080887098886,
+        "heat_duty_w": 6829.169457670241,
+        "ua_w_k": 1968.2456199426783,
+        "overall_u_w_m2k": 206.78873900266646,
+        "area_m2": 9.518147020168726,
+        "alpha_hot_w_m2k": 274.42464285296495,
+        "mass_flow_hot_kg_s": 0.02175,
+        "mass_flow_cold_kg_s": 2.7661875864608456,
+        "volume_flow_hot_inlet_m3_h": 0.08197486552150628,
+        "volume_flow_cold_inlet_m3_h": 10,
+        "hot_velocity_m_s": 0.015705132348033925,
+        "t_wall_c": 47.45100664676811,
+        "heat_balance_error_w": -1.8189894035458565e-11,
+        "hot_properties": {
+          "rho": 979.6146566152654,
+          "mu": 0.00041804728753136824,
+          "cp": 4186.464037370431,
+          "lambda": 0.6582412208119678,
+          "pr": 2.6588124229161143
+        },
+        "cold_properties": {
+          "rho": 995.7371061469793,
+          "mu": 0.0007921882985752169,
+          "cp": 4178.681339277003,
+          "lambda": 0.6150626798029353,
+          "pr": 5.382057096214115
+        },
+        "valid": false,
+        "outlet_iterations": 2,
+        "wall_iterations": 2,
+        "shell": {
+          "free_area_m2": 0.021551325603625982,
+          "limiting_row": 2,
+          "diameter_effective_m": 0.014,
+          "s1_m": 0.025,
+          "s2_m": 0.13,
+          "row_winding_steps_m": [
+            0.12,
+            0.14
+          ],
+          "adjacent_radius_steps_m": [
+            0.025
+          ],
+          "relative_pitch": 0.19230769230769232,
+          "spacing_correction": 0.7809073283712266,
+          "bundle_correction": 0.9845627175643338,
+          "volume_flow_mean_m3_h": 10.000908121012733,
+          "velocity_m_s": 0.1289029772325118,
+          "re_cold": 2268.3353043173233,
+          "regime": "crossflow",
+          "correlation_c": 0.26,
+          "re_exponent": 0.65,
+          "pr_exponent": 0.33,
+          "nu_base": 75.32333137905025,
+          "nu_cold": 57.91251215952443,
+          "alpha_cold_w_m2k": 2544.2732087826553,
+          "valid": true
+        },
+        "rows": [
+          {
+            "row": 1,
+            "area_m2": 3.420163782178847,
+            "alpha_hot_w_m2k": 288.48668747274615,
+            "row_correction": 0.9979838709677419,
+            "crossflow_tube_count": 248,
+            "projection_m2": 0.00483805268652828,
+            "free_area_m2": 0.023750440461138844,
+            "height_m": 3.7199999999999998
+          },
+          {
+            "row": 2,
+            "area_m2": 6.0979832379898795,
+            "alpha_hot_w_m2k": 266.53769173569486,
+            "row_correction": 0.9983870967741936,
+            "crossflow_tube_count": 310,
+            "projection_m2": 0.0070371675440411416,
+            "free_area_m2": 0.021551325603625982,
+            "height_m": 4.340000000000001
+          }
+        ],
+        "coils": [
+          {
+            "row": 1,
+            "length_m": 11.340332752450749,
+            "area_m2": 0.4275204727723559,
+            "nu_hot": 4.382689481477412,
+            "alpha_hot_w_m2k": 288.48668747274615,
+            "re_hot": 368.0200372323223,
+            "re_critical": 8596.228664652976,
+            "radius_ratio": 5.5,
+            "length_ratio": 1134.033275245075,
+            "length_correction": 1,
+            "angle_correction": 0.9817011760747155,
+            "k_linear_w_mk": 7.795751799550489,
+            "k_w_m2k": 206.78873900266646,
+            "ua_w_k": 88.40641946241928,
+            "heat_duty_w": 306.7414013462002,
+            "wall_inner_c": 64.36257307818634,
+            "wall_outer_c": 30.539440215349863,
+            "valid": false
+          },
+          {
+            "row": 2,
+            "length_m": 16.175402920293514,
+            "area_m2": 0.6097983237989879,
+            "nu_hot": 4.049240359133231,
+            "alpha_hot_w_m2k": 266.53769173569486,
+            "re_hot": 368.0200372323223,
+            "re_critical": 7926.810678315539,
+            "radius_ratio": 8,
+            "length_ratio": 1617.5402920293513,
+            "length_correction": 1,
+            "angle_correction": 0.9888727109694204,
+            "k_linear_w_mk": 7.795751799550489,
+            "k_w_m2k": 206.78873900266646,
+            "ua_w_k": 126.0994264243324,
+            "heat_duty_w": 437.523824690064,
+            "wall_inner_c": 64.36257307818634,
+            "wall_outer_c": 30.539440215349863,
+            "valid": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "staggered",
+      "inputs": {
+        "row_count": 2,
+        "shell_inner_diameter_m": 0.2,
+        "displacer_outer_diameter_m": 0.06,
+        "coil_rows": [
+          {
+            "count": 8,
+            "radius_m": 0.055,
+            "pitch_m": 0.12,
+            "turns": 31,
+            "tube_outer_diameter_m": 0.014
+          },
+          {
+            "count": 10,
+            "radius_m": 0.08,
+            "pitch_m": 0.14,
+            "turns": 31,
+            "tube_outer_diameter_m": 0.014
+          }
+        ],
+        "volume_flow_cold_m3_h": 10,
+        "arrangement": "staggered"
+      },
+      "expected": {
+        "t_hot_out_c": 30.000000024030115,
+        "t_cold_out_c": 30.59080887108415,
+        "heat_duty_w": 6829.169458771824,
+        "ua_w_k": 2005.6865176516167,
+        "overall_u_w_m2k": 210.72237205431003,
+        "area_m2": 9.518147020168726,
+        "alpha_hot_w_m2k": 274.36889605406657,
+        "mass_flow_hot_kg_s": 0.02175,
+        "mass_flow_cold_kg_s": 2.7661875864608456,
+        "volume_flow_hot_inlet_m3_h": 0.08197486552150628,
+        "volume_flow_cold_inlet_m3_h": 10,
+        "hot_velocity_m_s": 0.015705132348030726,
+        "t_wall_c": 47.41798433478283,
+        "heat_balance_error_w": -1.7280399333685637e-11,
+        "hot_properties": {
+          "rho": 979.6146566154648,
+          "mu": 0.0004180472875333799,
+          "cp": 4186.464037370054,
+          "lambda": 0.6582412208116932,
+          "pr": 2.658812422929779
+        },
+        "cold_properties": {
+          "rho": 995.7371061469788,
+          "mu": 0.0007921882985751658,
+          "cp": 4178.681339277072,
+          "lambda": 0.6150626798029294,
+          "pr": 5.382057096213908
+        },
+        "valid": false,
+        "outlet_iterations": 2,
+        "wall_iterations": 3,
+        "shell": {
+          "free_area_m2": 0.021551325603625982,
+          "limiting_row": 2,
+          "diameter_effective_m": 0.014,
+          "s1_m": 0.025,
+          "s2_m": 0.13,
+          "row_winding_steps_m": [
+            0.12,
+            0.14
+          ],
+          "adjacent_radius_steps_m": [
+            0.025
+          ],
+          "relative_pitch": 0.19230769230769232,
+          "spacing_correction": 1,
+          "bundle_correction": 0.9838695016708993,
+          "volume_flow_mean_m3_h": 10.000908121012738,
+          "velocity_m_s": 0.12890297723251185,
+          "re_cold": 2268.33530431747,
+          "regime": "crossflow",
+          "correlation_c": 0.41,
+          "re_exponent": 0.6,
+          "pr_exponent": 0.33,
+          "nu_base": 80.6986689863185,
+          "nu_cold": 79.39695924107403,
+          "alpha_cold_w_m2k": 3488.1504656442107,
+          "valid": true
+        },
+        "rows": [
+          {
+            "row": 1,
+            "area_m2": 3.420163782178847,
+            "alpha_hot_w_m2k": 288.42808410103646,
+            "row_correction": 0.9971774193548387,
+            "crossflow_tube_count": 248,
+            "projection_m2": 0.00483805268652828,
+            "free_area_m2": 0.023750440461138844,
+            "height_m": 3.7199999999999998
+          },
+          {
+            "row": 2,
+            "area_m2": 6.0979832379898795,
+            "alpha_hot_w_m2k": 266.4835470971319,
+            "row_correction": 0.997741935483871,
+            "crossflow_tube_count": 310,
+            "projection_m2": 0.0070371675440411416,
+            "free_area_m2": 0.021551325603625982,
+            "height_m": 4.340000000000001
+          }
+        ],
+        "coils": [
+          {
+            "row": 1,
+            "length_m": 11.340332752450749,
+            "area_m2": 0.4275204727723559,
+            "nu_hot": 4.381799179112011,
+            "alpha_hot_w_m2k": 288.42808410103646,
+            "re_hot": 368.02003723055134,
+            "re_critical": 8596.228664652976,
+            "radius_ratio": 5.5,
+            "length_ratio": 1134.033275245075,
+            "length_correction": 1,
+            "angle_correction": 0.9817011760747155,
+            "k_linear_w_mk": 7.944046271914026,
+            "k_w_m2k": 210.72237205431003,
+            "ua_w_k": 90.0881281243709,
+            "heat_duty_w": 306.7414013956793,
+            "wall_inner_c": 64.36193560891464,
+            "wall_outer_c": 30.47403306065102,
+            "valid": false
+          },
+          {
+            "row": 2,
+            "length_m": 16.175402920293514,
+            "area_m2": 0.6097983237989879,
+            "nu_hot": 4.0484177938374115,
+            "alpha_hot_w_m2k": 266.4835470971319,
+            "re_hot": 368.02003723055134,
+            "re_critical": 7926.810678315539,
+            "radius_ratio": 8,
+            "length_ratio": 1617.5402920293513,
+            "length_correction": 1,
+            "angle_correction": 0.9888727109694204,
+            "k_linear_w_mk": 7.944046271914026,
+            "k_w_m2k": 210.72237205431003,
+            "ua_w_k": 128.49814926566495,
+            "heat_duty_w": 437.52382476063895,
+            "wall_inner_c": 64.36193560891464,
+            "wall_outer_c": 30.47403306065102,
+            "valid": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "high-shell-re",
+      "inputs": {
+        "volume_flow_cold_m3_h": 200
+      },
+      "expected": {
+        "t_hot_out_c": 30.048048209078104,
+        "t_cold_out_c": 30.029521254729808,
+        "heat_duty_w": 6824.816009859313,
+        "ua_w_k": 669.7653537115066,
+        "overall_u_w_m2k": 1820.1697102898647,
+        "area_m2": 0.36796862947732795,
+        "alpha_hot_w_m2k": 2951.100494579557,
+        "mass_flow_hot_kg_s": 0.02175,
+        "mass_flow_cold_kg_s": 55.3237517292169,
+        "volume_flow_hot_inlet_m3_h": 0.08197486552150628,
+        "volume_flow_cold_inlet_m3_h": 200,
+        "hot_velocity_m_s": 0.28269624428687873,
+        "t_wall_c": 45.152364851335996,
+        "heat_balance_error_w": 7.275957614183426e-11,
+        "hot_properties": {
+          "rho": 979.601273722162,
+          "mu": 0.0004179063829968601,
+          "cp": 4186.477291568916,
+          "lambda": 0.6582613373560959,
+          "pr": 2.657843447778872
+        },
+        "cold_properties": {
+          "rho": 995.8230661361637,
+          "mu": 0.0007969634737899812,
+          "cp": 4178.7319322727435,
+          "lambda": 0.6146348182878834,
+          "pr": 5.418333972777568
+        },
+        "valid": false,
+        "outlet_iterations": 3,
+        "wall_iterations": 3,
+        "shell": {
+          "free_area_m2": 0.006022433116931636,
+          "limiting_row": 1,
+          "diameter_effective_m": 0.014,
+          "s1_m": null,
+          "s2_m": 0.021,
+          "row_winding_steps_m": [
+            0.021
+          ],
+          "adjacent_radius_steps_m": [],
+          "relative_pitch": null,
+          "spacing_correction": 1,
+          "bundle_correction": 0.9838709677419354,
+          "volume_flow_mean_m3_h": 200.00089674358676,
+          "velocity_m_s": 9.224810566148953,
+          "re_cold": 161372.39939430333,
+          "regime": "crossflow",
+          "correlation_c": 0.26,
+          "re_exponent": 0.65,
+          "pr_exponent": 0.33,
+          "nu_base": 1195.8260345260067,
+          "nu_cold": 1176.5385178401032,
+          "alpha_cold_w_m2k": 51652.96700866767,
+          "valid": false
+        },
+        "rows": [
+          {
+            "row": 1,
+            "area_m2": 0.36796862947732795,
+            "alpha_hot_w_m2k": 2951.100494579557,
+            "row_correction": 0.9838709677419355,
+            "crossflow_tube_count": 31,
+            "projection_m2": 0.00439822971502571,
+            "free_area_m2": 0.006022433116931636,
+            "height_m": 0.651
+          }
+        ],
+        "coils": [
+          {
+            "row": 1,
+            "length_m": 9.760671047344475,
+            "area_m2": 0.36796862947732795,
+            "nu_hot": 44.83174579920857,
+            "alpha_hot_w_m2k": 2951.100494579557,
+            "re_hot": 6626.594190641462,
+            "re_critical": 8778.8555585601,
+            "radius_ratio": 5,
+            "length_ratio": 976.0671047344475,
+            "length_correction": 1,
+            "angle_correction": 1,
+            "k_linear_w_mk": 68.61878148159961,
+            "k_w_m2k": 1820.1697102898647,
+            "ua_w_k": 669.7653537115066,
+            "heat_duty_w": 6824.816009859313,
+            "wall_inner_c": 59.98219073843528,
+            "wall_outer_c": 30.322538964236717,
+            "valid": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "different-diameters",
+      "inputs": {
+        "row_count": 2,
+        "shell_inner_diameter_m": 0.22,
+        "displacer_outer_diameter_m": 0.06,
+        "coil_rows": [
+          {
+            "count": 8,
+            "radius_m": 0.055,
+            "pitch_m": 0.12,
+            "turns": 31,
+            "tube_outer_diameter_m": 0.014
+          },
+          {
+            "count": 10,
+            "radius_m": 0.08,
+            "pitch_m": 0.21,
+            "turns": 31,
+            "tube_outer_diameter_m": 0.02
+          }
+        ]
+      },
+      "expected": {
+        "t_hot_out_c": 30.000025460541835,
+        "t_cold_out_c": 38.440980120376985,
+        "heat_duty_w": 6829.167154073324,
+        "ua_w_k": 1516.1133785602883,
+        "overall_u_w_m2k": 116.89540698397789,
+        "area_m2": 12.969828478958906,
+        "alpha_hot_w_m2k": 171.12850136745988,
+        "mass_flow_hot_kg_s": 0.02175,
+        "mass_flow_cold_kg_s": 0.19363313105225916,
+        "volume_flow_hot_inlet_m3_h": 0.08197486552150628,
+        "volume_flow_cold_inlet_m3_h": 0.7,
+        "hot_velocity_m_s": 0.008413463818689777,
+        "t_wall_c": 49.55883214022639,
+        "heat_balance_error_w": 9.094947017729282e-13,
+        "hot_properties": {
+          "rho": 979.6146495343842,
+          "mu": 0.00041804721294884183,
+          "cp": 4186.464044381952,
+          "lambda": 0.6582412314592214,
+          "pr": 2.6588119100114955
+        },
+        "cold_properties": {
+          "rho": 994.4755771370699,
+          "mu": 0.0007304862929776363,
+          "cp": 4178.257460801326,
+          "lambda": 0.6208125141716639,
+          "pr": 4.916395423696217
+        },
+        "valid": false,
+        "outlet_iterations": 3,
+        "wall_iterations": 2,
+        "shell": {
+          "free_area_m2": 0.02513274122871835,
+          "limiting_row": 2,
+          "diameter_effective_m": 0.017,
+          "s1_m": 0.025,
+          "s2_m": 0.16499999999999998,
+          "row_winding_steps_m": [
+            0.12,
+            0.21
+          ],
+          "adjacent_radius_steps_m": [
+            0.025
+          ],
+          "relative_pitch": 0.15151515151515155,
+          "spacing_correction": 0.7534742409583175,
+          "bundle_correction": 0.9708992773205007,
+          "volume_flow_mean_m3_h": 0.7009516249709303,
+          "velocity_m_s": 0.007747216387668053,
+          "re_cold": 179.29850095852927,
+          "regime": "laminar",
+          "correlation_c": 0.56,
+          "re_exponent": 0.5,
+          "pr_exponent": 0.36,
+          "nu_base": 14.387113551161624,
+          "nu_cold": 13.968438149550805,
+          "alpha_cold_w_m2k": 510.10477686317756,
+          "valid": true
+        },
+        "rows": [
+          {
+            "row": 1,
+            "area_m2": 3.420163782178847,
+            "alpha_hot_w_m2k": 291.35275846492425,
+            "row_correction": 0.9979838709677419,
+            "crossflow_tube_count": 248,
+            "projection_m2": 0.00483805268652828,
+            "free_area_m2": 0.030347785033677403,
+            "height_m": 3.7199999999999998
+          },
+          {
+            "row": 2,
+            "area_m2": 9.54966469678006,
+            "alpha_hot_w_m2k": 128.07079589610976,
+            "row_correction": 0.9983870967741936,
+            "crossflow_tube_count": 310,
+            "projection_m2": 0.010053096491487334,
+            "free_area_m2": 0.02513274122871835,
+            "height_m": 6.51
+          }
+        ],
+        "coils": [
+          {
+            "row": 1,
+            "length_m": 11.340332752450749,
+            "area_m2": 0.4275204727723559,
+            "nu_hot": 4.4262307576667475,
+            "alpha_hot_w_m2k": 291.35275846492425,
+            "re_hot": 368.02010288965306,
+            "re_critical": 8596.228664652976,
+            "radius_ratio": 5.5,
+            "length_ratio": 1134.033275245075,
+            "length_correction": 1,
+            "angle_correction": 0.9817011760747155,
+            "k_linear_w_mk": 4.274867759717052,
+            "k_w_m2k": 113.39438917052426,
+            "ua_w_k": 48.47842286791504,
+            "heat_duty_w": 218.36576196249007,
+            "wall_inner_c": 63.918334814254194,
+            "wall_outer_c": 35.07875667766404,
+            "valid": false
+          },
+          {
+            "row": 2,
+            "length_m": 16.887514904030134,
+            "area_m2": 0.9549664696780059,
+            "nu_hot": 3.1130422045959327,
+            "alpha_hot_w_m2k": 128.07079589610976,
+            "re_hot": 230.01256430603317,
+            "re_critical": 8778.855558560103,
+            "radius_ratio": 5,
+            "length_ratio": 1055.4696815018833,
+            "length_correction": 1,
+            "angle_correction": 0.9693028774064538,
+            "k_linear_w_mk": 6.681184307039204,
+            "k_w_m2k": 118.14927868592095,
+            "ua_w_k": 112.82859956169679,
+            "heat_duty_w": 508.22410583734035,
+            "wall_inner_c": 64.00138838204647,
+            "wall_outer_c": 35.15945842863705,
+            "valid": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "three-coils-one-turn",
+      "inputs": {
+        "coil_rows": [
+          {
+            "count": 3,
+            "radius_m": 0.05,
+            "pitch_m": 0.042,
+            "turns": 1,
+            "tube_outer_diameter_m": 0.014
+          }
+        ]
+      },
+      "expected": {
+        "t_hot_out_c": 89.97959924277052,
+        "t_cold_out_c": 31.700088944730943,
+        "heat_duty_w": 1375.5651372931345,
+        "ua_w_k": 20.7109516270826,
+        "overall_u_w_m2k": 577.7646931099912,
+        "area_m2": 0.03584668961960917,
+        "alpha_hot_w_m2k": 1514.1745992827853,
+        "mass_flow_hot_kg_s": 0.02175,
+        "mass_flow_cold_kg_s": 0.19363313105225916,
+        "volume_flow_hot_inlet_m3_h": 0.08197486552150628,
+        "volume_flow_cold_inlet_m3_h": 0.7,
+        "hot_velocity_m_s": 0.09609557246414675,
+        "t_wall_c": 64.54688228537587,
+        "heat_balance_error_w": 4.547473508864641e-13,
+        "hot_properties": {
+          "rho": 960.6047877777105,
+          "mu": 0.00028944543348079894,
+          "cp": 4210.565027566244,
+          "lambda": 0.6767906833519792,
+          "pr": 1.8007470397892253
+        },
+        "cold_properties": {
+          "rho": 995.5673951561814,
+          "mu": 0.0007830033878098788,
+          "cp": 4178.590851388073,
+          "lambda": 0.615892333246924,
+          "pr": 5.312374608820588
+        },
+        "valid": false,
+        "outlet_iterations": 3,
+        "wall_iterations": 2,
+        "shell": {
+          "free_area_m2": 0.006022433116931636,
+          "limiting_row": 1,
+          "diameter_effective_m": 0.014,
+          "s1_m": null,
+          "s2_m": 0.042,
+          "row_winding_steps_m": [
+            0.042
+          ],
+          "adjacent_radius_steps_m": [],
+          "relative_pitch": null,
+          "spacing_correction": 1,
+          "bundle_correction": 0.8333333333333334,
+          "volume_flow_mean_m3_h": 0.7001829059285106,
+          "velocity_m_s": 0.032295128541984,
+          "re_cold": 574.8732189293853,
+          "regime": "laminar",
+          "correlation_c": 0.56,
+          "re_exponent": 0.5,
+          "pr_exponent": 0.36,
+          "nu_base": 28.789710506062686,
+          "nu_cold": 23.991425421718905,
+          "alpha_cold_w_m2k": 1055.4382129215733,
+          "valid": true
+        },
+        "rows": [
+          {
+            "row": 1,
+            "area_m2": 0.03584668961960917,
+            "alpha_hot_w_m2k": 1514.1745992827853,
+            "row_correction": 0.8333333333333334,
+            "crossflow_tube_count": 3,
+            "projection_m2": 0.00439822971502571,
+            "free_area_m2": 0.006022433116931636,
+            "height_m": 0.042
+          }
+        ],
+        "coils": [
+          {
+            "row": 1,
+            "length_m": 0.31695432480231844,
+            "area_m2": 0.011948896539869722,
+            "nu_hot": 22.37286411484638,
+            "alpha_hot_w_m2k": 1514.1745992827855,
+            "re_hot": 3189.197559042606,
+            "re_critical": 8778.8555585601,
+            "radius_ratio": 5,
+            "length_ratio": 31.695432480231844,
+            "length_correction": 1.0723705538389567,
+            "angle_correction": 1,
+            "k_linear_w_mk": 21.781215784534922,
+            "k_w_m2k": 577.7646931099913,
+            "ua_w_k": 6.903650542360867,
+            "heat_duty_w": 458.5217124310449,
+            "wall_inner_c": 67.07998061827571,
+            "wall_outer_c": 62.01378395247606,
+            "valid": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "short-length",
+      "inputs": {
+        "coil_rows": [
+          {
+            "count": 1,
+            "radius_m": 0.035,
+            "pitch_m": 0.014,
+            "turns": 1,
+            "tube_outer_diameter_m": 0.014
+          }
+        ],
+        "displacer_outer_diameter_m": 0.04,
+        "mass_flow_hot_kg_s": 0.05
+      },
+      "expected": {
+        "t_hot_out_c": 103.19242537785836,
+        "t_cold_out_c": 30.471172518310322,
+        "heat_duty_w": 381.2413487343311,
+        "ua_w_k": 5.1617724961430556,
+        "overall_u_w_m2k": 621.3574956062683,
+        "area_m2": 0.008307250709362784,
+        "alpha_hot_w_m2k": 9089.846355361431,
+        "mass_flow_hot_kg_s": 0.05,
+        "mass_flow_cold_kg_s": 0.19363313105225916,
+        "volume_flow_hot_inlet_m3_h": 0.1884479667161064,
+        "volume_flow_cold_inlet_m3_h": 0.7,
+        "hot_velocity_m_s": 0.6660323636516052,
+        "t_wall_c": 95.14109121646092,
+        "heat_balance_error_w": 1.3073986337985843e-12,
+        "hot_properties": {
+          "rho": 955.8390959821147,
+          "mu": 0.00027020075504617587,
+          "cp": 4218.2640103967615,
+          "lambda": 0.679215615444814,
+          "pr": 1.6780799714783963
+        },
+        "cold_properties": {
+          "rho": 995.7559559090006,
+          "mu": 0.0007932281749079911,
+          "cp": 4178.692151936339,
+          "lambda": 0.61496930481661,
+          "pr": 5.389954137908186
+        },
+        "valid": true,
+        "outlet_iterations": 2,
+        "wall_iterations": 3,
+        "shell": {
+          "free_area_m2": 0.01062172476178709,
+          "limiting_row": 1,
+          "diameter_effective_m": 0.014,
+          "s1_m": null,
+          "s2_m": 0.014,
+          "row_winding_steps_m": [
+            0.014
+          ],
+          "adjacent_radius_steps_m": [],
+          "relative_pitch": null,
+          "spacing_correction": 1,
+          "bundle_correction": 0.6,
+          "volume_flow_mean_m3_h": 0.7000503161959868,
+          "velocity_m_s": 0.01830761251366059,
+          "re_cold": 321.7470166322914,
+          "regime": "laminar",
+          "correlation_c": 0.56,
+          "re_exponent": 0.5,
+          "pr_exponent": 0.36,
+          "nu_base": 24.069169939209868,
+          "nu_cold": 14.44150196352592,
+          "alpha_cold_w_m2k": 634.3628873583746,
+          "valid": true
+        },
+        "rows": [
+          {
+            "row": 1,
+            "area_m2": 0.008307250709362784,
+            "alpha_hot_w_m2k": 9089.846355361431,
+            "row_correction": 0.6,
+            "crossflow_tube_count": 1,
+            "projection_m2": 0.003078760800517997,
+            "free_area_m2": 0.01062172476178709,
+            "height_m": 0.014
+          }
+        ],
+        "coils": [
+          {
+            "row": 1,
+            "length_m": 0.22035666898312353,
+            "area_m2": 0.008307250709362784,
+            "nu_hot": 133.82858327555599,
+            "alpha_hot_w_m2k": 9089.846355361431,
+            "re_hot": 23560.991613764607,
+            "re_critical": 9510.558186048645,
+            "radius_ratio": 3.5000000000000004,
+            "length_ratio": 22.035666898312353,
+            "length_correction": 1.1032684423066321,
+            "angle_correction": 1,
+            "k_linear_w_mk": 23.42462572139526,
+            "k_w_m2k": 621.3574956062683,
+            "ua_w_k": 5.1617724961430556,
+            "heat_duty_w": 381.2413487343311,
+            "wall_inner_c": 98.03682810736937,
+            "wall_outer_c": 92.24535432555248,
+            "valid": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "valid-turbulent",
+      "inputs": {
+        "mass_flow_hot_kg_s": 0.3,
+        "volume_flow_cold_m3_h": 2
+      },
+      "expected": {
+        "t_hot_out_c": 72.86650748546722,
+        "t_cold_out_c": 47.52349441811229,
+        "heat_duty_w": 40507.41145018273,
+        "ua_w_k": 813.157849867286,
+        "overall_u_w_m2k": 2209.8564516826236,
+        "area_m2": 0.36796862947732795,
+        "alpha_hot_w_m2k": 28640.076207867358,
+        "mass_flow_hot_kg_s": 0.3,
+        "mass_flow_cold_kg_s": 0.5532375172921691,
+        "volume_flow_hot_inlet_m3_h": 1.130687800296638,
+        "volume_flow_cold_inlet_m3_h": 2,
+        "hot_velocity_m_s": 3.952193369762035,
+        "t_wall_c": 77.19738660298941,
+        "heat_balance_error_w": 7.275957614183426e-12,
+        "hot_properties": {
+          "rho": 966.48070497509,
+          "mu": 0.0003183214203855412,
+          "cp": 4201.992820197674,
+          "lambda": 0.672787151761375,
+          "pr": 1.9881240589588216
+        },
+        "cold_properties": {
+          "rho": 992.8595980376074,
+          "mu": 0.0006682534519584981,
+          "cp": 4178.324380442111,
+          "lambda": 0.6270655804671958,
+          "pr": 4.452771412764319
+        },
+        "valid": true,
+        "outlet_iterations": 3,
+        "wall_iterations": 3,
+        "shell": {
+          "free_area_m2": 0.006022433116931636,
+          "limiting_row": 1,
+          "diameter_effective_m": 0.014,
+          "s1_m": null,
+          "s2_m": 0.021,
+          "row_winding_steps_m": [
+            0.021
+          ],
+          "adjacent_radius_steps_m": [],
+          "relative_pitch": null,
+          "spacing_correction": 1,
+          "bundle_correction": 0.9838709677419354,
+          "volume_flow_mean_m3_h": 2.005978555465774,
+          "velocity_m_s": 0.0925234460206102,
+          "re_cold": 1924.5378773306425,
+          "regime": "crossflow",
+          "correlation_c": 0.26,
+          "re_exponent": 0.65,
+          "pr_exponent": 0.33,
+          "nu_base": 68.38123337825905,
+          "nu_cold": 67.27831025925487,
+          "alpha_cold_w_m2k": 3013.422333969411,
+          "valid": true
+        },
+        "rows": [
+          {
+            "row": 1,
+            "area_m2": 0.36796862947732795,
+            "alpha_hot_w_m2k": 28640.076207867358,
+            "row_correction": 0.9838709677419355,
+            "crossflow_tube_count": 31,
+            "projection_m2": 0.00439822971502571,
+            "free_area_m2": 0.006022433116931636,
+            "height_m": 0.651
+          }
+        ],
+        "coils": [
+          {
+            "row": 1,
+            "length_m": 9.760671047344475,
+            "area_m2": 0.36796862947732795,
+            "nu_hot": 425.6929718840031,
+            "alpha_hot_w_m2k": 28640.076207867354,
+            "re_hot": 119995.65186593983,
+            "re_critical": 8778.8555585601,
+            "radius_ratio": 5,
+            "length_ratio": 976.0671047344475,
+            "length_correction": 1,
+            "angle_correction": 1,
+            "k_linear_w_mk": 83.30962552912966,
+            "k_w_m2k": 2209.8564516826236,
+            "ua_w_k": 813.157849867286,
+            "heat_duty_w": 40507.41145018273,
+            "wall_inner_c": 84.3200415517741,
+            "wall_outer_c": 70.07473165420474,
+            "valid": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "volumetric-hot",
+      "inputs": {
+        "hot_flow_mode": "volume",
+        "volume_flow_hot_m3_h": 0.1
+      },
+      "expected": {
+        "t_hot_out_c": 35.67148136840251,
+        "t_cold_out_c": 39.52211799449407,
+        "heat_duty_w": 7703.821888143755,
+        "ua_w_k": 315.1095365892538,
+        "overall_u_w_m2k": 856.3489149519171,
+        "area_m2": 0.36796862947732795,
+        "alpha_hot_w_m2k": 3667.6709486174523,
+        "mass_flow_hot_kg_s": 0.026532522940576026,
+        "mass_flow_cold_kg_s": 0.19363313105225916,
+        "volume_flow_hot_inlet_m3_h": 0.1,
+        "volume_flow_cold_inlet_m3_h": 0.7,
+        "hot_velocity_m_s": 0.3454169801489632,
+        "t_wall_c": 56.601637350965035,
+        "heat_balance_error_w": -2.7284841053187847e-12,
+        "hot_properties": {
+          "rho": 978.0138027657318,
+          "mu": 0.00040195911094155745,
+          "cp": 4188.087671332591,
+          "lambda": 0.6605538631979516,
+          "pr": 2.5485279713058926
+        },
+        "cold_properties": {
+          "rho": 994.2917744426637,
+          "mu": 0.0007225951875847076,
+          "cp": 4178.236383450898,
+          "lambda": 0.6215790015795832,
+          "pr": 4.857264314914915
+        },
+        "valid": false,
+        "outlet_iterations": 4,
+        "wall_iterations": 3,
+        "shell": {
+          "free_area_m2": 0.006022433116931636,
+          "limiting_row": 1,
+          "diameter_effective_m": 0.014,
+          "s1_m": null,
+          "s2_m": 0.021,
+          "row_winding_steps_m": [
+            0.021
+          ],
+          "adjacent_radius_steps_m": [],
+          "relative_pitch": null,
+          "spacing_correction": 1,
+          "bundle_correction": 0.9838709677419354,
+          "volume_flow_mean_m3_h": 0.7010812014198458,
+          "velocity_m_s": 0.03233656138491077,
+          "re_cold": 622.9320174238106,
+          "regime": "laminar",
+          "correlation_c": 0.56,
+          "re_exponent": 0.5,
+          "pr_exponent": 0.36,
+          "nu_base": 27.467083535330904,
+          "nu_cold": 27.024066058954595,
+          "alpha_cold_w_m2k": 1199.8279999675499,
+          "valid": true
+        },
+        "rows": [
+          {
+            "row": 1,
+            "area_m2": 0.36796862947732795,
+            "alpha_hot_w_m2k": 3667.6709486174523,
+            "row_correction": 0.9838709677419355,
+            "crossflow_tube_count": 31,
+            "projection_m2": 0.00439822971502571,
+            "free_area_m2": 0.006022433116931636,
+            "height_m": 0.651
+          }
+        ],
+        "coils": [
+          {
+            "row": 1,
+            "length_m": 9.760671047344475,
+            "area_m2": 0.36796862947732795,
+            "nu_hot": 55.52417680007334,
+            "alpha_hot_w_m2k": 3667.6709486174523,
+            "re_hot": 8404.401470189845,
+            "re_critical": 8778.8555585601,
+            "radius_ratio": 5,
+            "length_ratio": 976.0671047344475,
+            "length_correction": 1,
+            "angle_correction": 1,
+            "k_linear_w_mk": 32.2835935214704,
+            "k_w_m2k": 856.3489149519171,
+            "ua_w_k": 315.1095365892538,
+            "heat_duty_w": 7703.821888143755,
+            "wall_inner_c": 63.485708711546835,
+            "wall_outer_c": 49.71756599038325,
+            "valid": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "mass-cold",
+      "inputs": {
+        "cold_flow_mode": "mass",
+        "mass_flow_cold_kg_s": 0.2
+      },
+      "expected": {
+        "t_hot_out_c": 33.541341801648144,
+        "t_cold_out_c": 37.78822483624944,
+        "heat_duty_w": 6508.267986386571,
+        "ua_w_k": 300.8627782556656,
+        "overall_u_w_m2k": 817.6315972451749,
+        "area_m2": 0.36796862947732795,
+        "alpha_hot_w_m2k": 3092.092667301359,
+        "mass_flow_hot_kg_s": 0.02175,
+        "mass_flow_cold_kg_s": 0.2,
+        "volume_flow_hot_inlet_m3_h": 0.08197486552150628,
+        "volume_flow_cold_inlet_m3_h": 0.7230167649471915,
+        "hot_velocity_m_s": 0.2829803610865144,
+        "t_wall_c": 54.42025909643216,
+        "heat_balance_error_w": -1.8189894035458565e-12,
+        "hot_properties": {
+          "rho": 978.6177384063528,
+          "mu": 0.00040785246112727086,
+          "cp": 4187.46614563041,
+          "lambda": 0.6597031391776429,
+          "pr": 2.5888437873911645
+        },
+        "cold_properties": {
+          "rho": 994.5856215766659,
+          "mu": 0.0007353281692498282,
+          "cp": 4178.274332871433,
+          "lambda": 0.6203458372459718,
+          "pr": 4.952725772214165
+        },
+        "valid": false,
+        "outlet_iterations": 3,
+        "wall_iterations": 3,
+        "shell": {
+          "free_area_m2": 0.006022433116931636,
+          "limiting_row": 1,
+          "diameter_effective_m": 0.014,
+          "s1_m": null,
+          "s2_m": 0.021,
+          "row_winding_steps_m": [
+            0.021
+          ],
+          "adjacent_radius_steps_m": [],
+          "relative_pitch": null,
+          "spacing_correction": 1,
+          "bundle_correction": 0.9838709677419354,
+          "volume_flow_mean_m3_h": 0.7239195745245349,
+          "velocity_m_s": 0.033389954989439925,
+          "re_cold": 632.2732996895245,
+          "regime": "laminar",
+          "correlation_c": 0.56,
+          "re_exponent": 0.5,
+          "pr_exponent": 0.36,
+          "nu_base": 27.739408834141294,
+          "nu_cold": 27.291999014235788,
+          "alpha_cold_w_m2k": 1209.3198556144525,
+          "valid": true
+        },
+        "rows": [
+          {
+            "row": 1,
+            "area_m2": 0.36796862947732795,
+            "alpha_hot_w_m2k": 3092.092667301359,
+            "row_correction": 0.9838709677419355,
+            "crossflow_tube_count": 31,
+            "projection_m2": 0.00439822971502571,
+            "free_area_m2": 0.006022433116931636,
+            "height_m": 0.651
+          }
+        ],
+        "coils": [
+          {
+            "row": 1,
+            "length_m": 9.760671047344475,
+            "area_m2": 0.36796862947732795,
+            "nu_hot": 46.870970951507466,
+            "alpha_hot_w_m2k": 3092.0926673013587,
+            "re_hot": 6789.945565474512,
+            "re_critical": 8778.8555585601,
+            "radius_ratio": 5,
+            "length_ratio": 976.0671047344475,
+            "length_correction": 1,
+            "angle_correction": 1,
+            "k_linear_w_mk": 30.823985030979962,
+            "k_w_m2k": 817.6315972451749,
+            "ua_w_k": 300.8627782556656,
+            "heat_duty_w": 6508.267986386571,
+            "wall_inner_c": 62.41083576850792,
+            "wall_outer_c": 46.42968242435639,
+            "valid": false
+          }
+        ]
+      }
+    },
+    {
+      "name": "air-water",
+      "inputs": {
+        "hot_fluid": "Air",
+        "mass_flow_hot_kg_s": 0.002
+      },
+      "expected": {
+        "t_hot_out_c": 30.00000061780085,
+        "t_cold_out_c": 30.18912102685623,
+        "heat_duty_w": 153.02503330151123,
+        "ua_w_k": 38.070821019319474,
+        "overall_u_w_m2k": 103.46213771917525,
+        "area_m2": 0.36796862947732795,
+        "alpha_hot_w_m2k": 136.39079608583768,
+        "mass_flow_hot_kg_s": 0.002,
+        "mass_flow_cold_kg_s": 0.19363313105225916,
+        "volume_flow_hot_inlet_m3_h": 0.7109194375605814,
+        "volume_flow_cold_inlet_m3_h": 0.7,
+        "hot_velocity_m_s": 2.2613022008679606,
+        "t_wall_c": 47.1219382103807,
+        "heat_balance_error_w": 2.2737367544323206e-13,
+        "hot_properties": {
+          "rho": 11.261117989859581,
+          "mu": 0.00002057941626756522,
+          "cp": 1020.1668970802077,
+          "lambda": 0.0296288207627506,
+          "pr": 0.7085816680155629
+        },
+        "cold_properties": {
+          "rho": 995.7988762591679,
+          "mu": 0.0007956110876464318,
+          "cp": 4178.717360168919,
+          "lambda": 0.6147557548174765,
+          "pr": 5.408056513237713
+        },
+        "valid": true,
+        "outlet_iterations": 2,
+        "wall_iterations": 2,
+        "shell": {
+          "free_area_m2": 0.006022433116931636,
+          "limiting_row": 1,
+          "diameter_effective_m": 0.014,
+          "s1_m": null,
+          "s2_m": 0.021,
+          "row_winding_steps_m": [
+            0.021
+          ],
+          "adjacent_radius_steps_m": [],
+          "relative_pitch": null,
+          "spacing_correction": 1,
+          "bundle_correction": 0.9838709677419354,
+          "volume_flow_mean_m3_h": 0.7000201430300774,
+          "velocity_m_s": 0.03228762129111817,
+          "re_cold": 565.7634552510343,
+          "regime": "laminar",
+          "correlation_c": 0.56,
+          "re_exponent": 0.5,
+          "pr_exponent": 0.36,
+          "nu_base": 26.776479282276533,
+          "nu_cold": 26.344600584175296,
+          "alpha_cold_w_m2k": 1156.8210583921154,
+          "valid": true
+        },
+        "rows": [
+          {
+            "row": 1,
+            "area_m2": 0.36796862947732795,
+            "alpha_hot_w_m2k": 136.39079608583768,
+            "row_correction": 0.9838709677419355,
+            "crossflow_tube_count": 31,
+            "projection_m2": 0.00439822971502571,
+            "free_area_m2": 0.006022433116931636,
+            "height_m": 0.651
+          }
+        ],
+        "coils": [
+          {
+            "row": 1,
+            "length_m": 9.760671047344475,
+            "area_m2": 0.36796862947732795,
+            "nu_hot": 46.03315034977984,
+            "alpha_hot_w_m2k": 136.39079608583768,
+            "re_hot": 12373.913119604742,
+            "re_critical": 8778.8555585601,
+            "radius_ratio": 5,
+            "length_ratio": 976.0671047344475,
+            "length_correction": 1,
+            "angle_correction": 1,
+            "k_linear_w_mk": 3.900430701399077,
+            "k_w_m2k": 103.46213771917526,
+            "ua_w_k": 38.070821019319474,
+            "heat_duty_w": 153.02503330151123,
+            "wall_inner_c": 63.841122703922764,
+            "wall_outer_c": 30.40275371683862,
+            "valid": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "cold-water",
+      "inputs": {
+        "t_hot_in_c": 60,
+        "t_cold_in_c": 5,
+        "p_hot_mpa": 0.2,
+        "p_cold_mpa": 0.3
+      },
+      "expected": {
+        "t_hot_out_c": 9.072885880471304,
+        "t_cold_out_c": 10.67019204932888,
+        "heat_duty_w": 4628.955180777202,
+        "ua_w_k": 255.10864827512324,
+        "overall_u_w_m2k": 693.2891226012557,
+        "area_m2": 0.36796862947732795,
+        "alpha_hot_w_m2k": 2390.077873806197,
+        "mass_flow_hot_kg_s": 0.02175,
+        "mass_flow_cold_kg_s": 0.19445694608444444,
+        "volume_flow_hot_inlet_m3_h": 0.07963475897631056,
+        "volume_flow_cold_inlet_m3_h": 0.7,
+        "hot_velocity_m_s": 0.2785352142903792,
+        "t_wall_c": 23.148580153566407,
+        "heat_balance_error_w": 0,
+        "hot_properties": {
+          "rho": 994.2355105275577,
+          "mu": 0.0007258424287297405,
+          "cp": 4179.021906748178,
+          "lambda": 0.6210984163299247,
+          "pr": 4.883785452928295
+        },
+        "cold_properties": {
+          "rho": 999.9568222523158,
+          "mu": 0.0013913423366949148,
+          "cp": 4198.186678102699,
+          "lambda": 0.5742833966287397,
+          "pr": 10.17113657974864
+        },
+        "valid": false,
+        "outlet_iterations": 4,
+        "wall_iterations": 3,
+        "shell": {
+          "free_area_m2": 0.006022433116931636,
+          "limiting_row": 1,
+          "diameter_effective_m": 0.014,
+          "s1_m": null,
+          "s2_m": 0.021,
+          "row_winding_steps_m": [
+            0.021
+          ],
+          "adjacent_radius_steps_m": [],
+          "relative_pitch": null,
+          "spacing_correction": 1,
+          "bundle_correction": 0.9838709677419354,
+          "volume_flow_mean_m3_h": 0.7000752335757954,
+          "velocity_m_s": 0.032290162278966264,
+          "re_cold": 324.8968574826995,
+          "regime": "laminar",
+          "correlation_c": 0.56,
+          "re_exponent": 0.5,
+          "pr_exponent": 0.36,
+          "nu_base": 26.086395418885886,
+          "nu_cold": 25.665647105678048,
+          "alpha_cold_w_m2k": 1052.8110711802408,
+          "valid": true
+        },
+        "rows": [
+          {
+            "row": 1,
+            "area_m2": 0.36796862947732795,
+            "alpha_hot_w_m2k": 2390.077873806197,
+            "row_correction": 0.9838709677419355,
+            "crossflow_tube_count": 31,
+            "projection_m2": 0.00439822971502571,
+            "free_area_m2": 0.006022433116931636,
+            "height_m": 0.651
+          }
+        ],
+        "coils": [
+          {
+            "row": 1,
+            "length_m": 9.760671047344475,
+            "area_m2": 0.36796862947732795,
+            "nu_hot": 38.481467847385375,
+            "alpha_hot_w_m2k": 2390.077873806197,
+            "re_hot": 3815.2853845226173,
+            "re_critical": 8778.8555585601,
+            "radius_ratio": 5,
+            "length_ratio": 976.0671047344475,
+            "length_correction": 1,
+            "angle_correction": 1,
+            "k_linear_w_mk": 26.13638417253382,
+            "k_w_m2k": 693.2891226012557,
+            "ua_w_k": 255.10864827512324,
+            "heat_duty_w": 4628.955180777202,
+            "wall_inner_c": 28.22027776833226,
+            "wall_outer_c": 18.076882538800557,
+            "valid": false
+          }
+        ]
+      }
+    }
+  ]
+}

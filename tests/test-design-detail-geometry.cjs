@@ -1,5 +1,6 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict'),path=require('node:path');
 const app=fs.readFileSync(path.join(__dirname,'..','app.js'),'utf8');
+const editorSource=app.slice(app.indexOf('function renderDesignGeometry('),app.indexOf('function renderDesignGeometryFeedback('));assert(!editorSource.includes('Минимальные зазоры'));assert(!editorSource.includes('Вытеснительная труба — закрытая центральная вставка'));for(const key of ['coreClearance','shellClearance','rowClearance'])assert(!editorSource.includes("['"+key+"'"));assert(editorSource.includes('detail-geometry-error'),'Keep validation feedback after removing the optional UI section');
 const model=app.slice(app.indexOf('function coilGeometryError('),app.indexOf('function coilFieldDefinitions('));
 const {calculateCoilGeometry:calculate,restoreCoilGeometry:restore,seedCoilGeometry:seed}=vm.runInNewContext(model+';({calculateCoilGeometry,restoreCoilGeometry,seedCoilGeometry})');
 const base={diameter:600,height:2000,shellWall:4,coreDiameter:180,tubeDiameter:20,tubeWall:2,clearance:5,rows:[{diameter:300,count:2,turns:10,pitch:60}]};

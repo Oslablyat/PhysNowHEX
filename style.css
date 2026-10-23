@@ -343,9 +343,9 @@ main{flex:none}
 #variant-status{font-size:10px;line-height:15px;color:#939393}
 .variants-scroll{overflow-x:auto;min-width:0;padding:3px;border-radius:12px;scrollbar-width:thin;scrollbar-color:#626262 transparent}
 .variants-scroll:focus-visible{outline:1px solid #aaa;outline-offset:2px}
-.variant-selection-grid{min-width:1080px}
+.variant-selection-grid{min-width:1000px}
 .variant-options{display:flex;flex-direction:column;gap:2px}
-.variants-panel .variant-row{display:grid;grid-template-columns:minmax(220px,2.6fr) repeat(4,minmax(60px,.8fr)) minmax(90px,1fr) repeat(2,minmax(92px,1fr)) minmax(100px,1fr) minmax(84px,.9fr) 16px;align-items:center;gap:12px;width:100%;box-sizing:border-box;padding:12px;border-radius:12px;font-size:12px;line-height:20px;text-align:left;white-space:nowrap}
+.variants-panel .variant-row{display:grid;grid-template-columns:minmax(220px,2.6fr) repeat(4,minmax(60px,.8fr)) minmax(90px,1fr) repeat(2,minmax(92px,1fr)) minmax(100px,1fr) 16px;align-items:center;gap:12px;width:100%;box-sizing:border-box;padding:12px;border-radius:12px;font-size:12px;line-height:20px;text-align:left;white-space:nowrap}
 .variants-panel .variant-header{font-size:11px;line-height:16px;color:#a1a1a1;padding-top:0;padding-bottom:8px}
 .variant-header small{display:block;font-size:10px;color:#8d8d8d;font-weight:400;line-height:16px}
 .variants-panel .num{text-align:right;font-variant-numeric:tabular-nums}
@@ -367,7 +367,7 @@ main{flex:none}
 .variants-panel .variant-option .t-icon-swap{position:sticky;right:0;border-radius:4px;background:#2b2b2b;box-shadow:0 0 0 4px #2b2b2b}
 .variants-panel .variant-option[aria-checked=true] .t-icon-swap{background:#243649;box-shadow:0 0 0 4px #243649}
 @media(prefers-reduced-motion:reduce){.variants-panel .t-icon-swap .t-icon,.variants-panel .variant-option{transition:none!important}.variants-panel .variant-option:is(:active,.is-pressed){transform:none}}
-@media(max-width:1000px){.variants-panel .variant-row{font-size:11px;gap:9px}.variants-panel .variant-selection-grid{min-width:1060px}}
+@media(max-width:1000px){.variants-panel .variant-row{font-size:11px;gap:9px}.variants-panel .variant-selection-grid{min-width:980px}}
 @media(max-width:560px){.variants-heading{padding-left:4px;padding-right:4px;gap:10px}.variants-panel .variants-heading h2{font-size:15px}.variants-panel .variant-row{padding:12px}}
 
 .variant-method-details p,.variant-method-details li{font-size:11px;line-height:1.65}.variant-method-details li+li{margin-top:5px}.variant-method-details .formula{font-size:12px}.method-sources a{text-decoration:underline;text-underline-offset:3px}
@@ -493,6 +493,7 @@ footer{color:#737373}
 
 /* Searchable parameter card, matching the reference dialog shell. */
 .variants-heading>.variants-actions{display:flex;flex-direction:row;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:8px}
+.variants-actions>[hidden]{display:none!important}
 .variant-card-trigger{background:transparent;border-color:#363636;color:#c9c9c9}
 .exchanger-card-open{overflow:hidden}
 .exchanger-card-dialog{width:800px;max-width:calc(100vw - 32px);max-height:calc(100dvh - 48px);padding:0;border:1px solid #303030;border-radius:20px;background:#202020;color:#eee;box-shadow:0 24px 100px #0009;overflow:hidden}
@@ -737,3 +738,19 @@ main{padding-top:0}
  .calculator-overview>.heading,.verification-heading,.design-section-heading{height:auto;min-height:67.2px;padding:12px 20px;flex-wrap:wrap}
  .verification-heading-actions{width:auto;justify-content:flex-end}
 }
+/* Teplo verification uses the existing neutral engineering palette. */
+.coil-thermal{padding:22px;color:var(--text,#d7d7d7);min-width:0}
+.coil-thermal-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.coil-thermal h2{font-size:18px;font-weight:600;margin:0 0 7px}.coil-thermal h3{font-size:14px;margin:22px 0 10px}
+.coil-thermal-heading p,.coil-thermal-note,.coil-thermal-method p{color:#919aab;font-size:12px;line-height:1.65;margin:8px 0 16px}
+.coil-thermal-actions{display:flex;gap:8px;flex-wrap:wrap}.coil-thermal-actions button{background:#282828;border:1px solid #3b3b3b;color:#c9d3e0;border-radius:7px;padding:8px 11px;font:inherit;font-size:12px;cursor:pointer}.coil-thermal-actions button:hover{border-color:#7ca4d6}.coil-thermal-actions button:disabled{opacity:.45;cursor:default}
+.coil-thermal-inputs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin:24px 0}
+.coil-thermal fieldset{border:0;border-top:1px solid #363636;padding:16px 0 0;margin:0;min-width:0}.coil-thermal legend{font-size:13px;font-weight:600;padding-right:8px}
+.coil-thermal-field{display:block;margin:0 0 12px;min-width:0}.coil-thermal-field>span{display:block;font-size:12px;color:#a5adba;margin-bottom:7px}.coil-thermal-field .input-wrap{height:36px}.coil-thermal input{width:100%;min-width:0}.coil-thermal select{width:100%;height:36px;background:#161616;border:1px solid #383838;color:#d5dae3;border-radius:6px;padding:0 9px;font:inherit;font-size:13px}
+.coil-thermal-status{font-size:13px;line-height:1.6;padding:12px 0;border-block:1px solid #353535;white-space:pre-line}.coil-thermal-status[data-kind=error],.coil-thermal-status[data-kind=warning]{color:#e9b474}.coil-thermal-status[data-kind=valid]{color:#85c5a9}
+.coil-thermal-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:#333;margin:20px 0;border:1px solid #333;border-radius:8px;overflow:hidden}.coil-thermal-metrics>div{padding:17px;background:#202020}.coil-thermal-metrics span{display:block;color:#9da6b5;font-size:12px;margin-bottom:10px}.coil-thermal-metrics b{font-size:20px;font-weight:500}.coil-thermal-metrics small{font-size:11px;color:#99a5b8;font-weight:400}
+.coil-thermal-table{min-width:0}.coil-thermal-table>div{overflow:auto;max-height:440px}.coil-thermal table{width:100%;border-collapse:collapse;font-size:12px}.coil-thermal th{font-weight:500;text-align:left;color:#97a9c0;background:#202020;position:sticky;top:0}.coil-thermal td,.coil-thermal th{border-bottom:1px solid #303030;padding:11px 12px;vertical-align:top}.coil-thermal td{font-variant-numeric:tabular-nums}.coil-thermal td:first-child,.coil-thermal th:first-child{padding-left:0}.coil-thermal details{margin-top:24px;font-size:12px;line-height:1.65}.coil-thermal summary{cursor:pointer;color:#b4c6df}.coil-thermal a{color:#9dbce8}
+#coil-thermal-design{width:100%;min-width:0;max-height:950px;overflow:auto}#coil-thermal-verification{margin-top:24px;background:#1b1b1b;border:1px solid #343434;border-radius:14px}
+.coil-thermal [hidden],#coil-thermal-design[hidden],#coil-thermal-verification[hidden]{display:none!important}
+@media(max-width:1100px){.coil-thermal-inputs{grid-template-columns:repeat(2,minmax(0,1fr))}.coil-thermal-inputs fieldset:last-child{grid-column:1/-1}}
+@media(max-width:600px){.coil-thermal{padding:15px}.coil-thermal-inputs{grid-template-columns:1fr}.coil-thermal-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.coil-thermal-metrics b{font-size:17px}.coil-thermal-actions{width:100%}.coil-thermal-actions button{flex:1}.coil-thermal td,.coil-thermal th{padding:9px}}
