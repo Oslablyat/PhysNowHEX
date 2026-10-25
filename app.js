@@ -20,7 +20,6 @@ const coilProject={worker:null,id:0,key:null,timer:null,phase:'idle',version:''}
 let calculationIssue=null;
 const fieldFeedback=new Map(),touchedNumericFields=new Set();
 let fieldFeedbackReady=false,submittedNumericFields=false;
-document.querySelector('.thermal .workspace-toolbar').insertAdjacentHTML('afterend','<div class="calculation-alert" id="calculation-alert" role="alert" aria-atomic="true" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2 21h20L12 3Z"/><path d="M12 9v5m0 3v.1"/></svg><div><strong id="calculation-alert-title"></strong><p id="calculation-alert-message"></p><p id="calculation-alert-hint"></p></div></div>');
 
 function toast(message){$('toast').textContent=message;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),3000)}
 function getState(){return Object.fromEntries([['flow',flow],['unknown',unknownParameter],['selected-variant',selectedVariant],['coil-variant-binding',coilVariantBinding],['verification-design',verificationSelection],['verification-state',verificationState],['coil-thermal-inputs',coilThermalInputs],['refine-tubes',$('refine-tubes').getAttribute('aria-checked')==='true'],...fieldIds.map(id=>[id,$(id).dataset.exactValue??$(id).value])])}
@@ -204,16 +203,11 @@ function coilProjectState(){const state=getState();return Object.fromEntries([..
 function coilProjectKey(state){return JSON.stringify(['sequential-full-height-v1',calculationSheets?.activeId??'',state.flow,state.unknown,...['thi','tho','tci','tco','mh','mc','ph','pc','hot-fluid','cold-fluid','hot-flow-unit','cold-flow-unit','length','exchanger-diameter','tube-conductivity','area-reserve-percent','refine-tubes','tube-diameter','tube-wall'].map(k=>k===state.unknown?null:state[k]),state['coil-thermal-inputs'].arrangement])}
 function setCalculationIssue(issue){
  calculationIssue=issue&&issue.code!=='incomplete'?{...issue}:null;
- const alert=$('calculation-alert'),thermal=document.querySelector('.thermal');
- alert.hidden=!calculationIssue;thermal.classList.toggle('has-calculation-error',!!calculationIssue);
  document.querySelector('.results').classList.toggle('has-calculation-error',!!calculationIssue);
  if(calculationIssue){
   const state=getState(),invalid=Object.keys(numericFieldErrors(state));
   calculationIssue.fields=[...new Set([...(issue.fields||[]),...invalid,...(!issue.fields?.length&&!invalid.length&&issue.stage==='balance'&&unknownParameter?[unknownParameter]:[])])];
-  $('calculation-alert-title').textContent=issue.stage==='design'?'Подбор конструкции остановлен':issue.stage==='runtime'?'Расчёт недоступен':'Расчёт остановлен — проверьте исходные данные';
-  $('calculation-alert-message').textContent=issue.message;
-  $('calculation-alert-hint').textContent=issue.hint||(issue.stage==='runtime'?'Обновите страницу или повторите ввод.':issue.stage==='design'?'Исправьте параметры конструкции и повторите расчёт.':'Исправьте исходные данные или выберите другой параметр кнопкой «Найти».');
- }else for(const id of ['calculation-alert-title','calculation-alert-message','calculation-alert-hint'])$(id).textContent='';
+ }
  for(const card of document.querySelectorAll('.port-card'))card.classList.toggle('has-calculation-error',!!calculationIssue?.fields.some(id=>card.contains($(id))));
  $('export').disabled=!!calculationIssue;
  refreshFieldFeedback();
@@ -746,8 +740,8 @@ function refreshFieldFeedback(shakeIds=[]){
   // A failed solved/read-only field needs an immediate visible explanation too.
   info.input.title=error;info.input.setAttribute('aria-description',error);
   if(calculationError){
-   info.input.setAttribute('aria-describedby',[info.describedBy,'calculation-alert',info.note?.id].filter(Boolean).join(' '));
-   if(info.note){info.note.hidden=false;info.note.textContent=id===unknownParameter?'Не удалось найти значение — проверьте исходные данные.':'Проверьте значение — расчёт остановлен.'}
+   info.input.setAttribute('aria-describedby',[info.describedBy,info.note?.id].filter(Boolean).join(' '));
+   if(info.note){info.note.hidden=false;info.note.textContent='Проверьте значение'}
   }else{if(info.describedBy==null)info.input.removeAttribute('aria-describedby');else info.input.setAttribute('aria-describedby',info.describedBy);if(info.note){info.note.hidden=true;info.note.textContent=''}}
   if(shakeIds.includes(id)){
    info.border.classList.remove('is-shaking');void info.border.offsetWidth;info.border.classList.add('is-shaking');

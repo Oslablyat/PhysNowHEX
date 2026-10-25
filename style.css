@@ -741,16 +741,8 @@ main{padding-top:0}
  .calculator-overview>.heading,.verification-heading,.design-section-heading{height:auto;min-height:67.2px;padding:12px 20px;flex-wrap:wrap}
  .verification-heading-actions{width:auto;justify-content:flex-end}
 }
-/* Failed calculations are visible beside the source controls, not only below. */
-.workspace:has(.thermal.has-calculation-error){min-height:max-content;flex-shrink:0}
-.thermal.has-calculation-error{grid-template-rows:auto auto minmax(min-content,1fr)}
-.thermal.has-calculation-error>.process{min-height:min-content}
-.calculation-alert[hidden],.calculation-field-error[hidden]{display:none}
-.calculation-alert{display:flex;align-items:flex-start;gap:12px;margin:14px 16px 8px;padding:15px 17px;border:1px solid #ef6262;border-left:4px solid #ef6262;border-radius:10px;background:#351d20;color:#ffd8d8;min-width:0;overflow-wrap:anywhere}
-.calculation-alert>svg{width:25px;height:25px;flex-shrink:0;fill:none;stroke:#ff8787;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.calculation-alert strong{display:block;font-size:14px;line-height:1.45;color:#fff0f0;font-weight:650}
-.calculation-alert p{margin:5px 0 0;font-size:12px;line-height:1.55}
-.calculation-alert #calculation-alert-hint{color:#e1a7ab;font-size:11px}
+/* Compact field-level feedback; no large alert above the scheme. */
+.calculation-field-error[hidden]{display:none}
 .thermal .port-card.has-calculation-error{border-color:#e56d75;box-shadow:0 0 0 1px #e56d7526}
 .thermal .find-field.is-find>.input-wrap.is-error,.thermal .input-wrap.is-error{border-color:#ff727c;box-shadow:0 0 0 2px #ff727c25;background:#371d22}
 .thermal .find-field.is-find:has(>.input-wrap.is-error) .find-button[aria-pressed=true]{color:#ffd0d0;background:#51252c;border-color:#df6874}
@@ -760,7 +752,6 @@ main{padding-top:0}
 .balance-status.invalid i{background:#ff727c;flex-shrink:0;width:6px;height:6px}
 .results.has-calculation-error{outline-color:#a94c56}
 .export-button:disabled{opacity:.4;cursor:not-allowed}
-@media(max-width:780px){.thermal.has-calculation-error{grid-template-rows:auto auto auto}.calculation-alert{margin:12px 10px 8px;padding:13px;gap:9px}.calculation-alert strong{font-size:13px}.calculation-alert p{font-size:12px}}
 /* Teplo verification uses the existing neutral engineering palette. */
 .process[data-method="teplo"] .hot-pipe{stroke:#ef4444;marker-end:url(#cold-arrow)}
 .process[data-method="teplo"] .cold-pipe{stroke:#3b82f6;marker-end:url(#hot-arrow)}
