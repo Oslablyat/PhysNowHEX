@@ -9,7 +9,7 @@ const fail=error=>{
 
 async function main(){
   // Local pinned dependencies: this page needs no network/CDN and never loads app.js.
-  const [THREE,model]=await Promise.all([import('../vendor/three-0.186.1/three.module.min.js'),import('./model.js')]);
+  const [THREE,model,{createModelLighting}]=await Promise.all([import('../vendor/three-0.186.1/three.module.min.js'),import('./model.js'),import('./lighting.js?v=bottom-fill-20261024')]);
   document.getElementById('three-version').textContent='r'+THREE.REVISION;
   const views=[],cache=new model.GeometryCache(),rowKeys=['coilDiameter','turns','pitch','count'],globalKeys=Object.keys(model.DEFAULTS).filter(key=>!rowKeys.includes(key));
   let mode='cutaway',current=model.exampleParameters(3),rows=current.rows.map(row=>({...row})),selectedRow=0,pending=0,lost=false;
@@ -45,8 +45,7 @@ async function main(){
     renderer.domElement.setAttribute('role','img');renderer.domElement.setAttribute('aria-label',host.id==='whole-view'?'Цилиндрический аппарат без разреза':'Аппарат с раскрытыми внутренними деталями');
     host.append(renderer.domElement);host.querySelector('.loading')?.remove();
     const scene=new THREE.Scene(),camera=new THREE.OrthographicCamera(-500,500,800,-800,1,30000);
-    scene.add(new THREE.HemisphereLight(0xd7e5ff,0x30303a,2.4));
-    for(const [color,intensity,position] of [[0xffffff,3.1,[1200,2200,2500]],[0x7eabff,2,[-1700,300,1500]],[0xffd6a3,2,[600,1400,-2000]]]){const light=new THREE.DirectionalLight(color,intensity);light.position.set(...position);scene.add(light);}
+    scene.add(createModelLighting());
     const grid=new THREE.GridHelper(1800,18,0x435368,0x2a3442);grid.material.transparent=true;grid.material.opacity=.32;scene.add(grid);
     const view={host,renderer,scene,camera,grid,group:null};
     renderer.domElement.addEventListener('webglcontextlost',event=>{event.preventDefault();lost=true;status.textContent='3D приостановлено. Обновите страницу для восстановления.';host.dataset.invalid='true';});

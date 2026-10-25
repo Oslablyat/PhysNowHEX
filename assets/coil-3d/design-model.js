@@ -23,7 +23,7 @@ export function designParameters(g){
   if(!g||!Array.isArray(g.rows)||!g.rows.length||g.rows.length>8)throw Error('Не задана геометрия аппарата.');
   for(const key of ['diameter','height','shellWall','tubeDiameter','tubeWall'])if(!Number.isFinite(g[key])||g[key]<=0)throw Error('Проверьте размеры аппарата.');
   const rows=g.rows.map((r,i)=>{
-    if(![r.diameter,r.turns,r.pitch,r.count,r.offset??0,r.phase??0].every(Number.isFinite)||r.count<1||r.count>64||!Number.isInteger(r.count)||r.turns<.5||r.turns>100)throw Error('Проверьте параметры ряда '+(i+1)+'.');
+    if(![r.diameter,r.turns,r.pitch,r.count,r.offset??0,r.phase??0].every(Number.isFinite)||r.count<1||r.count>64||!Number.isInteger(r.count)||r.turns<.5||r.turns>1000)throw Error('Проверьте параметры ряда '+(i+1)+'.');
     return {coilDiameter:r.diameter,turns:r.turns,pitch:r.pitch,count:r.count,phase:(r.phase??0)*Math.PI/180,handedness:r.direction==='left'?-1:1,centerY:g.height/2-(r.offset??0)-g.tubeDiameter/2-r.turns*r.pitch/2,index:i};
   });
   const stepsPerTurn=COIL_STEPS_PER_TURN;

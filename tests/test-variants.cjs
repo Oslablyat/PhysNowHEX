@@ -18,7 +18,7 @@ const fixed=model.selectExchangerVariants({...state,'refine-tubes':true,'tube-di
 assert.equal(model.selectExchangerVariants({...state,length:50,'exchanger-diameter':50},r).rows.length,0);
 assert.equal(model.selectExchangerVariants(state,null).rows.length,0);
 assert.equal(model.selectExchangerVariants({...state,'hot-fluid':'custom'},r).rows.length,0);
-assert.equal(model.selectExchangerVariants({...state,'exchanger-type':'coil'},r).rows.length,3);
+const deferred=model.selectExchangerVariants({...state,'exchanger-type':'coil'},r);assert.equal(deferred.rows.length,0);assert.match(deferred.message,/Teplo.*фоновом/,'Coils must not use the synchronous constant-K selector');
 assert.equal(model.selectExchangerVariants(state,{...r,thi:110}).rows.length,0);
 assert.equal(model.selectExchangerVariants({...state,'refine-tubes':true,'tube-wall':10},r).rows.length,0);
 assert(model.waterProperties(20).rho>998&&model.waterProperties(20).rho<999);
@@ -32,7 +32,7 @@ const exportRows=vm.runInNewContext(exportSource+'\nvariantExportRows(state)', {
 assert.equal(exportRows.filter(row=>result.rows.some(profile=>profile.name===row[0])).length,4);
 assert(exportRows[2].includes('Перепад трубное, кПа'));
 assert(exportRows[2].includes('Перегородок, шт.'),'Shell-and-tube export retains its real construction parameters');
-for(const type of ['coil','double']){const rows=vm.runInNewContext(exportSource+'\nvariantExportRows(state)',{currentVariants:model.selectExchangerVariants({...state,'exchanger-type':type},r),state:{...state,'exchanger-type':type}});assert(!JSON.stringify(rows).toLowerCase().includes('перегород'));assert(!JSON.stringify(rows).includes('Керна'));if(type==='double')assert(rows.some(row=>row[0]==='Подбор недоступен'));else{assert(rows.some(row=>row[0]==='Оптимальная конструкция'));assert(!rows.flat().includes('Перепад трубное, кПа'));}}
+for(const type of ['coil','double']){const rows=vm.runInNewContext(exportSource+'\nvariantExportRows(state)',{currentResult:null,currentVariants:model.selectExchangerVariants({...state,'exchanger-type':type},r),state:{...state,'exchanger-type':type}});assert(!JSON.stringify(rows).toLowerCase().includes('перегород'));assert(!JSON.stringify(rows).includes('Керна'));if(type==='double')assert(rows.some(row=>row[0]==='Подбор недоступен'));else{assert(rows.some(row=>row[0]==='Подбор недоступен'));assert(!rows.flat().includes('Перепад трубное, кПа'));}}
 const html=fs.readFileSync(require('node:path').join(__dirname,'..','index.html'),'utf8'),header=html.slice(html.indexOf('class="variant-row variant-header"'),html.indexOf('id="variant-rows"'));assert(!header.includes('Перегородок'));assert.equal((header.match(/class="num"/g)||[]).length,8);
 // A fresh page/new sheet starts with coils; an explicitly saved type still wins.
 const defaultState=vm.runInNewContext(app.slice(app.indexOf('const defaults ='),app.indexOf('\n',app.indexOf('const defaults =')))+';defaults');

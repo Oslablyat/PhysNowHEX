@@ -574,6 +574,9 @@ footer{color:#737373}
 .rectangular-dropdown-field .dd .dd-trigger .hi{width:14px;height:14px;color:#e2e2e2;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .detail-mode-field .dd-menu{min-width:240px;max-width:calc(100vw - 64px)}
 .detail-mode-field .dd .dd-item{font-size:11px;font-weight:500}
+.arrangement-dropdown-field{position:relative;min-width:0}
+.arrangement-dropdown-field .dd-menu{left:auto;right:0;width:200px;max-width:calc(100vw - 64px)}
+.arrangement-dropdown-field .dd .dd-item{font-size:11px;font-weight:500}
 .preview-mode-field{flex:0 1 360px}
 .preview-mode-field .dd .dd-item{height:auto;min-height:32px;padding-top:6px;padding-bottom:6px}
 @media(max-width:780px){.design-detail-workspace{height:auto;min-height:0}.design-detail-settings{min-height:390px}.design-detail-preview{min-height:570px}}
@@ -739,8 +742,16 @@ main{padding-top:0}
  .verification-heading-actions{width:auto;justify-content:flex-end}
 }
 /* Teplo verification uses the existing neutral engineering palette. */
+.process[data-method="teplo"] .hot-pipe{stroke:#ef4444;marker-end:url(#cold-arrow)}
+.process[data-method="teplo"] .cold-pipe{stroke:#3b82f6;marker-end:url(#hot-arrow)}
+.process[data-method="teplo"] .svg-temp text:nth-child(1),.process[data-method="teplo"] .svg-temp text:nth-child(4){fill:#ff6b6b}
+.process[data-method="teplo"] .svg-temp text:nth-child(2),.process[data-method="teplo"] .svg-temp text:nth-child(3){fill:#7d96ff}
+.t-tab:disabled{opacity:.4;cursor:not-allowed}
+.wall-conductivity-field{display:block;margin:10px 0;color:#999;font-size:11px;line-height:1.5}
+.wall-conductivity-field .input-wrap{margin-top:5px}
+.wall-conductivity-field .input-wrap>span{font-size:9px;white-space:nowrap}
 .coil-thermal{padding:22px;color:var(--text,#d7d7d7);min-width:0}
-.coil-thermal-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.coil-thermal-heading{display:flex;align-items:flex-start;justify-content:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
 .coil-thermal h2{font-size:18px;font-weight:600;margin:0 0 7px}.coil-thermal h3{font-size:14px;margin:22px 0 10px}
 .coil-thermal-heading p,.coil-thermal-note,.coil-thermal-method p{color:#919aab;font-size:12px;line-height:1.65;margin:8px 0 16px}
 .coil-thermal-actions{display:flex;gap:8px;flex-wrap:wrap}.coil-thermal-actions button{background:#282828;border:1px solid #3b3b3b;color:#c9d3e0;border-radius:7px;padding:8px 11px;font:inherit;font-size:12px;cursor:pointer}.coil-thermal-actions button:hover{border-color:#7ca4d6}.coil-thermal-actions button:disabled{opacity:.45;cursor:default}

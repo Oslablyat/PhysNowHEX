@@ -1,5 +1,6 @@
 import * as THREE from '../vendor/three-0.186.1/three.module.min.js';
-import {GeometryCache,buildDesignModel,disposeModel,setDesignRowVisible,setDesignPartVisible} from './design-model.js?v=plane-panel-20261022';
+import {createModelLighting} from './lighting.js?v=bottom-fill-20261024';
+import {GeometryCache,buildDesignModel,disposeModel,setDesignRowVisible,setDesignPartVisible} from './design-model.js?v=sequential-20261024';
 import {wheelZoom,zoomAtPoint,panByPixels,orbitByPixels,orbitFrame,DEFAULT_AZIMUTH,DEFAULT_POLAR} from './camera-controls.js?v=plane-panel-20261022';
 import {createOrientationGizmo,planeOrbit,ISOMETRIC_VIEW} from './orientation-gizmo.js?v=plane-panel-20261022';
 
@@ -9,8 +10,7 @@ export function createDesignView(host,onStatus){
   const canvas=renderer.domElement;canvas.setAttribute('role','img');canvas.setAttribute('aria-label','Продольный 3D-разрез змеевикового аппарата');host.prepend(canvas);
   canvas.tabIndex=0;canvas.setAttribute('aria-keyshortcuts','+ - 0 Home ArrowLeft ArrowRight ArrowUp ArrowDown');
   const scene=new THREE.Scene(),camera=new THREE.OrthographicCamera(-500,500,800,-800,1,100000),fitCamera=new THREE.OrthographicCamera(),cache=new GeometryCache();
-  scene.add(new THREE.HemisphereLight(0xd7e5ff,0x30303a,2.4));
-  for(const [color,intensity,position] of [[0xffffff,3.1,[1200,2200,2500]],[0x7eabff,2,[-1700,300,1500]],[0xffd6a3,2,[600,1400,-2000]]]){const light=new THREE.DirectionalLight(color,intensity);light.position.set(...position);scene.add(light);}
+  scene.add(createModelLighting());
   const grid=new THREE.GridHelper(1800,18,0x435368,0x2a3442);grid.material.transparent=true;grid.material.opacity=.32;scene.add(grid);
   let latest=null,group=null,visible=false,allowed=true,timer=0,resizeFrame=0,version=0,renderedVersion=-1,lost=false,disposed=false,lastSize='';
   let zoomState={zoom:1,x:0,y:0},zoomFrame=0,drag=null;host.dataset.zoom='1';host.dataset.panX='0';host.dataset.panY='0';

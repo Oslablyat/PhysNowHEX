@@ -1,0 +1,13 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
+const app=fs.readFileSync(require('node:path').join(__dirname,'../app.js'),'utf8');
+const source=app.slice(app.indexOf('function coilThermalSourceInputs(){'),app.indexOf('function initializeCoilThermalMethod(){'));
+const state={'hot-fluid':'water','cold-fluid':'water','tube-conductivity':'21','hot-flow-unit':'kg-s','cold-flow-unit':'kg-s',mh:'2.5',mc:'3.75'},currentResult={thi:90,tci:20,ph:.6,pc:.4,mh:2.5,mc:3.75};
+const context={flow:'counter',lastError:'',currentResult,getState:()=>state};vm.createContext(context);vm.runInContext(source,context);const read=()=>vm.runInContext('coilThermalSourceInputs()',context);
+assert.equal(read().wall_conductivity_w_mk,21);assert.equal(read().t_hot_in_c,90);assert.equal(read().p_cold_mpa,.4);
+for(const [unit,value,volume] of [['kg-s',2.5,null],['kg-h',9000,null],['m3-h',9,9],['m3-s',.0025,9],['l-s',2.5,9]]){state['hot-flow-unit']=unit;state.mh=String(value);const r=read();assert.equal(r.hot_flow_mode,volume===null?'mass':'volume');assert.equal(volume===null?r.mass_flow_hot_kg_s:r.volume_flow_hot_m3_h,volume??2.5)}
+state['hot-flow-unit']='kg-s';state.mh='';assert.equal(read().mass_flow_hot_kg_s,2.5,'Use solved unknown flow, not rounded/stale text');
+for(const value of ['',0,-1,'NaN']){state['tube-conductivity']=value;assert.throws(read,/теплопроводность/)}state['tube-conductivity']='16';
+context.flow='parallel';assert.throws(read,/противоток/);context.flow='counter';state['cold-fluid']='custom';assert.throws(read,/вода/);state['cold-fluid']='water';context.lastError='invalid';assert.throws(read,/верхнем блоке/);context.lastError='';context.currentResult=null;assert.throws(read,/верхнем блоке/);
+const ui=fs.readFileSync(require('node:path').join(__dirname,'../assets/coil-thermal-ui.js'),'utf8');assert(!ui.includes('data-thermal-field='));assert(!ui.includes('data-thermal-action="project"'));assert(ui.includes('...hooks.source()'));
+context.currentResult={...currentResult,method:'Teplo'};context.CoilProjectMethod=require('../assets/coil-project-method.js');state.flow='counter';state.mh='999';state['hot-flow-unit']='m3-h';assert.equal(read().mass_flow_hot_kg_s,2.5,'Teplo uses exact inlet-fixed mass from the completed balance, not stale raw/rounded text');assert.equal(read().hot_flow_mode,'mass');context.lastError='invalid';assert.throws(read,/верхнем блоке/);context.lastError='';state.flow='parallel';assert.throws(read,/противоток/);state.flow='counter';
+console.log('Thermal source passed: upper controls, five flow units, solved unknowns, conductivity, invalid inputs/counterflow/water guards and no duplicate editors.');
