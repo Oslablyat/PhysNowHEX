@@ -13,6 +13,9 @@ const project=require('../assets/coil-project-method.js'),teplo=require('../asse
  }
  assert.throws(()=>project.balance({...state,flow:'parallel'},props));assert.throws(()=>project.balance({...state,ph:0},props));assert.throws(()=>project.balance({...state,'hot-fluid':'custom'},props));assert.throws(()=>project.balance({...state,thi:''},props));
  const constant=name=>({Dmass:1000,Cpmass:4200,T:450})[name];const exact=project.balance(state,constant);assert.equal(exact.mc,3.75);assert.equal(exact.q,315);
+ assert.throws(()=>project.balance({...state,thi:150,tho:60,mh:100,mc:30.3344156798,ph:5,pc:.4,unknown:'tco',tco:''},props),error=>{assert.equal(error.code,'no-balance-solution');assert.deepEqual(error.fields,['tco']);assert.match(error.message,/Невозможно найти температуру холодного потока на выходе/);assert.match(error.message,/диапазоне.*°C/);assert.match(error.hint,/расходы или давление/);return true});
+ assert.throws(()=>project.balance({...state,thi:''},props),error=>error.code==='incomplete'&&error.fields.includes('thi'));
+ assert.throws(()=>project.balance({...state,unknown:null,mc:1},props),error=>error.code==='unbalanced'&&error.fields.length===6);
  if(process.argv.includes('--probe')){const t=Date.now();await project.select(state,r,props,{progress:s=>console.log(s,Date.now()-t),cancelled:()=>true});return}
  const fixtures=require('./fixtures/teplo-reference.json');for(const c of fixtures.cases){const v=teplo.calculate(c.inputs,props),target={q:v.heat_duty_kw,requiredUA:v.ua_w_k,reservePercent:0,tho:v.t_hot_out_c,tco:v.t_cold_out_c};assert.equal(project.meets(v,target),v.valid);assert(!project.meets({...v,valid:false},target));assert(!project.meets(v,{...target,requiredUA:v.ua_w_k*1.01}))}
  const cache=new Map(),memo=(...args)=>{const key=JSON.stringify(args);if(cache.has(key))return cache.get(key);const value=props(...args);if(cache.size<100000)cache.set(key,value);return value};

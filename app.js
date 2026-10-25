@@ -17,8 +17,10 @@ let coilThermalInputs=null,coilThermalUI=null;
 let detailArrangementDropdown=null;
 let detailDirectionDropdown=null;
 const coilProject={worker:null,id:0,key:null,timer:null,phase:'idle',version:''};
+let calculationIssue=null;
 const fieldFeedback=new Map(),touchedNumericFields=new Set();
 let fieldFeedbackReady=false,submittedNumericFields=false;
+document.querySelector('.thermal .workspace-toolbar').insertAdjacentHTML('afterend','<div class="calculation-alert" id="calculation-alert" role="alert" aria-atomic="true" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2 21h20L12 3Z"/><path d="M12 9v5m0 3v.1"/></svg><div><strong id="calculation-alert-title"></strong><p id="calculation-alert-message"></p><p id="calculation-alert-hint"></p></div></div>');
 
 function toast(message){$('toast').textContent=message;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),3000)}
 function getState(){return Object.fromEntries([['flow',flow],['unknown',unknownParameter],['selected-variant',selectedVariant],['coil-variant-binding',coilVariantBinding],['verification-design',verificationSelection],['verification-state',verificationState],['coil-thermal-inputs',coilThermalInputs],['refine-tubes',$('refine-tubes').getAttribute('aria-checked')==='true'],...fieldIds.map(id=>[id,$(id).dataset.exactValue??$(id).value])])}
@@ -176,6 +178,7 @@ function selectUnknownParameter(id){
 }
 function update(persist=true){
  if($('exchanger-type').value==='coil'){updateCoilProject(persist);return}
+ setCalculationIssue(null);
  if(coilProject.key!==null){clearTimeout(coilProject.timer);coilProject.key=null;coilProject.id++;coilProject.worker?.postMessage({id:coilProject.id,cancel:true})}
  syncUnknownControls();const state=getState();lastError='';
  try{
@@ -194,13 +197,29 @@ function update(persist=true){
   $('svg-'+id).textContent=value!==''&&Number.isFinite(Number(value))?fmt(Number(value))+' °C':'—';
  }
  try{currentGeometry=geometry(state)}catch(error){currentGeometry=null;lastError=lastError||error.message}
- $('error').textContent='';$('error').hidden=true;renderExchangerVariants(state,currentResult);refreshFieldFeedback();coilThermalUI?.refresh();if(persist)save();
+ $('error').textContent='';$('error').hidden=true;if(lastError)setCalculationIssue({stage:currentResult?'design':'balance',message:lastError,code:lastError.startsWith('Заполните')?'incomplete':'invalid-input'});renderExchangerVariants(state,currentResult);refreshFieldFeedback();coilThermalUI?.refresh();if(persist)save();
 }
 
 function coilProjectState(){const state=getState();return Object.fromEntries([...fieldIds.map(key=>[key,state[key]]),['flow',flow],['unknown',unknownParameter],['refine-tubes',state['refine-tubes']],['coil-thermal-inputs',{arrangement:coilThermalInputs?.arrangement??coilThermalUI?.arrangement??'inline'}]])}
 function coilProjectKey(state){return JSON.stringify(['sequential-full-height-v1',calculationSheets?.activeId??'',state.flow,state.unknown,...['thi','tho','tci','tco','mh','mc','ph','pc','hot-fluid','cold-fluid','hot-flow-unit','cold-flow-unit','length','exchanger-diameter','tube-conductivity','area-reserve-percent','refine-tubes','tube-diameter','tube-wall'].map(k=>k===state.unknown?null:state[k]),state['coil-thermal-inputs'].arrangement])}
+function setCalculationIssue(issue){
+ calculationIssue=issue&&issue.code!=='incomplete'?{...issue}:null;
+ const alert=$('calculation-alert'),thermal=document.querySelector('.thermal');
+ alert.hidden=!calculationIssue;thermal.classList.toggle('has-calculation-error',!!calculationIssue);
+ document.querySelector('.results').classList.toggle('has-calculation-error',!!calculationIssue);
+ if(calculationIssue){
+  const state=getState(),invalid=Object.keys(numericFieldErrors(state));
+  calculationIssue.fields=[...new Set([...(issue.fields||[]),...invalid,...(!issue.fields?.length&&!invalid.length&&issue.stage==='balance'&&unknownParameter?[unknownParameter]:[])])];
+  $('calculation-alert-title').textContent=issue.stage==='design'?'Подбор конструкции остановлен':issue.stage==='runtime'?'Расчёт недоступен':'Расчёт остановлен — проверьте исходные данные';
+  $('calculation-alert-message').textContent=issue.message;
+  $('calculation-alert-hint').textContent=issue.hint||(issue.stage==='runtime'?'Обновите страницу или повторите ввод.':issue.stage==='design'?'Исправьте параметры конструкции и повторите расчёт.':'Исправьте исходные данные или выберите другой параметр кнопкой «Найти».');
+ }else for(const id of ['calculation-alert-title','calculation-alert-message','calculation-alert-hint'])$(id).textContent='';
+ for(const card of document.querySelectorAll('.port-card'))card.classList.toggle('has-calculation-error',!!calculationIssue?.fields.some(id=>card.contains($(id))));
+ $('export').disabled=!!calculationIssue;
+ refreshFieldFeedback();
+}
 function renderCoilProjectBalance(r,state){
- currentResult=r;lastError='';
+ currentResult=r;lastError='';setCalculationIssue(null);
  if(unknownParameter){const input=$(unknownParameter),exact=calculatedDisplayValue(r,unknownParameter,state);input.dataset.exactValue=exact;input.value=fmt(Number(exact),['mh','mc'].includes(unknownParameter)?state[unknownParameter==='mh'?'hot-flow-unit':'cold-flow-unit']==='m3-s'?8:4:4)}
  $('result-q').textContent=fmt(r.q);$('result-dt').textContent=fmt(r.dt);$('balance-status').classList.remove('invalid');$('balance-status').innerHTML='<i></i> Баланс по методике Teplo';$('balance-status').title='CoolProp: cp при средних температурах, масса по плотности на входе. Невязка '+fmt(r.heatBalanceError,6)+' Вт.';
  for(const id of ['thi','tho','tci','tco'])$('svg-'+id).textContent=fmt(r[id])+' °C';
@@ -214,16 +233,17 @@ function renderCoilProjectArea(){
 function updateCoilProject(persist=true,force=false){
  syncUnknownControls();const state=coilProjectState(),key=coilProjectKey(state);
  if(!force&&key===coilProject.key){refreshFieldFeedback();if(persist)save();return}
+ setCalculationIssue(null);
  coilProject.key=key;coilProject.phase='pending';const id=++coilProject.id;clearTimeout(coilProject.timer);coilProject.worker?.postMessage({id,cancel:true});currentResult=null;lastError='Расчёт Teplo обновляется';
  for(const field of ['result-q','result-dt'])$(field).textContent='—';if(unknownParameter){$(unknownParameter).value='';delete $(unknownParameter).dataset.exactValue}
  $('balance-status').classList.remove('invalid');$('balance-status').innerHTML='<i></i> Расчёт баланса · CoolProp';for(const k of ['thi','tho','tci','tco'])$('svg-'+k).textContent=k===unknownParameter?'—':state[k]!==''?fmt(Number(state[k]))+' °C':'—';
  renderCoilProjectArea();renderExchangerVariants(state,null,{kind:'coil',inputKey:key,rows:[],candidates:[],message:'Расчёт баланса и подбор конструкций по Teplo…'});coilThermalUI?.refresh();refreshFieldFeedback();if(persist)save();
  coilProject.timer=setTimeout(()=>{
   if(!coilProject.worker){
-   const worker=new Worker(new URL('assets/coil-project-worker.js?v=sequential-20261024',document.baseURI),{type:'module'});coilProject.worker=worker;
+   const worker=new Worker(new URL('assets/coil-project-worker.js?v=balance-errors-20261025',document.baseURI),{type:'module'});coilProject.worker=worker;
    worker.onmessage=({data})=>{
     if(data.id!==coilProject.id||$('exchanger-type').value!=='coil')return;
-    if(data.error){coilProject.phase='error';lastError=data.error;if(!currentResult){$('balance-status').classList.add('invalid');$('balance-status').innerHTML='<i></i> Проверьте исходные данные';$('balance-status').title=data.error}renderExchangerVariants(coilProjectState(),currentResult,{kind:'coil',inputKey:coilProject.key,rows:[],candidates:[],message:data.error});coilThermalUI?.refresh();save();return}
+    if(data.error){coilProject.phase='error';lastError=data.error;setCalculationIssue({stage:currentResult?'design':'balance',...data.issue,message:data.error});if(!currentResult){$('balance-status').classList.add('invalid');$('balance-status').innerHTML='<i></i> Баланс не рассчитан';$('balance-status').title=data.error;$('result-area').textContent='—';$('result-area-note').textContent='Сначала исправьте тепловой баланс'}renderExchangerVariants(coilProjectState(),currentResult,{kind:'coil',inputKey:coilProject.key,rows:[],candidates:[],message:data.error});coilThermalUI?.refresh();save();return}
     if(data.phase==='balance'){coilProject.phase='selecting';renderCoilProjectBalance(data.balance,coilProjectState());save()}
     if(data.phase==='progress'){const status=$('variant-status');status.hidden=false;status.textContent='Подбор по Teplo: проверено '+data.stats.evaluations+' конструкций, принято '+data.stats.accepted+'.'}
     if(data.phase==='variants'){
@@ -233,7 +253,7 @@ function updateCoilProject(persist=true,force=false){
      renderExchangerVariants(coilProjectState(),currentResult,data.variants);renderCoilProjectArea();coilThermalUI?.refresh();save();
     }
    };
-   worker.onerror=()=>{coilProject.phase='error';coilProject.key=null;lastError='Не удалось загрузить расчёт Teplo. Обновите страницу или повторите ввод.';coilProject.worker?.terminate();coilProject.worker=null;$('balance-status').classList.add('invalid');$('balance-status').title=lastError;$('balance-status').innerHTML='<i></i> Расчёт Teplo недоступен';renderExchangerVariants(coilProjectState(),null,{kind:'coil',rows:[],candidates:[],message:lastError})};
+   worker.onerror=()=>{coilProject.phase='error';coilProject.key=null;lastError='Не удалось загрузить расчёт Teplo. Обновите страницу или повторите ввод.';coilProject.worker?.terminate();coilProject.worker=null;setCalculationIssue({stage:'runtime',message:lastError});$('balance-status').classList.add('invalid');$('balance-status').title=lastError;$('balance-status').innerHTML='<i></i> Расчёт Teplo недоступен';renderExchangerVariants(coilProjectState(),null,{kind:'coil',rows:[],candidates:[],message:lastError})};
   }
   coilProject.worker.postMessage({id,state});
  },250);
@@ -704,6 +724,8 @@ function numericFieldErrors(state){
 function clearFieldFeedback(info){
  info.border.classList.remove('is-error','is-shaking');
  info.input.removeAttribute('aria-invalid');
+ if(info.describedBy==null)info.input.removeAttribute('aria-describedby');else info.input.setAttribute('aria-describedby',info.describedBy);
+ if(info.note){info.note.hidden=true;info.note.textContent=''}
  if(info.title==null)info.input.removeAttribute('title');else info.input.title=info.title;
  if(info.description==null)info.input.removeAttribute('aria-description');else info.input.setAttribute('aria-description',info.description);
 }
@@ -716,12 +738,17 @@ function refreshFieldFeedback(shakeIds=[]){
  if(!fieldFeedbackReady)return;
  const state=getState(),errors={...numericFieldErrors(state),...flowUnitErrors(state)};
  for(const [id,info]of fieldFeedback){
-  const error=errors[id]||(info.input.validity.badInput?'Введите число':'');
-  const reveal=(submittedNumericFields||touchedNumericFields.has(id))&&!info.input.readOnly;
+  const calculationError=calculationIssue?.fields.includes(id)?calculationIssue.message:'';
+  const error=calculationError||errors[id]||(info.input.validity.badInput?'Введите число':'');
+  const reveal=!!calculationError||(submittedNumericFields||touchedNumericFields.has(id))&&!info.input.readOnly;
   if(!error||!reveal){clearFieldFeedback(info);continue}
   info.border.classList.add('is-error');info.input.setAttribute('aria-invalid','true');
-  // Explanations remain available on hover and to screen readers, without a visible error label.
+  // A failed solved/read-only field needs an immediate visible explanation too.
   info.input.title=error;info.input.setAttribute('aria-description',error);
+  if(calculationError){
+   info.input.setAttribute('aria-describedby',[info.describedBy,'calculation-alert',info.note?.id].filter(Boolean).join(' '));
+   if(info.note){info.note.hidden=false;info.note.textContent=id===unknownParameter?'Не удалось найти значение — проверьте исходные данные.':'Проверьте значение — расчёт остановлен.'}
+  }else{if(info.describedBy==null)info.input.removeAttribute('aria-describedby');else info.input.setAttribute('aria-describedby',info.describedBy);if(info.note){info.note.hidden=true;info.note.textContent=''}}
   if(shakeIds.includes(id)){
    info.border.classList.remove('is-shaking');void info.border.offsetWidth;info.border.classList.add('is-shaking');
   }
@@ -733,7 +760,8 @@ function initializeFieldFeedback(){
   const input=$(id);if(input.type==='hidden')continue;
   const border=input.closest('.input-wrap')||input;
   border.classList.add('t-input');
-  fieldFeedback.set(id,{input,border,title:input.getAttribute('title'),description:input.getAttribute('aria-description')});
+  let note=null;if(input.closest('.find-field')){note=document.createElement('p');note.id='calculation-field-'+id;note.className='calculation-field-error';note.hidden=true;input.closest('.find-field').append(note)}
+  fieldFeedback.set(id,{input,border,note,title:input.getAttribute('title'),description:input.getAttribute('aria-description'),describedBy:input.getAttribute('aria-describedby')});
   input.addEventListener('blur',()=>{touchedNumericFields.add(id);refreshFieldFeedback([id])});
   border.addEventListener('animationend',event=>{if(event.animationName==='t-input-shake')border.classList.remove('is-shaking')});
  }

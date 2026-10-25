@@ -6,19 +6,21 @@
  const temperatures=['thi','tho','tci','tco'],flows=['mh','mc'],unknowns=[...temperatures,...flows];
  const profiles=[{id:'balanced',enabled:true,name:'Оптимальная конструкция',detail:'Первое выполнение задания при добавлении полновысотных рядов снаружи внутрь'},{id:'compact',enabled:false,name:'По габаритам',detail:'Временно отключено'},{id:'production',enabled:false,name:'По сложности производства',detail:'Временно отключено'}];
  const construction=Object.freeze({atmosphereMPa:.101325,allowableMPa:130,corrosionMM:.2,weldFactor:1,gapMM:3,maxRows:8,maxTurns:1000});
- const finite=(v,label)=>{if(v===''||v==null||!Number.isFinite(Number(v)))throw Error('Заполните '+label);return Number(v)};
+ const parameterNames={thi:'температуру горячего потока на входе',tho:'температуру горячего потока на выходе',tci:'температуру холодного потока на входе',tco:'температуру холодного потока на выходе',mh:'расход горячего потока',mc:'расход холодного потока',ph:'абсолютное давление трубного пространства',pc:'абсолютное давление межтрубного пространства'};
+ function inputError(message,fields=[],hint='',code='invalid-input'){const error=Error(message);error.fields=fields;error.hint=hint;error.code=code;return error}
+ const finite=(v,label)=>{if(v===''||v==null||!Number.isFinite(Number(v)))throw inputError('Заполните '+(parameterNames[label]||label),parameterNames[label]?[label]:[],'Введите известные параметры, а для одного неизвестного выберите «Найти».','incomplete');return Number(v)};
  function balance(state,props){
   if(state.flow!=='counter')throw Error('Методика Teplo поддерживает только противоток.');
   if(state['hot-fluid']!=='water'||state['cold-fluid']!=='water')throw Error('Проектировочный расчёт Teplo пока поддерживает воду в обоих контурах.');
   const unknown=state.unknown===null?null:unknowns.includes(state.unknown)?state.unknown:'mc',n={};
   for(const key of [...unknowns,'ph','pc'])if(key!==unknown)n[key]=finite(state[key],key);
-  if(n.ph<=0||n.pc<=0)throw Error('Абсолютные давления должны быть положительными.');
+  if(n.ph<=0||n.pc<=0)throw inputError('Абсолютные давления должны быть положительными.',['ph','pc'].filter(k=>n[k]<=0));
   const units={hot:state['hot-flow-unit']||'kg-s',cold:state['cold-flow-unit']||'kg-s'};
   for(const unit of Object.values(units))if(!['kg-s','kg-h','m3-h','m3-s','l-s'].includes(unit))throw Error('Неизвестная единица расхода');
   const property=(name,t,p)=>{const value=props(name,'T',t+273.15,'P',p*1e6,'Water');if(!Number.isFinite(value)||value<=0||value>1e100)throw Error('CoolProp: недопустимые свойства воды');return value};
   function mass(v,unit,t,p){if(v<=0)throw Error('Расход должен быть положительным.');return unit==='kg-s'?v:unit==='kg-h'?v/3600:v*(unit==='m3-h'?1/3600:unit==='m3-s'?1:.001)*property('Dmass',t,p)}
   function evaluate(){
-   if(n.thi<=n.tho||n.tco<=n.tci)throw Error('Горячий поток должен охлаждаться, холодный — нагреваться.');
+   if(n.thi<=n.tho||n.tco<=n.tci)throw inputError('Горячий поток должен охлаждаться, холодный — нагреваться.',n.thi<=n.tho?['thi','tho']:['tci','tco']);
    const cph=property('Cpmass',(n.thi+n.tho)/2,n.ph),cpc=property('Cpmass',(n.tci+n.tco)/2,n.pc),mh=mass(n.mh,units.hot,n.thi,n.ph),mc=mass(n.mc,units.cold,n.tci,n.pc);
    return {cph,cpc,mh,mc,rhoh:property('Dmass',n.thi,n.ph),rhoc:property('Dmass',n.tci,n.pc),qh:mh*cph*(n.thi-n.tho),qc:mc*cpc*(n.tco-n.tci)};
   }
@@ -29,12 +31,13 @@
    const eps=1e-6,hot=unknown==='thi'||unknown==='tho',p=hot?n.ph:n.pc;
    const saturation=props('T','P',p*1e6,'Q',0,'Water')-273.15;
    let lo,hi;if(unknown==='thi'){lo=Math.max(n.tho,n.tco)+eps;hi=saturation-.01}else if(unknown==='tho'){lo=n.tci+eps;hi=n.thi-eps}else if(unknown==='tci'){lo=.01;hi=Math.min(n.tco,n.tho)-eps}else{lo=n.tci+eps;hi=n.thi-eps}
-   lo=Math.max(.01,lo);hi=Math.min(saturation-.01,hi);if(!(hi>lo))throw Error('Нет допустимого диапазона неизвестной температуры.');
+   const temperatureError=()=>inputError('Невозможно найти '+parameterNames[unknown]+': тепловой баланс не имеет решения в допустимом диапазоне'+(hi>lo?' '+lo.toLocaleString('ru-RU',{maximumFractionDigits:2})+'…'+hi.toLocaleString('ru-RU',{maximumFractionDigits:2})+' °C':'')+' при текущих температурах, расходах и давлениях.',[unknown],'Измените известные температуры, расходы или давление либо выберите другой неизвестный параметр.','no-balance-solution');
+   lo=Math.max(.01,lo);hi=Math.min(saturation-.01,hi);if(!(hi>lo))throw temperatureError();
    const residual=t=>{n[unknown]=t;const r=evaluate();return r.qh-r.qc};
-   let a=lo,b=hi,fa=residual(a),fb=residual(b);if(fa*fb>0)throw Error('По балансу Teplo неизвестная температура не находится в допустимом диапазоне.');
+   let a=lo,b=hi,fa=residual(a),fb=residual(b);if(fa*fb>0)throw temperatureError();
    for(let i=0;i<80;i++){const mid=(a+b)/2,fm=residual(mid);if(Math.abs(fm)<1e-7||b-a<1e-10)break;if((fa<0)===(fm<0)){a=mid;fa=fm}else{b=mid;fb=fm}}
   }
-  const r=evaluate(),imbalance=Math.abs(r.qh-r.qc)/Math.max(r.qh,r.qc);if(imbalance>.001)throw Error('Тепловой баланс Teplo не сходится: '+(imbalance*100).toFixed(4)+' %. Выберите неизвестный или исправьте данные.');
+  const r=evaluate(),imbalance=Math.abs(r.qh-r.qc)/Math.max(r.qh,r.qc);if(imbalance>.001)throw inputError('Тепловой баланс Teplo не сходится: '+(imbalance*100).toFixed(4)+' %.',[...unknowns],'Выберите один неизвестный параметр кнопкой «Найти» или исправьте известные температуры и расходы.','unbalanced');
   const d1=n.thi-n.tco,d2=n.tho-n.tci;if(d1<=0||d2<=0)throw Error('Температурные напоры противотока должны быть положительными.');
   const dt=Math.abs(d1-d2)<1e-8?(d1+d2)/2:(d1-d2)/Math.log(d1/d2),q=r.qh/1000,reservePercent=finite(state['area-reserve-percent']??10,'запас');if(reservePercent<0)throw Error('Запас не может быть отрицательным.');
   return {...n,mh:r.mh,mc:r.mc,displayFlowHot:n.mh,displayFlowCold:n.mc,cph:r.cph/1000,cpc:r.cpc/1000,rhoh:r.rhoh,rhoc:r.rhoc,q,dt,unknown,flow:'counter',imbalance,heatBalanceError:r.qh-r.qc,requiredUA:r.qh/dt,reservePercent,area:null,designArea:null,u:null,method:'Teplo',ignoreRadiusRatio:true};

@@ -1,0 +1,12 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict'),path=require('node:path');
+const app=fs.readFileSync(path.join(__dirname,'../app.js'),'utf8');
+const source=app.slice(app.indexOf('function clearFieldFeedback('),app.indexOf('function validateAllNumericFields('));
+const classes=new Set(),attributes=new Map(),note={id:'calculation-field-tco',hidden:true,textContent:''};
+const input={readOnly:true,validity:{badInput:false},setAttribute:(k,v)=>attributes.set(k,v),removeAttribute:k=>{attributes.delete(k);if(k==='title')delete input.title}};
+const info={input,note,border:{classList:{add:(...xs)=>xs.forEach(x=>classes.add(x)),remove:(...xs)=>xs.forEach(x=>classes.delete(x))}},title:null,description:'Original',describedBy:'original-help'};
+const context={fieldFeedbackReady:true,fieldFeedback:new Map([['tco',info]]),touchedNumericFields:new Set(),submittedNumericFields:false,unknownParameter:'tco',calculationIssue:{fields:['tco'],message:'Невозможно найти температуру'},getState:()=>({}),numericFieldErrors:()=>({}),flowUnitErrors:()=>({})};
+vm.createContext(context);vm.runInContext(source,context);vm.runInContext('refreshFieldFeedback()',context);
+assert(classes.has('is-error'),'A failed read-only unknown is immediately red without blur');assert.equal(attributes.get('aria-invalid'),'true');assert(attributes.get('aria-describedby').includes('calculation-alert'));assert(attributes.get('aria-describedby').includes('original-help'));assert.equal(note.hidden,false);assert.match(note.textContent,/Не удалось найти/);
+context.calculationIssue=null;vm.runInContext('refreshFieldFeedback()',context);assert(!classes.has('is-error'));assert(!attributes.has('aria-invalid'));assert.equal(attributes.get('aria-describedby'),'original-help');assert.equal(note.hidden,true);assert.equal(note.textContent,'');assert.equal(input.title,undefined);
+input.readOnly=false;context.numericFieldErrors=()=>({tco:'Недопустимое значение'});vm.runInContext('refreshFieldFeedback()',context);assert(!classes.has('is-error'),'Keep normal untouched fields quiet');context.touchedNumericFields.add('tco');vm.runInContext('refreshFieldFeedback()',context);assert(classes.has('is-error'));assert.equal(note.hidden,true,'Do not leave a stale balance label for ordinary input errors');
+console.log('Calculation feedback passed: failed read-only unknown highlighted immediately; visible label and accessible reason; cleanup/recovery; existing blur validation preserved.');
