@@ -44,6 +44,8 @@ main{padding:6px 0 0;gap:6px;max-width:none}.heading{background:#2B2B2B;border-r
 .process-svg .exchanger-shell{fill:#171717;stroke:none}
 .process-svg .exchanger-fluid{fill:#3b82f6;fill-opacity:.12;stroke:#626970;stroke-width:1.25}
 .process-svg .exchanger-coil{stroke:#ef4444;stroke-width:3;stroke-linecap:round}
+.process-svg .exchanger-coil-leads{fill:none;stroke:#ef4444;stroke-width:3;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.process-svg .exchanger-fluid{vector-effect:non-scaling-stroke}
 .process-svg g[fill] circle{fill:#2B2B2B}.process-svg g[fill] circle:nth-child(1),.process-svg g[fill] circle:nth-child(4){stroke:#3b82f6}.process-svg g[fill] circle:nth-child(2),.process-svg g[fill] circle:nth-child(3){stroke:#ef4444}
 .svg-temp text:nth-child(1),.svg-temp text:nth-child(4){fill:#7d96ff}.svg-temp text:nth-child(2),.svg-temp text:nth-child(3){fill:#ff6b6b}
 .legend-dot.hot{background:#3b82f6}.legend-dot.cold{background:#ef4444;border:0;width:5px;height:5px}

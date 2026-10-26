@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ru">
+<head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#191919">
+ <title>Прямоток и противоток · 10 компоновок · PhysNow</title>
+ <link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="rectangle-variants.css?v=20261026"><link rel="stylesheet" href="rectangle-flow-variants.css?v=20261026">
+</head>
+<body>
+ <header class="topbar"><a class="brand" href="../"><img src="physnow-logo.png" alt="" width="25" height="25">PhysNow</a><span class="section-name">Сравнение патрубков</span><a class="back-link" href="../">← К расчёту</a></header>
+ <main class="page flow-page">
+  <header class="intro"><div><p class="eyebrow">Выбранный корпус и прежний змеевик</p><h1>Прямоток и противоток</h1><p class="intro-note">10 компоновок боковых патрубков. В каждой строке — два режима рядом.<br>Корпус, красный змеевик и цвета одинаковые. Нажмите на схему для крупного просмотра.</p></div></header>
+  <nav class="quick-nav" id="quick-nav" aria-label="Перейти к варианту"></nav>
+  <section id="comparison" aria-label="Сравнительная таблица из 10 компоновок">
+   <div class="flow-columns"><div>Прямоток <span>левый снизу · правый сверху</span></div><div>Противоток <span>левый сверху · правый снизу</span></div></div>
+   <div id="flow-table"></div>
+  </section>
+  <p class="comparison-footnote">Это только сравнение оформления. Режимы расчёта на основной странице не изменены: текущая методика Teplo поддерживает только противоток.</p>
+ </main>
+ <dialog id="flow-detail" aria-labelledby="flow-selected-title">
+  <header class="detail-heading"><h2 id="flow-selected-title"></h2><button type="button" id="flow-close" aria-label="Закрыть крупный просмотр">×</button></header>
+  <div class="flow-switch" aria-label="Режим в сравнении"><button type="button" data-flow-mode="parallel" aria-pressed="true">Прямоток</button><button type="button" data-flow-mode="counter" aria-pressed="false">Противоток</button></div>
+  <div class="detail-stage" id="flow-selected-scene"></div>
+  <p id="flow-selected-note" aria-live="polite"></p>
+  <footer class="flow-dialog-footer"><button type="button" id="flow-prev">← Предыдущий</button><span>Змеевик: сверху → вниз</span><button type="button" id="flow-next">Следующий →</button></footer>
+ </dialog>
+ <script src="rectangle-variants.js?v=flow-20261026"></script><script src="rectangle-flow-variants.js?v=20261026"></script>
+</body>
+</html>

@@ -31,9 +31,9 @@ function syncMethodRoles(){
  const coil=$('exchanger-type').value==='coil',hot=coil?'трубного':'межтрубного',cold=coil?'межтрубного':'трубного';document.querySelector('.process').dataset.method=coil?'teplo':'legacy';
  for(const [id,title]of [['hot-in','Вход '+hot+' пространства'],['hot-out','Выход '+hot+' пространства'],['cold-in','Вход '+cold+' пространства'],['cold-out','Выход '+cold+' пространства']])$(id).querySelector('h3').textContent=title;
  for(const [id,label]of [['thi','Температура на входе '+hot+' пространства'],['tho','Температура на выходе '+hot+' пространства'],['tci','Температура на входе '+cold+' пространства'],['tco','Температура на выходе '+cold+' пространства'],['mh','Расход в '+(coil?'трубном':'межтрубном')+' пространстве'],['mc','Расход в '+(coil?'межтрубном':'трубном')+' пространстве'],['ph','Давление на входе '+hot+' пространства'],['pc','Давление на входе '+cold+' пространства']]){$(id).setAttribute('aria-label',label);document.querySelector('[data-find-param="'+id+'"]')?.setAttribute('aria-label','Найти: '+label.toLowerCase())}
- $('diagram-title').textContent=coil?'Teplo: горячий поток внутри змеевиков, холодный в межтрубном пространстве; противоток':'Поток межтрубного пространства сверху вниз, трубного пространства справа налево';
+ $('diagram-title').textContent=coil?'Горячий поток внутри змеевиков, холодный в межтрубном пространстве; '+(flow==='counter'?'противоток':'прямоток · расчёт Teplo недоступен'):'Поток межтрубного пространства сверху вниз, трубного пространства справа налево';
  $('hot-flow-unit').setAttribute('aria-label','Единицы расхода '+(coil?'трубного':'межтрубного')+' потока');$('cold-flow-unit').setAttribute('aria-label','Единицы расхода '+(coil?'межтрубного':'трубного')+' потока');
- $('flow-parallel').disabled=coil;$('flow-parallel').title=coil?'В методике Teplo предусмотрен только противоток':'';fitDiagram();
+ $('flow-parallel').disabled=false;$('flow-parallel').title=coil?'Показать схему прямотока. Расчёт Teplo для прямотока не поддерживается.':'';fitDiagram();
  const reserve=document.querySelector('.reserve-factor-field');reserve.firstChild.textContent=coil?'Запас по UA':'Коэффициент запаса по площади';reserve.title=coil?'Запас проводимости UA относительно проектного задания':'Запас относительно расчётной площади без запаса';$('area-reserve-percent').setAttribute('aria-label',coil?'Запас проводимости UA в процентах':'Коэффициент запаса по площади в процентах');
  const power=$('result-q').closest('.metric');power.querySelector('.metric-label').innerHTML=coil?'Задание по мощности <span>Q</span>':'Тепловая нагрузка <span>Q</span>';power.querySelector('.metric-foot').textContent=coil?'Требуется по балансу Teplo':'Передаваемая тепловая мощность';
  if(!coil){$('result-area').closest('.metric').querySelector('.metric-label').innerHTML='Площадь теплообмена <span>F</span>'}
@@ -445,6 +445,16 @@ for(const b of document.querySelectorAll('[data-flow]'))b.addEventListener('clic
 $('reset').addEventListener('click',()=>{applyState({...defaults,thi:'',tho:'',tci:'',tco:'',mh:'',ph:'',pc:''});save();$('thi').focus();toast('Параметры потоков очищены')});
 $('close-help').addEventListener('click',()=>$('help-dialog').close());$('help-dialog').addEventListener('click',e=>{if(e.target===$('help-dialog')){const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.target.close()}});
 $('export').addEventListener('click',()=>{if($('exchanger-type').value==='coil'){exportCoilProject();return}update();if(lastError||!currentResult||!currentGeometry){validateAllNumericFields();toast('Для экспорта исправьте исходные данные');return}const r=currentResult,g=currentGeometry,s=getState();const rows=[['PhysNow — предварительный расчёт'],['Параметр','Значение','Единица'],['Тип аппарата',typeNames[s['exchanger-type']],''],['Неизвестный параметр',unknownParameter?findParameterName(unknownParameter):'Все параметры заданы',''],['Схема',flow==='counter'?'Противоток':'Прямоток',''],['Предельная длина теплообменника',g.length,'мм'],['Предельный внешний диаметр теплообменника',g['exchanger-diameter'],'мм'],['Коэффициент запаса по площади',r.reservePercent,'%'],['Материал труб',materialNames[$('tube-material').value],''],['Наружный диаметр трубы',g['tube-diameter'],'мм'],['Толщина стенки',g['tube-wall'],'мм'],['Межтрубное пространство',$('hot-fluid').selectedOptions[0].textContent,''],['Трубное пространство',$('cold-fluid').selectedOptions[0].textContent,''],['Температура на входе межтрубного пространства',r.thi,'°C'],['Температура на выходе межтрубного пространства',r.tho,'°C'],['Температура на входе трубного пространства',r.tci,'°C'],['Температура на выходе трубного пространства',r.tco,'°C'],['Абсолютное давление на входе межтрубного пространства',r.ph,'МПа'],['Абсолютное давление на входе трубного пространства',r.pc,'МПа'],['Массовый расход в межтрубном пространстве',r.mh,'кг/с'],['Массовый расход в трубном пространстве',r.mc,'кг/с'],['Расход на входе межтрубного пространства',Number(s.mh),flowUnitName(s['hot-flow-unit'])],['Расход на входе трубного пространства',massToFlow(r.mc,s['cold-flow-unit'],s.tci,s['cold-fluid']),flowUnitName(s['cold-flow-unit'])],['Теплоёмкость теплоносителя межтрубного пространства',r.cph,'кДж/(кг·К)'],['Теплоёмкость теплоносителя трубного пространства',r.cpc,'кДж/(кг·К)'],['Коэффициент теплопередачи',r.u,'Вт/(м²·К)'],['Тепловая нагрузка',r.q,'кВт'],['Температурный напор',r.dt,'К'],['Расчётная площадь без запаса',r.area,'м²'],['Требуемая площадь с запасом',r.designArea,'м²'],['Допущения','Постоянные cₚ и K, без фазового перехода и теплопотерь. Габариты и материал не определяют K автоматически. Гидравлика и геометрия вариантов — в таблице ниже.','']];rows.push(...variantExportRows());const csv='\uFEFF'+rows.map(row=>row.map(x=>'"'+String(typeof x==='number'?fmt(x,6):x).replaceAll('"','""')+'"').join(';')).join('\r\n');const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='physnow-calculation.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Параметры аппарата и результаты экспортированы в CSV')});
+// Selected narrow comparison, option 1: original coil, 150 x 258 shell,
+// 16-wide side nozzles, and 50% wider winding. Visual only, not thermal geometry.
+function coilProcessLayout(cx,cy,scale,left=0,right=left){
+ const l=98-196*left,r=-98+196*right;
+ const shell=`M-67 -129H67Q75 -129 75 -121V${r-8}H87V${r+8}H75V121Q75 129 67 129H-67Q-75 129 -75 121V${l+8}H-87V${l-8}H-75V-121Q-75 -129 -67 -129Z`;
+ return {shell,transform:`translate(${cx} ${cy}) scale(${scale})`,coilTransform:`translate(${cx} ${cy}) rotate(90) scale(${scale*222/184} ${scale*1.35})`,leads:`M${cx} ${cy-129*scale}V${cy-111*scale}M${cx} ${cy+111*scale}V${cy+129*scale}`,ports:[[cx+87*scale,cy+r*scale],[cx,cy+129*scale],[cx,cy-129*scale],[cx-87*scale,cy+l*scale]]};
+}
+const processNozzleMotion=ProcessNozzleMotion.create();
+document.addEventListener('visibilitychange',()=>{if(document.hidden)processNozzleMotion.finish()});
+matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change',event=>{if(event.matches)processNozzleMotion.finish()});
 function fitDiagram(){
  const box=document.querySelector('.diagram').getBoundingClientRect(),svg=document.querySelector('.process-svg');
  const w=box.width,h=box.height;if(w<=0||h<=0)return;
@@ -463,11 +473,29 @@ function fitDiagram(){
  set(pipes[1],{d:`M${w} ${top}C${w-coldInSpan*120/152} ${top} ${w-coldInSpan*60/152} ${cy} ${coldIn} ${cy}`});
  set(pipes[2],{d:`M${coldOut} ${cy}C${coldOut-coldOutSpan*92/148} ${cy} ${coldOut-coldOutSpan*32/148} ${bottom} 6 ${bottom}`});
  set(pipes[3],{d:`M${cx} ${hotOut}C${cx} ${hotOut+(bottom-hotOut)*107/128} ${cx+hotOutSpan*100/246} ${bottom} ${w-6} ${bottom}`});
- set(svg.querySelector('.exchanger-shell'),{cx,cy,r:shellRadius});set(svg.querySelector('.exchanger-fluid'),{cx,cy,r:shellRadius});
  const verticalCoil=$('exchanger-type').value==='coil';
- set(svg.querySelector('.exchanger-coil'),{transform:`translate(${cx} ${cy}) rotate(${verticalCoil?90:0}) scale(${shellRadius/92})`});
- const joints=svg.querySelectorAll('.exchanger-ports circle'),ports=verticalCoil?[[cx+shellRadius,cy],[cx,cy+shellRadius],[cx,cy-shellRadius],[cx-shellRadius,cy]]:[[cx,cy-shellRadius],[cx+shellRadius,cy],[cx-shellRadius,cy],[cx,cy+shellRadius]];
- ports.forEach(([x,y],i)=>set(joints[i],{cx:x,cy:y}));
+ let ports;
+ if(verticalCoil){
+  const drawCoil=(left,right)=>{
+  const layout=coilProcessLayout(cx,cy,Math.min(1,2*shellRadius/222),left,right),[sideIn,tubeOut,tubeIn,sideOut]=layout.ports;
+  for(const cls of ['.exchanger-shell','.exchanger-fluid'])set(svg.querySelector(cls),{d:layout.shell,transform:layout.transform});
+  set(svg.querySelector('.exchanger-coil'),{transform:layout.coilTransform});set(svg.querySelector('.exchanger-coil-leads'),{d:layout.leads});
+  const inletY=tubeIn[1]-6,outletY=tubeOut[1]+6,inletX=sideIn[0]+6,outletX=sideOut[0]-6;
+  set(pipes[0],{d:`M0 ${top}C${cx*.56} ${top} ${cx} ${top+(inletY-top)*.07} ${cx} ${inletY}`});
+  set(pipes[1],{d:`M${w} ${top}C${inletX+(w-inletX)*.4} ${top} ${inletX+(w-inletX)*.4} ${sideIn[1]} ${inletX} ${sideIn[1]}`});
+  set(pipes[2],{d:`M${outletX} ${sideOut[1]}C${outletX*.62} ${sideOut[1]} ${outletX*.62} ${bottom} 6 ${bottom}`});
+  set(pipes[3],{d:`M${cx} ${outletY}C${cx} ${outletY+(bottom-outletY)*.84} ${cx+(w-6-cx)*.41} ${bottom} ${w-6} ${bottom}`});
+  const joints=svg.querySelectorAll('.exchanger-ports circle');layout.ports.forEach(([x,y],i)=>set(joints[i],{cx:x,cy:y}));
+  };
+  processNozzleMotion.setDraw(drawCoil);processNozzleMotion.update(flow==='counter');
+ }else{
+  processNozzleMotion.reset();
+  const circle=`M${-shellRadius} 0a${shellRadius} ${shellRadius} 0 1 0 ${2*shellRadius} 0a${shellRadius} ${shellRadius} 0 1 0 ${-2*shellRadius} 0`;
+  for(const cls of ['.exchanger-shell','.exchanger-fluid'])set(svg.querySelector(cls),{d:circle,transform:`translate(${cx} ${cy})`});
+  set(svg.querySelector('.exchanger-coil'),{transform:`translate(${cx} ${cy}) scale(${shellRadius/92})`});set(svg.querySelector('.exchanger-coil-leads'),{d:''});
+  ports=[[cx,cy-shellRadius],[cx+shellRadius,cy],[cx-shellRadius,cy],[cx,cy+shellRadius]];
+ }
+ if(ports){const joints=svg.querySelectorAll('.exchanger-ports circle');ports.forEach(([x,y],i)=>set(joints[i],{cx:x,cy:y}))}
  const temps=svg.querySelectorAll('.svg-temp text');
  [[w*.29,top-12],[w*.71,top-12],[w*.29,bottom+18],[w*.71,bottom+18]].forEach(([x,y],i)=>set(temps[i],{x,y,'text-anchor':'middle'}));
 
