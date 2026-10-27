@@ -1,8 +1,8 @@
-/* Selected motion 6: right nozzle first, left follows. No thermal state. */
+/* Selected motion 1: both nozzles move together with smooth easing. No thermal state. */
 (function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.ProcessNozzleMotion=api})(globalThis,function(){
  'use strict';
- const duration=1100,clamp=t=>Math.max(0,Math.min(1,t)),smooth=t=>{t=clamp(t);return t*t*(3-2*t)};
- function progress(t){return {left:smooth((t-.3)/.7),right:smooth(t/.7)}}
+ const duration=750,clamp=t=>Math.max(0,Math.min(1,t)),smooth=t=>{t=clamp(t);return t*t*(3-2*t)};
+ function progress(t){const value=smooth(t);return {left:value,right:value}}
  function create(options={}){
   const request=options.requestFrame||(callback=>requestAnimationFrame(callback)),cancel=options.cancelFrame||(id=>cancelAnimationFrame(id)),reduced=options.reducedMotion||(()=>typeof matchMedia==='function'&&matchMedia('(prefers-reduced-motion: reduce)').matches);
   let draw=options.draw||(()=>{}),left=0,right=0,target=null,raf=0;

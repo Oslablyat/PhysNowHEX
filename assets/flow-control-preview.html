@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="ru">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#191919"><title>Переключатель №1 с анимацией · PhysNow</title><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="rectangle-variants.css?v=20261026"><link rel="stylesheet" href="flow-control-variants.css?v=20261027"><link rel="stylesheet" href="flow-control-preview.css?v=20261027"></head>
+<body>
+ <header class="topbar"><a class="brand" href="../"><img src="physnow-logo.png" alt="" width="25" height="25">PhysNow</a><span class="section-name">Превью переключателя №1</span><a class="back-link" href="flow-control-variants.html">← Все 10 вариантов</a></header>
+ <main class="page animated-preview-page">
+  <header class="intro"><div><p class="eyebrow">№1 · Сегменты как поля</p><h1>Первый вариант с анимацией</h1><p class="intro-note">Прямоугольное оформление и привычный плавный сдвиг плашки.<br>Переключите схему: патрубки двигаются той же анимацией, что на основном сайте.</p></div></header>
+  <div class="animated-preview-layout">
+   <section class="construction-preview" aria-label="Пример панели Конструкция">
+    <header class="context-heading"><span class="context-step">01</span><strong>Конструкция</strong><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 6h14v8H3zM6 3v14m8-14v14"/></svg></header>
+    <div class="preview-fields">
+     <div aria-hidden="true"><span class="field-label">Тип теплообменника</span><div class="mock-select">Змеевиковый<svg class="chevron" viewBox="0 0 20 20"><path d="m5 8 5 5 5-5"/></svg></div></div>
+     <div class="selector-field"><span class="field-label" id="preview-flow-label">Схема движения</span><div class="flow-ui kind-field preview-tabs" role="tablist" aria-labelledby="preview-flow-label" data-current="counter"><span class="preview-pill" aria-hidden="true"></span><button type="button" role="tab" data-mode="counter" aria-selected="true" aria-controls="preview-scheme" tabindex="0">Противоток</button><button type="button" role="tab" data-mode="parallel" aria-selected="false" aria-controls="preview-scheme" tabindex="-1">Прямоток</button></div></div>
+     <div class="context-dimensions" aria-hidden="true"><span class="field-label">Размеры теплообменника</span><div class="mock-dimensions"><div><span class="field-label">Длина L</span><div class="mock-input"><strong>1 000</strong><span>мм</span></div></div><div><span class="field-label">Внешний диаметр</span><div class="mock-input"><strong>200</strong><span>мм</span></div></div></div></div>
+     <div class="mock-extra" aria-hidden="true"><span class="field-label">Запас по UA</span><div class="mock-input"><strong>10</strong><span>%</span></div><span class="field-label">Материал труб</span><div class="mock-select">Нерж. сталь 12Х18Н10Т<svg class="chevron" viewBox="0 0 20 20"><path d="m5 8 5 5 5-5"/></svg></div><span class="field-label">Теплопроводность стенки λw</span><div class="mock-input"><strong>16</strong><span>Вт/(м·К)</span></div></div>
+    </div>
+   </section>
+   <section class="scheme-preview" id="preview-scheme" role="tabpanel" aria-label="Схема выбранного потока"><header><span class="context-step">02</span><h2>Параметры теплообмена</h2><button type="button" id="preview-repeat" aria-label="Повторить анимацию" title="Повторить анимацию">↻</button></header><div class="detail-stage" id="preview-scene"></div><p id="preview-mode-note" aria-live="polite">Противоток · левый патрубок сверху, правый снизу</p></section>
+  </div>
+  <p class="selector-footnote">Только визуальное превью. Основной переключатель и расчёты не изменены. Плашка: 250 мс, патрубки: тот же общий скрипт и 750 мс, что на сайте.</p>
+ </main>
+ <script src="rectangle-variants.js?v=flow-20261026"></script><script src="process-nozzle-motion.js?v=smooth-both-20261027"></script><script src="flow-control-preview.js?v=20261027"></script>
+</body>
+</html>

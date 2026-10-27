@@ -18,11 +18,11 @@ for(const [w,h,screen]of [[600,500,1400],[160,350,790],[360,235,390]]){
  fields['exchanger-type'].value='coil';context.fitDiagram();assert.equal(shell.attrs.d,selected.shell,'Switch back restores rectangle');
  context.flow='counter';context.fitDiagram();assert.equal(shell.attrs.d,shellPath({...narrowVariants[0],flowMode:'counter'}));assert(+ports[0].attrs.cy>h/2);assert(+ports[3].attrs.cy<h/2);
 }
-// Selected motion 6 matches the approved prototype and handles interruption/resize.
-assert.equal(nozzleMotion.duration,1100);
+// Selected motion 1 matches the approved prototype and handles interruption/resize.
+assert.equal(nozzleMotion.duration,750);
 let nextFrame=0,queue=new Map(),lastDraw=null;const scheduler={requestFrame:cb=>{queue.set(++nextFrame,cb);return nextFrame},cancelFrame:id=>queue.delete(id),reducedMotion:()=>false,draw:(left,right)=>{lastDraw={left,right}}};
 const controller=nozzleMotion.create(scheduler),step=time=>{const jobs=[...queue.values()];queue.clear();jobs.forEach(cb=>cb(time))};
-controller.update(0);assert.deepEqual(lastDraw,{left:0,right:0});assert.equal(queue.size,0);controller.update(1);step(0);step(200);assert.equal(lastDraw.left,0);assert(lastDraw.right>0,'Right moves before left');
+controller.update(0);assert.deepEqual(lastDraw,{left:0,right:0});assert.equal(queue.size,0);controller.update(1);step(0);step(200);assert(lastDraw.left>0);assert.equal(lastDraw.left,lastDraw.right,'Both nozzles move together');
 const interrupted={...lastDraw};controller.update(0);step(250);assert.deepEqual(lastDraw,interrupted,'Reversal starts from current positions');step(1350);assert.deepEqual(lastDraw,{left:0,right:0});assert.equal(queue.size,0);
 controller.update(1);step(1500);step(1900);const beforeResize={...lastDraw};controller.setDraw((left,right)=>{lastDraw={left,right}});controller.update(1);assert.deepEqual(lastDraw,beforeResize,'Resize must not restart transition');step(2600);assert.deepEqual(lastDraw,{left:1,right:1});assert.equal(queue.size,0);controller.reset();controller.update(0);assert.deepEqual(lastDraw,{left:0,right:0});
 const quiet=nozzleMotion.create({...scheduler,reducedMotion:()=>true});quiet.update(0);quiet.update(1);assert.deepEqual(lastDraw,{left:1,right:1});assert.equal(queue.size,0);
@@ -74,6 +74,7 @@ for(let i=0;i<10;i++){
 assert.equal(flowPaths.size,10);const rows=flowComparison.rows();assert.equal((rows.match(/class="flow-row"/g)||[]).length,10);assert.equal((rows.match(/class="flow-cell"/g)||[]).length,20);
 const flowHtml=fs.readFileSync(path.join(__dirname,'../assets/rectangle-flow-variants.html'),'utf8');assert(!flowHtml.includes('app.js'));assert(flowHtml.includes('<dialog'));assert(flowHtml.includes('только противоток'));
 const animations=require('../assets/rectangle-flow-animations.js');assert.equal(animations.motions.length,10);assert.deepEqual(animations.base,narrowVariants[0]);
+for(let k=0;k<=100;k++){const t=k/100,expected=animations.frame(0,t),actual=nozzleMotion.progress(t);assert.equal(actual.left,expected.left);assert.equal(actual.right,expected.right)}assert.equal(nozzleMotion.duration,animations.motions[0].duration);
 const signatures=new Set();
 for(let i=0;i<10;i++){
  assert.deepEqual(animations.frame(i,0),{left:0,right:0,neck:1,opacity:1});assert.deepEqual(animations.frame(i,1),{left:1,right:1,neck:1,opacity:1});

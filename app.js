@@ -239,7 +239,7 @@ function updateCoilProject(persist=true,force=false){
     if(data.id!==coilProject.id||$('exchanger-type').value!=='coil')return;
     if(data.error){coilProject.phase='error';lastError=data.error;setCalculationIssue({stage:currentResult?'design':'balance',...data.issue,message:data.error});if(!currentResult){$('balance-status').classList.add('invalid');$('balance-status').innerHTML='<i></i> Баланс не рассчитан';$('balance-status').title=data.error;$('result-area').textContent='—';$('result-area-note').textContent='Сначала исправьте тепловой баланс'}renderExchangerVariants(coilProjectState(),currentResult,{kind:'coil',inputKey:coilProject.key,rows:[],candidates:[],message:data.error});coilThermalUI?.refresh();save();return}
     if(data.phase==='balance'){coilProject.phase='selecting';renderCoilProjectBalance(data.balance,coilProjectState());save()}
-    if(data.phase==='progress'){const status=$('variant-status');status.hidden=false;status.textContent='Подбор по Teplo: проверено '+data.stats.evaluations+' конструкций, принято '+data.stats.accepted+'.'}
+    if(data.phase==='progress'){const status=$('variant-status');if(status){status.hidden=false;status.textContent='Подбор по Teplo: проверено '+data.stats.evaluations+' конструкций, принято '+data.stats.accepted+'.'}}
     if(data.phase==='variants'){
      coilProject.phase='ready';coilProject.version=data.version;lastError='';data.variants.inputKey=coilProject.key;
      const hadRows=data.variants.rows.length;data.variants.rows=data.variants.rows.filter(({design})=>{try{calculateCoilGeometry(design.geometry);return true}catch{return false}});
@@ -331,47 +331,20 @@ function selectExchangerVariants(state,r){
  return {rows,candidates,message:'В пределах заданных L и D · вода / вода'};
 }
 function renderExchangerVariants(state,r,supplied=null){
- const target=$('variant-rows');if(!target)return;
+ // Automatic geometry binding is independent of the removed variants table.
  currentVariants=supplied??selectExchangerVariants(state,r);
- const coil=state['exchanger-type']==='coil';document.querySelector('.variants-panel').dataset.kind=coil?'coil':'shell';$('variant-count-title').textContent=coil?'Змеевиков':'Труб';
+ const coil=state['exchanger-type']==='coil';
  if(coil&&currentVariants.rows.length){
   if(!currentVariants.rows.some(row=>row.id===selectedVariant))selectedVariant=currentVariants.rows.find(row=>row.id==='balanced')?.id??currentVariants.rows[0].id;
   if(coilVariantBinding?.legacy){coilVariantBinding={key:currentVariants.inputKey,profile:selectedVariant,manual:true};}
   else if(!coilVariantBinding||coilVariantBinding.key!==currentVariants.inputKey||!currentVariants.rows.some(row=>row.id===coilVariantBinding.profile)){if(coilVariantBinding?.manual)coilVariantBinding.key=currentVariants.inputKey;else{selectedVariant='balanced';loadCoilVariant(selectedVariant,false)}}
  }
- const status=$('variant-status');status.hidden=currentVariants.rows.length>0;status.textContent=status.hidden?'':currentVariants.message;
+ const status=$('variant-status');if(status){status.hidden=currentVariants.rows.length>0;status.textContent=status.hidden?'':currentVariants.message;}
  if(coil)syncCoilVariantNotice();
- target.replaceChildren();
- const labels=['Длина, мм','Внешний диаметр, мм','Поверхность, м²',coil?'Змеевиков, шт.':'Труб, шт.','Труба d × δ, мм','Перепад в трубном пространстве, кПа','Перепад в межтрубном пространстве, кПа','Скорость в трубах, м/с'];
- for(const profile of variantProfiles()){
-  const c=currentVariants.rows.find(row=>row.id===profile.id)?.design,row=document.createElement('button');
-  row.type='button';row.className='variant-row variant-option';row.dataset.profile=profile.id;row.setAttribute('role','radio');row.disabled=!c;
-  const name=document.createElement('span');name.className='variant-name';name.textContent=profile.name;row.append(name);
-  const values=c?[fmt(c.length*1000,0),fmt(c.diameter*1000,0),fmt(c.area,2),fmt(c.n,0),fmt(c.dmm,2)+' × '+fmt(c.wmm,2),...(coil?['—','—','—']:[fmt(c.dpt/1000,3),fmt(c.dps/1000,3),fmt(c.vt,2)])]:Array(8).fill('—');
-  row.setAttribute('aria-label',profile.name+'. '+(c?values.map((value,i)=>labels[i]+': '+value).join('; '):currentVariants.message));
-  row.title=c?(currentVariants.rows.find(item=>item.id===profile.id)?.detail||profile.detail):coil&&['compact','production'].includes(profile.id)?'Временно отключено':coil&&profile.id==='hydraulic'?'Гидравлическая модель змеевикового аппарата пока не подключена':currentVariants.message;
-  for(const value of values){const cell=document.createElement('span');cell.className='num';cell.textContent=value;row.append(cell)}
-  const icon=document.createElement('span');icon.className='t-icon-swap';icon.setAttribute('aria-hidden','true');
-  icon.innerHTML='<span class="t-icon" data-icon="a"><span class="ring"></span></span><span class="t-icon" data-icon="b"><svg class="hi" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"><path d="M5.25 12.7033 9.40385 17.37 18.75 6.87"/></svg></span>';
-  row.append(icon);
-  row.addEventListener('click',()=>{if(coil){loadCoilVariant(profile.id);return}if(selectedVariant===profile.id)return;selectedVariant=profile.id;syncVariantSelection();save()});
-  row.addEventListener('keydown',event=>{
-   if(!['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
-   event.preventDefault();const options=[...target.querySelectorAll('.variant-option:not(:disabled)')],index=options.indexOf(row);
-   const next=event.key==='Home'?0:event.key==='End'?options.length-1:(index+(['ArrowDown','ArrowRight'].includes(event.key)?1:-1)+options.length)%options.length;
-   options[next].click();options[next].focus();
-  });
-  row.addEventListener('pointerdown',event=>{
-   if(event.pointerType==='mouse'||row.disabled)return;const start=performance.now();clearTimeout(row._variantPress);row.classList.add('is-pressed');
-   const up=()=>{document.removeEventListener('pointerup',up,true);document.removeEventListener('pointercancel',up,true);row._variantPress=setTimeout(()=>row.classList.remove('is-pressed'),Math.max(0,150-(performance.now()-start)))};
-   document.addEventListener('pointerup',up,true);document.addEventListener('pointercancel',up,true);
-  },{passive:true});
-  target.append(row);
- }
  syncVariantSelection();
 }
 function restoreCoilVariantBinding(value){return value&&typeof value.key==='string'&&typeof value.profile==='string'?{key:value.key,profile:value.profile,manual:value.manual===true}:null}
-function syncCoilVariantNotice(){if($('exchanger-type').value!=='coil')return;const status=$('variant-status');status.hidden=false;status.textContent=currentVariants?.message||'';if(currentVariants?.rows.length)status.textContent+=' '+(coilVariantBinding?.manual?'Геометрия ниже изменена вручную. Нажмите строку, чтобы загрузить вариант заново.':'В проработке: '+(currentVariants.rows.find(row=>row.id===selectedVariant)?.name||'—')+'.')}
+function syncCoilVariantNotice(){if($('exchanger-type').value!=='coil')return;const status=$('variant-status');if(!status)return;status.hidden=false;status.textContent=currentVariants?.message||'';if(currentVariants?.rows.length)status.textContent+=' '+(coilVariantBinding?.manual?'Геометрия изменена вручную; автоматический подбор не перезаписывает ручные изменения.':'В проработке: '+(currentVariants.rows.find(row=>row.id===selectedVariant)?.name||'—')+'.')}
 function markCoilVariantManual(){if(coilVariantBinding&&$('exchanger-type').value==='coil'){coilVariantBinding.manual=true;syncCoilVariantNotice()}}
 function loadCoilVariant(profile,refresh=true){
  const candidate=currentVariants?.rows.find(row=>row.id===profile)?.design;if(candidate?.kind!=='coil')return;
@@ -381,9 +354,6 @@ function loadCoilVariant(profile,refresh=true){
  if(refresh){syncVariantSelection();syncCoilVariantNotice();save()}
 }
 function syncVariantSelection(){
- for(const row of $('variant-rows').querySelectorAll('.variant-option')){
-  const checked=!row.disabled&&row.dataset.profile===selectedVariant;row.setAttribute('aria-checked',String(checked));row.tabIndex=checked?0:-1;row.querySelector('.t-icon-swap').dataset.state=checked?'b':'a';
- }
  syncVerificationChoice();
 }
 
@@ -575,7 +545,7 @@ fitDiagram();document.fonts.ready.then(fitDiagram);
 
 // Calculation tools reuse the existing storage and CSV export on either page.
 $('header-save').addEventListener('click',()=>toast(save()?'Листы расчёта сохранены в этом браузере':'Браузер не разрешил сохранить расчёт'));
-$('header-download').addEventListener('click',()=>headerNavigation.dataset.activeSection==='verification'?exportCoilGeometry():$('export').click());
+$('header-download').addEventListener('click',()=>['verification','construction'].includes(headerNavigation.dataset.activeSection)?exportCoilGeometry():$('export').click());
 
 // Header navigation: switch the selected item and slide its underline.
 const headerNavigation=document.querySelector('.cad-navigation');
@@ -1230,7 +1200,7 @@ function coilSideSvg(g,highlightRow=coilHighlightedRow,dimOpacity=.12,compact=fa
  out+='<path class="coil-dimension-line" d="M'+(x-6)+' '+y0+'h14m-14 '+height+'h14M'+x+' '+y0+'v'+height+'"/><text class="coil-dimension-text" transform="translate('+(x+20)+','+(y0+height/2)+') rotate(90)" text-anchor="middle">H = '+fmt(g.height,1)+' мм</text><text class="coil-dimension-text" x="320" y="'+(compact?y0+height+36:562)+'" text-anchor="middle">Труба Ø '+fmt(g.tubeDiameter)+' × '+fmt(g.tubeWall)+' мм · '+g.totalCount+' змеевиков</text>';
  return out;
 }
-function syncDesignLayoutVisibility(){const panel=$('design-layout');if(panel)panel.hidden=$('detail-preview-mode').value!=='layout';designLayout3d?.setVisible(!!panel&&!panel.hidden&&!$('design-page').hidden);syncCoilThermalVisibility()}
+function syncDesignLayoutVisibility(){const panel=$('design-layout');if(panel)panel.hidden=$('detail-preview-mode').value!=='layout';designLayout3d?.setVisible(!!panel&&!panel.hidden&&!$('construction-page').hidden);syncCoilThermalVisibility()}
 function designLayout3dStatus(state,message=''){
  const host=$('layout-main-3d');host.dataset.status=state;
  $('layout-main-3d-state').textContent=state==='error'?'Не удалось показать 3D. '+message:state==='loading'?'Обновление 3D…':'';
@@ -1278,13 +1248,13 @@ function initializeDesignLayout(){
 }
 function syncPageView(){
  if(!verificationUIReady)return;
- const verification=headerNavigation.dataset.activeSection==='verification';
- $('design-page').hidden=verification;$('verification-page').hidden=!verification;
+ const verification=headerNavigation.dataset.activeSection==='verification',construction=headerNavigation.dataset.activeSection==='construction';
+ $('design-page').hidden=verification||construction;$('construction-page').hidden=!construction;$('verification-page').hidden=!verification;
  syncDesignLayoutVisibility();
- const actionsTarget=document.querySelector(verification?'.verification-heading-actions':'.heading-actions');
+ const actionsTarget=document.querySelector(verification?'.verification-heading-actions':construction?'.construction-heading-actions':'.calculator-overview>.heading .heading-actions');
  actionsTarget.append($('calculation-actions'));
  if(verification){if(!verificationState)verificationState=seedCoilGeometry(getState());fillVerificationInputs();document.title='PhysNow'}
- else{document.title='PhysNow';requestAnimationFrame(fitDiagram)}
+ else{document.title='PhysNow';if(construction){if($('detail-preview-mode').value==='layout')ensureDesignLayout3d()}else requestAnimationFrame(fitDiagram)}
 }
 function exportCoilGeometry(){
  const g=currentCoilGeometry;if(!g){toast('Проверьте геометрию перед экспортом');return}
@@ -1300,7 +1270,7 @@ initializeCoilThermalMethod();
 
 function syncCoilThermalVisibility(){
  if(!coilThermalUI)return;
- const verification=!$('verification-page').hidden,design=!$('design-page').hidden&&$('detail-preview-mode').value==='characteristics';
+ const verification=!$('verification-page').hidden,design=!$('construction-page').hidden&&$('detail-preview-mode').value==='characteristics';
  $('coil-thermal-design').hidden=!design;$('coil-thermal-verification').hidden=!verification;
  coilThermalUI.mount($(verification?'coil-thermal-verification':'coil-thermal-design'),verification||design);
 }

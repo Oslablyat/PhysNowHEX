@@ -33,7 +33,7 @@ assert.equal(exportRows.filter(row=>result.rows.some(profile=>profile.name===row
 assert(exportRows[2].includes('Перепад трубное, кПа'));
 assert(exportRows[2].includes('Перегородок, шт.'),'Shell-and-tube export retains its real construction parameters');
 for(const type of ['coil','double']){const rows=vm.runInNewContext(exportSource+'\nvariantExportRows(state)',{currentResult:null,currentVariants:model.selectExchangerVariants({...state,'exchanger-type':type},r),state:{...state,'exchanger-type':type}});assert(!JSON.stringify(rows).toLowerCase().includes('перегород'));assert(!JSON.stringify(rows).includes('Керна'));if(type==='double')assert(rows.some(row=>row[0]==='Подбор недоступен'));else{assert(rows.some(row=>row[0]==='Подбор недоступен'));assert(!rows.flat().includes('Перепад трубное, кПа'));}}
-const html=fs.readFileSync(require('node:path').join(__dirname,'..','index.html'),'utf8'),header=html.slice(html.indexOf('class="variant-row variant-header"'),html.indexOf('id="variant-rows"'));assert(!header.includes('Перегородок'));assert.equal((header.match(/class="num"/g)||[]).length,8);
+const html=fs.readFileSync(require('node:path').join(__dirname,'..','index.html'),'utf8');assert(!html.includes('class="variants-panel"'));assert(!html.includes('id="variant-rows"'));assert(!html.includes('id="variant-count-title"'));
 // A fresh page/new sheet starts with coils; an explicitly saved type still wins.
 const defaultState=vm.runInNewContext(app.slice(app.indexOf('const defaults ='),app.indexOf('\n',app.indexOf('const defaults =')))+';defaults');
 assert.equal(defaultState['exchanger-type'],'coil');
