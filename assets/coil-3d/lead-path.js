@@ -1,5 +1,6 @@
 import * as THREE from '../vendor/three-0.186.1/three.module.min.js';
 import {HelixCurve} from './model.js?v=rows-sidebar-20261022';
+import '../coil-manufacturing.js?v=re-stock-20261029';
 
 // One open centreline. Bends stay on the helix cylinder and have constant
 // centreline curvature 1 / bendRadius. They are spatial bends, not planar elbows.
@@ -14,14 +15,10 @@ export class LeadedCoilCurve extends THREE.Curve {
       const beta=Math.asin(THREE.MathUtils.clamp(out.y*sign,-1,1)),angle=Math.PI/2-beta;
       // On a cylinder: curvature² = (dθ/ds)² + cos(θ)^4 / R².
       // Integrating this equation keeps both the requested bend radius and R.
-      const rate=a=>{const c=Math.cos(a),ds=1/Math.sqrt(1/this.radius**2-c**4/cylinderRadius**2);return [c/cylinderRadius*ds,Math.sin(a)*ds,ds];};
-      const integral=(a,b)=>{const x=rate(a),m=rate((a+b)/2),y=rate(b);return x.map((v,i)=>(b-a)/6*(v+4*m[i]+y[i]));};
-      const samples=256,table=[[0,0,0]];
-      for(let i=0;i<samples;i++){const add=integral(beta+angle*i/samples,beta+angle*(i+1)/samples);table.push(table[i].map((v,j)=>v+add[j]));}
-      const sample=u=>{const q=THREE.MathUtils.clamp(u,0,1)*samples,i=Math.min(samples-1,Math.floor(q)),add=integral(beta+angle*i/samples,beta+angle*q/samples);return table[i].map((v,j)=>v+add[j]);};
+      const table=globalThis.CoilManufacturing.bendTable(cylinderRadius,this.radius,beta),sample=table.sample;
       const at=(u,target=new THREE.Vector3())=>{const [azimuth,height]=sample(u),phi=phi0+direction*azimuth;return target.set(cylinderRadius*Math.cos(phi),point.y+sign*height,cylinderRadius*Math.sin(phi));};
       const tangent=(u,target=new THREE.Vector3())=>{const phi=phi0+direction*sample(u)[0],a=beta+angle*u,c=direction*Math.cos(a);return target.set(-Math.sin(phi)*c,sign*Math.sin(a),Math.cos(phi)*c);};
-      return {at,tangent,angle,point,end:at(1),length:table[samples][2]};
+      return {at,tangent,angle,point,end:at(1),length:table.length};
     };
     this.upper=bend(0,1);this.lower=bend(1,-1);
     const straight=p.leadStraightLength;

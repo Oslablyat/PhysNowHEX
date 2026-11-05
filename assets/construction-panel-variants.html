@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#191919">
+  <title>Панель «Конструкция» · 20 вариантов · PhysNow</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="rectangle-variants.css">
+  <link rel="stylesheet" href="construction-panel-variants.css">
+  <script src="construction-panel-variants.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="../"><img src="physnow-logo.png" alt="" width="25" height="25">PhysNow</a>
+    <span class="section-name">Сравнение интерфейсов</span>
+    <a class="back-link" href="../">← К расчёту</a>
+  </header>
+  <main class="page panel-comparison">
+    <header class="intro">
+      <div>
+        <p class="eyebrow">Проектировочный расчёт</p>
+        <h1>Панель «Конструкция»</h1>
+        <p class="intro-note">20 компоновок с одинаковыми исходными данными. Изменения в полях применяются ко всем эскизам для сравнения.</p>
+      </div>
+    </header>
+    <div class="comparison-tools" aria-label="Настройки сравнения">
+      <label><input type="checkbox" id="show-warning" checked> Показать предупреждение</label>
+      <label><input type="checkbox" data-field="refine"> Раскрыть типоразмер труб</label>
+      <button type="button" id="reset-previews">Сбросить пример</button>
+    </div>
+    <nav id="panel-index" class="panel-index" aria-label="Перейти к варианту"></nav>
+    <div id="panel-gallery"></div>
+  </main>
+</body>
+</html>

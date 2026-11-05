@@ -1,0 +1,380 @@
+{
+  "algorithm": "re-stock-inline-counts-v7",
+  "cases": [
+    {
+      "id": "cold-inlet-20",
+      "state": {
+        "flow": "counter",
+        "hot-fluid": "water",
+        "cold-fluid": "water",
+        "hot-flow-unit": "kg-s",
+        "cold-flow-unit": "kg-s",
+        "thi": 90,
+        "tho": 60,
+        "tco": 40,
+        "mh": 2.5,
+        "mc": "",
+        "ph": 0.6,
+        "pc": 0.4,
+        "unknown": "mc",
+        "area-reserve-percent": 0,
+        "tube-conductivity": 16,
+        "length": 2000,
+        "exchanger-diameter": 600,
+        "tci": 20
+      },
+      "target": {
+        "q": 314.40873398901044,
+        "mc": 3.7617622654700704
+      },
+      "found": true,
+      "selected": {
+        "q": 314.4294673073309,
+        "hot": 59.99801466072058,
+        "cold": 40.00131975130736,
+        "re": 17347.348835707726,
+        "shellRe": 3127.3385466351056,
+        "valid": true,
+        "geometry": {
+          "diameter": 236,
+          "height": 1774,
+          "shellWall": 1,
+          "coreDiameter": 126,
+          "coreLength": 1774,
+          "coreWall": 2,
+          "tubeDiameter": 14,
+          "tubeWall": 2.5,
+          "clearance": 3,
+          "coreClearance": 3,
+          "shellClearance": 3,
+          "rowClearance": 3,
+          "leadBendRadius": 28,
+          "leadStraightLength": 40,
+          "rows": [
+            {
+              "diameter": 146,
+              "count": 18,
+              "turns": 4,
+              "pitch": 440,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 180,
+              "count": 18,
+              "turns": 4,
+              "pitch": 440,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 214,
+              "count": 18,
+              "turns": 3,
+              "pitch": 440,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            }
+          ]
+        }
+      },
+      "range": {
+        "target": {
+          "min": 47,
+          "max": 62
+        },
+        "min": 47,
+        "max": 62,
+        "selected": 54,
+        "estimatedRe": 17347.68229653475,
+        "counts": [
+          54
+        ],
+        "fallbackCounts": [
+          55,
+          62,
+          52,
+          56
+        ]
+      },
+      "stats": {
+        "families": 8,
+        "evaluations": 73,
+        "errors": 0,
+        "inapplicable": 0,
+        "insufficient": 68,
+        "geometryChecks": 886,
+        "tubeCount": 54,
+        "maxEvaluations": 200,
+        "phases": {
+          "initial": 9,
+          "refinement": 64
+        },
+        "testedCounts": [
+          54
+        ]
+      }
+    },
+    {
+      "id": "cold-inlet-21",
+      "state": {
+        "flow": "counter",
+        "hot-fluid": "water",
+        "cold-fluid": "water",
+        "hot-flow-unit": "kg-s",
+        "cold-flow-unit": "kg-s",
+        "thi": 90,
+        "tho": 60,
+        "tco": 40,
+        "mh": 2.5,
+        "mc": "",
+        "ph": 0.6,
+        "pc": 0.4,
+        "unknown": "mc",
+        "area-reserve-percent": 0,
+        "tube-conductivity": 16,
+        "length": 2000,
+        "exchanger-diameter": 600,
+        "tci": 21
+      },
+      "target": {
+        "q": 314.40873398901044,
+        "mc": 3.959834369026161
+      },
+      "found": true,
+      "selected": {
+        "q": 314.4157505151404,
+        "hot": 59.99932694829604,
+        "cold": 40.000424355329216,
+        "re": 17347.513548715644,
+        "shellRe": 3327.073432548583,
+        "valid": true,
+        "geometry": {
+          "diameter": 236,
+          "height": 1737,
+          "shellWall": 1,
+          "coreDiameter": 126,
+          "coreLength": 1737,
+          "coreWall": 2,
+          "tubeDiameter": 14,
+          "tubeWall": 2.5,
+          "clearance": 3,
+          "coreClearance": 3,
+          "shellClearance": 3,
+          "rowClearance": 3,
+          "leadBendRadius": 28,
+          "leadStraightLength": 40,
+          "rows": [
+            {
+              "diameter": 146,
+              "count": 18,
+              "turns": 4,
+              "pitch": 430.75,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 180,
+              "count": 18,
+              "turns": 4,
+              "pitch": 430.75,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 214,
+              "count": 18,
+              "turns": 3,
+              "pitch": 430.75,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            }
+          ]
+        }
+      },
+      "range": {
+        "target": {
+          "min": 47,
+          "max": 62
+        },
+        "min": 47,
+        "max": 62,
+        "selected": 54,
+        "estimatedRe": 17347.68229653475,
+        "counts": [
+          54
+        ],
+        "fallbackCounts": [
+          55,
+          62,
+          52,
+          56
+        ]
+      },
+      "stats": {
+        "families": 8,
+        "evaluations": 73,
+        "errors": 0,
+        "inapplicable": 0,
+        "insufficient": 45,
+        "geometryChecks": 1038,
+        "tubeCount": 54,
+        "maxEvaluations": 200,
+        "phases": {
+          "initial": 9,
+          "refinement": 64
+        },
+        "testedCounts": [
+          54
+        ]
+      }
+    },
+    {
+      "id": "cold-inlet-31",
+      "state": {
+        "flow": "counter",
+        "hot-fluid": "water",
+        "cold-fluid": "water",
+        "hot-flow-unit": "kg-s",
+        "cold-flow-unit": "kg-s",
+        "thi": 90,
+        "tho": 60,
+        "tco": 40,
+        "mh": 2.5,
+        "mc": "",
+        "ph": 0.6,
+        "pc": 0.4,
+        "unknown": "mc",
+        "area-reserve-percent": 0,
+        "tube-conductivity": 16,
+        "length": 2000,
+        "exchanger-diameter": 600,
+        "tci": 31
+      },
+      "target": {
+        "q": 314.40873398901044,
+        "mc": 8.360530516260928
+      },
+      "found": true,
+      "selected": {
+        "q": 314.86343271530336,
+        "hot": 59.956520685971526,
+        "cold": 40.0130159840418,
+        "re": 16723.85915813876,
+        "shellRe": 6354.8219569306375,
+        "valid": true,
+        "geometry": {
+          "diameter": 230,
+          "height": 1920,
+          "shellWall": 1,
+          "coreDiameter": 86,
+          "coreLength": 1920,
+          "coreWall": 2,
+          "tubeDiameter": 14,
+          "tubeWall": 2.5,
+          "clearance": 3,
+          "coreClearance": 3,
+          "shellClearance": 3,
+          "rowClearance": 3,
+          "leadBendRadius": 28,
+          "leadStraightLength": 40,
+          "rows": [
+            {
+              "diameter": 106,
+              "count": 14,
+              "turns": 5,
+              "pitch": 381.2,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 140,
+              "count": 14,
+              "turns": 4,
+              "pitch": 381.2,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 174,
+              "count": 14,
+              "turns": 4,
+              "pitch": 381.2,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 208,
+              "count": 14,
+              "turns": 3,
+              "pitch": 381.2,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            }
+          ]
+        }
+      },
+      "range": {
+        "target": {
+          "min": 47,
+          "max": 62
+        },
+        "min": 47,
+        "max": 62,
+        "selected": 54,
+        "estimatedRe": 17347.68229653475,
+        "counts": [
+          54
+        ],
+        "fallbackCounts": [
+          55,
+          62,
+          52,
+          56
+        ]
+      },
+      "stats": {
+        "families": 24,
+        "evaluations": 124,
+        "errors": 0,
+        "inapplicable": 0,
+        "insufficient": 118,
+        "geometryChecks": 1953,
+        "tubeCount": 54,
+        "maxEvaluations": 200,
+        "phases": {
+          "initial": 9,
+          "refinement": 80,
+          "fallback": 24,
+          "improvement": 11
+        },
+        "testedCounts": [
+          54,
+          56,
+          52,
+          55
+        ]
+      }
+    }
+  ]
+}

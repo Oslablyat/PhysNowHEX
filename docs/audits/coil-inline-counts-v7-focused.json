@@ -1,0 +1,4188 @@
+{
+  "algorithm": "re-stock-inline-counts-v7",
+  "created": "2026-11-04T06:36:06.426Z",
+  "base": {
+    "flow": "counter",
+    "hot-fluid": "water",
+    "cold-fluid": "water",
+    "hot-flow-unit": "kg-s",
+    "cold-flow-unit": "kg-s",
+    "ph": 2,
+    "pc": 1.2,
+    "unknown": "mc",
+    "mc": "",
+    "area-reserve-percent": 0,
+    "tube-conductivity": 16,
+    "length": 10000,
+    "exchanger-diameter": 3000
+  },
+  "flows": [
+    0.02,
+    0.05,
+    0.08,
+    0.1,
+    0.15,
+    0.2,
+    0.35,
+    0.5,
+    1,
+    2.5,
+    5,
+    10,
+    20,
+    40,
+    80
+  ],
+  "regimes": [
+    {
+      "id": "A",
+      "thi": 50,
+      "tho": 40,
+      "tci": 10,
+      "tco": 25
+    },
+    {
+      "id": "B",
+      "thi": 70,
+      "tho": 50,
+      "tci": 15,
+      "tco": 35
+    },
+    {
+      "id": "C",
+      "thi": 90,
+      "tho": 60,
+      "tci": 20,
+      "tco": 40
+    },
+    {
+      "id": "D",
+      "thi": 90,
+      "tho": 80,
+      "tci": 20,
+      "tco": 30
+    },
+    {
+      "id": "E",
+      "thi": 90,
+      "tho": 30,
+      "tci": 20,
+      "tco": 80
+    },
+    {
+      "id": "F",
+      "thi": 120,
+      "tho": 70,
+      "tci": 20,
+      "tco": 60
+    },
+    {
+      "id": "G",
+      "thi": 150,
+      "tho": 90,
+      "tci": 30,
+      "tco": 70
+    },
+    {
+      "id": "H",
+      "thi": 160,
+      "tho": 60,
+      "tci": 10,
+      "tco": 100
+    },
+    {
+      "id": "I",
+      "thi": 60,
+      "tho": 35,
+      "tci": 30,
+      "tco": 55
+    },
+    {
+      "id": "J",
+      "thi": 100,
+      "tho": 80,
+      "tci": 70,
+      "tco": 90
+    }
+  ],
+  "cases": [
+    {
+      "id": "A-0.5",
+      "regime": "A",
+      "mh": 0.5,
+      "state": {
+        "flow": "counter",
+        "hot-fluid": "water",
+        "cold-fluid": "water",
+        "hot-flow-unit": "kg-s",
+        "cold-flow-unit": "kg-s",
+        "ph": 2,
+        "pc": 1.2,
+        "unknown": "mc",
+        "mc": "",
+        "area-reserve-percent": 0,
+        "tube-conductivity": 16,
+        "length": 10000,
+        "exchanger-diameter": 3000,
+        "thi": 50,
+        "tho": 40,
+        "tci": 10,
+        "tco": 25,
+        "mh": 0.5
+      },
+      "passedAudit": true,
+      "target": {
+        "q": 20.87828132782756,
+        "mc": 0.33279238958713564,
+        "dt": 27.424074738735392,
+        "requiredUA": 761.3121509743347,
+        "imbalance": 0
+      },
+      "stats": {
+        "families": 55,
+        "evaluations": 200,
+        "errors": 0,
+        "inapplicable": 0,
+        "insufficient": 195,
+        "geometryChecks": 4952,
+        "tubeCount": 7,
+        "maxEvaluations": 200,
+        "phases": {
+          "initial": 20,
+          "refinement": 80,
+          "catalogue": 60,
+          "fallback": 24,
+          "improvement": 16
+        },
+        "testedCounts": [
+          7,
+          6
+        ]
+      },
+      "budget": {
+        "firstBatch": 20,
+        "maxEvaluations": 200,
+        "screened": 725,
+        "stopped": "budget-success",
+        "firstSuccess": 137
+      },
+      "countRange": {
+        "target": {
+          "min": 6,
+          "max": 7
+        },
+        "min": 6,
+        "max": 7,
+        "selected": 7,
+        "estimatedRe": 16952.192585828285,
+        "counts": [
+          7
+        ],
+        "fallbackCounts": [
+          6
+        ]
+      },
+      "message": "Проверено 200 из максимум 200. Подобрано 6 трубок, 3 ряд(а). Мощность от задания до +1 %, выходы в допуске; запас UA 0 %. Лучшая длина, затем диаметр среди проверенных вариантов. Re 15000…20000; 3 < R/dᵢ < 12; остаток ≤20 %; зазор 3 мм.",
+      "found": true,
+      "selected": {
+        "q": 20.881749722490948,
+        "ratio": 1.0001661245295497,
+        "hot": 39.998338372466954,
+        "cold": 25.002495038504147,
+        "re": 19777.30882619689,
+        "shellRe": 445.49197889563106,
+        "valid": true,
+        "applicable": true,
+        "agreement": true,
+        "uaOK": true,
+        "blocking": [],
+        "dutyChecks": [],
+        "n": 6,
+        "height": 500,
+        "diameter": 146,
+        "rowCount": 3,
+        "geometry": {
+          "diameter": 146,
+          "height": 500,
+          "shellWall": 1,
+          "coreDiameter": 36,
+          "coreLength": 500,
+          "coreWall": 2,
+          "tubeDiameter": 14,
+          "tubeWall": 2.5,
+          "clearance": 3,
+          "coreClearance": 3,
+          "shellClearance": 3,
+          "rowClearance": 3,
+          "leadBendRadius": 28,
+          "leadStraightLength": 40,
+          "rows": [
+            {
+              "diameter": 56,
+              "count": 2,
+              "turns": 14,
+              "pitch": 34.714285714285715,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 90,
+              "count": 2,
+              "turns": 9,
+              "pitch": 34.714285714285715,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 124,
+              "count": 2,
+              "turns": 14,
+              "pitch": 34.714285714285715,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            }
+          ]
+        },
+        "manufacturing": [
+          {
+            "row": 1,
+            "count": 2,
+            "stockMM": 3000,
+            "windingMM": 2510.4994647989834,
+            "bendsMM": 105.62692927295565,
+            "straightMM": 80,
+            "totalMM": 2696.126394071939,
+            "axialEnvelopeMM": 631.6788314533709,
+            "wasteMM": 303.8736059280609,
+            "wasteFraction": 0.1012912019760203
+          },
+          {
+            "row": 2,
+            "count": 2,
+            "stockMM": 3000,
+            "windingMM": 2563.7977805980768,
+            "bendsMM": 87.50560696651368,
+            "straightMM": 80,
+            "totalMM": 2731.3033875645906,
+            "axialEnvelopeMM": 450.522298323983,
+            "wasteMM": 268.6966124354094,
+            "wasteFraction": 0.0895655374784698
+          },
+          {
+            "row": 3,
+            "count": 2,
+            "stockMM": 6000,
+            "windingMM": 5475.416267750371,
+            "bendsMM": 86.19143012922764,
+            "straightMM": 80,
+            "totalMM": 5641.607697879598,
+            "axialEnvelopeMM": 623.0049736837159,
+            "wasteMM": 358.39230212040184,
+            "wasteFraction": 0.059732050353400304
+          }
+        ]
+      },
+      "diagnostics": {
+        "calls": 200,
+        "errors": 0,
+        "applicable": 200,
+        "below": 33,
+        "above": 162,
+        "agreement": 5,
+        "tubeReFailures": 0,
+        "shellReFailures": 0,
+        "closest": [
+          {
+            "q": 20.904554478947354,
+            "ratio": 1.0012583962591202,
+            "hot": 39.9874127130767,
+            "cold": 25.01890309568877,
+            "re": 19775.39274839208,
+            "shellRe": 966.0009540434335,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          },
+          {
+            "q": 20.89639437078772,
+            "ratio": 1.0008675543104222,
+            "hot": 39.9913221843657,
+            "cold": 25.013031891278807,
+            "re": 19776.077353419834,
+            "shellRe": 965.9289156975483,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          },
+          {
+            "q": 20.8825149707854,
+            "ratio": 1.0002027773690452,
+            "hot": 39.99797174557491,
+            "cold": 25.003045634338832,
+            "re": 19777.2446226675,
+            "shellRe": 445.49509487149,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          }
+        ]
+      },
+      "elapsedMS": 12960.9039
+    },
+    {
+      "id": "A-5",
+      "regime": "A",
+      "mh": 5,
+      "state": {
+        "flow": "counter",
+        "hot-fluid": "water",
+        "cold-fluid": "water",
+        "hot-flow-unit": "kg-s",
+        "cold-flow-unit": "kg-s",
+        "ph": 2,
+        "pc": 1.2,
+        "unknown": "mc",
+        "mc": "",
+        "area-reserve-percent": 0,
+        "tube-conductivity": 16,
+        "length": 10000,
+        "exchanger-diameter": 3000,
+        "thi": 50,
+        "tho": 40,
+        "tci": 10,
+        "tco": 25,
+        "mh": 5
+      },
+      "passedAudit": true,
+      "target": {
+        "q": 208.78281327827557,
+        "mc": 3.327923895871356,
+        "dt": 27.424074738735392,
+        "requiredUA": 7613.121509743347,
+        "imbalance": 1.3939763527346836e-16
+      },
+      "stats": {
+        "families": 20,
+        "evaluations": 200,
+        "errors": 0,
+        "inapplicable": 40,
+        "insufficient": 159,
+        "geometryChecks": 4089,
+        "tubeCount": 68,
+        "maxEvaluations": 200,
+        "phases": {
+          "initial": 20,
+          "refinement": 80,
+          "catalogue": 2,
+          "fallback": 24,
+          "improvement": 74
+        },
+        "testedCounts": [
+          68,
+          66,
+          60,
+          69,
+          65
+        ]
+      },
+      "budget": {
+        "firstBatch": 20,
+        "maxEvaluations": 200,
+        "screened": 179,
+        "stopped": "budget-success",
+        "firstSuccess": 103
+      },
+      "countRange": {
+        "target": {
+          "min": 60,
+          "max": 79
+        },
+        "min": 60,
+        "max": 79,
+        "selected": 68,
+        "estimatedRe": 17450.78648541147,
+        "counts": [
+          68
+        ],
+        "fallbackCounts": [
+          69,
+          60,
+          66,
+          65
+        ]
+      },
+      "message": "Проверено 200 из максимум 200. Подобрано 69 трубок, 3 ряд(а). Мощность от задания до +1 %, выходы в допуске; запас UA 0 %. Лучшая длина, затем диаметр среди проверенных вариантов. Re 15000…20000; 3 < R/dᵢ < 12; остаток ≤20 %; зазор 3 мм.",
+      "found": true,
+      "selected": {
+        "q": 209.75362196560775,
+        "ratio": 1.0046498496312446,
+        "hot": 39.95348964013535,
+        "cold": 25.069843988837327,
+        "re": 17191.17616933621,
+        "shellRe": 2351.1844439818374,
+        "valid": true,
+        "applicable": true,
+        "agreement": true,
+        "uaOK": true,
+        "blocking": [],
+        "dutyChecks": [],
+        "n": 69,
+        "height": 4713,
+        "diameter": 218,
+        "rowCount": 3,
+        "geometry": {
+          "diameter": 218,
+          "height": 4713,
+          "shellWall": 2,
+          "coreDiameter": 106,
+          "coreLength": 4713,
+          "coreWall": 2,
+          "tubeDiameter": 14,
+          "tubeWall": 2.5,
+          "clearance": 3,
+          "coreClearance": 3,
+          "shellClearance": 3,
+          "rowClearance": 3,
+          "leadBendRadius": 28,
+          "leadStraightLength": 40,
+          "rows": [
+            {
+              "diameter": 126,
+              "count": 23,
+              "turns": 1,
+              "pitch": 4699,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 160,
+              "count": 23,
+              "turns": 1,
+              "pitch": 4699,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 194,
+              "count": 23,
+              "turns": 1,
+              "pitch": 4699,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            }
+          ]
+        },
+        "manufacturing": [
+          {
+            "row": 1,
+            "count": 23,
+            "stockMM": 6000,
+            "windingMM": 4715.643205276634,
+            "bendsMM": 4.706296469351375,
+            "straightMM": 80,
+            "totalMM": 4800.349501745985,
+            "axialEnvelopeMM": 4783.700758420209,
+            "wasteMM": 1199.6504982540146,
+            "wasteFraction": 0.19994174970900241
+          },
+          {
+            "row": 2,
+            "count": 23,
+            "stockMM": 6000,
+            "windingMM": 4725.8081713785095,
+            "bendsMM": 5.967669658748271,
+            "straightMM": 80,
+            "totalMM": 4811.775841037258,
+            "axialEnvelopeMM": 4784.9563810652535,
+            "wasteMM": 1188.224158962742,
+            "wasteFraction": 0.19803735982712367
+          },
+          {
+            "row": 3,
+            "count": 23,
+            "stockMM": 6000,
+            "windingMM": 4738.3597827981985,
+            "bendsMM": 7.222996991908334,
+            "straightMM": 80,
+            "totalMM": 4825.5827797901065,
+            "axialEnvelopeMM": 4786.202986264129,
+            "wasteMM": 1174.4172202098935,
+            "wasteFraction": 0.19573620336831557
+          }
+        ]
+      },
+      "diagnostics": {
+        "calls": 200,
+        "errors": 0,
+        "applicable": 160,
+        "below": 122,
+        "above": 37,
+        "agreement": 1,
+        "tubeReFailures": 40,
+        "shellReFailures": 0,
+        "closest": [
+          {
+            "q": 209.75362196560775,
+            "ratio": 1.0046498496312446,
+            "hot": 39.95348964013535,
+            "cold": 25.069843988837327,
+            "re": 17191.17616933621,
+            "shellRe": 2351.1844439818374,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          },
+          {
+            "q": 211.8158341087327,
+            "ratio": 1.0145271575894257,
+            "hot": 39.854689631667085,
+            "cold": 25.218222609766528,
+            "re": 17176.142447731527,
+            "shellRe": 2355.6134633730285,
+            "valid": true,
+            "applicable": true,
+            "agreement": false,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": [
+              "Мощность должна быть от задания до +1 %; отклонение 1.4527 %.",
+              "Горячий выход вне допустимого диапазона задания: 39.9000…40.0000 °C.",
+              "Холодный выход вне допустимого диапазона задания: 25.0000…25.1500 °C."
+            ]
+          },
+          {
+            "q": 204.30751565294835,
+            "ratio": 0.9785648178839207,
+            "hot": 40.214408798897864,
+            "cold": 24.67800577603323,
+            "re": 18013.980280449698,
+            "shellRe": 2061.1943943639635,
+            "valid": true,
+            "applicable": true,
+            "agreement": false,
+            "uaOK": false,
+            "blocking": [],
+            "dutyChecks": [
+              "Мощность должна быть от задания до +1 %; отклонение -2.1435 %.",
+              "Горячий выход вне допустимого диапазона задания: 39.9000…40.0000 °C.",
+              "Холодный выход вне допустимого диапазона задания: 25.0000…25.1500 °C."
+            ]
+          }
+        ]
+      },
+      "elapsedMS": 9246.9665
+    },
+    {
+      "id": "B-1",
+      "regime": "B",
+      "mh": 1,
+      "state": {
+        "flow": "counter",
+        "hot-fluid": "water",
+        "cold-fluid": "water",
+        "hot-flow-unit": "kg-s",
+        "cold-flow-unit": "kg-s",
+        "ph": 2,
+        "pc": 1.2,
+        "unknown": "mc",
+        "mc": "",
+        "area-reserve-percent": 0,
+        "tube-conductivity": 16,
+        "length": 10000,
+        "exchanger-diameter": 3000,
+        "thi": 70,
+        "tho": 50,
+        "tci": 15,
+        "tco": 35,
+        "mh": 1
+      },
+      "passedAudit": true,
+      "target": {
+        "q": 83.61518593940544,
+        "mc": 1.000626061127156,
+        "dt": 35,
+        "requiredUA": 2389.005312554441,
+        "imbalance": 3.48068716582473e-16
+      },
+      "stats": {
+        "families": 109,
+        "evaluations": 200,
+        "errors": 0,
+        "inapplicable": 0,
+        "insufficient": 190,
+        "geometryChecks": 6295,
+        "tubeCount": 17,
+        "maxEvaluations": 200,
+        "phases": {
+          "initial": 20,
+          "refinement": 80,
+          "catalogue": 52,
+          "fallback": 24,
+          "improvement": 24
+        },
+        "testedCounts": [
+          17,
+          20,
+          16,
+          18
+        ]
+      },
+      "budget": {
+        "firstBatch": 20,
+        "maxEvaluations": 200,
+        "screened": 1454,
+        "stopped": "budget-success",
+        "firstSuccess": 121
+      },
+      "countRange": {
+        "target": {
+          "min": 16,
+          "max": 20
+        },
+        "min": 16,
+        "max": 20,
+        "selected": 17,
+        "estimatedRe": 17839.155703780496,
+        "counts": [
+          17
+        ],
+        "fallbackCounts": [
+          16,
+          18,
+          20
+        ]
+      },
+      "message": "Проверено 200 из максимум 200. Подобрано 16 трубок, 4 ряд(а). Мощность от задания до +1 %, выходы в допуске; запас UA 0 %. Лучшая длина, затем диаметр среди проверенных вариантов. Re 15000…20000; 3 < R/dᵢ < 12; остаток ≤20 %; зазор 3 мм.",
+      "found": true,
+      "selected": {
+        "q": 83.85919745968188,
+        "ratio": 1.0029182679860722,
+        "hot": 49.9415734638978,
+        "cold": 35.05841541656932,
+        "re": 18945.953484999893,
+        "shellRe": 654.17172125054,
+        "valid": true,
+        "applicable": true,
+        "agreement": true,
+        "uaOK": true,
+        "blocking": [],
+        "dutyChecks": [],
+        "n": 16,
+        "height": 643,
+        "diameter": 222,
+        "rowCount": 4,
+        "geometry": {
+          "diameter": 222,
+          "height": 643,
+          "shellWall": 2,
+          "coreDiameter": 76,
+          "coreLength": 643,
+          "coreWall": 2,
+          "tubeDiameter": 14,
+          "tubeWall": 2.5,
+          "clearance": 3,
+          "coreClearance": 3,
+          "shellClearance": 3,
+          "rowClearance": 3,
+          "leadBendRadius": 28,
+          "leadStraightLength": 40,
+          "rows": [
+            {
+              "diameter": 96,
+              "count": 4,
+              "turns": 9,
+              "pitch": 69.88888888888889,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 130,
+              "count": 4,
+              "turns": 6,
+              "pitch": 69.88888888888889,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 164,
+              "count": 4,
+              "turns": 9,
+              "pitch": 69.88888888888889,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 198,
+              "count": 4,
+              "turns": 9,
+              "pitch": 69.88888888888889,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            }
+          ]
+        },
+        "manufacturing": [
+          {
+            "row": 1,
+            "count": 4,
+            "stockMM": 3000,
+            "windingMM": 2786.262946492237,
+            "bendsMM": 79.38687644483001,
+            "straightMM": 80,
+            "totalMM": 2945.649822937067,
+            "axialEnvelopeMM": 765.4876162894554,
+            "wasteMM": 54.3501770629332,
+            "wasteFraction": 0.0181167256876444
+          },
+          {
+            "row": 2,
+            "count": 4,
+            "stockMM": 3000,
+            "windingMM": 2486.062702762585,
+            "bendsMM": 80.88752918614964,
+            "straightMM": 80,
+            "totalMM": 2646.9502319487347,
+            "axialEnvelopeMM": 555.5764155644724,
+            "wasteMM": 353.04976805126535,
+            "wasteFraction": 0.11768325601708844
+          },
+          {
+            "row": 3,
+            "count": 4,
+            "stockMM": 6000,
+            "windingMM": 4679.457690556422,
+            "bendsMM": 81.99439771159838,
+            "straightMM": 80,
+            "totalMM": 4841.45208826802,
+            "axialEnvelopeMM": 765.1469127575635,
+            "wasteMM": 1158.54791173198,
+            "wasteFraction": 0.1930913186219967
+          },
+          {
+            "row": 4,
+            "count": 4,
+            "stockMM": 6000,
+            "windingMM": 5633.542992306429,
+            "bendsMM": 82.81505336800205,
+            "straightMM": 80,
+            "totalMM": 5796.358045674431,
+            "axialEnvelopeMM": 765.0987532346882,
+            "wasteMM": 203.6419543255688,
+            "wasteFraction": 0.03394032572092814
+          }
+        ]
+      },
+      "diagnostics": {
+        "calls": 200,
+        "errors": 0,
+        "applicable": 200,
+        "below": 68,
+        "above": 122,
+        "agreement": 10,
+        "tubeReFailures": 0,
+        "shellReFailures": 0,
+        "closest": [
+          {
+            "q": 84.06101735293865,
+            "ratio": 1.0053319430977083,
+            "hot": 49.8932470365225,
+            "cold": 35.10673219337757,
+            "re": 18938.934895234284,
+            "shellRe": 2639.1518319397724,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          },
+          {
+            "q": 83.97612786867573,
+            "ratio": 1.0043167030631477,
+            "hot": 49.91357459238587,
+            "cold": 35.08640877045045,
+            "re": 18941.949221711053,
+            "shellRe": 654.3799735389517,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          },
+          {
+            "q": 84.09184555872315,
+            "ratio": 1.0057006345673039,
+            "hot": 49.88586603546547,
+            "cold": 35.11411182103896,
+            "re": 18937.98675388618,
+            "shellRe": 654.5860913291318,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          }
+        ]
+      },
+      "elapsedMS": 8643.1099
+    },
+    {
+      "id": "B-2.5",
+      "regime": "B",
+      "mh": 2.5,
+      "state": {
+        "flow": "counter",
+        "hot-fluid": "water",
+        "cold-fluid": "water",
+        "hot-flow-unit": "kg-s",
+        "cold-flow-unit": "kg-s",
+        "ph": 2,
+        "pc": 1.2,
+        "unknown": "mc",
+        "mc": "",
+        "area-reserve-percent": 0,
+        "tube-conductivity": 16,
+        "length": 10000,
+        "exchanger-diameter": 3000,
+        "thi": 70,
+        "tho": 50,
+        "tci": 15,
+        "tco": 35,
+        "mh": 2.5
+      },
+      "passedAudit": true,
+      "target": {
+        "q": 209.0379648485136,
+        "mc": 2.50156515281789,
+        "dt": 35,
+        "requiredUA": 5972.513281386103,
+        "imbalance": 1.3922748663298924e-16
+      },
+      "stats": {
+        "families": 41,
+        "evaluations": 101,
+        "errors": 0,
+        "inapplicable": 10,
+        "insufficient": 84,
+        "geometryChecks": 3074,
+        "tubeCount": 43,
+        "maxEvaluations": 200,
+        "phases": {
+          "fallback": 24,
+          "refinement": 32,
+          "improvement": 45
+        },
+        "testedCounts": [
+          50,
+          44,
+          42,
+          38
+        ]
+      },
+      "budget": {
+        "firstBatch": 20,
+        "maxEvaluations": 200,
+        "screened": 405,
+        "stopped": "improved-success",
+        "firstSuccess": 8
+      },
+      "countRange": {
+        "target": {
+          "min": 38,
+          "max": 50
+        },
+        "min": 38,
+        "max": 50,
+        "selected": 43,
+        "estimatedRe": 17631.72366071328,
+        "counts": [
+          43
+        ],
+        "fallbackCounts": [
+          42,
+          44,
+          38,
+          50
+        ]
+      },
+      "message": "Проверено 101 из максимум 200. Подобрано 50 трубок, 5 ряд(а). Мощность от задания до +1 %, выходы в допуске; запас UA 0 %. Лучшая длина, затем диаметр среди проверенных вариантов. Re 15000…20000; 3 < R/dᵢ < 12; остаток ≤20 %; зазор 3 мм.",
+      "found": true,
+      "selected": {
+        "q": 209.4760616173823,
+        "ratio": 1.0020957760911333,
+        "hot": 49.95804071952384,
+        "cold": 35.041951387041834,
+        "re": 15158.61565265211,
+        "shellRe": 1291.5567651778108,
+        "valid": true,
+        "applicable": true,
+        "agreement": true,
+        "uaOK": true,
+        "blocking": [],
+        "dutyChecks": [],
+        "n": 50,
+        "height": 1709,
+        "diameter": 236,
+        "rowCount": 5,
+        "geometry": {
+          "diameter": 236,
+          "height": 1709,
+          "shellWall": 2,
+          "coreDiameter": 56,
+          "coreLength": 1709,
+          "coreWall": 2,
+          "tubeDiameter": 14,
+          "tubeWall": 2.5,
+          "clearance": 3,
+          "coreClearance": 3,
+          "shellClearance": 3,
+          "rowClearance": 3,
+          "leadBendRadius": 28,
+          "leadStraightLength": 40,
+          "rows": [
+            {
+              "diameter": 76,
+              "count": 10,
+              "turns": 7,
+              "pitch": 242.14285714285714,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 110,
+              "count": 10,
+              "turns": 6,
+              "pitch": 242.14285714285714,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 144,
+              "count": 10,
+              "turns": 5,
+              "pitch": 242.14285714285714,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 178,
+              "count": 10,
+              "turns": 4,
+              "pitch": 242.14285714285714,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 212,
+              "count": 10,
+              "turns": 7,
+              "pitch": 242.14285714285714,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            }
+          ]
+        },
+        "manufacturing": [
+          {
+            "row": 1,
+            "count": 10,
+            "stockMM": 3000,
+            "windingMM": 2380.4117114511755,
+            "bendsMM": 44.2793014557174,
+            "straightMM": 80,
+            "totalMM": 2504.691012906893,
+            "axialEnvelopeMM": 1814.8682312200747,
+            "wasteMM": 495.30898709310713,
+            "wasteFraction": 0.16510299569770237
+          },
+          {
+            "row": 2,
+            "count": 10,
+            "stockMM": 3000,
+            "windingMM": 2531.796507357087,
+            "bendsMM": 54.54075131741375,
+            "straightMM": 80,
+            "totalMM": 2666.337258674501,
+            "axialEnvelopeMM": 1579.2817104715627,
+            "wasteMM": 333.66274132549916,
+            "wasteFraction": 0.11122091377516638
+          },
+          {
+            "row": 3,
+            "count": 10,
+            "stockMM": 3000,
+            "windingMM": 2565.5860934993734,
+            "bendsMM": 61.18545128768714,
+            "straightMM": 80,
+            "totalMM": 2706.7715447870605,
+            "axialEnvelopeMM": 1340.5559246801693,
+            "wasteMM": 293.2284552129395,
+            "wasteFraction": 0.09774281840431316
+          },
+          {
+            "row": 4,
+            "count": 10,
+            "stockMM": 3000,
+            "windingMM": 2437.5125324294727,
+            "bendsMM": 65.7177884689137,
+            "straightMM": 80,
+            "totalMM": 2583.2303208983863,
+            "axialEnvelopeMM": 1100.3322225386087,
+            "wasteMM": 416.76967910161375,
+            "wasteFraction": 0.13892322636720458
+          },
+          {
+            "row": 5,
+            "count": 10,
+            "stockMM": 6000,
+            "windingMM": 4960.687503756455,
+            "bendsMM": 68.97214490828655,
+            "straightMM": 80,
+            "totalMM": 5109.659648664741,
+            "axialEnvelopeMM": 1827.9227777708097,
+            "wasteMM": 890.3403513352587,
+            "wasteFraction": 0.14839005855587645
+          }
+        ]
+      },
+      "diagnostics": {
+        "calls": 101,
+        "errors": 0,
+        "applicable": 91,
+        "below": 60,
+        "above": 24,
+        "agreement": 7,
+        "tubeReFailures": 10,
+        "shellReFailures": 0,
+        "closest": [
+          {
+            "q": 209.91780667039717,
+            "ratio": 1.0042090049169832,
+            "hot": 49.91573045796909,
+            "cold": 35.08425330915272,
+            "re": 17220.182937539477,
+            "shellRe": 1635.91833773633,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          },
+          {
+            "q": 209.85923245756345,
+            "ratio": 1.0039287964253047,
+            "hot": 49.92134067487336,
+            "cold": 35.078644200300786,
+            "re": 17220.911982105426,
+            "shellRe": 1635.8140594392828,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          },
+          {
+            "q": 210.3716221424959,
+            "ratio": 1.006379976455228,
+            "hot": 49.87226423141517,
+            "cold": 35.127710917037206,
+            "re": 15148.806773919208,
+            "shellRe": 1292.8161183891773,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          }
+        ]
+      },
+      "elapsedMS": 5327.125799999998
+    },
+    {
+      "id": "B-5",
+      "regime": "B",
+      "mh": 5,
+      "state": {
+        "flow": "counter",
+        "hot-fluid": "water",
+        "cold-fluid": "water",
+        "hot-flow-unit": "kg-s",
+        "cold-flow-unit": "kg-s",
+        "ph": 2,
+        "pc": 1.2,
+        "unknown": "mc",
+        "mc": "",
+        "area-reserve-percent": 0,
+        "tube-conductivity": 16,
+        "length": 10000,
+        "exchanger-diameter": 3000,
+        "thi": 70,
+        "tho": 50,
+        "tci": 15,
+        "tco": 35,
+        "mh": 5
+      },
+      "passedAudit": true,
+      "target": {
+        "q": 418.0759296970272,
+        "mc": 5.00313030563578,
+        "dt": 35,
+        "requiredUA": 11945.026562772206,
+        "imbalance": 1.3922748663298924e-16
+      },
+      "stats": {
+        "families": 2,
+        "evaluations": 42,
+        "errors": 0,
+        "inapplicable": 15,
+        "insufficient": 27,
+        "geometryChecks": 763,
+        "tubeCount": 87,
+        "maxEvaluations": 200,
+        "phases": {
+          "fallback": 10,
+          "refinement": 32
+        },
+        "testedCounts": [
+          76,
+          78
+        ]
+      },
+      "budget": {
+        "firstBatch": 20,
+        "maxEvaluations": 200,
+        "screened": 10,
+        "stopped": "catalogue-exhausted",
+        "firstSuccess": null
+      },
+      "countRange": {
+        "target": {
+          "min": 76,
+          "max": 101
+        },
+        "min": 76,
+        "max": 101,
+        "selected": 87,
+        "estimatedRe": 17429.060170360255,
+        "counts": [
+          87
+        ],
+        "fallbackCounts": [
+          76,
+          78
+        ]
+      },
+      "message": "Нет конструкции в сокращённом наборе компоновок. Предварительно выбрано 87 трубок. Итоговые Re, заготовки или тепловое задание не выполнены.",
+      "found": false,
+      "diagnostics": {
+        "calls": 42,
+        "errors": 0,
+        "applicable": 27,
+        "below": 0,
+        "above": 27,
+        "agreement": 0,
+        "tubeReFailures": 15,
+        "shellReFailures": 0,
+        "closest": [
+          {
+            "q": 424.8602048514163,
+            "ratio": 1.0162273756331908,
+            "hot": 49.67510270638509,
+            "cold": 35.32483210655329,
+            "re": 19903.199225930643,
+            "shellRe": 3053.647531731369,
+            "valid": true,
+            "applicable": true,
+            "agreement": false,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": [
+              "Мощность должна быть от задания до +1 %; отклонение 1.6227 %.",
+              "Горячий выход вне допустимого диапазона задания: 49.8000…50.0000 °C.",
+              "Холодный выход вне допустимого диапазона задания: 35.0000…35.2000 °C."
+            ]
+          },
+          {
+            "q": 424.8964856342643,
+            "ratio": 1.016314156000753,
+            "hot": 49.67336518751543,
+            "cold": 35.32656925682315,
+            "re": 19902.937859321417,
+            "shellRe": 3053.707734772844,
+            "valid": true,
+            "applicable": true,
+            "agreement": false,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": [
+              "Мощность должна быть от задания до +1 %; отклонение 1.6314 %.",
+              "Горячий выход вне допустимого диапазона задания: 49.8000…50.0000 °C.",
+              "Холодный выход вне допустимого диапазона задания: 35.0000…35.2000 °C."
+            ]
+          },
+          {
+            "q": 424.9327622417049,
+            "ratio": 1.0164009263811162,
+            "hot": 49.67162786833976,
+            "cold": 35.32830620727035,
+            "re": 19902.676523903756,
+            "shellRe": 3053.7679313432277,
+            "valid": true,
+            "applicable": true,
+            "agreement": false,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": [
+              "Мощность должна быть от задания до +1 %; отклонение 1.6401 %.",
+              "Горячий выход вне допустимого диапазона задания: 49.8000…50.0000 °C.",
+              "Холодный выход вне допустимого диапазона задания: 35.0000…35.2000 °C."
+            ]
+          }
+        ]
+      },
+      "elapsedMS": 1902.9779000000053
+    },
+    {
+      "id": "C-0.5",
+      "regime": "C",
+      "mh": 0.5,
+      "state": {
+        "flow": "counter",
+        "hot-fluid": "water",
+        "cold-fluid": "water",
+        "hot-flow-unit": "kg-s",
+        "cold-flow-unit": "kg-s",
+        "ph": 2,
+        "pc": 1.2,
+        "unknown": "mc",
+        "mc": "",
+        "area-reserve-percent": 0,
+        "tube-conductivity": 16,
+        "length": 10000,
+        "exchanger-diameter": 3000,
+        "thi": 90,
+        "tho": 60,
+        "tci": 20,
+        "tco": 40,
+        "mh": 0.5
+      },
+      "passedAudit": true,
+      "target": {
+        "q": 62.83621772834066,
+        "mc": 0.7521972805172806,
+        "dt": 44.814201177245494,
+        "requiredUA": 1402.149677505484,
+        "imbalance": 1.15792418404932e-16
+      },
+      "stats": {
+        "families": 91,
+        "evaluations": 184,
+        "errors": 0,
+        "inapplicable": 16,
+        "insufficient": 165,
+        "geometryChecks": 6614,
+        "tubeCount": 11,
+        "maxEvaluations": 200,
+        "phases": {
+          "initial": 20,
+          "refinement": 53,
+          "catalogue": 60,
+          "fallback": 24,
+          "improvement": 27
+        },
+        "testedCounts": [
+          11,
+          10,
+          12
+        ]
+      },
+      "budget": {
+        "firstBatch": 20,
+        "maxEvaluations": 200,
+        "screened": 1206,
+        "stopped": "improved-success",
+        "firstSuccess": 146
+      },
+      "countRange": {
+        "target": {
+          "min": 10,
+          "max": 12
+        },
+        "min": 10,
+        "max": 12,
+        "selected": 11,
+        "estimatedRe": 17015.522911117136,
+        "counts": [
+          11
+        ],
+        "fallbackCounts": [
+          10,
+          12
+        ]
+      },
+      "message": "Проверено 184 из максимум 200. Подобрано 10 трубок, 5 ряд(а). Мощность от задания до +1 %, выходы в допуске; запас UA 0 %. Лучшая длина, затем диаметр среди проверенных вариантов. Re 15000…20000; 3 < R/dᵢ < 12; остаток ≤20 %; зазор 3 мм.",
+      "found": true,
+      "selected": {
+        "q": 63.262618696566605,
+        "ratio": 1.0067859107954173,
+        "hot": 59.795944228459035,
+        "cold": 40.135769546582345,
+        "re": 18692.727658484622,
+        "shellRe": 469.7318188351567,
+        "valid": true,
+        "applicable": true,
+        "agreement": true,
+        "uaOK": true,
+        "blocking": [],
+        "dutyChecks": [],
+        "n": 10,
+        "height": 394,
+        "diameter": 226,
+        "rowCount": 5,
+        "geometry": {
+          "diameter": 226,
+          "height": 394,
+          "shellWall": 2,
+          "coreDiameter": 46,
+          "coreLength": 394,
+          "coreWall": 2,
+          "tubeDiameter": 14,
+          "tubeWall": 2.5,
+          "clearance": 3,
+          "coreClearance": 3,
+          "shellClearance": 3,
+          "rowClearance": 3,
+          "leadBendRadius": 28,
+          "leadStraightLength": 40,
+          "rows": [
+            {
+              "diameter": 66,
+              "count": 2,
+              "turns": 11,
+              "pitch": 34.54545454545455,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 100,
+              "count": 2,
+              "turns": 8,
+              "pitch": 34.54545454545455,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 134,
+              "count": 2,
+              "turns": 11,
+              "pitch": 34.54545454545455,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 168,
+              "count": 2,
+              "turns": 11,
+              "pitch": 34.54545454545455,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 202,
+              "count": 2,
+              "turns": 9,
+              "pitch": 34.54545454545455,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            }
+          ]
+        },
+        "manufacturing": [
+          {
+            "row": 1,
+            "count": 2,
+            "stockMM": 3000,
+            "windingMM": 2312.2351976623345,
+            "bendsMM": 92.96784045598167,
+            "straightMM": 80,
+            "totalMM": 2485.2030381183163,
+            "axialEnvelopeMM": 520.8941455630253,
+            "wasteMM": 514.7969618816837,
+            "wasteFraction": 0.17159898729389458
+          },
+          {
+            "row": 2,
+            "count": 2,
+            "stockMM": 3000,
+            "windingMM": 2528.4231600349895,
+            "bendsMM": 86.8871691947746,
+            "straightMM": 80,
+            "totalMM": 2695.310329229764,
+            "axialEnvelopeMM": 413.99824550419805,
+            "wasteMM": 304.6896707702358,
+            "wasteFraction": 0.1015632235900786
+          },
+          {
+            "row": 3,
+            "count": 2,
+            "stockMM": 6000,
+            "windingMM": 4646.272980760087,
+            "bendsMM": 86.11380644177241,
+            "straightMM": 80,
+            "totalMM": 4812.38678720186,
+            "axialEnvelopeMM": 516.8509834341658,
+            "wasteMM": 1187.61321279814,
+            "wasteFraction": 0.19793553546635667
+          },
+          {
+            "row": 4,
+            "count": 2,
+            "stockMM": 6000,
+            "windingMM": 5818.086065758901,
+            "bendsMM": 86.03634047884242,
+            "straightMM": 80,
+            "totalMM": 5984.122406237743,
+            "axialEnvelopeMM": 516.5262335174457,
+            "wasteMM": 15.877593762256765,
+            "wasteFraction": 0.002646265627042794
+          },
+          {
+            "row": 5,
+            "count": 2,
+            "stockMM": 6000,
+            "windingMM": 5719.871575425098,
+            "bendsMM": 86.11905088975372,
+            "straightMM": 80,
+            "totalMM": 5885.990626314851,
+            "axialEnvelopeMM": 447.2677509090189,
+            "wasteMM": 114.0093736851486,
+            "wasteFraction": 0.0190015622808581
+          }
+        ]
+      },
+      "diagnostics": {
+        "calls": 184,
+        "errors": 0,
+        "applicable": 168,
+        "below": 38,
+        "above": 127,
+        "agreement": 3,
+        "tubeReFailures": 16,
+        "shellReFailures": 0,
+        "closest": [
+          {
+            "q": 63.262618696566605,
+            "ratio": 1.0067859107954173,
+            "hot": 59.795944228459035,
+            "cold": 40.135769546582345,
+            "re": 18692.727658484622,
+            "shellRe": 469.7318188351567,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          },
+          {
+            "q": 63.42224884420873,
+            "ratio": 1.009326327030084,
+            "hot": 59.71953308536302,
+            "cold": 40.18659928051484,
+            "re": 18682.69118915798,
+            "shellRe": 2521.331439988966,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          },
+          {
+            "q": 63.434703023630334,
+            "ratio": 1.0095245276836537,
+            "hot": 59.713572611100915,
+            "cold": 40.1905648329855,
+            "re": 18681.96303450375,
+            "shellRe": 2521.437666991992,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          }
+        ]
+      },
+      "elapsedMS": 8426.643200000006
+    },
+    {
+      "id": "C-2.5",
+      "regime": "C",
+      "mh": 2.5,
+      "state": {
+        "flow": "counter",
+        "hot-fluid": "water",
+        "cold-fluid": "water",
+        "hot-flow-unit": "kg-s",
+        "cold-flow-unit": "kg-s",
+        "ph": 2,
+        "pc": 1.2,
+        "unknown": "mc",
+        "mc": "",
+        "area-reserve-percent": 0,
+        "tube-conductivity": 16,
+        "length": 10000,
+        "exchanger-diameter": 3000,
+        "thi": 90,
+        "tho": 60,
+        "tci": 20,
+        "tco": 40,
+        "mh": 2.5
+      },
+      "passedAudit": true,
+      "target": {
+        "q": 314.1810886417033,
+        "mc": 3.7609864025864033,
+        "dt": 44.814201177245494,
+        "requiredUA": 7010.748387527421,
+        "imbalance": 0
+      },
+      "stats": {
+        "families": 19,
+        "evaluations": 60,
+        "errors": 0,
+        "inapplicable": 0,
+        "insufficient": 48,
+        "geometryChecks": 2374,
+        "tubeCount": 53,
+        "maxEvaluations": 200,
+        "phases": {
+          "fallback": 24,
+          "refinement": 32,
+          "improvement": 4
+        },
+        "testedCounts": [
+          55,
+          54,
+          52
+        ]
+      },
+      "budget": {
+        "firstBatch": 20,
+        "maxEvaluations": 200,
+        "screened": 172,
+        "stopped": "improved-success",
+        "firstSuccess": 25
+      },
+      "countRange": {
+        "target": {
+          "min": 47,
+          "max": 62
+        },
+        "min": 47,
+        "max": 62,
+        "selected": 53,
+        "estimatedRe": 17657.618115310233,
+        "counts": [
+          53
+        ],
+        "fallbackCounts": [
+          52,
+          54,
+          62,
+          55
+        ]
+      },
+      "message": "Проверено 60 из максимум 200. Подобрано 54 трубок, 3 ряд(а). Мощность от задания до +1 %, выходы в допуске; запас UA 0 %. Лучшая длина, затем диаметр среди проверенных вариантов. Re 15000…20000; 3 < R/dᵢ < 12; остаток ≤20 %; зазор 3 мм.",
+      "found": true,
+      "selected": {
+        "q": 314.1866648586257,
+        "ratio": 1.0000177484168336,
+        "hot": 59.9994639072311,
+        "cold": 40.000355358210626,
+        "re": 17330.452667863115,
+        "shellRe": 3126.720733517626,
+        "valid": true,
+        "applicable": true,
+        "agreement": true,
+        "uaOK": true,
+        "blocking": [],
+        "dutyChecks": [],
+        "n": 54,
+        "height": 1767,
+        "diameter": 238,
+        "rowCount": 3,
+        "geometry": {
+          "diameter": 238,
+          "height": 1767,
+          "shellWall": 2,
+          "coreDiameter": 126,
+          "coreLength": 1767,
+          "coreWall": 2,
+          "tubeDiameter": 14,
+          "tubeWall": 2.5,
+          "clearance": 3,
+          "coreClearance": 3,
+          "shellClearance": 3,
+          "rowClearance": 3,
+          "leadBendRadius": 28,
+          "leadStraightLength": 40,
+          "rows": [
+            {
+              "diameter": 146,
+              "count": 18,
+              "turns": 4,
+              "pitch": 438.25,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 180,
+              "count": 18,
+              "turns": 4,
+              "pitch": 438.25,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 214,
+              "count": 18,
+              "turns": 3,
+              "pitch": 438.25,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            }
+          ]
+        },
+        "manufacturing": [
+          {
+            "row": 1,
+            "count": 18,
+            "stockMM": 3000,
+            "windingMM": 2537.5375462479233,
+            "bendsMM": 45.468827941734915,
+            "straightMM": 80,
+            "totalMM": 2663.0063741896583,
+            "axialEnvelopeMM": 1873.6546887727932,
+            "wasteMM": 336.99362581034165,
+            "wasteFraction": 0.11233120860344722
+          },
+          {
+            "row": 2,
+            "count": 18,
+            "stockMM": 3000,
+            "windingMM": 2861.7148567816334,
+            "bendsMM": 51.27657967840646,
+            "straightMM": 80,
+            "totalMM": 2992.99143646004,
+            "axialEnvelopeMM": 1877.433240770835,
+            "wasteMM": 7.0085635399600505,
+            "wasteFraction": 0.0023361878466533503
+          },
+          {
+            "row": 3,
+            "count": 18,
+            "stockMM": 3000,
+            "windingMM": 2407.584513754521,
+            "bendsMM": 55.848976481276786,
+            "straightMM": 80,
+            "totalMM": 2543.4334902357978,
+            "axialEnvelopeMM": 1441.8232881087358,
+            "wasteMM": 456.56650976420224,
+            "wasteFraction": 0.15218883658806742
+          }
+        ]
+      },
+      "diagnostics": {
+        "calls": 60,
+        "errors": 0,
+        "applicable": 60,
+        "below": 46,
+        "above": 2,
+        "agreement": 12,
+        "tubeReFailures": 0,
+        "shellReFailures": 0,
+        "closest": [
+          {
+            "q": 314.4470659653115,
+            "ratio": 1.000846573308273,
+            "hot": 59.97453960549633,
+            "cold": 40.0169383038034,
+            "re": 17327.63235256933,
+            "shellRe": 3127.2721520543632,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          },
+          {
+            "q": 314.42333404249945,
+            "ratio": 1.000771037498926,
+            "hot": 59.97681111075497,
+            "cold": 40.0154270000352,
+            "re": 17327.88937969505,
+            "shellRe": 3127.2218964486833,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          },
+          {
+            "q": 314.39961388806046,
+            "ratio": 1.000695539146872,
+            "hot": 59.97908148892407,
+            "cold": 40.013916445696914,
+            "re": 17328.146280407724,
+            "shellRe": 3127.1716660667,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          }
+        ]
+      },
+      "elapsedMS": 3632.4795000000013
+    },
+    {
+      "id": "C-5",
+      "regime": "C",
+      "mh": 5,
+      "state": {
+        "flow": "counter",
+        "hot-fluid": "water",
+        "cold-fluid": "water",
+        "hot-flow-unit": "kg-s",
+        "cold-flow-unit": "kg-s",
+        "ph": 2,
+        "pc": 1.2,
+        "unknown": "mc",
+        "mc": "",
+        "area-reserve-percent": 0,
+        "tube-conductivity": 16,
+        "length": 10000,
+        "exchanger-diameter": 3000,
+        "thi": 90,
+        "tho": 60,
+        "tci": 20,
+        "tco": 40,
+        "mh": 5
+      },
+      "passedAudit": true,
+      "target": {
+        "q": 628.3621772834066,
+        "mc": 7.5219728051728065,
+        "dt": 44.814201177245494,
+        "requiredUA": 14021.496775054842,
+        "imbalance": 0
+      },
+      "stats": {
+        "families": 0,
+        "evaluations": 0,
+        "errors": 0,
+        "inapplicable": 0,
+        "insufficient": 0,
+        "geometryChecks": 0,
+        "tubeCount": 107,
+        "maxEvaluations": 200,
+        "phases": {},
+        "testedCounts": []
+      },
+      "budget": {
+        "firstBatch": 20,
+        "maxEvaluations": 200,
+        "screened": 0,
+        "stopped": "catalogue-exhausted",
+        "firstSuccess": null
+      },
+      "countRange": {
+        "target": {
+          "min": 94,
+          "max": 124
+        },
+        "min": 94,
+        "max": 124,
+        "selected": 107,
+        "estimatedRe": 17492.59364694285,
+        "counts": [
+          107
+        ],
+        "fallbackCounts": []
+      },
+      "message": "Нет конструкции в сокращённом наборе компоновок. Предварительно выбрано 107 трубок. Итоговые Re, заготовки или тепловое задание не выполнены.",
+      "found": false,
+      "diagnostics": {
+        "calls": 0,
+        "errors": 0,
+        "applicable": 0,
+        "below": 0,
+        "above": 0,
+        "agreement": 0,
+        "tubeReFailures": 0,
+        "shellReFailures": 0,
+        "closest": []
+      },
+      "elapsedMS": 10.53020000000106
+    },
+    {
+      "id": "D-0.5",
+      "regime": "D",
+      "mh": 0.5,
+      "state": {
+        "flow": "counter",
+        "hot-fluid": "water",
+        "cold-fluid": "water",
+        "hot-flow-unit": "kg-s",
+        "cold-flow-unit": "kg-s",
+        "ph": 2,
+        "pc": 1.2,
+        "unknown": "mc",
+        "mc": "",
+        "area-reserve-percent": 0,
+        "tube-conductivity": 16,
+        "length": 10000,
+        "exchanger-diameter": 3000,
+        "thi": 90,
+        "tho": 80,
+        "tci": 20,
+        "tco": 30,
+        "mh": 0.5
+      },
+      "passedAudit": true,
+      "target": {
+        "q": 20.982881561375585,
+        "mc": 0.5022058587078273,
+        "dt": 60,
+        "requiredUA": 349.71469268959305,
+        "imbalance": 0
+      },
+      "stats": {
+        "families": 99,
+        "evaluations": 188,
+        "errors": 0,
+        "inapplicable": 6,
+        "insufficient": 175,
+        "geometryChecks": 5992,
+        "tubeCount": 12,
+        "maxEvaluations": 200,
+        "phases": {
+          "initial": 20,
+          "refinement": 80,
+          "catalogue": 60,
+          "fallback": 18,
+          "improvement": 10
+        },
+        "testedCounts": [
+          12,
+          14,
+          11,
+          13
+        ]
+      },
+      "budget": {
+        "firstBatch": 20,
+        "maxEvaluations": 200,
+        "screened": 1217,
+        "stopped": "improved-success",
+        "firstSuccess": 129
+      },
+      "countRange": {
+        "target": {
+          "min": 11,
+          "max": 14
+        },
+        "min": 11,
+        "max": 14,
+        "selected": 12,
+        "estimatedRe": 17670.322564939615,
+        "counts": [
+          12
+        ],
+        "fallbackCounts": [
+          11,
+          13,
+          14
+        ]
+      },
+      "message": "Проверено 188 из максимум 200. Подобрано 14 трубок, 2 ряд(а). Мощность от задания до +1 %, выходы в допуске; запас UA 0 %. Лучшая длина, затем диаметр среди проверенных вариантов. Re 15000…20000; 3 < R/dᵢ < 12; остаток ≤20 %; зазор 3 мм.",
+      "found": true,
+      "selected": {
+        "q": 20.991159329787326,
+        "ratio": 1.0003945010311157,
+        "hot": 79.99605128854893,
+        "cold": 30.003946629330166,
+        "re": 15145.655494727018,
+        "shellRe": 598.6847925171252,
+        "valid": true,
+        "applicable": true,
+        "agreement": true,
+        "uaOK": true,
+        "blocking": [],
+        "dutyChecks": [],
+        "n": 14,
+        "height": 483,
+        "diameter": 234,
+        "rowCount": 2,
+        "geometry": {
+          "diameter": 234,
+          "height": 483,
+          "shellWall": 2,
+          "coreDiameter": 156,
+          "coreLength": 483,
+          "coreWall": 2,
+          "tubeDiameter": 14,
+          "tubeWall": 2.5,
+          "clearance": 3,
+          "coreClearance": 3,
+          "shellClearance": 3,
+          "rowClearance": 3,
+          "leadBendRadius": 28,
+          "leadStraightLength": 40,
+          "rows": [
+            {
+              "diameter": 176,
+              "count": 7,
+              "turns": 1,
+              "pitch": 469,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 210,
+              "count": 7,
+              "turns": 1,
+              "pitch": 469,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            }
+          ]
+        },
+        "manufacturing": [
+          {
+            "row": 1,
+            "count": 7,
+            "stockMM": 1000,
+            "windingMM": 725.0392168208172,
+            "bendsMM": 48.767993588796685,
+            "straightMM": 80,
+            "totalMM": 853.8072104096138,
+            "axialEnvelopeMM": 591.8543781570755,
+            "wasteMM": 146.19278959038616,
+            "wasteFraction": 0.14619278959038615
+          },
+          {
+            "row": 2,
+            "count": 7,
+            "stockMM": 1000,
+            "windingMM": 809.4507731097924,
+            "bendsMM": 53.562198532647685,
+            "straightMM": 80,
+            "totalMM": 943.0129716424401,
+            "axialEnvelopeMM": 594.7873515767268,
+            "wasteMM": 56.98702835755989,
+            "wasteFraction": 0.056987028357559893
+          }
+        ]
+      },
+      "diagnostics": {
+        "calls": 188,
+        "errors": 0,
+        "applicable": 182,
+        "below": 68,
+        "above": 107,
+        "agreement": 7,
+        "tubeReFailures": 6,
+        "shellReFailures": 0,
+        "closest": [
+          {
+            "q": 21.122153055465503,
+            "ratio": 1.0066373864658458,
+            "hot": 79.93355975861658,
+            "cold": 30.066403045780916,
+            "re": 15140.013480951573,
+            "shellRe": 599.1102346495295,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          },
+          {
+            "q": 21.034454359276374,
+            "ratio": 1.0024578510701658,
+            "hot": 79.97539715455943,
+            "cold": 30.024589213680706,
+            "re": 15143.790687749004,
+            "shellRe": 598.8253933035486,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          },
+          {
+            "q": 21.02576539893437,
+            "ratio": 1.0020437534965514,
+            "hot": 79.97954227774271,
+            "cold": 30.020446412834726,
+            "re": 15144.164935171846,
+            "shellRe": 598.79717483789,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          }
+        ]
+      },
+      "elapsedMS": 7681.889900000002
+    },
+    {
+      "id": "D-1",
+      "regime": "D",
+      "mh": 1,
+      "state": {
+        "flow": "counter",
+        "hot-fluid": "water",
+        "cold-fluid": "water",
+        "hot-flow-unit": "kg-s",
+        "cold-flow-unit": "kg-s",
+        "ph": 2,
+        "pc": 1.2,
+        "unknown": "mc",
+        "mc": "",
+        "area-reserve-percent": 0,
+        "tube-conductivity": 16,
+        "length": 10000,
+        "exchanger-diameter": 3000,
+        "thi": 90,
+        "tho": 80,
+        "tci": 20,
+        "tco": 30,
+        "mh": 1
+      },
+      "passedAudit": true,
+      "target": {
+        "q": 41.96576312275117,
+        "mc": 1.0044117174156546,
+        "dt": 60,
+        "requiredUA": 699.4293853791861,
+        "imbalance": 0
+      },
+      "stats": {
+        "families": 99,
+        "evaluations": 200,
+        "errors": 0,
+        "inapplicable": 0,
+        "insufficient": 200,
+        "geometryChecks": 5126,
+        "tubeCount": 24,
+        "maxEvaluations": 200,
+        "phases": {
+          "initial": 20,
+          "refinement": 80,
+          "catalogue": 76,
+          "fallback": 24
+        },
+        "testedCounts": [
+          24,
+          22,
+          23
+        ]
+      },
+      "budget": {
+        "firstBatch": 20,
+        "maxEvaluations": 200,
+        "screened": 1172,
+        "stopped": "budget-exhausted",
+        "firstSuccess": null
+      },
+      "countRange": {
+        "target": {
+          "min": 22,
+          "max": 28
+        },
+        "min": 22,
+        "max": 28,
+        "selected": 24,
+        "estimatedRe": 17670.322564939615,
+        "counts": [
+          24
+        ],
+        "fallbackCounts": [
+          23,
+          25,
+          22,
+          28
+        ]
+      },
+      "message": "Достигнут лимит 200 проверок Teplo. Подходящий вариант не найден; это не доказывает отсутствие решения.",
+      "found": false,
+      "diagnostics": {
+        "calls": 200,
+        "errors": 0,
+        "applicable": 200,
+        "below": 110,
+        "above": 90,
+        "agreement": 0,
+        "tubeReFailures": 0,
+        "shellReFailures": 0,
+        "closest": [
+          {
+            "q": 41.69092209608872,
+            "ratio": 0.9934508273837763,
+            "hot": 80.06555697847256,
+            "cold": 29.93447949034738,
+            "re": 17677.264734747707,
+            "shellRe": 1531.9025833399314,
+            "valid": true,
+            "applicable": true,
+            "agreement": false,
+            "uaOK": false,
+            "blocking": [],
+            "dutyChecks": [
+              "Мощность должна быть от задания до +1 %; отклонение -0.6549 %.",
+              "Горячий выход вне допустимого диапазона задания: 79.9000…80.0000 °C.",
+              "Холодный выход вне допустимого диапазона задания: 30.0000…30.1000 °C."
+            ]
+          },
+          {
+            "q": 41.674005164865896,
+            "ratio": 0.9930477147042013,
+            "hot": 80.06959207362159,
+            "cold": 29.93044660874303,
+            "re": 17677.689779887583,
+            "shellRe": 1531.8322723119147,
+            "valid": true,
+            "applicable": true,
+            "agreement": false,
+            "uaOK": false,
+            "blocking": [],
+            "dutyChecks": [
+              "Мощность должна быть от задания до +1 %; отклонение -0.6952 %.",
+              "Горячий выход вне допустимого диапазона задания: 79.9000…80.0000 °C.",
+              "Холодный выход вне допустимого диапазона задания: 30.0000…30.1000 °C."
+            ]
+          },
+          {
+            "q": 41.65709506313374,
+            "ratio": 0.9926447647642063,
+            "hot": 80.07362553670133,
+            "cold": 29.92641535622009,
+            "re": 17678.114655780337,
+            "shellRe": 1531.7619909208515,
+            "valid": true,
+            "applicable": true,
+            "agreement": false,
+            "uaOK": false,
+            "blocking": [],
+            "dutyChecks": [
+              "Мощность должна быть от задания до +1 %; отклонение -0.7355 %.",
+              "Горячий выход вне допустимого диапазона задания: 79.9000…80.0000 °C.",
+              "Холодный выход вне допустимого диапазона задания: 30.0000…30.1000 °C."
+            ]
+          }
+        ]
+      },
+      "elapsedMS": 8039.7658999999985
+    },
+    {
+      "id": "D-2.5",
+      "regime": "D",
+      "mh": 2.5,
+      "state": {
+        "flow": "counter",
+        "hot-fluid": "water",
+        "cold-fluid": "water",
+        "hot-flow-unit": "kg-s",
+        "cold-flow-unit": "kg-s",
+        "ph": 2,
+        "pc": 1.2,
+        "unknown": "mc",
+        "mc": "",
+        "area-reserve-percent": 0,
+        "tube-conductivity": 16,
+        "length": 10000,
+        "exchanger-diameter": 3000,
+        "thi": 90,
+        "tho": 80,
+        "tci": 20,
+        "tco": 30,
+        "mh": 2.5
+      },
+      "passedAudit": true,
+      "target": {
+        "q": 104.91440780687792,
+        "mc": 2.5110292935391367,
+        "dt": 60,
+        "requiredUA": 1748.5734634479654,
+        "imbalance": 1.3870273428177197e-16
+      },
+      "stats": {
+        "families": 24,
+        "evaluations": 200,
+        "errors": 0,
+        "inapplicable": 19,
+        "insufficient": 181,
+        "geometryChecks": 2555,
+        "tubeCount": 61,
+        "maxEvaluations": 200,
+        "phases": {
+          "fallback": 24,
+          "refinement": 32,
+          "catalogue": 144
+        },
+        "testedCounts": [
+          60,
+          54,
+          63,
+          62
+        ]
+      },
+      "budget": {
+        "firstBatch": 20,
+        "maxEvaluations": 200,
+        "screened": 196,
+        "stopped": "budget-exhausted",
+        "firstSuccess": null
+      },
+      "countRange": {
+        "target": {
+          "min": 54,
+          "max": 70
+        },
+        "min": 54,
+        "max": 70,
+        "selected": 61,
+        "estimatedRe": 17380.645145842245,
+        "counts": [
+          61
+        ],
+        "fallbackCounts": [
+          60,
+          62,
+          54,
+          63
+        ]
+      },
+      "message": "Достигнут лимит 200 проверок Teplo. Подходящий вариант не найден; это не доказывает отсутствие решения.",
+      "found": false,
+      "diagnostics": {
+        "calls": 200,
+        "errors": 0,
+        "applicable": 181,
+        "below": 0,
+        "above": 181,
+        "agreement": 0,
+        "tubeReFailures": 19,
+        "shellReFailures": 0,
+        "closest": [
+          {
+            "q": 113.01027736049126,
+            "ratio": 1.0771664228283677,
+            "hot": 79.2275103022555,
+            "cold": 30.77202045466812,
+            "re": 17589.01520549726,
+            "shellRe": 1886.594712704299,
+            "valid": true,
+            "applicable": true,
+            "agreement": false,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": [
+              "Мощность должна быть от задания до +1 %; отклонение 7.7166 %.",
+              "Горячий выход вне допустимого диапазона задания: 79.9000…80.0000 °C.",
+              "Холодный выход вне допустимого диапазона задания: 30.0000…30.1000 °C."
+            ]
+          },
+          {
+            "q": 113.05119121972128,
+            "ratio": 1.0775563965229753,
+            "hot": 79.22360610976095,
+            "cold": 30.775922076477354,
+            "re": 17588.604466029992,
+            "shellRe": 1886.6780012310892,
+            "valid": true,
+            "applicable": true,
+            "agreement": false,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": [
+              "Мощность должна быть от задания до +1 %; отклонение 7.7556 %.",
+              "Горячий выход вне допустимого диапазона задания: 79.9000…80.0000 °C.",
+              "Холодный выход вне допустимого диапазона задания: 30.0000…30.1000 °C."
+            ]
+          },
+          {
+            "q": 113.09217832245487,
+            "ratio": 1.077947068343847,
+            "hot": 79.21969492518176,
+            "cold": 30.77983068374611,
+            "re": 17588.19299340438,
+            "shellRe": 1886.7614403046607,
+            "valid": true,
+            "applicable": true,
+            "agreement": false,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": [
+              "Мощность должна быть от задания до +1 %; отклонение 7.7947 %.",
+              "Горячий выход вне допустимого диапазона задания: 79.9000…80.0000 °C.",
+              "Холодный выход вне допустимого диапазона задания: 30.0000…30.1000 °C."
+            ]
+          }
+        ]
+      },
+      "elapsedMS": 7269.409
+    },
+    {
+      "id": "F-1",
+      "regime": "F",
+      "mh": 1,
+      "state": {
+        "flow": "counter",
+        "hot-fluid": "water",
+        "cold-fluid": "water",
+        "hot-flow-unit": "kg-s",
+        "cold-flow-unit": "kg-s",
+        "ph": 2,
+        "pc": 1.2,
+        "unknown": "mc",
+        "mc": "",
+        "area-reserve-percent": 0,
+        "tube-conductivity": 16,
+        "length": 10000,
+        "exchanger-diameter": 3000,
+        "thi": 120,
+        "tho": 70,
+        "tci": 20,
+        "tco": 60,
+        "mh": 1
+      },
+      "passedAudit": true,
+      "target": {
+        "q": 210.29462359944887,
+        "mc": 1.2587316387722283,
+        "dt": 54.848149477470784,
+        "requiredUA": 3834.124316005022,
+        "imbalance": 0
+      },
+      "stats": {
+        "families": 96,
+        "evaluations": 200,
+        "errors": 0,
+        "inapplicable": 2,
+        "insufficient": 196,
+        "geometryChecks": 6460,
+        "tubeCount": 27,
+        "maxEvaluations": 200,
+        "phases": {
+          "initial": 20,
+          "refinement": 80,
+          "catalogue": 60,
+          "fallback": 24,
+          "improvement": 16
+        },
+        "testedCounts": [
+          27,
+          24,
+          28,
+          26
+        ]
+      },
+      "budget": {
+        "firstBatch": 20,
+        "maxEvaluations": 200,
+        "screened": 1171,
+        "stopped": "budget-success",
+        "firstSuccess": 131
+      },
+      "countRange": {
+        "target": {
+          "min": 24,
+          "max": 31
+        },
+        "min": 24,
+        "max": 31,
+        "selected": 27,
+        "estimatedRe": 17606.39905853675,
+        "counts": [
+          27
+        ],
+        "fallbackCounts": [
+          26,
+          28,
+          24,
+          31
+        ]
+      },
+      "message": "Проверено 200 из максимум 200. Подобрано 28 трубок, 4 ряд(а). Мощность от задания до +1 %, выходы в допуске; запас UA 0 %. Лучшая длина, затем диаметр среди проверенных вариантов. Re 15000…20000; 3 < R/dᵢ < 12; остаток ≤20 %; зазор 3 мм.",
+      "found": true,
+      "selected": {
+        "q": 212.30253645184214,
+        "ratio": 1.00954809408831,
+        "hot": 69.51959400374284,
+        "cold": 60.38170534282333,
+        "re": 16932.51359039923,
+        "shellRe": 1601.3463617904483,
+        "valid": true,
+        "applicable": true,
+        "agreement": true,
+        "uaOK": true,
+        "blocking": [],
+        "dutyChecks": [],
+        "n": 28,
+        "height": 1630,
+        "diameter": 180,
+        "rowCount": 4,
+        "geometry": {
+          "diameter": 180,
+          "height": 1630,
+          "shellWall": 1,
+          "coreDiameter": 36,
+          "coreLength": 1630,
+          "coreWall": 2,
+          "tubeDiameter": 14,
+          "tubeWall": 2.5,
+          "clearance": 3,
+          "coreClearance": 3,
+          "shellClearance": 3,
+          "rowClearance": 3,
+          "leadBendRadius": 28,
+          "leadStraightLength": 40,
+          "rows": [
+            {
+              "diameter": 56,
+              "count": 7,
+              "turns": 10,
+              "pitch": 161.6,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 90,
+              "count": 7,
+              "turns": 8,
+              "pitch": 161.6,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 124,
+              "count": 7,
+              "turns": 6,
+              "pitch": 161.6,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 158,
+              "count": 7,
+              "turns": 10,
+              "pitch": 161.6,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            }
+          ]
+        },
+        "manufacturing": [
+          {
+            "row": 1,
+            "count": 7,
+            "stockMM": 3000,
+            "windingMM": 2388.8415477343033,
+            "bendsMM": 48.17242830896206,
+            "straightMM": 80,
+            "totalMM": 2517.0139760432653,
+            "axialEnvelopeMM": 1738.6354093582045,
+            "wasteMM": 482.9860239567347,
+            "wasteFraction": 0.16099534131891158
+          },
+          {
+            "row": 2,
+            "count": 7,
+            "stockMM": 3000,
+            "windingMM": 2605.3281485303773,
+            "bendsMM": 60.71943312888777,
+            "straightMM": 80,
+            "totalMM": 2746.0475816592652,
+            "axialEnvelopeMM": 1422.6013628588066,
+            "wasteMM": 253.95241834073477,
+            "wasteFraction": 0.08465080611357825
+          },
+          {
+            "row": 3,
+            "count": 7,
+            "stockMM": 3000,
+            "windingMM": 2530.4753509491848,
+            "bendsMM": 67.37789801119837,
+            "straightMM": 80,
+            "totalMM": 2677.853248960383,
+            "axialEnvelopeMM": 1102.145940248365,
+            "wasteMM": 322.1467510396169,
+            "wasteFraction": 0.10738225034653896
+          },
+          {
+            "row": 4,
+            "count": 7,
+            "stockMM": 6000,
+            "windingMM": 5220.147165251136,
+            "bendsMM": 71.4274610312438,
+            "straightMM": 80,
+            "totalMM": 5371.57462628238,
+            "axialEnvelopeMM": 1749.8208391301935,
+            "wasteMM": 628.4253737176196,
+            "wasteFraction": 0.10473756228626993
+          }
+        ]
+      },
+      "diagnostics": {
+        "calls": 200,
+        "errors": 0,
+        "applicable": 198,
+        "below": 182,
+        "above": 14,
+        "agreement": 2,
+        "tubeReFailures": 2,
+        "shellReFailures": 0,
+        "closest": [
+          {
+            "q": 212.30253645184214,
+            "ratio": 1.00954809408831,
+            "hot": 69.51959400374284,
+            "cold": 60.38170534282333,
+            "re": 16932.51359039923,
+            "shellRe": 1601.3463617904483,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          },
+          {
+            "q": 212.346176101165,
+            "ratio": 1.0097556108026031,
+            "hot": 69.50915327251775,
+            "cold": 60.39000122299574,
+            "re": 16931.546111422835,
+            "shellRe": 1601.470793547222,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          },
+          {
+            "q": 209.763891787851,
+            "ratio": 0.9974762464084258,
+            "hot": 70.12696521106275,
+            "cold": 59.89910464690242,
+            "re": 16989.389178384383,
+            "shellRe": 1315.5084448471428,
+            "valid": true,
+            "applicable": true,
+            "agreement": false,
+            "uaOK": false,
+            "blocking": [],
+            "dutyChecks": [
+              "Мощность должна быть от задания до +1 %; отклонение -0.2524 %.",
+              "Горячий выход вне допустимого диапазона задания: 69.5000…70.0000 °C.",
+              "Холодный выход вне допустимого диапазона задания: 60.0000…60.4000 °C."
+            ]
+          }
+        ]
+      },
+      "elapsedMS": 10211.571899999995
+    },
+    {
+      "id": "F-2.5",
+      "regime": "F",
+      "mh": 2.5,
+      "state": {
+        "flow": "counter",
+        "hot-fluid": "water",
+        "cold-fluid": "water",
+        "hot-flow-unit": "kg-s",
+        "cold-flow-unit": "kg-s",
+        "ph": 2,
+        "pc": 1.2,
+        "unknown": "mc",
+        "mc": "",
+        "area-reserve-percent": 0,
+        "tube-conductivity": 16,
+        "length": 10000,
+        "exchanger-diameter": 3000,
+        "thi": 120,
+        "tho": 70,
+        "tci": 20,
+        "tco": 60,
+        "mh": 2.5
+      },
+      "passedAudit": true,
+      "target": {
+        "q": 525.7365589986222,
+        "mc": 3.14682909693057,
+        "dt": 54.848149477470784,
+        "requiredUA": 9585.310790012554,
+        "imbalance": 0
+      },
+      "stats": {
+        "families": 20,
+        "evaluations": 200,
+        "errors": 0,
+        "inapplicable": 45,
+        "insufficient": 155,
+        "geometryChecks": 4061,
+        "tubeCount": 68,
+        "maxEvaluations": 200,
+        "phases": {
+          "initial": 20,
+          "refinement": 80,
+          "catalogue": 76,
+          "fallback": 24
+        },
+        "testedCounts": [
+          68,
+          69,
+          60,
+          66,
+          65
+        ]
+      },
+      "budget": {
+        "firstBatch": 20,
+        "maxEvaluations": 200,
+        "screened": 179,
+        "stopped": "budget-exhausted",
+        "firstSuccess": null
+      },
+      "countRange": {
+        "target": {
+          "min": 60,
+          "max": 79
+        },
+        "min": 60,
+        "max": 79,
+        "selected": 68,
+        "estimatedRe": 17476.940241929864,
+        "counts": [
+          68
+        ],
+        "fallbackCounts": [
+          69,
+          60,
+          66,
+          65
+        ]
+      },
+      "message": "Достигнут лимит 200 проверок Teplo. Подходящий вариант не найден; это не доказывает отсутствие решения.",
+      "found": false,
+      "diagnostics": {
+        "calls": 200,
+        "errors": 0,
+        "applicable": 155,
+        "below": 69,
+        "above": 86,
+        "agreement": 0,
+        "tubeReFailures": 45,
+        "shellReFailures": 0,
+        "closest": [
+          {
+            "q": 520.1230912158801,
+            "ratio": 0.9893226603958566,
+            "hot": 70.53712902234768,
+            "cold": 59.57312997079668,
+            "re": 19865.279320226153,
+            "shellRe": 5387.689379528222,
+            "valid": true,
+            "applicable": true,
+            "agreement": false,
+            "uaOK": false,
+            "blocking": [],
+            "dutyChecks": [
+              "Мощность должна быть от задания до +1 %; отклонение -1.0677 %.",
+              "Горячий выход вне допустимого диапазона задания: 69.5000…70.0000 °C.",
+              "Холодный выход вне допустимого диапазона задания: 60.0000…60.4000 °C."
+            ]
+          },
+          {
+            "q": 520.0715070975812,
+            "ratio": 0.9892245425887229,
+            "hot": 70.54206468773694,
+            "cold": 59.5692072705978,
+            "re": 19865.81402126661,
+            "shellRe": 5387.4903828020915,
+            "valid": true,
+            "applicable": true,
+            "agreement": false,
+            "uaOK": false,
+            "blocking": [],
+            "dutyChecks": [
+              "Мощность должна быть от задания до +1 %; отклонение -1.0775 %.",
+              "Горячий выход вне допустимого диапазона задания: 69.5000…70.0000 °C.",
+              "Холодный выход вне допустимого диапазона задания: 60.0000…60.4000 °C."
+            ]
+          },
+          {
+            "q": 520.0199135032136,
+            "ratio": 0.9891264067572224,
+            "hot": 70.5470012552714,
+            "cold": 59.56528384860108,
+            "re": 19866.348823146353,
+            "shellRe": 5387.291352201763,
+            "valid": true,
+            "applicable": true,
+            "agreement": false,
+            "uaOK": false,
+            "blocking": [],
+            "dutyChecks": [
+              "Мощность должна быть от задания до +1 %; отклонение -1.0874 %.",
+              "Горячий выход вне допустимого диапазона задания: 69.5000…70.0000 °C.",
+              "Холодный выход вне допустимого диапазона задания: 60.0000…60.4000 °C."
+            ]
+          }
+        ]
+      },
+      "elapsedMS": 9336.932100000005
+    },
+    {
+      "id": "G-0.08",
+      "regime": "G",
+      "mh": 0.08,
+      "state": {
+        "flow": "counter",
+        "hot-fluid": "water",
+        "cold-fluid": "water",
+        "hot-flow-unit": "kg-s",
+        "cold-flow-unit": "kg-s",
+        "ph": 2,
+        "pc": 1.2,
+        "unknown": "mc",
+        "mc": "",
+        "area-reserve-percent": 0,
+        "tube-conductivity": 16,
+        "length": 10000,
+        "exchanger-diameter": 3000,
+        "thi": 150,
+        "tho": 90,
+        "tci": 30,
+        "tco": 70,
+        "mh": 0.08
+      },
+      "passedAudit": true,
+      "target": {
+        "q": 20.34682242031706,
+        "mc": 0.12172604750225413,
+        "dt": 69.52118993564416,
+        "requiredUA": 292.6708020842586,
+        "imbalance": 0
+      },
+      "stats": {
+        "families": 26,
+        "evaluations": 200,
+        "errors": 0,
+        "inapplicable": 0,
+        "insufficient": 200,
+        "geometryChecks": 3172,
+        "tubeCount": 3,
+        "maxEvaluations": 200,
+        "phases": {
+          "initial": 20,
+          "refinement": 64,
+          "catalogue": 116
+        },
+        "testedCounts": [
+          3
+        ]
+      },
+      "budget": {
+        "firstBatch": 20,
+        "maxEvaluations": 200,
+        "screened": 353,
+        "stopped": "budget-exhausted",
+        "firstSuccess": null
+      },
+      "countRange": {
+        "target": {
+          "min": 3,
+          "max": 3
+        },
+        "min": 3,
+        "max": 3,
+        "selected": 3,
+        "estimatedRe": 16225.329666815305,
+        "counts": [
+          3
+        ],
+        "fallbackCounts": []
+      },
+      "message": "Достигнут лимит 200 проверок Teplo. Подходящий вариант не найден; это не доказывает отсутствие решения.",
+      "found": false,
+      "diagnostics": {
+        "calls": 200,
+        "errors": 0,
+        "applicable": 200,
+        "below": 67,
+        "above": 133,
+        "agreement": 0,
+        "tubeReFailures": 0,
+        "shellReFailures": 0,
+        "closest": [
+          {
+            "q": 20.63033268486379,
+            "ratio": 1.0139338840576715,
+            "hot": 89.15402912376595,
+            "cold": 70.55654961140763,
+            "re": 16164.079219597586,
+            "shellRe": 1137.9017940565411,
+            "valid": true,
+            "applicable": true,
+            "agreement": false,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": [
+              "Мощность должна быть от задания до +1 %; отклонение 1.3934 %.",
+              "Горячий выход вне допустимого диапазона задания: 89.4000…90.0000 °C.",
+              "Холодный выход вне допустимого диапазона задания: 70.0000…70.4000 °C."
+            ]
+          },
+          {
+            "q": 20.630892177608793,
+            "ratio": 1.0139613818523368,
+            "hot": 89.15235946628776,
+            "cold": 70.5576479015633,
+            "re": 16163.958524257027,
+            "shellRe": 1137.9122420688138,
+            "valid": true,
+            "applicable": true,
+            "agreement": false,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": [
+              "Мощность должна быть от задания до +1 %; отклонение 1.3961 %.",
+              "Горячий выход вне допустимого диапазона задания: 89.4000…90.0000 °C.",
+              "Холодный выход вне допустимого диапазона задания: 70.0000…70.4000 °C."
+            ]
+          },
+          {
+            "q": 20.631453791760915,
+            "ratio": 1.0139889839093321,
+            "hot": 89.15068347722679,
+            "cold": 70.5587503559239,
+            "re": 16163.837371338414,
+            "shellRe": 1137.9227297292337,
+            "valid": true,
+            "applicable": true,
+            "agreement": false,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": [
+              "Мощность должна быть от задания до +1 %; отклонение 1.3989 %.",
+              "Горячий выход вне допустимого диапазона задания: 89.4000…90.0000 °C.",
+              "Холодный выход вне допустимого диапазона задания: 70.0000…70.4000 °C."
+            ]
+          }
+        ]
+      },
+      "elapsedMS": 7608.784899999999
+    },
+    {
+      "id": "G-0.15",
+      "regime": "G",
+      "mh": 0.15,
+      "state": {
+        "flow": "counter",
+        "hot-fluid": "water",
+        "cold-fluid": "water",
+        "hot-flow-unit": "kg-s",
+        "cold-flow-unit": "kg-s",
+        "ph": 2,
+        "pc": 1.2,
+        "unknown": "mc",
+        "mc": "",
+        "area-reserve-percent": 0,
+        "tube-conductivity": 16,
+        "length": 10000,
+        "exchanger-diameter": 3000,
+        "thi": 150,
+        "tho": 90,
+        "tci": 30,
+        "tco": 70,
+        "mh": 0.15
+      },
+      "passedAudit": true,
+      "target": {
+        "q": 38.15029203809449,
+        "mc": 0.2282363390667265,
+        "dt": 69.52118993564416,
+        "requiredUA": 548.7577539079849,
+        "imbalance": 0
+      },
+      "stats": {
+        "families": 58,
+        "evaluations": 200,
+        "errors": 0,
+        "inapplicable": 0,
+        "insufficient": 181,
+        "geometryChecks": 5033,
+        "tubeCount": 5,
+        "maxEvaluations": 200,
+        "phases": {
+          "initial": 20,
+          "refinement": 80,
+          "catalogue": 60,
+          "fallback": 24,
+          "improvement": 16
+        },
+        "testedCounts": [
+          5,
+          6
+        ]
+      },
+      "budget": {
+        "firstBatch": 20,
+        "maxEvaluations": 200,
+        "screened": 782,
+        "stopped": "budget-success",
+        "firstSuccess": 129
+      },
+      "countRange": {
+        "target": {
+          "min": 5,
+          "max": 6
+        },
+        "min": 5,
+        "max": 6,
+        "selected": 5,
+        "estimatedRe": 18253.495875167217,
+        "counts": [
+          5
+        ],
+        "fallbackCounts": [
+          6
+        ]
+      },
+      "message": "Проверено 200 из максимум 200. Подобрано 6 трубок, 3 ряд(а). Мощность от задания до +1 %, выходы в допуске; запас UA 0 %. Лучшая длина, затем диаметр среди проверенных вариантов. Re 15000…20000; 3 < R/dᵢ < 12; остаток ≤20 %; зазор 3 мм.",
+      "found": true,
+      "selected": {
+        "q": 38.153007476617596,
+        "ratio": 1.0000711773980757,
+        "hot": 89.99570025726592,
+        "cold": 70.00285307333823,
+        "re": 15211.076638730136,
+        "shellRe": 393.78455413555747,
+        "valid": true,
+        "applicable": true,
+        "agreement": true,
+        "uaOK": true,
+        "blocking": [],
+        "dutyChecks": [],
+        "n": 6,
+        "height": 380,
+        "diameter": 186,
+        "rowCount": 3,
+        "geometry": {
+          "diameter": 186,
+          "height": 380,
+          "shellWall": 1,
+          "coreDiameter": 76,
+          "coreLength": 380,
+          "coreWall": 2,
+          "tubeDiameter": 14,
+          "tubeWall": 2.5,
+          "clearance": 3,
+          "coreClearance": 3,
+          "shellClearance": 3,
+          "rowClearance": 3,
+          "leadBendRadius": 28,
+          "leadStraightLength": 40,
+          "rows": [
+            {
+              "diameter": 96,
+              "count": 2,
+              "turns": 9,
+              "pitch": 40.666666666666664,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 130,
+              "count": 2,
+              "turns": 6,
+              "pitch": 40.666666666666664,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 164,
+              "count": 2,
+              "turns": 9,
+              "pitch": 40.666666666666664,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            }
+          ]
+        },
+        "manufacturing": [
+          {
+            "row": 1,
+            "count": 2,
+            "stockMM": 3000,
+            "windingMM": 2738.9005471165983,
+            "bendsMM": 85.74058885070384,
+            "straightMM": 80,
+            "totalMM": 2904.641135967302,
+            "axialEnvelopeMM": 503.62937394852395,
+            "wasteMM": 95.35886403269797,
+            "wasteFraction": 0.03178628801089932
+          },
+          {
+            "row": 2,
+            "count": 2,
+            "stockMM": 3000,
+            "windingMM": 2462.5603175603164,
+            "bendsMM": 85.22800833624879,
+            "straightMM": 80,
+            "totalMM": 2627.7883258965653,
+            "axialEnvelopeMM": 380.8243152363658,
+            "wasteMM": 372.2116741034347,
+            "wasteFraction": 0.12407055803447822
+          },
+          {
+            "row": 3,
+            "count": 2,
+            "stockMM": 6000,
+            "windingMM": 4651.412610993314,
+            "bendsMM": 85.32933074300034,
+            "straightMM": 80,
+            "totalMM": 4816.741941736314,
+            "axialEnvelopeMM": 502.5023241360608,
+            "wasteMM": 1183.2580582636856,
+            "wasteFraction": 0.19720967637728093
+          }
+        ]
+      },
+      "diagnostics": {
+        "calls": 200,
+        "errors": 0,
+        "applicable": 200,
+        "below": 68,
+        "above": 113,
+        "agreement": 19,
+        "tubeReFailures": 0,
+        "shellReFailures": 0,
+        "closest": [
+          {
+            "q": 38.211905869331346,
+            "ratio": 1.0016150290848451,
+            "hot": 89.90197963348052,
+            "cold": 70.06451966902074,
+            "re": 15204.722081454813,
+            "shellRe": 393.9881509043917,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          },
+          {
+            "q": 38.20459503420158,
+            "ratio": 1.0014233966034354,
+            "hot": 89.91361295978182,
+            "cold": 70.05686524970537,
+            "re": 15205.510840194851,
+            "shellRe": 393.9628772475411,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          },
+          {
+            "q": 38.48023677955039,
+            "ratio": 1.0086485508715486,
+            "hot": 89.47495974290725,
+            "cold": 70.3454557445354,
+            "re": 15175.70060758407,
+            "shellRe": 875.4554066130468,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          }
+        ]
+      },
+      "elapsedMS": 9618.11510000001
+    },
+    {
+      "id": "G-0.2",
+      "regime": "G",
+      "mh": 0.2,
+      "state": {
+        "flow": "counter",
+        "hot-fluid": "water",
+        "cold-fluid": "water",
+        "hot-flow-unit": "kg-s",
+        "cold-flow-unit": "kg-s",
+        "ph": 2,
+        "pc": 1.2,
+        "unknown": "mc",
+        "mc": "",
+        "area-reserve-percent": 0,
+        "tube-conductivity": 16,
+        "length": 10000,
+        "exchanger-diameter": 3000,
+        "thi": 150,
+        "tho": 90,
+        "tci": 30,
+        "tco": 70,
+        "mh": 0.2
+      },
+      "passedAudit": true,
+      "target": {
+        "q": 50.86705605079266,
+        "mc": 0.3043151187556354,
+        "dt": 69.52118993564416,
+        "requiredUA": 731.6770052106466,
+        "imbalance": 0
+      },
+      "stats": {
+        "families": 51,
+        "evaluations": 200,
+        "errors": 0,
+        "inapplicable": 16,
+        "insufficient": 181,
+        "geometryChecks": 4797,
+        "tubeCount": 7,
+        "maxEvaluations": 200,
+        "phases": {
+          "initial": 20,
+          "refinement": 80,
+          "catalogue": 60,
+          "fallback": 24,
+          "improvement": 16
+        },
+        "testedCounts": [
+          7,
+          8
+        ]
+      },
+      "budget": {
+        "firstBatch": 20,
+        "maxEvaluations": 200,
+        "screened": 661,
+        "stopped": "budget-success",
+        "firstSuccess": 135
+      },
+      "countRange": {
+        "target": {
+          "min": 7,
+          "max": 8
+        },
+        "min": 7,
+        "max": 8,
+        "selected": 7,
+        "estimatedRe": 17384.281785873543,
+        "counts": [
+          7
+        ],
+        "fallbackCounts": [
+          8
+        ]
+      },
+      "message": "Проверено 200 из максимум 200. Подобрано 8 трубок, 2 ряд(а). Мощность от задания до +1 %, выходы в допуске; запас UA 0 %. Лучшая длина, затем диаметр среди проверенных вариантов. Re 15000…20000; 3 < R/dᵢ < 12; остаток ≤20 %; зазор 3 мм.",
+      "found": true,
+      "selected": {
+        "q": 51.33534018000367,
+        "ratio": 1.009206039538506,
+        "hot": 89.44111383933476,
+        "cold": 70.3677232381061,
+        "re": 15173.415972859506,
+        "shellRe": 815.443975821551,
+        "valid": true,
+        "applicable": true,
+        "agreement": true,
+        "uaOK": true,
+        "blocking": [],
+        "dutyChecks": [],
+        "n": 8,
+        "height": 498,
+        "diameter": 182,
+        "rowCount": 2,
+        "geometry": {
+          "diameter": 182,
+          "height": 498,
+          "shellWall": 1,
+          "coreDiameter": 106,
+          "coreLength": 498,
+          "coreWall": 2,
+          "tubeDiameter": 14,
+          "tubeWall": 2.5,
+          "clearance": 3,
+          "coreClearance": 3,
+          "shellClearance": 3,
+          "rowClearance": 3,
+          "leadBendRadius": 28,
+          "leadStraightLength": 40,
+          "rows": [
+            {
+              "diameter": 126,
+              "count": 4,
+              "turns": 7,
+              "pitch": 69.14285714285714,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 160,
+              "count": 4,
+              "turns": 5,
+              "pitch": 69.14285714285714,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            }
+          ]
+        },
+        "manufacturing": [
+          {
+            "row": 1,
+            "count": 4,
+            "stockMM": 3000,
+            "windingMM": 2812.8380924100557,
+            "bendsMM": 80.84642113199219,
+            "straightMM": 80,
+            "totalMM": 2973.6845135420476,
+            "axialEnvelopeMM": 620.2801573385449,
+            "wasteMM": 26.315486457952375,
+            "wasteFraction": 0.008771828819317458
+          },
+          {
+            "row": 2,
+            "count": 4,
+            "stockMM": 3000,
+            "windingMM": 2536.940122281984,
+            "bendsMM": 81.96805215396178,
+            "straightMM": 80,
+            "totalMM": 2698.9081744359455,
+            "axialEnvelopeMM": 481.88104304160777,
+            "wasteMM": 301.0918255640545,
+            "wasteFraction": 0.10036394185468483
+          }
+        ]
+      },
+      "diagnostics": {
+        "calls": 200,
+        "errors": 0,
+        "applicable": 184,
+        "below": 47,
+        "above": 134,
+        "agreement": 3,
+        "tubeReFailures": 16,
+        "shellReFailures": 0,
+        "closest": [
+          {
+            "q": 51.22387378150617,
+            "ratio": 1.007014711650645,
+            "hot": 89.57415430738595,
+            "cold": 70.2801967703663,
+            "re": 15182.418691493991,
+            "shellRe": 959.5143969542554,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          },
+          {
+            "q": 51.2396407416898,
+            "ratio": 1.0073246757297118,
+            "hot": 89.5553356146956,
+            "cold": 70.29257743114384,
+            "re": 15181.143002078503,
+            "shellRe": 959.6138392504341,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          },
+          {
+            "q": 51.33534018000367,
+            "ratio": 1.009206039538506,
+            "hot": 89.44111383933476,
+            "cold": 70.3677232381061,
+            "re": 15173.415972859506,
+            "shellRe": 815.443975821551,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          }
+        ]
+      },
+      "elapsedMS": 8133.164199999999
+    },
+    {
+      "id": "G-0.5",
+      "regime": "G",
+      "mh": 0.5,
+      "state": {
+        "flow": "counter",
+        "hot-fluid": "water",
+        "cold-fluid": "water",
+        "hot-flow-unit": "kg-s",
+        "cold-flow-unit": "kg-s",
+        "ph": 2,
+        "pc": 1.2,
+        "unknown": "mc",
+        "mc": "",
+        "area-reserve-percent": 0,
+        "tube-conductivity": 16,
+        "length": 10000,
+        "exchanger-diameter": 3000,
+        "thi": 150,
+        "tho": 90,
+        "tci": 30,
+        "tco": 70,
+        "mh": 0.5
+      },
+      "passedAudit": true,
+      "target": {
+        "q": 127.16764012698164,
+        "mc": 0.7607877968890884,
+        "dt": 69.52118993564416,
+        "requiredUA": 1829.1925130266163,
+        "imbalance": 0
+      },
+      "stats": {
+        "families": 109,
+        "evaluations": 200,
+        "errors": 0,
+        "inapplicable": 37,
+        "insufficient": 139,
+        "geometryChecks": 7388,
+        "tubeCount": 17,
+        "maxEvaluations": 200,
+        "phases": {
+          "initial": 20,
+          "refinement": 80,
+          "catalogue": 52,
+          "fallback": 24,
+          "improvement": 24
+        },
+        "testedCounts": [
+          17,
+          18,
+          16,
+          20
+        ]
+      },
+      "budget": {
+        "firstBatch": 20,
+        "maxEvaluations": 200,
+        "screened": 1454,
+        "stopped": "budget-success",
+        "firstSuccess": 141
+      },
+      "countRange": {
+        "target": {
+          "min": 16,
+          "max": 20
+        },
+        "min": 16,
+        "max": 20,
+        "selected": 17,
+        "estimatedRe": 17895.58419134041,
+        "counts": [
+          17
+        ],
+        "fallbackCounts": [
+          16,
+          18,
+          20
+        ]
+      },
+      "message": "Проверено 200 из максимум 200. Подобрано 16 трубок, 4 ряд(а). Мощность от задания до +1 %, выходы в допуске; запас UA 0 %. Лучшая длина, затем диаметр среди проверенных вариантов. Re 15000…20000; 3 < R/dᵢ < 12; остаток ≤20 %; зазор 3 мм.",
+      "found": true,
+      "selected": {
+        "q": 127.26247428460265,
+        "ratio": 1.0007457412713354,
+        "hot": 89.95473874520529,
+        "cold": 70.02979620246805,
+        "re": 19010.287960595793,
+        "shellRe": 809.1638554966012,
+        "valid": true,
+        "applicable": true,
+        "agreement": true,
+        "uaOK": true,
+        "blocking": [],
+        "dutyChecks": [],
+        "n": 16,
+        "height": 619,
+        "diameter": 222,
+        "rowCount": 4,
+        "geometry": {
+          "diameter": 222,
+          "height": 619,
+          "shellWall": 2,
+          "coreDiameter": 76,
+          "coreLength": 619,
+          "coreWall": 2,
+          "tubeDiameter": 14,
+          "tubeWall": 2.5,
+          "clearance": 3,
+          "coreClearance": 3,
+          "shellClearance": 3,
+          "rowClearance": 3,
+          "leadBendRadius": 28,
+          "leadStraightLength": 40,
+          "rows": [
+            {
+              "diameter": 96,
+              "count": 4,
+              "turns": 8,
+              "pitch": 75.625,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 130,
+              "count": 4,
+              "turns": 6,
+              "pitch": 75.625,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 164,
+              "count": 4,
+              "turns": 5,
+              "pitch": 75.625,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 198,
+              "count": 4,
+              "turns": 8,
+              "pitch": 75.625,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            }
+          ]
+        },
+        "manufacturing": [
+          {
+            "row": 1,
+            "count": 4,
+            "stockMM": 3000,
+            "windingMM": 2487.439355294542,
+            "bendsMM": 78.18055300859089,
+            "straightMM": 80,
+            "totalMM": 2645.619908303133,
+            "axialEnvelopeMM": 741.2047491121148,
+            "wasteMM": 354.3800916968671,
+            "wasteFraction": 0.11812669723228904
+          },
+          {
+            "row": 2,
+            "count": 4,
+            "stockMM": 3000,
+            "windingMM": 2492.098790201296,
+            "bendsMM": 80.04858897896386,
+            "straightMM": 80,
+            "totalMM": 2652.14737918026,
+            "axialEnvelopeMM": 589.84595214789,
+            "wasteMM": 347.85262081973997,
+            "wasteFraction": 0.11595087360657999
+          },
+          {
+            "row": 3,
+            "count": 4,
+            "stockMM": 3000,
+            "windingMM": 2603.7089919799955,
+            "bendsMM": 81.34569499088335,
+            "straightMM": 80,
+            "totalMM": 2765.0546869708787,
+            "axialEnvelopeMM": 514.1812095590082,
+            "wasteMM": 234.94531302912128,
+            "wasteFraction": 0.07831510434304043
+          },
+          {
+            "row": 4,
+            "count": 4,
+            "stockMM": 6000,
+            "windingMM": 5012.9248089493285,
+            "bendsMM": 82.28455425112524,
+            "straightMM": 80,
+            "totalMM": 5175.2093632004535,
+            "axialEnvelopeMM": 741.0371246198877,
+            "wasteMM": 824.7906367995465,
+            "wasteFraction": 0.13746510613325774
+          }
+        ]
+      },
+      "diagnostics": {
+        "calls": 200,
+        "errors": 0,
+        "applicable": 163,
+        "below": 20,
+        "above": 119,
+        "agreement": 24,
+        "tubeReFailures": 37,
+        "shellReFailures": 0,
+        "closest": [
+          {
+            "q": 127.86373567606711,
+            "ratio": 1.0054738418389333,
+            "hot": 89.6676928051777,
+            "cold": 70.21864157373372,
+            "re": 18985.87749251228,
+            "shellRe": 2202.1926177121895,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          },
+          {
+            "q": 127.87910325233297,
+            "ratio": 1.0055946868609098,
+            "hot": 89.66035620814381,
+            "cold": 70.22346842457053,
+            "re": 18985.255753787955,
+            "shellRe": 2202.2816565557773,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          },
+          {
+            "q": 127.66130594878061,
+            "ratio": 1.003882008200404,
+            "hot": 89.7643468246156,
+            "cold": 70.15506901645028,
+            "re": 15195.335544007936,
+            "shellRe": 753.9443350937863,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          }
+        ]
+      },
+      "elapsedMS": 11024.469199999992
+    },
+    {
+      "id": "G-2.5",
+      "regime": "G",
+      "mh": 2.5,
+      "state": {
+        "flow": "counter",
+        "hot-fluid": "water",
+        "cold-fluid": "water",
+        "hot-flow-unit": "kg-s",
+        "cold-flow-unit": "kg-s",
+        "ph": 2,
+        "pc": 1.2,
+        "unknown": "mc",
+        "mc": "",
+        "area-reserve-percent": 0,
+        "tube-conductivity": 16,
+        "length": 10000,
+        "exchanger-diameter": 3000,
+        "thi": 150,
+        "tho": 90,
+        "tci": 30,
+        "tco": 70,
+        "mh": 2.5
+      },
+      "passedAudit": true,
+      "target": {
+        "q": 635.8382006349082,
+        "mc": 3.8039389844454417,
+        "dt": 69.52118993564416,
+        "requiredUA": 9145.96256513308,
+        "imbalance": 0
+      },
+      "stats": {
+        "families": 1,
+        "evaluations": 34,
+        "errors": 0,
+        "inapplicable": 0,
+        "insufficient": 34,
+        "geometryChecks": 312,
+        "tubeCount": 87,
+        "maxEvaluations": 200,
+        "phases": {
+          "fallback": 2,
+          "refinement": 32
+        },
+        "testedCounts": [
+          78
+        ]
+      },
+      "budget": {
+        "firstBatch": 20,
+        "maxEvaluations": 200,
+        "screened": 2,
+        "stopped": "catalogue-exhausted",
+        "firstSuccess": null
+      },
+      "countRange": {
+        "target": {
+          "min": 77,
+          "max": 101
+        },
+        "min": 77,
+        "max": 101,
+        "selected": 87,
+        "estimatedRe": 17484.191451309598,
+        "counts": [
+          87
+        ],
+        "fallbackCounts": [
+          78
+        ]
+      },
+      "message": "Нет конструкции в сокращённом наборе компоновок. Предварительно выбрано 87 трубок. Итоговые Re, заготовки или тепловое задание не выполнены.",
+      "found": false,
+      "diagnostics": {
+        "calls": 34,
+        "errors": 0,
+        "applicable": 34,
+        "below": 0,
+        "above": 34,
+        "agreement": 0,
+        "tubeReFailures": 0,
+        "shellReFailures": 0,
+        "closest": [
+          {
+            "q": 737.2115893616725,
+            "ratio": 1.1594326805554294,
+            "hot": 80.30864711106904,
+            "cold": 76.36599385285874,
+            "re": 18661.572099052715,
+            "shellRe": 4859.552864610945,
+            "valid": true,
+            "applicable": true,
+            "agreement": false,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": [
+              "Мощность должна быть от задания до +1 %; отклонение 15.9433 %.",
+              "Горячий выход вне допустимого диапазона задания: 89.4000…90.0000 °C.",
+              "Холодный выход вне допустимого диапазона задания: 70.0000…70.4000 °C."
+            ]
+          },
+          {
+            "q": 737.2642467546397,
+            "ratio": 1.159515496266902,
+            "hot": 80.30360659291415,
+            "cold": 76.3692993577577,
+            "re": 18661.13655174026,
+            "shellRe": 4859.683047733742,
+            "valid": true,
+            "applicable": true,
+            "agreement": false,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": [
+              "Мощность должна быть от задания до +1 %; отклонение 15.9515 %.",
+              "Горячий выход вне допустимого диапазона задания: 89.4000…90.0000 °C.",
+              "Холодный выход вне допустимого диапазона задания: 70.0000…70.4000 °C."
+            ]
+          },
+          {
+            "q": 737.3168954347148,
+            "ratio": 1.1595982982753732,
+            "hot": 80.29856690242418,
+            "cold": 76.37260431437201,
+            "re": 18660.701077410202,
+            "shellRe": 4859.813210472945,
+            "valid": true,
+            "applicable": true,
+            "agreement": false,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": [
+              "Мощность должна быть от задания до +1 %; отклонение 15.9598 %.",
+              "Горячий выход вне допустимого диапазона задания: 89.4000…90.0000 °C.",
+              "Холодный выход вне допустимого диапазона задания: 70.0000…70.4000 °C."
+            ]
+          }
+        ]
+      },
+      "elapsedMS": 1424.8119000000006
+    },
+    {
+      "id": "H-0.35",
+      "regime": "H",
+      "mh": 0.35,
+      "state": {
+        "flow": "counter",
+        "hot-fluid": "water",
+        "cold-fluid": "water",
+        "hot-flow-unit": "kg-s",
+        "cold-flow-unit": "kg-s",
+        "ph": 2,
+        "pc": 1.2,
+        "unknown": "mc",
+        "mc": "",
+        "area-reserve-percent": 0,
+        "tube-conductivity": 16,
+        "length": 10000,
+        "exchanger-diameter": 3000,
+        "thi": 160,
+        "tho": 60,
+        "tci": 10,
+        "tco": 100,
+        "mh": 0.35
+      },
+      "passedAudit": true,
+      "target": {
+        "q": 147.8353017429711,
+        "mc": 0.3929244452857039,
+        "dt": 54.848149477470784,
+        "requiredUA": 2695.3562362882517,
+        "imbalance": 1.9686658134830408e-16
+      },
+      "stats": {
+        "families": 91,
+        "evaluations": 200,
+        "errors": 0,
+        "inapplicable": 8,
+        "insufficient": 167,
+        "geometryChecks": 5551,
+        "tubeCount": 11,
+        "maxEvaluations": 200,
+        "phases": {
+          "initial": 20,
+          "refinement": 80,
+          "catalogue": 60,
+          "fallback": 24,
+          "improvement": 16
+        },
+        "testedCounts": [
+          11,
+          10,
+          12
+        ]
+      },
+      "budget": {
+        "firstBatch": 20,
+        "maxEvaluations": 200,
+        "screened": 1206,
+        "stopped": "budget-success",
+        "firstSuccess": 131
+      },
+      "countRange": {
+        "target": {
+          "min": 10,
+          "max": 12
+        },
+        "min": 10,
+        "max": 12,
+        "selected": 11,
+        "estimatedRe": 17644.844864431318,
+        "counts": [
+          11
+        ],
+        "fallbackCounts": [
+          10,
+          12
+        ]
+      },
+      "message": "Проверено 200 из максимум 200. Подобрано 10 трубок, 1 ряд(а). Мощность от задания до +1 %, выходы в допуске; запас UA 0 %. Лучшая длина, затем диаметр среди проверенных вариантов. Re 15000…20000; 3 < R/dᵢ < 12; остаток ≤20 %; зазор 3 мм.",
+      "found": true,
+      "selected": {
+        "q": 147.93504306850423,
+        "ratio": 1.0006746786752365,
+        "hot": 59.93138978649765,
+        "cold": 100.06047768186565,
+        "re": 19402.761517050174,
+        "shellRe": 2812.932610610537,
+        "valid": true,
+        "applicable": true,
+        "agreement": true,
+        "uaOK": true,
+        "blocking": [],
+        "dutyChecks": [],
+        "n": 10,
+        "height": 1329,
+        "diameter": 230,
+        "rowCount": 1,
+        "geometry": {
+          "diameter": 230,
+          "height": 1329,
+          "shellWall": 2,
+          "coreDiameter": 186,
+          "coreLength": 1329,
+          "coreWall": 2,
+          "tubeDiameter": 14,
+          "tubeWall": 2.5,
+          "clearance": 3,
+          "coreClearance": 3,
+          "shellClearance": 3,
+          "rowClearance": 3,
+          "leadBendRadius": 28,
+          "leadStraightLength": 40,
+          "rows": [
+            {
+              "diameter": 206,
+              "count": 10,
+              "turns": 7,
+              "pitch": 187.85714285714286,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            }
+          ]
+        },
+        "manufacturing": [
+          {
+            "row": 1,
+            "count": 10,
+            "stockMM": 6000,
+            "windingMM": 4717.173421220251,
+            "bendsMM": 72.82896261865943,
+            "straightMM": 80,
+            "totalMM": 4870.002383838911,
+            "axialEnvelopeMM": 1449.1273157803485,
+            "wasteMM": 1129.9976161610894,
+            "wasteFraction": 0.18833293602684822
+          }
+        ]
+      },
+      "diagnostics": {
+        "calls": 200,
+        "errors": 0,
+        "applicable": 192,
+        "below": 51,
+        "above": 116,
+        "agreement": 25,
+        "tubeReFailures": 8,
+        "shellReFailures": 0,
+        "closest": [
+          {
+            "q": 148.41949171096695,
+            "ratio": 1.00395162698698,
+            "hot": 59.598265180414174,
+            "cold": 100.35422292800521,
+            "re": 16143.013891149038,
+            "shellRe": 1476.0181149594423,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          },
+          {
+            "q": 147.99772567383613,
+            "ratio": 1.0010986816338863,
+            "hot": 59.88828695821168,
+            "cold": 100.09848556250984,
+            "re": 19398.72502490025,
+            "shellRe": 2813.782449110265,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          },
+          {
+            "q": 147.99497820134647,
+            "ratio": 1.001080096949056,
+            "hot": 59.890176226742085,
+            "cold": 100.09681962520877,
+            "re": 19398.90194814403,
+            "shellRe": 2813.7451976906423,
+            "valid": true,
+            "applicable": true,
+            "agreement": true,
+            "uaOK": true,
+            "blocking": [],
+            "dutyChecks": []
+          }
+        ]
+      },
+      "elapsedMS": 9657.87550000001
+    },
+    {
+      "id": "H-2.5",
+      "regime": "H",
+      "mh": 2.5,
+      "state": {
+        "flow": "counter",
+        "hot-fluid": "water",
+        "cold-fluid": "water",
+        "hot-flow-unit": "kg-s",
+        "cold-flow-unit": "kg-s",
+        "ph": 2,
+        "pc": 1.2,
+        "unknown": "mc",
+        "mc": "",
+        "area-reserve-percent": 0,
+        "tube-conductivity": 16,
+        "length": 10000,
+        "exchanger-diameter": 3000,
+        "thi": 160,
+        "tho": 60,
+        "tci": 10,
+        "tco": 100,
+        "mh": 2.5
+      },
+      "passedAudit": true,
+      "target": {
+        "q": 1055.9664410212222,
+        "mc": 2.806603180612171,
+        "dt": 54.848149477470784,
+        "requiredUA": 19252.544544916083,
+        "imbalance": 0
+      },
+      "stats": {
+        "families": 7,
+        "evaluations": 62,
+        "errors": 0,
+        "inapplicable": 40,
+        "insufficient": 22,
+        "geometryChecks": 2503,
+        "tubeCount": 79,
+        "maxEvaluations": 200,
+        "phases": {
+          "fallback": 24,
+          "refinement": 32,
+          "catalogue": 6
+        },
+        "testedCounts": [
+          72,
+          75,
+          78,
+          76
+        ]
+      },
+      "budget": {
+        "firstBatch": 20,
+        "maxEvaluations": 200,
+        "screened": 30,
+        "stopped": "catalogue-exhausted",
+        "firstSuccess": null
+      },
+      "countRange": {
+        "target": {
+          "min": 70,
+          "max": 92
+        },
+        "min": 70,
+        "max": 92,
+        "selected": 79,
+        "estimatedRe": 17549.122378729164,
+        "counts": [
+          79
+        ],
+        "fallbackCounts": [
+          78,
+          76,
+          75,
+          72
+        ]
+      },
+      "message": "Нет конструкции в сокращённом наборе компоновок. Предварительно выбрано 79 трубок. Итоговые Re, заготовки или тепловое задание не выполнены.",
+      "found": false,
+      "diagnostics": {
+        "calls": 62,
+        "errors": 0,
+        "applicable": 22,
+        "below": 22,
+        "above": 0,
+        "agreement": 0,
+        "tubeReFailures": 40,
+        "shellReFailures": 0,
+        "closest": [
+          {
+            "q": 982.7563982993522,
+            "ratio": 0.9306701047704994,
+            "hot": 67.04301981944018,
+            "cold": 93.78200368661719,
+            "re": 19911.197156092454,
+            "shellRe": 3510.6841086178133,
+            "valid": true,
+            "applicable": true,
+            "agreement": false,
+            "uaOK": false,
+            "blocking": [],
+            "dutyChecks": [
+              "Мощность должна быть от задания до +1 %; отклонение -6.9330 %.",
+              "Горячий выход вне допустимого диапазона задания: 59.0000…60.0000 °C.",
+              "Холодный выход вне допустимого диапазона задания: 100.0000…100.9000 °C."
+            ]
+          },
+          {
+            "q": 982.7231226971405,
+            "ratio": 0.9306385927821265,
+            "hot": 67.04621881958806,
+            "cold": 93.77917608434488,
+            "re": 19911.49595477126,
+            "shellRe": 3510.6025427534623,
+            "valid": true,
+            "applicable": true,
+            "agreement": false,
+            "uaOK": false,
+            "blocking": [],
+            "dutyChecks": [
+              "Мощность должна быть от задания до +1 %; отклонение -6.9361 %.",
+              "Горячий выход вне допустимого диапазона задания: 59.0000…60.0000 °C.",
+              "Холодный выход вне допустимого диапазона задания: 100.0000…100.9000 °C."
+            ]
+          },
+          {
+            "q": 982.6898447186139,
+            "ratio": 0.9306070785433838,
+            "hot": 67.04941804606709,
+            "cold": 93.7763482789171,
+            "re": 19911.794775265356,
+            "shellRe": 3510.5209716910604,
+            "valid": true,
+            "applicable": true,
+            "agreement": false,
+            "uaOK": false,
+            "blocking": [],
+            "dutyChecks": [
+              "Мощность должна быть от задания до +1 %; отклонение -6.9393 %.",
+              "Горячий выход вне допустимого диапазона задания: 59.0000…60.0000 °C.",
+              "Холодный выход вне допустимого диапазона задания: 100.0000…100.9000 °C."
+            ]
+          }
+        ]
+      },
+      "elapsedMS": 4927.588399999979
+    }
+  ],
+  "summary": {
+    "total": 20,
+    "found": 12,
+    "auditFailures": 0,
+    "totalCalls": 3071,
+    "totalMS": 145085.11490000002
+  }
+}

@@ -1,6 +1,6 @@
 import * as THREE from '../vendor/three-0.186.1/three.module.min.js';
 import {GeometryCache,hollowCylinder,smoothHollowSweep,sectionGeometry,disposeModel} from './model.js?v=rows-sidebar-20261022';
-import {leadPath} from './lead-path.js?v=rows-sidebar-20261022';
+import {leadPath} from './lead-path.js?v=re-stock-20261029';
 export {GeometryCache,disposeModel};
 
 // Visibility is a display flag only: retain geometry, dimensions and camera fit.

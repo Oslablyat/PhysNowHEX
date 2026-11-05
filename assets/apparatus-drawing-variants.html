@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#191919">
+  <title>Компоновка аппарата · 10 вариантов · PhysNow</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="apparatus-drawing-variants.css">
+  <script src="coil-layout.js" defer></script>
+  <script src="apparatus-drawing-variants.js" defer></script>
+</head>
+<body>
+  <header class="page-header">
+    <a class="brand" href="../"><img src="physnow-logo.png" alt="" width="26" height="26">PhysNow</a>
+    <span class="header-context">Сравнение компоновок</span>
+    <a class="back-link" href="../">К расчёту ↗</a>
+  </header>
+  <main>
+    <div class="intro">
+      <p class="eyebrow">Проработка конструкции / Компоновка аппарата</p>
+      <h1>Чертёж, в котором видны размеры</h1>
+      <p>Десять вариантов расположения вида сверху, продольного сечения и увеличенного фрагмента труб. Откройте любой вариант крупно и выберите цветной ряд.</p>
+    </div>
+    <div class="toolbar">
+      <div class="row-selector" role="group" aria-label="Ряд змеевиков">
+        <span>Выделить ряд</span>
+        <button type="button" data-row="0" aria-pressed="true">1</button>
+        <button type="button" data-row="1" aria-pressed="false">2</button>
+        <button type="button" data-row="2" aria-pressed="false">3</button>
+      </div>
+      <label><input id="show-dimensions" type="checkbox" checked>Размеры</label>
+      <label><input id="show-numbers" type="checkbox" checked>Номера труб</label>
+    </div>
+    <nav class="quick-nav" aria-label="Перейти к варианту"></nav>
+    <p class="sample-note">Единый демонстрационный аппарат для всех вариантов. Корпус Ø226 × 932 мм, труба 14 × 2,5 мм, 3 ряда по 18 змеевиков. Все размеры в мм. Продольное сечение показано с разрывом по высоте.</p>
+    <div id="gallery" class="gallery"></div>
+  </main>
+  <dialog id="drawing-dialog" aria-labelledby="dialog-title">
+    <header class="dialog-header"><h2 id="dialog-title"></h2><button type="button" id="close-dialog" aria-label="Закрыть">Закрыть ×</button></header>
+    <div id="dialog-content"></div>
+  </dialog>
+</body>
+</html>

@@ -1,6 +1,7 @@
 import createCoolProp from './vendor/coolprop/coolprop.js';
 import './coil-thermal-method.js';
-import './coil-project-method.js?v=balance-errors-20261025';
+import './coil-manufacturing.js?v=re-stock-20261029';
+import './coil-project-method.js?v=single-coil-20261104';
 const library=createCoolProp({print:()=>{},printErr:()=>{}});let latest=0;
 self.onmessage=async({data})=>{
  latest=data.id;const cancelled=()=>latest!==data.id;

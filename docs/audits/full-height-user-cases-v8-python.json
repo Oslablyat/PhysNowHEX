@@ -1,0 +1,43 @@
+{
+  "source": "tests/reference/teplo_original.py",
+  "CoolProp": "8.0.0",
+  "checked": 3,
+  "cases": [
+    {
+      "id": "cold-inlet-20",
+      "kind": "selected",
+      "errors": {
+        "q": 1.7109869077103212e-11,
+        "hot": 1.6342482922482304e-12,
+        "cold": 2.1458390619955026e-12,
+        "re": 3.637978807091713e-12,
+        "shellRe": 4.547473508864641e-12
+      },
+      "valid": true
+    },
+    {
+      "id": "cold-inlet-21",
+      "kind": "selected",
+      "errors": {
+        "q": 2.1600499167107046e-12,
+        "hot": 1.2079226507921703e-12,
+        "cold": 1.6342482922482304e-13,
+        "re": 2.473825588822365e-10,
+        "shellRe": 8.276401786133647e-11
+      },
+      "valid": true
+    },
+    {
+      "id": "cold-inlet-31",
+      "kind": "selected",
+      "errors": {
+        "q": 1.9326762412674725e-12,
+        "hot": 3.197442310920451e-13,
+        "cold": 1.9184653865522705e-13,
+        "re": 1.0913936421275139e-11,
+        "shellRe": 8.549250196665525e-11
+      },
+      "valid": true
+    }
+  ]
+}

@@ -9,8 +9,12 @@ const reference=model.solve(base);near(reference.q,313.5);near(reference.mc,3.75
 near(model.flowToMass(3600,'kg-h',20,'water'),1);
 near(model.massToFlow(1,'kg-h',20,'water'),3600);
 assert(Math.abs(model.flowToMass(1,'l-s',4,'water')-1)<.00001);
+near(model.flowToMass(60,'l-min',20,'water'),model.flowToMass(1,'l-s',20,'water'));
+near(model.flowToMass(3600,'l-h',20,'water'),model.flowToMass(1,'l-s',20,'water'));
+near(model.massToFlow(1,'l-min',20,'water'),60*model.massToFlow(1,'l-s',20,'water'));
+near(model.massToFlow(1,'l-h',20,'water'),3600*model.massToFlow(1,'l-s',20,'water'));
 assert(Math.abs(model.flowToMass(1,'m3-h',20,'water')-998.2/3600)<.0001);
-for(const unit of ['kg-s','kg-h','m3-h','m3-s','l-s']){
+for(const unit of ['kg-s','kg-h','m3-h','m3-s','l-s','l-min','l-h']){
  const input=model.massToFlow(2.5,unit,90,'water');near(model.flowToMass(input,unit,90,'water'),2.5);
  const result=model.solve({...base,mh:input,'hot-flow-unit':unit});near(result.mh,2.5);near(result.q,reference.q);near(result.mc,reference.mc);near(result.area,reference.area);
  const cold=model.massToFlow(result.mc,unit,20,'water');near(model.flowToMass(cold,unit,20,'water'),result.mc);
@@ -21,4 +25,4 @@ assert.throws(()=>model.flowToMass(1,'m3-h',120,'water'),/температуру
 assert(model.flowUnitErrors({...base,'hot-flow-unit':'m3-h',thi:''}).thi);
 assert(model.flowUnitErrors({...base,'cold-flow-unit':'l-s',tci:-5}).tci);
 near(model.solve({...base,thi:120,tho:90}).q,313.5); // Mass units retain the existing thermal domain.
-console.log('Flow checks passed: five units, kg/h and water-volume reference values, unchanged heat balance/area, output conversion and unsupported density cases.');
+console.log('Flow checks passed: seven units, kg/h and water-volume reference values, unchanged heat balance/area, output conversion and unsupported density cases.');

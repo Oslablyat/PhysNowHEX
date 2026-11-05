@@ -1,0 +1,1816 @@
+{
+  "algorithm": "re-stock-full-height-v8",
+  "state": {
+    "flow": "counter",
+    "hot-fluid": "water",
+    "cold-fluid": "water",
+    "hot-flow-unit": "kg-s",
+    "cold-flow-unit": "kg-s",
+    "thi": 90,
+    "tho": 60,
+    "tci": 31,
+    "tco": 40,
+    "mh": 2.5,
+    "mc": "",
+    "ph": 0.6,
+    "pc": 0.4,
+    "unknown": "mc",
+    "area-reserve-percent": 0,
+    "tube-conductivity": 16,
+    "length": 1800,
+    "exchanger-diameter": 600
+  },
+  "target": {
+    "thi": 90,
+    "tho": 60,
+    "tci": 31,
+    "tco": 40,
+    "mh": 2.5,
+    "ph": 0.6,
+    "pc": 0.4,
+    "mc": 8.360530516260928,
+    "displayFlowHot": 2.5,
+    "displayFlowCold": 8.360530516260928,
+    "cph": 4.192116453186806,
+    "cpc": 4.178479309250862,
+    "rhoh": 965.5377749318291,
+    "rhoc": 995.4758883977069,
+    "q": 314.40873398901044,
+    "dt": 38.5514087542501,
+    "unknown": "mc",
+    "flow": "counter",
+    "imbalance": 0,
+    "heatBalanceError": 0,
+    "requiredUA": 8155.570552382174,
+    "reservePercent": 0,
+    "area": null,
+    "designArea": null,
+    "u": null,
+    "method": "Teplo",
+    "projectAlgorithm": "re-stock-full-height-v8",
+    "reMin": 15000,
+    "reMax": 20000
+  },
+  "range": {
+    "target": {
+      "min": 47,
+      "max": 62
+    },
+    "min": 47,
+    "max": 62,
+    "selected": 54,
+    "estimatedRe": 17347.68229653475,
+    "counts": [
+      54
+    ],
+    "fallbackCounts": [
+      55,
+      62,
+      52,
+      56
+    ],
+    "reserveOrder": [
+      55,
+      62,
+      52,
+      56,
+      51,
+      57,
+      50,
+      60,
+      48
+    ]
+  },
+  "production": {
+    "kind": "coil",
+    "inputKey": "[\"re-stock-full-height-v8\",{\"flow\":\"counter\",\"hot-fluid\":\"water\",\"cold-fluid\":\"water\",\"hot-flow-unit\":\"kg-s\",\"cold-flow-unit\":\"kg-s\",\"thi\":90,\"tho\":60,\"tci\":31,\"tco\":40,\"mh\":2.5,\"mc\":\"\",\"ph\":0.6,\"pc\":0.4,\"unknown\":\"mc\",\"area-reserve-percent\":0,\"tube-conductivity\":16,\"length\":1800,\"exchanger-diameter\":600},8155.570552382174]",
+    "algorithm": "re-stock-full-height-v8",
+    "rows": [],
+    "candidates": [],
+    "attempts": [
+      {
+        "height": 586,
+        "diameter": 226,
+        "count": 60,
+        "phase": "fallback",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.44391931848801547,
+        "uaRatio": 0.34084373606181356,
+        "estimatedRatio": 0.3359399160761625,
+        "blocking": []
+      },
+      {
+        "height": 576,
+        "diameter": 226,
+        "count": 60,
+        "phase": "fallback",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.44161498022386636,
+        "uaRatio": 0.33876039851662454,
+        "estimatedRatio": 0.3339491419720072,
+        "blocking": []
+      },
+      {
+        "height": 531,
+        "diameter": 236,
+        "count": 60,
+        "phase": "fallback",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.43800265329324717,
+        "uaRatio": 0.335502422487496,
+        "estimatedRatio": 0.3309353282224056,
+        "blocking": []
+      },
+      {
+        "height": 521,
+        "diameter": 236,
+        "count": 60,
+        "phase": "fallback",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.4358266218323671,
+        "uaRatio": 0.3335444904506704,
+        "estimatedRatio": 0.32906145495006284,
+        "blocking": []
+      },
+      {
+        "height": 583,
+        "diameter": 216,
+        "count": 57,
+        "phase": "fallback",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.4241805270241783,
+        "uaRatio": 0.32312451169704287,
+        "estimatedRatio": 0.31814368604666954,
+        "blocking": []
+      },
+      {
+        "height": 654,
+        "diameter": 186,
+        "count": 48,
+        "phase": "fallback",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.38565178632258285,
+        "uaRatio": 0.289342305555208,
+        "estimatedRatio": 0.2835029205699136,
+        "blocking": [
+          "Змеевик 1: требуется 15000 ≤ Re ≤ 20000; Re=21908.63",
+          "Змеевик 2: требуется 15000 ≤ Re ≤ 20000; Re=21908.63",
+          "Змеевик 3: требуется 15000 ≤ Re ≤ 20000; Re=21908.63"
+        ]
+      },
+      {
+        "height": 644,
+        "diameter": 186,
+        "count": 48,
+        "phase": "fallback",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.38316459230354616,
+        "uaRatio": 0.28719708544220013,
+        "estimatedRatio": 0.28145598554644624,
+        "blocking": [
+          "Змеевик 1: требуется 15000 ≤ Re ≤ 20000; Re=21918.45",
+          "Змеевик 2: требуется 15000 ≤ Re ≤ 20000; Re=21918.45",
+          "Змеевик 3: требуется 15000 ≤ Re ≤ 20000; Re=21918.45"
+        ]
+      },
+      {
+        "height": 682,
+        "diameter": 200,
+        "count": 48,
+        "phase": "fallback",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.361220571135782,
+        "uaRatio": 0.26845195004188444,
+        "estimatedRatio": 0.26092048769661935,
+        "blocking": [
+          "Змеевик 1: требуется 15000 ≤ Re ≤ 20000; Re=22005.12",
+          "Змеевик 2: требуется 15000 ≤ Re ≤ 20000; Re=22005.12",
+          "Змеевик 3: требуется 15000 ≤ Re ≤ 20000; Re=22005.12"
+        ]
+      },
+      {
+        "height": 607,
+        "diameter": 226,
+        "count": 60,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.4488035068015219,
+        "uaRatio": 0.34527255158460374,
+        "estimatedRatio": 0.34017442999437913,
+        "blocking": []
+      },
+      {
+        "height": 566,
+        "diameter": 236,
+        "count": 60,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.4457811742590608,
+        "uaRatio": 0.3425299074893578,
+        "estimatedRatio": 0.33766839018171607,
+        "blocking": []
+      },
+      {
+        "height": 644,
+        "diameter": 216,
+        "count": 57,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.4388869188475697,
+        "uaRatio": 0.3362990561977992,
+        "estimatedRatio": 0.3307514480052788,
+        "blocking": []
+      },
+      {
+        "height": 733,
+        "diameter": 186,
+        "count": 48,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.4051478342108689,
+        "uaRatio": 0.30630590251631534,
+        "estimatedRatio": 0.299699752280858,
+        "blocking": [
+          "Змеевик 1: требуется 15000 ≤ Re ≤ 20000; Re=21831.69",
+          "Змеевик 2: требуется 15000 ≤ Re ≤ 20000; Re=21831.69",
+          "Змеевик 3: требуется 15000 ≤ Re ≤ 20000; Re=21831.69"
+        ]
+      },
+      {
+        "height": 695,
+        "diameter": 200,
+        "count": 48,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.36407686309696036,
+        "uaRatio": 0.27087356262897144,
+        "estimatedRatio": 0.2632051141423753,
+        "blocking": [
+          "Змеевик 1: требуется 15000 ≤ Re ≤ 20000; Re=21993.84",
+          "Змеевик 2: требуется 15000 ≤ Re ≤ 20000; Re=21993.84",
+          "Змеевик 3: требуется 15000 ≤ Re ≤ 20000; Re=21993.84"
+        ]
+      },
+      {
+        "height": 606,
+        "diameter": 226,
+        "count": 60,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.4485696276828538,
+        "uaRatio": 0.345060072356554,
+        "estimatedRatio": 0.33997120007305315,
+        "blocking": []
+      },
+      {
+        "height": 565,
+        "diameter": 236,
+        "count": 60,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.4455574773181802,
+        "uaRatio": 0.3423271822578164,
+        "estimatedRatio": 0.3374741956261646,
+        "blocking": []
+      },
+      {
+        "height": 643,
+        "diameter": 216,
+        "count": 57,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.438644404225698,
+        "uaRatio": 0.33608051782822096,
+        "estimatedRatio": 0.3305422722053099,
+        "blocking": []
+      },
+      {
+        "height": 605,
+        "diameter": 226,
+        "count": 60,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.4483358731507056,
+        "uaRatio": 0.34484774716527417,
+        "estimatedRatio": 0.33976812454478916,
+        "blocking": []
+      },
+      {
+        "height": 564,
+        "diameter": 236,
+        "count": 60,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.44533397301580074,
+        "uaRatio": 0.34212466880112463,
+        "estimatedRatio": 0.3372802135791912,
+        "blocking": []
+      },
+      {
+        "height": 642,
+        "diameter": 216,
+        "count": 57,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.4384019657784789,
+        "uaRatio": 0.33586209143953777,
+        "estimatedRatio": 0.3303332087399947,
+        "blocking": []
+      },
+      {
+        "height": 732,
+        "diameter": 186,
+        "count": 48,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.40490987722668786,
+        "uaRatio": 0.30609725567969936,
+        "estimatedRatio": 0.299501275705676,
+        "blocking": [
+          "Змеевик 1: требуется 15000 ≤ Re ≤ 20000; Re=21832.63",
+          "Змеевик 2: требуется 15000 ≤ Re ≤ 20000; Re=21832.63",
+          "Змеевик 3: требуется 15000 ≤ Re ≤ 20000; Re=21832.63"
+        ]
+      },
+      {
+        "height": 694,
+        "diameter": 200,
+        "count": 48,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.3638571917063593,
+        "uaRatio": 0.2706871287138109,
+        "estimatedRatio": 0.2630292085752781,
+        "blocking": [
+          "Змеевик 1: требуется 15000 ≤ Re ≤ 20000; Re=21994.70",
+          "Змеевик 2: требуется 15000 ≤ Re ≤ 20000; Re=21994.70",
+          "Змеевик 3: требуется 15000 ≤ Re ≤ 20000; Re=21994.70"
+        ]
+      },
+      {
+        "height": 731,
+        "diameter": 186,
+        "count": 48,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.40467188342736066,
+        "uaRatio": 0.305888616435834,
+        "estimatedRatio": 0.2993028074772348,
+        "blocking": [
+          "Змеевик 1: требуется 15000 ≤ Re ≤ 20000; Re=21833.56",
+          "Змеевик 2: требуется 15000 ≤ Re ≤ 20000; Re=21833.56",
+          "Змеевик 3: требуется 15000 ≤ Re ≤ 20000; Re=21833.56"
+        ]
+      },
+      {
+        "height": 693,
+        "diameter": 200,
+        "count": 48,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.3636375120734545,
+        "uaRatio": 0.2705007199656101,
+        "estimatedRatio": 0.2628533297110123,
+        "blocking": [
+          "Змеевик 1: требуется 15000 ≤ Re ≤ 20000; Re=21995.57",
+          "Змеевик 2: требуется 15000 ≤ Re ≤ 20000; Re=21995.57",
+          "Змеевик 3: требуется 15000 ≤ Re ≤ 20000; Re=21995.57"
+        ]
+      },
+      {
+        "height": 604,
+        "diameter": 226,
+        "count": 60,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.44810224402328047,
+        "uaRatio": 0.34463557667520905,
+        "estimatedRatio": 0.3395652040674883,
+        "blocking": []
+      },
+      {
+        "height": 603,
+        "diameter": 226,
+        "count": 60,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.4478687411223744,
+        "uaRatio": 0.3444235615535782,
+        "estimatedRatio": 0.33936243930183096,
+        "blocking": []
+      },
+      {
+        "height": 563,
+        "diameter": 236,
+        "count": 60,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.445110662353376,
+        "uaRatio": 0.3419223679188095,
+        "estimatedRatio": 0.33708644483742844,
+        "blocking": []
+      },
+      {
+        "height": 641,
+        "diameter": 216,
+        "count": 57,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.43815960415799593,
+        "uaRatio": 0.33564377756373853,
+        "estimatedRatio": 0.33012425813301793,
+        "blocking": []
+      },
+      {
+        "height": 730,
+        "diameter": 186,
+        "count": 48,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.4044338530405479,
+        "uaRatio": 0.30567998498990934,
+        "estimatedRatio": 0.2991043477911892,
+        "blocking": [
+          "Змеевик 1: требуется 15000 ≤ Re ≤ 20000; Re=21834.50",
+          "Змеевик 2: требуется 15000 ≤ Re ≤ 20000; Re=21834.50",
+          "Змеевик 3: требуется 15000 ≤ Re ≤ 20000; Re=21834.50"
+        ]
+      },
+      {
+        "height": 692,
+        "diameter": 200,
+        "count": 48,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.3634178244702251,
+        "uaRatio": 0.2703143366093939,
+        "estimatedRatio": 0.26267747776705064,
+        "blocking": [
+          "Змеевик 1: требуется 15000 ≤ Re ≤ 20000; Re=21996.44",
+          "Змеевик 2: требуется 15000 ≤ Re ≤ 20000; Re=21996.44",
+          "Змеевик 3: требуется 15000 ≤ Re ≤ 20000; Re=21996.44"
+        ]
+      },
+      {
+        "height": 562,
+        "diameter": 236,
+        "count": 60,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.4448875463364212,
+        "uaRatio": 0.34172028041353225,
+        "estimatedRatio": 0.3368928902005893,
+        "blocking": []
+      },
+      {
+        "height": 640,
+        "diameter": 216,
+        "count": 57,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.4379173200193482,
+        "uaRatio": 0.33542557673512785,
+        "estimatedRatio": 0.3299154209104258,
+        "blocking": []
+      },
+      {
+        "height": 729,
+        "diameter": 186,
+        "count": 48,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.40419578629543873,
+        "uaRatio": 0.3054713615483082,
+        "estimatedRatio": 0.29890589684443014,
+        "blocking": [
+          "Змеевик 1: требуется 15000 ≤ Re ≤ 20000; Re=21835.44",
+          "Змеевик 2: требуется 15000 ≤ Re ≤ 20000; Re=21835.44",
+          "Змеевик 3: требуется 15000 ≤ Re ≤ 20000; Re=21835.44"
+        ]
+      },
+      {
+        "height": 602,
+        "diameter": 226,
+        "count": 60,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.44763536527334385,
+        "uaRatio": 0.34421170247035177,
+        "estimatedRatio": 0.339159830911289,
+        "blocking": []
+      },
+      {
+        "height": 561,
+        "diameter": 236,
+        "count": 60,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.4446646259742213,
+        "uaRatio": 0.3415184070908832,
+        "estimatedRatio": 0.33669955047147915,
+        "blocking": []
+      },
+      {
+        "height": 639,
+        "diameter": 216,
+        "count": 57,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.4376751140208479,
+        "uaRatio": 0.3352074894904638,
+        "estimatedRatio": 0.32970669760063637,
+        "blocking": []
+      },
+      {
+        "height": 728,
+        "diameter": 186,
+        "count": 48,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.4039576834228291,
+        "uaRatio": 0.30526274631867567,
+        "estimatedRatio": 0.2987074548350924,
+        "blocking": [
+          "Змеевик 1: требуется 15000 ≤ Re ≤ 20000; Re=21836.38",
+          "Змеевик 2: требуется 15000 ≤ Re ≤ 20000; Re=21836.38",
+          "Змеевик 3: требуется 15000 ≤ Re ≤ 20000; Re=21836.38"
+        ]
+      },
+      {
+        "height": 691,
+        "diameter": 200,
+        "count": 48,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.36319812917030436,
+        "uaRatio": 0.27012797887143314,
+        "estimatedRatio": 0.262501652962123,
+        "blocking": [
+          "Змеевик 1: требуется 15000 ≤ Re ≤ 20000; Re=21997.31",
+          "Змеевик 2: требуется 15000 ≤ Re ≤ 20000; Re=21997.31",
+          "Змеевик 3: требуется 15000 ≤ Re ≤ 20000; Re=21997.31"
+        ]
+      },
+      {
+        "height": 601,
+        "diameter": 226,
+        "count": 60,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.4474021173053466,
+        "uaRatio": 0.34400000009842846,
+        "estimatedRatio": 0.338957379562137,
+        "blocking": []
+      },
+      {
+        "height": 560,
+        "diameter": 236,
+        "count": 60,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.44444038888774107,
+        "uaRatio": 0.3413153786310653,
+        "estimatedRatio": 0.3365049589345989,
+        "blocking": []
+      },
+      {
+        "height": 638,
+        "diameter": 216,
+        "count": 57,
+        "phase": "refinement",
+        "accepted": false,
+        "diagnostic": false,
+        "dutyRatio": 0.437432986823755,
+        "uaRatio": 0.3349895163687616,
+        "estimatedRatio": 0.329498088734451,
+        "blocking": []
+      },
+      {
+        "height": 2099,
+        "diameter": 206,
+        "count": 54,
+        "phase": "diagnosis",
+        "accepted": false,
+        "diagnostic": true,
+        "dutyRatio": 0.9965785027877094,
+        "uaRatio": 0.9946400440714497,
+        "estimatedRatio": 0.9902490627283069,
+        "blocking": []
+      },
+      {
+        "height": 2270,
+        "diameter": 232,
+        "count": 54,
+        "phase": "diagnosis",
+        "accepted": false,
+        "diagnostic": true,
+        "dutyRatio": 0.9959548380429288,
+        "uaRatio": 0.9936654587848294,
+        "estimatedRatio": 0.9902597955505816,
+        "blocking": []
+      },
+      {
+        "height": 1990,
+        "diameter": 226,
+        "count": 54,
+        "phase": "diagnosis",
+        "accepted": false,
+        "diagnostic": true,
+        "dutyRatio": 0.9961225929584052,
+        "uaRatio": 0.9939275355425974,
+        "estimatedRatio": 0.9898862626013373,
+        "blocking": []
+      },
+      {
+        "height": 2050,
+        "diameter": 216,
+        "count": 54,
+        "phase": "diagnosis",
+        "accepted": false,
+        "diagnostic": true,
+        "dutyRatio": 0.9966979162789482,
+        "uaRatio": 0.9948267285639818,
+        "estimatedRatio": 0.9906285781038875,
+        "blocking": []
+      },
+      {
+        "height": 1920,
+        "diameter": 236,
+        "count": 54,
+        "phase": "diagnosis",
+        "accepted": false,
+        "diagnostic": true,
+        "dutyRatio": 0.9959132614167017,
+        "uaRatio": 0.9936005183150124,
+        "estimatedRatio": 0.9897760554864968,
+        "blocking": []
+      },
+      {
+        "height": 2290,
+        "diameter": 222,
+        "count": 54,
+        "phase": "diagnosis",
+        "accepted": false,
+        "diagnostic": true,
+        "dutyRatio": 0.9954237657682975,
+        "uaRatio": 0.9928361568412113,
+        "estimatedRatio": 0.9892903259514172,
+        "blocking": []
+      },
+      {
+        "height": 2340,
+        "diameter": 222,
+        "count": 54,
+        "phase": "diagnosis",
+        "accepted": false,
+        "diagnostic": true,
+        "dutyRatio": 1.002681662987918,
+        "uaRatio": 1.0042163212949484,
+        "estimatedRatio": 1.0004535809100015,
+        "blocking": []
+      },
+      {
+        "height": 2100,
+        "diameter": 216,
+        "count": 54,
+        "phase": "diagnosis",
+        "accepted": false,
+        "diagnostic": true,
+        "dutyRatio": 1.0032830599547038,
+        "uaRatio": 1.0051638236844875,
+        "estimatedRatio": 1.0007647351275946,
+        "blocking": []
+      },
+      {
+        "height": 1980,
+        "diameter": 236,
+        "count": 54,
+        "phase": "diagnosis",
+        "accepted": false,
+        "diagnostic": true,
+        "dutyRatio": 1.0030579653647225,
+        "uaRatio": 1.0048091033101796,
+        "estimatedRatio": 1.0007421313385605,
+        "blocking": []
+      },
+      {
+        "height": 1970,
+        "diameter": 236,
+        "count": 54,
+        "phase": "diagnosis",
+        "accepted": false,
+        "diagnostic": true,
+        "dutyRatio": 1.001865205030163,
+        "uaRatio": 1.0029311127572398,
+        "estimatedRatio": 0.998904205028319,
+        "blocking": []
+      },
+      {
+        "height": 1960,
+        "diameter": 236,
+        "count": 54,
+        "phase": "diagnosis",
+        "accepted": false,
+        "diagnostic": true,
+        "dutyRatio": 1.0006731783446792,
+        "uaRatio": 1.0010570064647886,
+        "estimatedRatio": 0.9970703040572046,
+        "blocking": []
+      },
+      {
+        "height": 1950,
+        "diameter": 236,
+        "count": 54,
+        "phase": "diagnosis",
+        "accepted": false,
+        "diagnostic": true,
+        "dutyRatio": 0.9994819274669945,
+        "uaRatio": 0.999186838606725,
+        "estimatedRatio": 0.9952404829686282,
+        "blocking": []
+      },
+      {
+        "height": 1940,
+        "diameter": 236,
+        "count": 54,
+        "phase": "diagnosis",
+        "accepted": false,
+        "diagnostic": true,
+        "dutyRatio": 0.998291495228989,
+        "uaRatio": 0.9973206640824887,
+        "estimatedRatio": 0.9934147970389398,
+        "blocking": []
+      },
+      {
+        "height": 1930,
+        "diameter": 236,
+        "count": 54,
+        "phase": "diagnosis",
+        "accepted": false,
+        "diagnostic": true,
+        "dutyRatio": 0.9971019251438734,
+        "uaRatio": 0.9954585385256981,
+        "estimatedRatio": 0.9915933022874358,
+        "blocking": []
+      },
+      {
+        "height": 1910,
+        "diameter": 236,
+        "count": 54,
+        "phase": "diagnosis",
+        "accepted": false,
+        "diagnostic": true,
+        "dutyRatio": 0.9947255489531792,
+        "uaRatio": 0.9917466605833052,
+        "estimatedRatio": 0.9879631141718509,
+        "blocking": []
+      },
+      {
+        "height": 1844,
+        "diameter": 236,
+        "count": 57,
+        "phase": "diagnosis",
+        "accepted": false,
+        "diagnostic": true,
+        "dutyRatio": 1.0108364871281095,
+        "uaRatio": 1.017123782261289,
+        "estimatedRatio": 1.0150895259933044,
+        "blocking": []
+      },
+      {
+        "height": 1900,
+        "diameter": 236,
+        "count": 54,
+        "phase": "diagnosis",
+        "accepted": false,
+        "diagnostic": true,
+        "dutyRatio": 0.9935388333696118,
+        "uaRatio": 0.9898970232282008,
+        "estimatedRatio": 0.9861545366529738,
+        "blocking": []
+      },
+      {
+        "height": 1890,
+        "diameter": 236,
+        "count": 54,
+        "phase": "diagnosis",
+        "accepted": false,
+        "diagnostic": true,
+        "dutyRatio": 0.992353161002373,
+        "uaRatio": 0.9880516649219249,
+        "estimatedRatio": 0.9843503820236171,
+        "blocking": []
+      },
+      {
+        "height": 1960,
+        "diameter": 226,
+        "count": 54,
+        "phase": "diagnosis",
+        "accepted": false,
+        "diagnostic": true,
+        "dutyRatio": 0.9923372584502345,
+        "uaRatio": 0.9880269346166058,
+        "estimatedRatio": 0.9841058714896866,
+        "blocking": []
+      },
+      {
+        "height": 1880,
+        "diameter": 236,
+        "count": 54,
+        "phase": "diagnosis",
+        "accepted": false,
+        "diagnostic": true,
+        "dutyRatio": 0.9911685789182084,
+        "uaRatio": 0.9862106451220037,
+        "estimatedRatio": 0.9825507101724751,
+        "blocking": []
+      },
+      {
+        "height": 1950,
+        "diameter": 226,
+        "count": 54,
+        "phase": "diagnosis",
+        "accepted": false,
+        "diagnostic": true,
+        "dutyRatio": 0.9910760910018136,
+        "uaRatio": 0.9860670179835007,
+        "estimatedRatio": 0.9821862980623877,
+        "blocking": []
+      },
+      {
+        "height": 1870,
+        "diameter": 236,
+        "count": 54,
+        "phase": "diagnosis",
+        "accepted": false,
+        "diagnostic": true,
+        "dutyRatio": 0.9899851349238881,
+        "uaRatio": 0.9843740240815334,
+        "estimatedRatio": 0.9807555817939846,
+        "blocking": []
+      },
+      {
+        "height": 1940,
+        "diameter": 226,
+        "count": 54,
+        "phase": "diagnosis",
+        "accepted": false,
+        "diagnostic": true,
+        "dutyRatio": 0.9898152967997176,
+        "uaRatio": 0.9841106648417338,
+        "estimatedRatio": 0.9802704251973299,
+        "blocking": []
+      },
+      {
+        "height": 1860,
+        "diameter": 236,
+        "count": 54,
+        "phase": "diagnosis",
+        "accepted": false,
+        "diagnostic": true,
+        "dutyRatio": 0.9888028775764033,
+        "uaRatio": 0.9825418628598348,
+        "estimatedRatio": 0.9789650583992601,
+        "blocking": []
+      }
+    ],
+    "stats": {
+      "families": 68,
+      "evaluations": 64,
+      "errors": 0,
+      "inapplicable": 14,
+      "insufficient": 45,
+      "geometryChecks": 3903,
+      "tubeCount": 54,
+      "maxEvaluations": 200,
+      "phases": {
+        "fallback": 8,
+        "refinement": 32,
+        "diagnosis": 24
+      },
+      "testedCounts": [
+        60,
+        57,
+        48,
+        54
+      ],
+      "reserveScreenedCounts": [
+        55,
+        62,
+        52,
+        56,
+        51,
+        57,
+        50,
+        60,
+        48
+      ]
+    },
+    "shellCalculation": null,
+    "countRange": {
+      "target": {
+        "min": 47,
+        "max": 62
+      },
+      "min": 47,
+      "max": 62,
+      "selected": 54,
+      "estimatedRe": 17347.68229653475,
+      "counts": [
+        54
+      ],
+      "fallbackCounts": [
+        60,
+        57,
+        48
+      ],
+      "reserveOrder": [
+        55,
+        62,
+        52,
+        56,
+        51,
+        57,
+        50,
+        60,
+        48
+      ]
+    },
+    "searchGrid": {
+      "radiusMM": 5,
+      "radialGapMM": 3,
+      "tubeCounts": [
+        60,
+        57,
+        48,
+        54
+      ],
+      "allocation": "equal starts per row; common pitch and phase",
+      "height": "stock-derived events + bounded local refinement"
+    },
+    "searchBudget": {
+      "firstBatch": 20,
+      "maxEvaluations": 200,
+      "screened": 8,
+      "stopped": "catalogue-exhausted",
+      "firstSuccess": null
+    },
+    "message": "Нет конструкции в сокращённом наборе компоновок. Предварительно выбрано 54 трубок. Итоговые Re, заготовки или тепловое задание не выполнены.",
+    "dimensionWitness": {
+      "geometry": {
+        "diameter": 236,
+        "height": 1960,
+        "shellWall": 1,
+        "coreDiameter": 126,
+        "coreLength": 1960,
+        "coreWall": 2,
+        "tubeDiameter": 14,
+        "tubeWall": 2.5,
+        "clearance": 3,
+        "coreClearance": 3,
+        "shellClearance": 3,
+        "rowClearance": 3,
+        "leadBendRadius": 28,
+        "leadStraightLength": 40,
+        "rows": [
+          {
+            "diameter": 146,
+            "count": 18,
+            "turns": 3,
+            "pitch": 648.6666666666666,
+            "offset": 0,
+            "phase": 0,
+            "direction": "right",
+            "hidden": false
+          },
+          {
+            "diameter": 180,
+            "count": 18,
+            "turns": 3,
+            "pitch": 648.6666666666666,
+            "offset": 0,
+            "phase": 0,
+            "direction": "right",
+            "hidden": false
+          },
+          {
+            "diameter": 214,
+            "count": 18,
+            "turns": 3,
+            "pitch": 648.6666666666666,
+            "offset": 0,
+            "phase": 0,
+            "direction": "right",
+            "hidden": false
+          }
+        ]
+      },
+      "manufacturing": [
+        {
+          "row": 1,
+          "count": 18,
+          "stockMM": 3000,
+          "windingMM": 2383.346468040806,
+          "bendsMM": 34.527791980751566,
+          "straightMM": 80,
+          "totalMM": 2497.874260021558,
+          "axialEnvelopeMM": 2058.3846368225854,
+          "wasteMM": 502.1257399784422,
+          "wasteFraction": 0.16737524665948073
+        },
+        {
+          "row": 2,
+          "count": 18,
+          "stockMM": 3000,
+          "windingMM": 2581.6453364778163,
+          "bendsMM": 40.23279293783877,
+          "straightMM": 80,
+          "totalMM": 2701.878129415655,
+          "axialEnvelopeMM": 2062.865838503878,
+          "wasteMM": 298.12187058434483,
+          "wasteFraction": 0.09937395686144827
+        },
+        {
+          "row": 3,
+          "count": 18,
+          "stockMM": 3000,
+          "windingMM": 2802.6436855887678,
+          "bendsMM": 45.07913177920135,
+          "straightMM": 80,
+          "totalMM": 2927.722817367969,
+          "axialEnvelopeMM": 2066.3745872814134,
+          "wasteMM": 72.27718263203087,
+          "wasteFraction": 0.024092394210676958
+        }
+      ],
+      "q": 314.6203871401098,
+      "hot": 59.97976664454699,
+      "cold": 40.00605866867912,
+      "re": 17345.87904256825,
+      "shellRe": 7782.328048395641,
+      "valid": true
+    },
+    "notifications": [
+      {
+        "level": "error",
+        "code": "length-limit",
+        "text": "Превышена габаритная длина: найден вариант 1 960 мм при пределе 1 800 мм."
+      }
+    ]
+  },
+  "counts": [
+    {
+      "n": 47,
+      "families": 0,
+      "geometries": 0,
+      "calls": 0,
+      "accepted": [],
+      "closest": null,
+      "maximum": null
+    },
+    {
+      "n": 48,
+      "families": 16,
+      "geometries": 94,
+      "calls": 43,
+      "accepted": [],
+      "closest": null,
+      "maximum": null
+    },
+    {
+      "n": 49,
+      "families": 0,
+      "geometries": 0,
+      "calls": 0,
+      "accepted": [],
+      "closest": null,
+      "maximum": null
+    },
+    {
+      "n": 50,
+      "families": 7,
+      "geometries": 0,
+      "calls": 0,
+      "accepted": [],
+      "closest": null,
+      "maximum": null
+    },
+    {
+      "n": 51,
+      "families": 6,
+      "geometries": 71,
+      "calls": 30,
+      "accepted": [],
+      "closest": null,
+      "maximum": null
+    },
+    {
+      "n": 52,
+      "families": 8,
+      "geometries": 7,
+      "calls": 9,
+      "accepted": [],
+      "closest": null,
+      "maximum": null
+    },
+    {
+      "n": 53,
+      "families": 0,
+      "geometries": 0,
+      "calls": 0,
+      "accepted": [],
+      "closest": null,
+      "maximum": null
+    },
+    {
+      "n": 54,
+      "families": 8,
+      "geometries": 52,
+      "calls": 24,
+      "accepted": [],
+      "closest": {
+        "q": 134.38605387432779,
+        "ratio": 0.4274246843251657,
+        "uaRatio": 0.3260172035101513,
+        "estimate": 0.3201076798157895,
+        "hot": 77.19670368215249,
+        "cold": 34.84670331909949,
+        "re": 19327.877844347247,
+        "valid": true,
+        "blocking": [],
+        "geometry": {
+          "diameter": 206,
+          "height": 673,
+          "shellWall": 1,
+          "coreDiameter": 96,
+          "coreLength": 673,
+          "coreWall": 2,
+          "tubeDiameter": 14,
+          "tubeWall": 2.5,
+          "clearance": 3,
+          "coreClearance": 3,
+          "shellClearance": 3,
+          "rowClearance": 3,
+          "leadBendRadius": 28,
+          "leadStraightLength": 40,
+          "rows": [
+            {
+              "diameter": 116,
+              "count": 18,
+              "turns": 1,
+              "pitch": 659,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 150,
+              "count": 18,
+              "turns": 1,
+              "pitch": 659,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 184,
+              "count": 18,
+              "turns": 1,
+              "pitch": 659,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            }
+          ]
+        }
+      },
+      "maximum": {
+        "q": 134.38605387432779,
+        "ratio": 0.4274246843251657,
+        "uaRatio": 0.3260172035101513,
+        "estimate": 0.3201076798157895,
+        "hot": 77.19670368215249,
+        "cold": 34.84670331909949,
+        "re": 19327.877844347247,
+        "valid": true,
+        "blocking": [],
+        "geometry": {
+          "diameter": 206,
+          "height": 673,
+          "shellWall": 1,
+          "coreDiameter": 96,
+          "coreLength": 673,
+          "coreWall": 2,
+          "tubeDiameter": 14,
+          "tubeWall": 2.5,
+          "clearance": 3,
+          "coreClearance": 3,
+          "shellClearance": 3,
+          "rowClearance": 3,
+          "leadBendRadius": 28,
+          "leadStraightLength": 40,
+          "rows": [
+            {
+              "diameter": 116,
+              "count": 18,
+              "turns": 1,
+              "pitch": 659,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 150,
+              "count": 18,
+              "turns": 1,
+              "pitch": 659,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 184,
+              "count": 18,
+              "turns": 1,
+              "pitch": 659,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 55,
+      "families": 2,
+      "geometries": 0,
+      "calls": 0,
+      "accepted": [],
+      "closest": null,
+      "maximum": null
+    },
+    {
+      "n": 56,
+      "families": 5,
+      "geometries": 1,
+      "calls": 2,
+      "accepted": [],
+      "closest": {
+        "q": 125.09740680724127,
+        "ratio": 0.3978814621975922,
+        "uaRatio": 0.29995248227961097,
+        "estimate": 0.2926428093568057,
+        "hot": 78.08268758686408,
+        "cold": 34.58081219404582,
+        "re": 18737.449214020377,
+        "valid": true,
+        "blocking": [],
+        "geometry": {
+          "diameter": 210,
+          "height": 662,
+          "shellWall": 1,
+          "coreDiameter": 66,
+          "coreLength": 662,
+          "coreWall": 2,
+          "tubeDiameter": 14,
+          "tubeWall": 2.5,
+          "clearance": 3,
+          "coreClearance": 3,
+          "shellClearance": 3,
+          "rowClearance": 3,
+          "leadBendRadius": 28,
+          "leadStraightLength": 40,
+          "rows": [
+            {
+              "diameter": 86,
+              "count": 14,
+              "turns": 1,
+              "pitch": 648,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 120,
+              "count": 14,
+              "turns": 1,
+              "pitch": 648,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 154,
+              "count": 14,
+              "turns": 1,
+              "pitch": 648,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 188,
+              "count": 14,
+              "turns": 1,
+              "pitch": 648,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            }
+          ]
+        }
+      },
+      "maximum": {
+        "q": 125.09740680724127,
+        "ratio": 0.3978814621975922,
+        "uaRatio": 0.29995248227961097,
+        "estimate": 0.2926428093568057,
+        "hot": 78.08268758686408,
+        "cold": 34.58081219404582,
+        "re": 18737.449214020377,
+        "valid": true,
+        "blocking": [],
+        "geometry": {
+          "diameter": 210,
+          "height": 662,
+          "shellWall": 1,
+          "coreDiameter": 66,
+          "coreLength": 662,
+          "coreWall": 2,
+          "tubeDiameter": 14,
+          "tubeWall": 2.5,
+          "clearance": 3,
+          "coreClearance": 3,
+          "shellClearance": 3,
+          "rowClearance": 3,
+          "leadBendRadius": 28,
+          "leadStraightLength": 40,
+          "rows": [
+            {
+              "diameter": 86,
+              "count": 14,
+              "turns": 1,
+              "pitch": 648,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 120,
+              "count": 14,
+              "turns": 1,
+              "pitch": 648,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 154,
+              "count": 14,
+              "turns": 1,
+              "pitch": 648,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 188,
+              "count": 14,
+              "turns": 1,
+              "pitch": 648,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 57,
+      "families": 5,
+      "geometries": 37,
+      "calls": 18,
+      "accepted": [],
+      "closest": {
+        "q": 137.91363180396544,
+        "ratio": 0.438644404225698,
+        "uaRatio": 0.33608051782822096,
+        "estimate": 0.3305422722053099,
+        "hot": 76.86019362751152,
+        "cold": 34.94768187046423,
+        "re": 18273.399867193057,
+        "valid": true,
+        "blocking": [],
+        "geometry": {
+          "diameter": 216,
+          "height": 643,
+          "shellWall": 1,
+          "coreDiameter": 106,
+          "coreLength": 643,
+          "coreWall": 2,
+          "tubeDiameter": 14,
+          "tubeWall": 2.5,
+          "clearance": 3,
+          "coreClearance": 3,
+          "shellClearance": 3,
+          "rowClearance": 3,
+          "leadBendRadius": 28,
+          "leadStraightLength": 40,
+          "rows": [
+            {
+              "diameter": 126,
+              "count": 19,
+              "turns": 1,
+              "pitch": 629,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 160,
+              "count": 19,
+              "turns": 1,
+              "pitch": 629,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 194,
+              "count": 19,
+              "turns": 1,
+              "pitch": 629,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            }
+          ]
+        }
+      },
+      "maximum": {
+        "q": 137.91363180396544,
+        "ratio": 0.438644404225698,
+        "uaRatio": 0.33608051782822096,
+        "estimate": 0.3305422722053099,
+        "hot": 76.86019362751152,
+        "cold": 34.94768187046423,
+        "re": 18273.399867193057,
+        "valid": true,
+        "blocking": [],
+        "geometry": {
+          "diameter": 216,
+          "height": 643,
+          "shellWall": 1,
+          "coreDiameter": 106,
+          "coreLength": 643,
+          "coreWall": 2,
+          "tubeDiameter": 14,
+          "tubeWall": 2.5,
+          "clearance": 3,
+          "coreClearance": 3,
+          "shellClearance": 3,
+          "rowClearance": 3,
+          "leadBendRadius": 28,
+          "leadStraightLength": 40,
+          "rows": [
+            {
+              "diameter": 126,
+              "count": 19,
+              "turns": 1,
+              "pitch": 629,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 160,
+              "count": 19,
+              "turns": 1,
+              "pitch": 629,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 194,
+              "count": 19,
+              "turns": 1,
+              "pitch": 629,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 58,
+      "families": 2,
+      "geometries": 0,
+      "calls": 0,
+      "accepted": [],
+      "closest": null,
+      "maximum": null
+    },
+    {
+      "n": 59,
+      "families": 0,
+      "geometries": 0,
+      "calls": 0,
+      "accepted": [],
+      "closest": null,
+      "maximum": null
+    },
+    {
+      "n": 60,
+      "families": 10,
+      "geometries": 17,
+      "calls": 12,
+      "accepted": [],
+      "closest": {
+        "q": 141.03420874568783,
+        "ratio": 0.4485696276828538,
+        "uaRatio": 0.345060072356554,
+        "estimate": 0.33997120007305315,
+        "hot": 76.56249212411679,
+        "cold": 35.03700994462924,
+        "re": 17328.464999560445,
+        "valid": true,
+        "blocking": [],
+        "geometry": {
+          "diameter": 226,
+          "height": 606,
+          "shellWall": 1,
+          "coreDiameter": 116,
+          "coreLength": 606,
+          "coreWall": 2,
+          "tubeDiameter": 14,
+          "tubeWall": 2.5,
+          "clearance": 3,
+          "coreClearance": 3,
+          "shellClearance": 3,
+          "rowClearance": 3,
+          "leadBendRadius": 28,
+          "leadStraightLength": 40,
+          "rows": [
+            {
+              "diameter": 136,
+              "count": 20,
+              "turns": 1,
+              "pitch": 592,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 170,
+              "count": 20,
+              "turns": 1,
+              "pitch": 592,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 204,
+              "count": 20,
+              "turns": 1,
+              "pitch": 592,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            }
+          ]
+        }
+      },
+      "maximum": {
+        "q": 141.03420874568783,
+        "ratio": 0.4485696276828538,
+        "uaRatio": 0.345060072356554,
+        "estimate": 0.33997120007305315,
+        "hot": 76.56249212411679,
+        "cold": 35.03700994462924,
+        "re": 17328.464999560445,
+        "valid": true,
+        "blocking": [],
+        "geometry": {
+          "diameter": 226,
+          "height": 606,
+          "shellWall": 1,
+          "coreDiameter": 116,
+          "coreLength": 606,
+          "coreWall": 2,
+          "tubeDiameter": 14,
+          "tubeWall": 2.5,
+          "clearance": 3,
+          "coreClearance": 3,
+          "shellClearance": 3,
+          "rowClearance": 3,
+          "leadBendRadius": 28,
+          "leadStraightLength": 40,
+          "rows": [
+            {
+              "diameter": 136,
+              "count": 20,
+              "turns": 1,
+              "pitch": 592,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 170,
+              "count": 20,
+              "turns": 1,
+              "pitch": 592,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 204,
+              "count": 20,
+              "turns": 1,
+              "pitch": 592,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "n": 61,
+      "families": 0,
+      "geometries": 0,
+      "calls": 0,
+      "accepted": [],
+      "closest": null,
+      "maximum": null
+    },
+    {
+      "n": 62,
+      "families": 1,
+      "geometries": 0,
+      "calls": 0,
+      "accepted": [],
+      "closest": null,
+      "maximum": null
+    }
+  ],
+  "sameLayoutAtHeight": [
+    {
+      "height": 1800,
+      "diameter": 236,
+      "withinHeightLimit": true,
+      "q": 308.66670908913284,
+      "deviationPercent": -1.8262930634994068,
+      "thermalPass": false,
+      "manufacturing": [
+        {
+          "radiusMM": 73,
+          "lengthMM": 2371.444028571881,
+          "stockMM": null,
+          "wasteFromThreeMetres": 0.20951865714270632
+        },
+        {
+          "radiusMM": 90,
+          "lengthMM": 2585.932809457169,
+          "stockMM": 3000,
+          "wasteFromThreeMetres": 0.13802239684761042
+        },
+        {
+          "radiusMM": 107,
+          "lengthMM": 2821.5078529012917,
+          "stockMM": 3000,
+          "wasteFromThreeMetres": 0.0594973823662361
+        }
+      ]
+    },
+    {
+      "height": 1837,
+      "diameter": 236,
+      "withinHeightLimit": false,
+      "q": 310.03482387775466,
+      "deviationPercent": -1.3911541374065806,
+      "thermalPass": false,
+      "manufacturing": [
+        {
+          "radiusMM": 73,
+          "lengthMM": 2400.306258215743,
+          "stockMM": 3000,
+          "wasteFromThreeMetres": 0.19989791392808562
+        },
+        {
+          "radiusMM": 90,
+          "lengthMM": 2612.310720853272,
+          "stockMM": 3000,
+          "wasteFromThreeMetres": 0.12922975971557601
+        },
+        {
+          "radiusMM": 107,
+          "lengthMM": 2845.601491124793,
+          "stockMM": 3000,
+          "wasteFromThreeMetres": 0.05146616962506899
+        }
+      ]
+    },
+    {
+      "height": 1955,
+      "diameter": 236,
+      "withinHeightLimit": false,
+      "q": 314.4330859731784,
+      "deviationPercent": 0.007745326874020186,
+      "thermalPass": true,
+      "manufacturing": [
+        {
+          "radiusMM": 73,
+          "lengthMM": 2493.8620245698567,
+          "stockMM": 3000,
+          "wasteFromThreeMetres": 0.16871265847671446
+        },
+        {
+          "radiusMM": 90,
+          "lengthMM": 2698.1833382618984,
+          "stockMM": 3000,
+          "wasteFromThreeMetres": 0.10060555391270054
+        },
+        {
+          "radiusMM": 107,
+          "lengthMM": 2924.3260654630512,
+          "stockMM": 3000,
+          "wasteFromThreeMetres": 0.02522464484564959
+        }
+      ]
+    }
+  ]
+}

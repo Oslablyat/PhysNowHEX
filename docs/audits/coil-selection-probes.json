@@ -1,0 +1,486 @@
+{
+  "note": "Supplementary offline probes; production selector and 200-call budget unchanged.",
+  "probes": [
+    {
+      "id": "B-5",
+      "productionFound": false,
+      "diagnosticCalls": 157,
+      "catalogue": 156,
+      "heightRefinement": {
+        "delta": -40,
+        "q": 420.8088733910348,
+        "ratio": 1.006536955370734,
+        "hot": 49.869121042395406,
+        "cold": 35.130853435264825,
+        "re": 17411.982908484013,
+        "shellRe": 2585.730186896542,
+        "valid": true,
+        "geometry": {
+          "diameter": 236,
+          "height": 2193,
+          "shellWall": 2,
+          "coreDiameter": 56,
+          "coreLength": 2193,
+          "coreWall": 2,
+          "tubeDiameter": 14,
+          "tubeWall": 2.5,
+          "clearance": 3,
+          "coreClearance": 3,
+          "shellClearance": 3,
+          "rowClearance": 3,
+          "leadBendRadius": 28,
+          "leadStraightLength": 40,
+          "rows": [
+            {
+              "diameter": 76,
+              "count": 5,
+              "turns": 22,
+              "pitch": 99.04545454545455,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 110,
+              "count": 9,
+              "turns": 12,
+              "pitch": 181.58333333333334,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 144,
+              "count": 16,
+              "turns": 4,
+              "pitch": 544.75,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 178,
+              "count": 24,
+              "turns": 3,
+              "pitch": 726.3333333333334,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 212,
+              "count": 33,
+              "turns": 2,
+              "pitch": 1089.5,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "D-0.08",
+      "productionFound": false,
+      "diagnosticCalls": 667,
+      "catalogue": 383,
+      "alternativeCounts": []
+    },
+    {
+      "id": "D-0.15",
+      "productionFound": false,
+      "diagnosticCalls": 1104,
+      "catalogue": 820,
+      "alternativeCounts": []
+    },
+    {
+      "id": "A-10",
+      "productionFound": false,
+      "diagnosticCalls": 23,
+      "catalogue": 0,
+      "alternativeCounts": [
+        {
+          "n": 135,
+          "families": 0,
+          "catalogue": 0
+        },
+        {
+          "n": 137,
+          "families": 0,
+          "catalogue": 0
+        },
+        {
+          "n": 119,
+          "families": 4,
+          "catalogue": 23
+        },
+        {
+          "n": 158,
+          "families": 0,
+          "catalogue": 0
+        }
+      ]
+    },
+    {
+      "id": "A-0.5",
+      "productionFound": true,
+      "diagnosticCalls": 200,
+      "catalogue": 1142,
+      "shorterCatalogue": 953
+    },
+    {
+      "id": "C-2.5",
+      "productionFound": true,
+      "diagnosticCalls": 26,
+      "catalogue": 654,
+      "shorterCatalogue": 26
+    },
+    {
+      "id": "E-0.2",
+      "productionFound": false,
+      "diagnosticCalls": 1184,
+      "catalogue": 820,
+      "alternativeCounts": []
+    },
+    {
+      "id": "C-5",
+      "productionFound": false,
+      "diagnosticCalls": 707,
+      "catalogue": 62,
+      "alternativeCounts": [
+        {
+          "n": 106,
+          "families": 9,
+          "catalogue": 61
+        },
+        {
+          "n": 108,
+          "families": 8,
+          "catalogue": 68
+        },
+        {
+          "n": 94,
+          "families": 14,
+          "catalogue": 90
+        },
+        {
+          "n": 124,
+          "families": 2,
+          "catalogue": 14
+        }
+      ]
+    },
+    {
+      "id": "D-0.2",
+      "productionFound": false,
+      "diagnosticCalls": 882,
+      "catalogue": 838,
+      "heightRefinement": {
+        "delta": 56,
+        "q": 8.397044303893715,
+        "ratio": 1.000463673129462,
+        "hot": 79.99535886020213,
+        "cold": 30.00463866235815,
+        "re": 16963.062416296816,
+        "shellRe": 698.152707886948,
+        "valid": true,
+        "geometry": {
+          "diameter": 112,
+          "height": 443,
+          "shellWall": 1,
+          "coreDiameter": 36,
+          "coreLength": 443,
+          "coreWall": 2,
+          "tubeDiameter": 14,
+          "tubeWall": 2.5,
+          "clearance": 3,
+          "coreClearance": 3,
+          "shellClearance": 3,
+          "rowClearance": 3,
+          "leadBendRadius": 28,
+          "leadStraightLength": 40,
+          "rows": [
+            {
+              "diameter": 56,
+              "count": 2,
+              "turns": 4,
+              "pitch": 107.25,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 90,
+              "count": 3,
+              "turns": 2,
+              "pitch": 214.5,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "D-0.5",
+      "productionFound": false,
+      "diagnosticCalls": 1216,
+      "catalogue": 1361,
+      "heightRefinement": {
+        "delta": 12,
+        "q": 20.98624561683373,
+        "ratio": 1.0001603238072094,
+        "hot": 79.99839538110713,
+        "cold": 30.00160383536837,
+        "re": 17670.176600464783,
+        "shellRe": 970.6708908451905,
+        "valid": true,
+        "geometry": {
+          "diameter": 162,
+          "height": 564,
+          "shellWall": 1,
+          "coreDiameter": 86,
+          "coreLength": 564,
+          "coreWall": 2,
+          "tubeDiameter": 14,
+          "tubeWall": 2.5,
+          "clearance": 3,
+          "coreClearance": 3,
+          "shellClearance": 3,
+          "rowClearance": 3,
+          "leadBendRadius": 28,
+          "leadStraightLength": 40,
+          "rows": [
+            {
+              "diameter": 106,
+              "count": 5,
+              "turns": 2,
+              "pitch": 275,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 140,
+              "count": 7,
+              "turns": 1,
+              "pitch": 550,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "D-2.5",
+      "productionFound": false,
+      "diagnosticCalls": 1397,
+      "catalogue": 476,
+      "alternativeCounts": [
+        {
+          "n": 60,
+          "families": 38,
+          "catalogue": 487
+        },
+        {
+          "n": 62,
+          "families": 38,
+          "catalogue": 469
+        },
+        {
+          "n": 54,
+          "families": 45,
+          "catalogue": 647
+        },
+        {
+          "n": 70,
+          "families": 30,
+          "catalogue": 352
+        }
+      ]
+    },
+    {
+      "id": "J-0.15",
+      "productionFound": false,
+      "diagnosticCalls": 1263,
+      "catalogue": 820,
+      "heightRefinement": {
+        "delta": 60,
+        "q": 12.724148178377263,
+        "ratio": 1.009614914695365,
+        "hot": 79.80727021793928,
+        "cold": 90.1919503572273,
+        "re": 16839.79290885356,
+        "shellRe": 3666.0637484515414,
+        "valid": true,
+        "geometry": {
+          "diameter": 108,
+          "height": 1349,
+          "shellWall": 1,
+          "coreDiameter": 66,
+          "coreLength": 1349,
+          "coreWall": 2,
+          "tubeDiameter": 14,
+          "tubeWall": 2.5,
+          "clearance": 3,
+          "coreClearance": 3,
+          "shellClearance": 3,
+          "rowClearance": 3,
+          "leadBendRadius": 28,
+          "leadStraightLength": 40,
+          "rows": [
+            {
+              "diameter": 86,
+              "count": 4,
+              "turns": 19,
+              "pitch": 70.26315789473684,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "J-2.5",
+      "productionFound": false,
+      "diagnosticCalls": 1704,
+      "catalogue": 403,
+      "alternativeCounts": [
+        {
+          "n": 63,
+          "families": 37,
+          "catalogue": 411
+        },
+        {
+          "n": 65,
+          "families": 35,
+          "catalogue": 401
+        },
+        {
+          "n": 57,
+          "families": 42,
+          "catalogue": 571
+        },
+        {
+          "n": 74,
+          "families": 28,
+          "catalogue": 315
+        }
+      ]
+    },
+    {
+      "id": "A-2.5",
+      "productionFound": true,
+      "diagnosticCalls": 4,
+      "catalogue": 1047,
+      "shorterCatalogue": 103,
+      "shorterWinner": {
+        "q": 104.93352943975911,
+        "ratio": 1.0051931745923814,
+        "hot": 39.948054308054544,
+        "cold": 25.078011314708007,
+        "re": 17442.79736992388,
+        "shellRe": 777.0260159369499,
+        "valid": true,
+        "geometry": {
+          "diameter": 226,
+          "height": 968,
+          "shellWall": 2,
+          "coreDiameter": 46,
+          "coreLength": 968,
+          "coreWall": 2,
+          "tubeDiameter": 14,
+          "tubeWall": 2.5,
+          "clearance": 3,
+          "coreClearance": 3,
+          "shellClearance": 3,
+          "rowClearance": 3,
+          "leadBendRadius": 28,
+          "leadStraightLength": 40,
+          "rows": [
+            {
+              "diameter": 66,
+              "count": 2,
+              "turns": 12,
+              "pitch": 79.5,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 100,
+              "count": 4,
+              "turns": 8,
+              "pitch": 119.25,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 134,
+              "count": 6,
+              "turns": 6,
+              "pitch": 159,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 168,
+              "count": 9,
+              "turns": 5,
+              "pitch": 190.8,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            },
+            {
+              "diameter": 202,
+              "count": 13,
+              "turns": 4,
+              "pitch": 238.5,
+              "offset": 0,
+              "phase": 0,
+              "direction": "right",
+              "hidden": false
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "F-2.5",
+      "productionFound": true,
+      "diagnosticCalls": 112,
+      "catalogue": 382,
+      "shorterCatalogue": 112
+    },
+    {
+      "id": "G-2.5",
+      "productionFound": true,
+      "diagnosticCalls": 6,
+      "catalogue": 156,
+      "shorterCatalogue": 6
+    }
+  ]
+}

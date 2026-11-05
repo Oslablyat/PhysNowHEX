@@ -1,6 +1,6 @@
 import * as THREE from '../vendor/three-0.186.1/three.module.min.js';
 import {createModelLighting} from './lighting.js?v=bottom-fill-20261024';
-import {GeometryCache,buildDesignModel,disposeModel,setDesignRowVisible,setDesignPartVisible} from './design-model.js?v=sequential-20261024';
+import {GeometryCache,buildDesignModel,disposeModel,setDesignRowVisible,setDesignPartVisible} from './design-model.js?v=re-stock-20261029';
 import {wheelZoom,zoomAtPoint,panByPixels,orbitByPixels,orbitFrame,DEFAULT_AZIMUTH,DEFAULT_POLAR} from './camera-controls.js?v=plane-panel-20261022';
 import {createOrientationGizmo,planeOrbit,ISOMETRIC_VIEW} from './orientation-gizmo.js?v=plane-panel-20261022';
 

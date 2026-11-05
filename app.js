@@ -1,11 +1,11 @@
 const $ = id => document.getElementById(id);
-document.querySelector('.dimension-grid').insertAdjacentHTML('beforeend','<label class="reserve-factor-field" title="Запас относительно расчётной площади без запаса">Коэффициент запаса по площади<div class="input-wrap"><input id="area-reserve-percent" type="number" min="0" step="any" value="10" aria-label="Коэффициент запаса по площади теплообмена в процентах"><span>%</span></div></label>');
-document.querySelector('.material-dropdown-field').insertAdjacentHTML('afterend','<label class="wall-conductivity-field" title="Задаётся явно по данным материала; автоматически из марки стали не определяется">Теплопроводность стенки λw<div class="input-wrap"><input id="tube-conductivity" type="number" min="0.000001" step="any" value="16" aria-label="Теплопроводность стенки трубы"><span>Вт/(м·К)</span></div></label>');
+document.querySelector('.construction-body').insertAdjacentHTML('afterend','<div id="design-notifications" class="design-notifications" role="status" aria-label="Ошибки и предупреждения расчёта" aria-live="polite" aria-atomic="true" hidden></div>');
 const thermalIds = ['thi','tho','tci','tco','mh','mc','cph','cpc','u','ph','pc'];
 const geometryIds = ['length','exchanger-diameter','area-reserve-percent','tube-diameter','tube-wall','tube-length','tube-count'];
 const selectIds = ['hot-fluid','cold-fluid','exchanger-type','tube-material','hot-flow-unit','cold-flow-unit','detail-parameter-mode','detail-preview-mode'];
+const constructionToggleIds = ['refine-dimensions','refine-tubes','single-coil'];
 const fieldIds = [...thermalIds,...geometryIds,...selectIds,'tube-conductivity'];
-const defaults = {'tube-conductivity':16,thi:90,tho:60,tci:20,tco:40,mh:2.5,mc:3.75,unknown:'mc',ph:0.6,pc:0.4,cph:4.18,cpc:4.18,u:800,'hot-fluid':'water','cold-fluid':'water','hot-flow-unit':'kg-s','cold-flow-unit':'kg-s',flow:'counter','exchanger-type':'coil',length:2000,'exchanger-diameter':600,'area-reserve-percent':10,'tube-material':'12x18','tube-diameter':14,'tube-wall':2.5,'tube-length':1800,'tube-count':80,'refine-tubes':false,'detail-parameter-mode':'construction','detail-preview-mode':'layout'};
+const defaults = {'tube-conductivity':16,thi:90,tho:60,tci:20,tco:40,mh:2.5,mc:3.75,unknown:'mc',ph:0.6,pc:0.4,cph:4.18,cpc:4.18,u:800,'hot-fluid':'water','cold-fluid':'water','hot-flow-unit':'kg-s','cold-flow-unit':'kg-s',flow:'counter','exchanger-type':'coil',length:2000,'exchanger-diameter':600,'area-reserve-percent':10,'tube-material':'12x18','tube-diameter':14,'tube-wall':2.5,'tube-length':1800,'tube-count':80,'refine-tubes':false,'refine-dimensions':false,'single-coil':false,'detail-parameter-mode':'construction','detail-preview-mode':'layout'};
 const typeNames = {shell:'Кожухотрубный',double:'Труба в трубе',coil:'Змеевиковый'};
 const materialNames = {"316":"Нерж. сталь AISI 316L","12x18":"Нерж. сталь 12Х18Н10Т","steel20":"Углеродистая сталь 20","copper":"Медь М1","titanium":"Титан ВТ1-0"};
 const fmt = (n,d=2) => new Intl.NumberFormat('ru-RU',{maximumFractionDigits:d}).format(n);
@@ -22,24 +22,25 @@ const fieldFeedback=new Map(),touchedNumericFields=new Set();
 let fieldFeedbackReady=false,submittedNumericFields=false;
 
 function toast(message){$('toast').textContent=message;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),3000)}
-function getState(){return Object.fromEntries([['flow',flow],['unknown',unknownParameter],['selected-variant',selectedVariant],['coil-variant-binding',coilVariantBinding],['verification-design',verificationSelection],['verification-state',verificationState],['coil-thermal-inputs',coilThermalInputs],['refine-tubes',$('refine-tubes').getAttribute('aria-checked')==='true'],...fieldIds.map(id=>[id,$(id).dataset.exactValue??$(id).value])])}
+function getState(){return Object.fromEntries([['flow',flow],['unknown',unknownParameter],['selected-variant',selectedVariant],['coil-variant-binding',coilVariantBinding],['verification-design',verificationSelection],['verification-state',verificationState],['coil-thermal-inputs',coilThermalInputs],...constructionToggleIds.map(id=>[id,$(id).getAttribute('aria-checked')==='true']),...fieldIds.map(id=>[id,$(id).dataset.exactValue??$(id).value])])}
 function save(){try{if(calculationSheets){captureCalculationSheet();localStorage.setItem('physnow-sheets-v1',JSON.stringify(calculationSheets))}localStorage.setItem('thermoflow-v2',JSON.stringify(getState()));return true}catch{return false}}
-function applyState(state){coilThermalInputs=state['coil-thermal-inputs']&&typeof state['coil-thermal-inputs']==='object'?state['coil-thermal-inputs']:null;verificationState=restoreCoilGeometry(state['verification-state']);coilVariantBinding=restoreCoilVariantBinding(state['coil-variant-binding']);if(!coilVariantBinding&&verificationState)coilVariantBinding={key:null,manual:true,legacy:true};coilHighlightedRow=null;coilHighlightedNumber=null;detailCoilRow=0;verificationSelection=state['verification-design']&&typeof state['verification-design']==='object'?state['verification-design']:null;unknownParameter=selectedUnknown(state);for(const id of findableParameters()){$(id).type='number';$(id).readOnly=id===unknownParameter;delete $(id).dataset.exactValue}selectedVariant=variantProfiles().some(profile=>profile.id===state['selected-variant'])?state['selected-variant']:'balanced';resetFieldFeedback();for(const id of fieldIds)$(id).value=state[id]??(id==='tube-conductivity'?state['coil-thermal-inputs']?.wall_conductivity_w_mk??defaults[id]:defaults[id]);flow=state.flow==='parallel'?'parallel':'counter';$('refine-tubes').setAttribute('aria-checked',String(state['refine-tubes']===true));syncTubeRefinement();syncControls();update(false);renderDesignGeometry();coilThermalUI?.setState(coilThermalInputs)}
-function syncControls(animateTabs=false){syncFlowControls();for(const b of document.querySelectorAll('[data-flow]')){const selected=b.dataset.flow===flow;b.classList.toggle('selected',selected);b.setAttribute('aria-selected',String(selected));b.tabIndex=selected?0:-1}moveFlowPill(animateTabs);$('heat-exchange-panel').setAttribute('aria-labelledby',flow==='counter'?'flow-counter':'flow-parallel');$('diagram-title').textContent='Поток межтрубного пространства сверху вниз, трубного пространства справа налево · '+(flow==='counter'?'противоток':'прямоток');const type=$('exchanger-type').value;syncMethodRoles();syncDropdowns();$('tube-count').readOnly=type==='double';if(type==='double')$('tube-count').value=1}
+function applyState(state){coilThermalInputs=state['coil-thermal-inputs']&&typeof state['coil-thermal-inputs']==='object'?state['coil-thermal-inputs']:null;verificationState=restoreCoilGeometry(state['verification-state']);coilVariantBinding=restoreCoilVariantBinding(state['coil-variant-binding']);if(!coilVariantBinding&&verificationState)coilVariantBinding={key:null,manual:true,legacy:true};coilHighlightedRow=null;coilHighlightedNumber=null;detailCoilRow=0;verificationSelection=state['verification-design']&&typeof state['verification-design']==='object'?state['verification-design']:null;unknownParameter=selectedUnknown(state);for(const id of findableParameters()){$(id).type='number';$(id).readOnly=id===unknownParameter;delete $(id).dataset.exactValue}selectedVariant=variantProfiles().some(profile=>profile.id===state['selected-variant'])?state['selected-variant']:'balanced';resetFieldFeedback();for(const id of fieldIds)$(id).value=state[id]??defaults[id];const conductivity=Number(state['tube-conductivity']??state['coil-thermal-inputs']?.wall_conductivity_w_mk);$('tube-conductivity').value=Number.isFinite(conductivity)&&conductivity>0?conductivity:defaults['tube-conductivity'];flow=state.flow==='parallel'?'parallel':'counter';for(const id of constructionToggleIds)setConstructionToggle($(id),state[id]===true);syncControls();update(false);renderDesignGeometry();coilThermalUI?.setState(coilThermalInputs)}
+function syncControls(){syncFlowControls();$('flow-choice').value=flow;const type=$('exchanger-type').value;syncMethodRoles();syncDropdowns();$('tube-count').readOnly=type==='double';if(type==='double')$('tube-count').value=1}
 // The heat balance and hydraulic model always receive mass flow in kg/s.
 function syncMethodRoles(){
  const coil=$('exchanger-type').value==='coil',hot=coil?'трубного':'межтрубного',cold=coil?'межтрубного':'трубного';document.querySelector('.process').dataset.method=coil?'teplo':'legacy';
+ $('single-coil').hidden=!coil;
  for(const [id,title]of [['hot-in','Вход '+hot+' пространства'],['hot-out','Выход '+hot+' пространства'],['cold-in','Вход '+cold+' пространства'],['cold-out','Выход '+cold+' пространства']])$(id).querySelector('h3').textContent=title;
  for(const [id,label]of [['thi','Температура на входе '+hot+' пространства'],['tho','Температура на выходе '+hot+' пространства'],['tci','Температура на входе '+cold+' пространства'],['tco','Температура на выходе '+cold+' пространства'],['mh','Расход в '+(coil?'трубном':'межтрубном')+' пространстве'],['mc','Расход в '+(coil?'межтрубном':'трубном')+' пространстве'],['ph','Давление на входе '+hot+' пространства'],['pc','Давление на входе '+cold+' пространства']]){$(id).setAttribute('aria-label',label);document.querySelector('[data-find-param="'+id+'"]')?.setAttribute('aria-label','Найти: '+label.toLowerCase())}
  $('diagram-title').textContent=coil?'Горячий поток внутри змеевиков, холодный в межтрубном пространстве; '+(flow==='counter'?'противоток':'прямоток · расчёт Teplo недоступен'):'Поток межтрубного пространства сверху вниз, трубного пространства справа налево';
  $('hot-flow-unit').setAttribute('aria-label','Единицы расхода '+(coil?'трубного':'межтрубного')+' потока');$('cold-flow-unit').setAttribute('aria-label','Единицы расхода '+(coil?'межтрубного':'трубного')+' потока');
- $('flow-parallel').disabled=false;$('flow-parallel').title=coil?'Показать схему прямотока. Расчёт Teplo для прямотока не поддерживается.':'';fitDiagram();
- const reserve=document.querySelector('.reserve-factor-field');reserve.firstChild.textContent=coil?'Запас по UA':'Коэффициент запаса по площади';reserve.title=coil?'Запас проводимости UA относительно проектного задания':'Запас относительно расчётной площади без запаса';$('area-reserve-percent').setAttribute('aria-label',coil?'Запас проводимости UA в процентах':'Коэффициент запаса по площади в процентах');
+ $('flow-parallel').title=coil?'Показать схему прямотока. Расчёт Teplo для прямотока не поддерживается.':'';fitDiagram();
+ const reserve=document.querySelector('.reserve-factor-field');reserve.firstChild.textContent=coil?'Запас по UA':'Коэффициент запаса по площади';reserve.title=coil?'Временно 0 %: подбор мощности от задания до +1 %':'Запас относительно расчётной площади без запаса';$('area-reserve-percent').setAttribute('aria-label',coil?'Запас проводимости UA в процентах':'Коэффициент запаса по площади в процентах');$('area-reserve-percent').disabled=coil;if(coil){$('area-reserve-percent').value='0';delete $('area-reserve-percent').dataset.exactValue}
  const power=$('result-q').closest('.metric');power.querySelector('.metric-label').innerHTML=coil?'Задание по мощности <span>Q</span>':'Тепловая нагрузка <span>Q</span>';power.querySelector('.metric-foot').textContent=coil?'Требуется по балансу Teplo':'Передаваемая тепловая мощность';
  if(!coil){$('result-area').closest('.metric').querySelector('.metric-label').innerHTML='Площадь теплообмена <span>F</span>'}
 }
-function flowUnitName(unit){return {'kg-s':'кг/с','kg-h':'кг/ч','m3-h':'м³/ч','m3-s':'м³/с','l-s':'л/с'}[unit]||'кг/с'}
-function isVolumeFlowUnit(unit){return ['m3-h','m3-s','l-s'].includes(unit)}
+function flowUnitName(unit){return {'kg-s':'кг/с','kg-h':'кг/ч','m3-h':'м³/ч','m3-s':'м³/с','l-s':'л/с','l-min':'л/мин','l-h':'л/ч'}[unit]||'кг/с'}
+function isVolumeFlowUnit(unit){return ['m3-h','m3-s','l-s','l-min','l-h'].includes(unit)}
 function flowDensity(temperature,fluid){
  if(fluid!=='water')throw Error('Объёмный расход доступен для воды. Для другой жидкости выберите кг/с или кг/ч.');
  if(temperature===''||!Number.isFinite(Number(temperature))||Number(temperature)<0||Number(temperature)>100)throw Error('Для объёмного расхода воды задайте температуру на входе от 0 до 100 °C.');
@@ -49,13 +50,13 @@ function flowToMass(value,unit,temperature,fluid){
  if(unit==='kg-h')return Number(value)/3600;
  if(!isVolumeFlowUnit(unit))return Number(value);
  const density=flowDensity(temperature,fluid);
- return Number(value)*density/(unit==='m3-h'?3600:unit==='l-s'?1000:1);
+ return Number(value)*density/(unit==='m3-h'?3600:unit==='l-s'?1000:unit==='l-min'?60000:unit==='l-h'?3600000:1);
 }
 function massToFlow(value,unit,temperature,fluid){
  if(unit==='kg-h')return Number(value)*3600;
  if(!isVolumeFlowUnit(unit))return Number(value);
  const density=flowDensity(temperature,fluid);
- return Number(value)/density*(unit==='m3-h'?3600:unit==='l-s'?1000:1);
+ return Number(value)/density*(unit==='m3-h'?3600:unit==='l-s'?1000:unit==='l-min'?60000:unit==='l-h'?3600000:1);
 }
 function flowUnitErrors(state){
  if(state['exchanger-type']==='coil')return {};
@@ -66,7 +67,7 @@ function flowUnitErrors(state){
 function syncFlowControls(){
  for(const side of ['hot','cold']){
   const select=$(side+'-flow-unit'),water=$(side+'-fluid').value==='water';
-  if(!['kg-s','kg-h','m3-h','m3-s','l-s'].includes(select.value))select.value='kg-s';
+  if(!['kg-s','kg-h','m3-h','m3-s','l-s','l-min','l-h'].includes(select.value))select.value='kg-s';
   if(!water&&isVolumeFlowUnit(select.value))select.value='kg-s';
   for(const option of select.options)option.disabled=!water&&isVolumeFlowUnit(option.value);
   select.dataset.previous=select.value;
@@ -75,7 +76,7 @@ function syncFlowControls(){
 function changeFlowUnit(side){
  if($('exchanger-type').value==='coil'){
   const select=$(side+'-flow-unit'),previous=select.dataset.previous||'kg-s',next=select.value,id=side==='hot'?'mh':'mc';
-  if(id!==unknownParameter){if(!currentResult||currentResult.method!=='Teplo'){select.value=previous;toast('Дождитесь расчёта баланса для точного перевода расхода');return}const mass=currentResult[id],rho=currentResult[side==='hot'?'rhoh':'rhoc'];$(id).value=String(next==='kg-s'?mass:next==='kg-h'?mass*3600:mass/rho*(next==='m3-h'?3600:next==='m3-s'?1:1000))}
+  if(id!==unknownParameter){if(!currentResult||currentResult.method!=='Teplo'){select.value=previous;toast('Дождитесь расчёта баланса для точного перевода расхода');return}const mass=currentResult[id],rho=currentResult[side==='hot'?'rhoh':'rhoc'];$(id).value=String(next==='kg-s'?mass:next==='kg-h'?mass*3600:mass/rho*(next==='m3-h'?3600:next==='m3-s'?1:next==='l-min'?60000:next==='l-h'?3600000:1000))}
   select.dataset.previous=next;update();return;
  }
  const select=$(side+'-flow-unit'),next=select.value,previous=select.dataset.previous||'kg-s',id=side==='hot'?'mh':'mc';
@@ -179,17 +180,14 @@ function update(persist=true){
  if($('exchanger-type').value==='coil'){updateCoilProject(persist);return}
  setCalculationIssue(null);
  if(coilProject.key!==null){clearTimeout(coilProject.timer);coilProject.key=null;coilProject.id++;coilProject.worker?.postMessage({id:coilProject.id,cancel:true})}
- syncUnknownControls();const state=getState();lastError='';
+ syncUnknownControls();const state=withDesignDimensions(getState());lastError='';
  try{
   const reservePercent=areaReservePercent(state);currentResult={...solve(state),reservePercent};currentResult.designArea=currentResult.area*(1+reservePercent/100);
   if(unknownParameter){const input=$(unknownParameter),exact=calculatedDisplayValue(currentResult,unknownParameter,state);input.dataset.exactValue=exact;const unit=unknownParameter==='mh'?state['hot-flow-unit']:state['cold-flow-unit'];input.value=fmt(Number(exact),['mh','mc'].includes(unknownParameter)?unit==='m3-s'?6:3:2)}
   $('result-q').textContent=fmt(currentResult.q);$('result-dt').textContent=fmt(currentResult.dt);$('result-area').textContent=fmt(currentResult.designArea);$('result-area-note').textContent='Требуемая поверхность · запас '+fmt(currentResult.reservePercent)+' %';
-  $('balance-status').classList.remove('invalid');$('balance-status').innerHTML='<i></i> Тепловой баланс соблюдён';$('balance-status').title=unknownParameter?'Найдено: '+findParameterName(unknownParameter):'Все параметры заданы; расхождение баланса не более 0,1 %';
  }catch(error){
   currentResult=null;lastError=error.message;if(unknownParameter){$(unknownParameter).value='';delete $(unknownParameter).dataset.exactValue}
   for(const id of ['result-q','result-dt','result-area'])$(id).textContent='—';$('result-area-note').textContent='Требуемая поверхность · с учётом запаса';
-  const message=lastError.startsWith('Заполните')?'Заполните известные параметры':lastError.startsWith('Тепловой баланс')?'Тепловой баланс не сходится':'Проверьте известные параметры';
-  $('balance-status').classList.add('invalid');$('balance-status').innerHTML='<i></i> '+message;$('balance-status').title=lastError;
  }
  for(const id of ['thi','tho','tci','tco']){
   const value=currentResult?currentResult[id]:id===unknownParameter?'':state[id];
@@ -199,9 +197,15 @@ function update(persist=true){
  $('error').textContent='';$('error').hidden=true;if(lastError)setCalculationIssue({stage:currentResult?'design':'balance',message:lastError,code:lastError.startsWith('Заполните')?'incomplete':'invalid-input'});renderExchangerVariants(state,currentResult);refreshFieldFeedback();coilThermalUI?.refresh();if(persist)save();
 }
 
-function coilProjectState(){const state=getState();return Object.fromEntries([...fieldIds.map(key=>[key,state[key]]),['flow',flow],['unknown',unknownParameter],['refine-tubes',state['refine-tubes']],['coil-thermal-inputs',{arrangement:coilThermalInputs?.arrangement??coilThermalUI?.arrangement??'inline'}]])}
-function coilProjectKey(state){return JSON.stringify(['sequential-full-height-v1',calculationSheets?.activeId??'',state.flow,state.unknown,...['thi','tho','tci','tco','mh','mc','ph','pc','hot-fluid','cold-fluid','hot-flow-unit','cold-flow-unit','length','exchanger-diameter','tube-conductivity','area-reserve-percent','refine-tubes','tube-diameter','tube-wall'].map(k=>k===state.unknown?null:state[k]),state['coil-thermal-inputs'].arrangement])}
+function withDesignDimensions(state){
+ if(state['refine-dimensions']!==false)return state;
+ const coil=state['exchanger-type']==='coil';
+ return {...state,length:coil?10000:defaults.length,'exchanger-diameter':coil?3000:defaults['exchanger-diameter']};
+}
+function coilProjectState(){const state=withDesignDimensions(getState());return Object.fromEntries([...fieldIds.map(key=>[key,state[key]]),['flow',flow],['unknown',unknownParameter],['refine-tubes',state['refine-tubes']],['single-coil',state['single-coil']],['coil-thermal-inputs',{arrangement:'inline'}]])}
+function coilProjectKey(state){return JSON.stringify(['re-stock-full-height-v8',calculationSheets?.activeId??'',state.flow,state.unknown,...['thi','tho','tci','tco','mh','mc','ph','pc','hot-fluid','cold-fluid','hot-flow-unit','cold-flow-unit','length','exchanger-diameter','tube-conductivity','area-reserve-percent','refine-tubes','single-coil','tube-diameter','tube-wall'].map(k=>k===state.unknown?null:state[k]),state['coil-thermal-inputs'].arrangement])}
 function setCalculationIssue(issue){
+ renderDesignNotifications(issue?[{level:issue.code==='incomplete'?'warning':'error',code:issue.code||'calculation-error',text:issue.message}]:[]);
  calculationIssue=issue&&issue.code!=='incomplete'?{...issue}:null;
  document.querySelector('.results').classList.toggle('has-calculation-error',!!calculationIssue);
  if(calculationIssue){
@@ -212,10 +216,22 @@ function setCalculationIssue(issue){
  $('export').disabled=!!calculationIssue;
  refreshFieldFeedback();
 }
+function renderDesignNotifications(messages=[]){
+ const panel=$('design-notifications');if(!panel)return;
+ panel.replaceChildren();const seen=new Set();
+ for(const message of messages){
+  if(!message?.text||seen.has(message.code||message.text))continue;seen.add(message.code||message.text);
+  const item=document.createElement('p'),icon=document.createElement('span'),text=document.createElement('span');
+  item.className='design-notification';item.dataset.level=message.level==='error'?'error':'warning';item.dataset.code=message.code||'';
+  icon.className='design-notification-icon';icon.textContent=message.level==='error'?'!':'△';icon.setAttribute('aria-hidden','true');
+  text.textContent=message.text;item.append(icon,text);panel.append(item);
+ }
+ panel.hidden=!panel.childElementCount;
+}
 function renderCoilProjectBalance(r,state){
  currentResult=r;lastError='';setCalculationIssue(null);
  if(unknownParameter){const input=$(unknownParameter),exact=calculatedDisplayValue(r,unknownParameter,state);input.dataset.exactValue=exact;input.value=fmt(Number(exact),['mh','mc'].includes(unknownParameter)?state[unknownParameter==='mh'?'hot-flow-unit':'cold-flow-unit']==='m3-s'?8:4:4)}
- $('result-q').textContent=fmt(r.q);$('result-dt').textContent=fmt(r.dt);$('balance-status').classList.remove('invalid');$('balance-status').innerHTML='<i></i> Баланс по методике Teplo';$('balance-status').title='CoolProp: cp при средних температурах, масса по плотности на входе. Невязка '+fmt(r.heatBalanceError,6)+' Вт.';
+ $('result-q').textContent=fmt(r.q);$('result-dt').textContent=fmt(r.dt);
  for(const id of ['thi','tho','tci','tco'])$('svg-'+id).textContent=fmt(r[id])+' °C';
  renderCoilProjectArea();coilThermalUI?.refresh();
 }
@@ -230,24 +246,26 @@ function updateCoilProject(persist=true,force=false){
  setCalculationIssue(null);
  coilProject.key=key;coilProject.phase='pending';const id=++coilProject.id;clearTimeout(coilProject.timer);coilProject.worker?.postMessage({id,cancel:true});currentResult=null;lastError='Расчёт Teplo обновляется';
  for(const field of ['result-q','result-dt'])$(field).textContent='—';if(unknownParameter){$(unknownParameter).value='';delete $(unknownParameter).dataset.exactValue}
- $('balance-status').classList.remove('invalid');$('balance-status').innerHTML='<i></i> Расчёт баланса · CoolProp';for(const k of ['thi','tho','tci','tco'])$('svg-'+k).textContent=k===unknownParameter?'—':state[k]!==''?fmt(Number(state[k]))+' °C':'—';
+ for(const k of ['thi','tho','tci','tco'])$('svg-'+k).textContent=k===unknownParameter?'—':state[k]!==''?fmt(Number(state[k]))+' °C':'—';
  renderCoilProjectArea();renderExchangerVariants(state,null,{kind:'coil',inputKey:key,rows:[],candidates:[],message:'Расчёт баланса и подбор конструкций по Teplo…'});coilThermalUI?.refresh();refreshFieldFeedback();if(persist)save();
  coilProject.timer=setTimeout(()=>{
   if(!coilProject.worker){
-   const worker=new Worker(new URL('assets/coil-project-worker.js?v=balance-errors-20261025',document.baseURI),{type:'module'});coilProject.worker=worker;
+   const worker=new Worker(new URL('assets/coil-project-worker.js?v=single-coil-20261104',document.baseURI),{type:'module'});coilProject.worker=worker;
    worker.onmessage=({data})=>{
     if(data.id!==coilProject.id||$('exchanger-type').value!=='coil')return;
-    if(data.error){coilProject.phase='error';lastError=data.error;setCalculationIssue({stage:currentResult?'design':'balance',...data.issue,message:data.error});if(!currentResult){$('balance-status').classList.add('invalid');$('balance-status').innerHTML='<i></i> Баланс не рассчитан';$('balance-status').title=data.error;$('result-area').textContent='—';$('result-area-note').textContent='Сначала исправьте тепловой баланс'}renderExchangerVariants(coilProjectState(),currentResult,{kind:'coil',inputKey:coilProject.key,rows:[],candidates:[],message:data.error});coilThermalUI?.refresh();save();return}
+    if(data.error){coilProject.phase='error';lastError=data.error;setCalculationIssue({stage:currentResult?'design':'balance',...data.issue,message:data.error});if(!currentResult){$('result-area').textContent='—';$('result-area-note').textContent='Сначала исправьте тепловой баланс'}renderExchangerVariants(coilProjectState(),currentResult,{kind:'coil',inputKey:coilProject.key,rows:[],candidates:[],message:data.error});coilThermalUI?.refresh();save();return}
     if(data.phase==='balance'){coilProject.phase='selecting';renderCoilProjectBalance(data.balance,coilProjectState());save()}
-    if(data.phase==='progress'){const status=$('variant-status');if(status){status.hidden=false;status.textContent='Подбор по Teplo: проверено '+data.stats.evaluations+' конструкций, принято '+data.stats.accepted+'.'}}
+    if(data.phase==='progress'){const status=$('variant-status');if(status){status.hidden=false;status.textContent='Подбор по Teplo: проверено '+data.stats.evaluations+' из максимум 200, принято '+data.stats.accepted+'.'}}
     if(data.phase==='variants'){
      coilProject.phase='ready';coilProject.version=data.version;lastError='';data.variants.inputKey=coilProject.key;
      const hadRows=data.variants.rows.length;data.variants.rows=data.variants.rows.filter(({design})=>{try{calculateCoilGeometry(design.geometry);return true}catch{return false}});
      if(hadRows&&!data.variants.rows.length)data.variants.message+=' Нет доступного варианта для редактора.';
      renderExchangerVariants(coilProjectState(),currentResult,data.variants);renderCoilProjectArea();coilThermalUI?.refresh();save();
+     if(!data.variants.rows.length){setCalculationIssue({stage:'design',code:'no-design',message:data.variants.message,fields:[]});$('result-area-note').textContent='Текущая геометрия · автоматический вариант не найден';}
+     renderDesignNotifications(data.variants.rows.length?[]:hadRows?[{level:'error',code:'editor-geometry',text:'Найденную конструкцию нельзя построить: геометрия не прошла проверку.'}]:data.variants.notifications?.length?data.variants.notifications:[{level:'error',code:'no-design',text:'Подходящая конструкция не найдена при заданных условиях.'}]);
     }
    };
-   worker.onerror=()=>{coilProject.phase='error';coilProject.key=null;lastError='Не удалось загрузить расчёт Teplo. Обновите страницу или повторите ввод.';coilProject.worker?.terminate();coilProject.worker=null;setCalculationIssue({stage:'runtime',message:lastError});$('balance-status').classList.add('invalid');$('balance-status').title=lastError;$('balance-status').innerHTML='<i></i> Расчёт Teplo недоступен';renderExchangerVariants(coilProjectState(),null,{kind:'coil',rows:[],candidates:[],message:lastError})};
+   worker.onerror=()=>{coilProject.phase='error';coilProject.key=null;lastError='Не удалось загрузить расчёт Teplo. Обновите страницу или повторите ввод.';coilProject.worker?.terminate();coilProject.worker=null;setCalculationIssue({stage:'runtime',message:lastError});renderExchangerVariants(coilProjectState(),null,{kind:'coil',rows:[],candidates:[],message:lastError})};
   }
   coilProject.worker.postMessage({id,state});
  },250);
@@ -334,6 +352,7 @@ function renderExchangerVariants(state,r,supplied=null){
  // Automatic geometry binding is independent of the removed variants table.
  currentVariants=supplied??selectExchangerVariants(state,r);
  const coil=state['exchanger-type']==='coil';
+ if(!coil&&r&&!currentVariants.rows.length&&!calculationIssue)renderDesignNotifications([{level:'error',code:'no-design',text:currentVariants.message||'Подходящая конструкция не найдена при заданных условиях.'}]);
  if(coil&&currentVariants.rows.length){
   if(!currentVariants.rows.some(row=>row.id===selectedVariant))selectedVariant=currentVariants.rows.find(row=>row.id==='balanced')?.id??currentVariants.rows[0].id;
   if(coilVariantBinding?.legacy){coilVariantBinding={key:currentVariants.inputKey,profile:selectedVariant,manual:true};}
@@ -344,11 +363,17 @@ function renderExchangerVariants(state,r,supplied=null){
  syncVariantSelection();
 }
 function restoreCoilVariantBinding(value){return value&&typeof value.key==='string'&&typeof value.profile==='string'?{key:value.key,profile:value.profile,manual:value.manual===true}:null}
-function syncCoilVariantNotice(){if($('exchanger-type').value!=='coil')return;const status=$('variant-status');if(!status)return;status.hidden=false;status.textContent=currentVariants?.message||'';if(currentVariants?.rows.length)status.textContent+=' '+(coilVariantBinding?.manual?'Геометрия изменена вручную; автоматический подбор не перезаписывает ручные изменения.':'В проработке: '+(currentVariants.rows.find(row=>row.id===selectedVariant)?.name||'—')+'.')}
+function syncCoilVariantNotice(){syncApplyCoilProject();if($('exchanger-type').value!=='coil')return;const status=$('variant-status');if(!status)return;status.hidden=false;status.textContent=currentVariants?.message||'';if(currentVariants?.rows.length)status.textContent+=' '+(coilVariantBinding?.manual?'Геометрия изменена вручную; автоматический подбор не перезаписывает ручные изменения.':'В проработке: '+(currentVariants.rows.find(row=>row.id===selectedVariant)?.name||'—')+'.')}
+function syncApplyCoilProject(){
+ const button=$('apply-coil-project');if(!button)return;
+ const ready=$('exchanger-type').value==='coil'&&coilProject.phase==='ready'&&currentVariants?.rows.some(row=>row.id==='balanced');
+ button.hidden=!ready||(!coilVariantBinding?.manual&&coilVariantBinding?.key===currentVariants?.inputKey);
+}
 function markCoilVariantManual(){if(coilVariantBinding&&$('exchanger-type').value==='coil'){coilVariantBinding.manual=true;syncCoilVariantNotice()}}
 function loadCoilVariant(profile,refresh=true){
  const candidate=currentVariants?.rows.find(row=>row.id===profile)?.design;if(candidate?.kind!=='coil')return;
  selectedVariant=profile;verificationState=restoreCoilGeometry(candidate.geometry);coilVariantBinding={key:currentVariants.inputKey,profile,manual:false};detailCoilRow=0;coilHighlightedRow=null;coilHighlightedNumber=null;
+ coilThermalInputs={...coilThermalInputs,arrangement:'inline'};coilThermalUI?.setState(coilThermalInputs);syncDetailThermalArrangement();
  if(verificationUIReady)fillVerificationInputs();else renderDesignGeometry();
  renderCoilProjectArea();
  if(refresh){syncVariantSelection();syncCoilVariantNotice();save()}
@@ -365,6 +390,7 @@ function verificationCandidate(){
  return {profile:row.id,name:row.name,design:JSON.parse(JSON.stringify(row.design)),inputs};
 }
 function syncVerificationChoice(){
+ syncApplyCoilProject();
  const button=$('choose-verification');if(!button)return;
  button.hidden=$('exchanger-type').value==='coil';
  const candidate=verificationCandidate(),chosen=!!candidate&&JSON.stringify(candidate)===JSON.stringify(verificationSelection);
@@ -384,11 +410,25 @@ function coilShellCalculationItems(){
  const s=currentVariants?.shellCalculation;if(!s)return [];
  return [['Формула стенки · предварительно',s.formula,''],['Межтрубное рабочее абсолютное давление',s.absoluteMPa,'МПа'],['Вычитаемая атмосфера',s.atmosphereMPa,'МПа'],['Избыточное давление для стенки',s.gaugeMPa,'МПа'],['Допускаемое напряжение [σ]',s.allowableMPa,'МПа'],['Коэффициент шва φ',s.weldFactor,''],['Прибавка c',s.corrosionMM,'мм'],['Стенка до округления',s.rawMM,'мм'],['Стенка после округления вверх',s.wallMM,'мм'],['Внутренний диаметр подбора',s.innerMM,'мм'],['Ограничение','Упрощённая оценка по заданной формуле; не полный расчёт прочности, устойчивости, днищ и штуцеров. Вакуум не проверяется.','']];
 }
+function coilManufacturingItems(){
+ try{
+  const g=calculateCoilGeometry(verificationState),items=[];
+  const unrestricted=!coilVariantBinding?.manual&&coilVariantBinding?.key===currentVariants?.inputKey&&currentVariants?.rows[0]?.design.stockLimitWaived;
+  for(const row of g.rows){const m=CoilManufacturing.measure(row,g.leadBendRadius,g.leadStraightLength),stock=CoilManufacturing.stockFor(m.totalMM),name='Ряд '+(row.index+1)+' · ';
+   items.push([name+'полная длина одной трубки с отводами',m.totalMM/1000,'м'],[name+'заготовка',unrestricted?'Без ограничения по длине заготовки':stock?stock/1000:'Не подходит под 1/3/6 м при остатке ≤20 %',stock&&!unrestricted?'м':''],[name+'остаток одной заготовки',stock&&!unrestricted?stock-m.totalMM:'—','мм'],[name+'остаток',stock&&!unrestricted?100*(stock-m.totalMM)/stock:'—','%']);
+  }
+  return items;
+ }catch{return []}
+}
+function coilDutyTargetItems(r){
+ const f=CoilProjectMethod.construction.dutyExcessFraction;
+ return [['Мощность конструкции · минимум',r.q,'кВт'],['Мощность конструкции · максимум (+1 %)',r.q*(1+f),'кВт'],['Горячий выход · минимум',r.tho-(r.thi-r.tho)*f,'°C'],['Горячий выход · максимум',r.tho,'°C'],['Холодный выход · минимум',r.tco,'°C'],['Холодный выход · максимум',r.tco+(r.tco-r.tci)*f,'°C'],['Численный допуск выходов Teplo',CoilProjectMethod.construction.outletNumericalToleranceC,'°C']];
+}
 function variantExportRows(state=getState()){
  if(state['exchanger-type']==='coil'&&currentResult?.method==='Teplo'){
-  const rows=[[],['Подбор змеевиков по Teplo'],['Вариант','Высота, мм','Диаметр, мм','F по среднему диаметру, м²','Змеевиков','Труба, мм','Q факт., кВт','K факт., Вт/(м²·К)','UA факт., Вт/К','Горячий выход, °C','Холодный выход, °C','Критерии Teplo','Задание и запас UA']];
+  const rows=[[],['Подбор змеевиков по Teplo'],['Вариант','Высота, мм','Диаметр, мм','F по среднему диаметру, м²','Змеевиков','Труба, мм','Q факт., кВт','K факт., Вт/(м²·К)','UA факт., Вт/К','Горячий выход, °C','Холодный выход, °C','Критерии Teplo','Соответствие заданию (0…+1 %)']];
   for(const {name,design:c}of currentVariants?.rows||[])rows.push([name,c.length*1000,c.diameter*1000,c.area,c.n,c.dmm+' × '+c.wmm,c.thermal.heat_duty_kw,c.thermal.overall_u_w_m2k,c.thermal.ua_w_k,c.thermal.t_hot_out_c,c.thermal.t_cold_out_c,c.thermal.valid?'Выполнены':'НЕ выполнены',CoilProjectMethod.meets(c.thermal,currentResult)?'Выполнены':'НЕ выполнены']);
-  rows.push(...coilShellCalculationItems(),['Границы','Фиксированные D/H; труба 14×2,5 по умолчанию; 1–8 рядов снаружи внутрь по одному змеевику; целые витки на всю высоту, до 1000. Зазоры 3 мм. Первая достаточная конструкция, не глобальный оптимум. Критерий 3 < R/dᵢ < 12 временно исключён; полная применимость Teplo не подтверждена. Стенка по упрощённой формуле, не полный расчёт прочности. Δp отсутствует.']);return rows;
+  rows.push(...coilShellCalculationItems(),...coilManufacturingItems(),...coilDutyTargetItems(currentResult),['Границы','D/H — верхние пределы. Re каждой трубки 15000…20000; 3 < R/dᵢ < 12 обязательно. Ряды от центра наружу. Заготовки 1/3/6 м и остаток ≤20 % в обычном режиме. Сначала минимальная длина корпуса, затем диаметр среди проверенных компоновок. Дискретный поиск, не глобальный оптимум. Зазоры 3 мм. Стенка предварительная; Δp отсутствует.']);return rows;
  }
  if(state['exchanger-type']==='coil')return [[],['Подбор Teplo'],['Подбор недоступен',currentVariants?.message||'Дождитесь завершения расчёта Teplo.']];
  if(state['exchanger-type']!=='shell')return [[],['Варианты конструкции'],['Подбор недоступен',currentVariants?.message||'Дискретный подбор пока реализован только для кожухотрубного аппарата.']];
@@ -399,7 +439,7 @@ function variantExportRows(state=getState()){
 }
 function exportCoilProject(){
  if(currentResult?.method!=='Teplo'||coilProject.phase!=='ready'){toast('Дождитесь завершения расчёта Teplo');return}
- const r=currentResult,rows=[['PhysNow — проектировочный расчёт Teplo / CoolProp'],['Параметр','Значение','Единица'],['Схема','Противоток; горячая среда внутри змеевиков',''],['Горячий вход',r.thi,'°C'],['Горячий выход · задание',r.tho,'°C'],['Холодный вход',r.tci,'°C'],['Холодный выход · задание',r.tco,'°C'],['Расход внутри змеевиков',r.mh,'кг/с'],['Расход межтрубного потока',r.mc,'кг/с'],['Трубная cp при средней температуре',r.cph,'кДж/(кг·К)'],['Межтрубная cp при средней температуре',r.cpc,'кДж/(кг·К)'],['Невязка баланса',r.heatBalanceError,'Вт'],['Q задания',r.q,'кВт'],['UA задания',r.requiredUA,'Вт/К'],['Запас UA',r.reservePercent,'%'],['Теплопроводность стенки',Number($('tube-conductivity').value),'Вт/(м·К)'],['Материал',materialNames[$('tube-material').value],''],['Геометрия в проработке',coilVariantBinding?.manual?'Изменена вручную; результаты вариантов не подтверждают ручную геометрию':selectedVariant,''],...variantExportRows()];
+ const r=currentResult,rows=[['PhysNow — проектировочный расчёт Teplo / CoolProp'],['Параметр','Значение','Единица'],['Схема','Противоток; горячая среда внутри змеевиков',''],['Горячий вход',r.thi,'°C'],['Горячий выход · задание',r.tho,'°C'],['Холодный вход',r.tci,'°C'],['Холодный выход · задание',r.tco,'°C'],['Расход внутри змеевиков',r.mh,'кг/с'],['Расход межтрубного потока',r.mc,'кг/с'],['Трубная cp при средней температуре',r.cph,'кДж/(кг·К)'],['Межтрубная cp при средней температуре',r.cpc,'кДж/(кг·К)'],['Невязка баланса',r.heatBalanceError,'Вт'],['Q задания',r.q,'кВт'],['UA задания',r.requiredUA,'Вт/К'],['Запас UA',r.reservePercent,'%'],['Допуск мощности','От задания до +1 %',''],['Теплопроводность стенки',Number($('tube-conductivity').value),'Вт/(м·К)'],['Материал',materialNames[$('tube-material').value],''],['Геометрия в проработке',coilVariantBinding?.manual?'Изменена вручную; результаты вариантов не подтверждают ручную геометрию':selectedVariant,''],...variantExportRows()];
  if(!currentVariants?.rows.length)rows.push(['Подбор',currentVariants?.message||'Нет подходящих конструкций','']);
  const csv='\ufeff'+rows.map(row=>row.map(value=>'"'+String(typeof value==='number'?fmt(value,9):value).replaceAll('"','""')+'"').join(';')).join('\r\n'),url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download='physnow-teplo-project.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
@@ -409,9 +449,8 @@ for(const id of [...thermalIds,...geometryIds])$(id).addEventListener('input',()
 for(const side of ['hot','cold']){$(side+'-fluid').addEventListener('change',()=>changeFlowFluid(side));$(side+'-flow-unit').addEventListener('change',()=>changeFlowUnit(side))}
 $('exchanger-type').addEventListener('change',()=>{if($('exchanger-type').value!=='double'&&$('tube-count').readOnly)$('tube-count').value=80;if($('exchanger-type').value==='coil'){coilVariantBinding=null;selectedVariant='balanced'}syncControls();update()});
 $('tube-material').addEventListener('change',()=>{syncDropdowns();update()});
-$('tube-conductivity').addEventListener('input',()=>update());
 for(const id of ['detail-parameter-mode','detail-preview-mode'])$(id).addEventListener('change',()=>{syncDropdowns();syncDesignGeometryVisibility();syncDesignLayoutVisibility();save()});
-for(const b of document.querySelectorAll('[data-flow]'))b.addEventListener('click',()=>{flow=b.dataset.flow;syncControls(true);update()});
+$('flow-choice').addEventListener('change',()=>{flow=$('flow-choice').value;syncControls();update()});
 $('reset').addEventListener('click',()=>{applyState({...defaults,thi:'',tho:'',tci:'',tco:'',mh:'',ph:'',pc:''});save();$('thi').focus();toast('Параметры потоков очищены')});
 $('close-help').addEventListener('click',()=>$('help-dialog').close());$('help-dialog').addEventListener('click',e=>{if(e.target===$('help-dialog')){const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.target.close()}});
 $('export').addEventListener('click',()=>{if($('exchanger-type').value==='coil'){exportCoilProject();return}update();if(lastError||!currentResult||!currentGeometry){validateAllNumericFields();toast('Для экспорта исправьте исходные данные');return}const r=currentResult,g=currentGeometry,s=getState();const rows=[['PhysNow — предварительный расчёт'],['Параметр','Значение','Единица'],['Тип аппарата',typeNames[s['exchanger-type']],''],['Неизвестный параметр',unknownParameter?findParameterName(unknownParameter):'Все параметры заданы',''],['Схема',flow==='counter'?'Противоток':'Прямоток',''],['Предельная длина теплообменника',g.length,'мм'],['Предельный внешний диаметр теплообменника',g['exchanger-diameter'],'мм'],['Коэффициент запаса по площади',r.reservePercent,'%'],['Материал труб',materialNames[$('tube-material').value],''],['Наружный диаметр трубы',g['tube-diameter'],'мм'],['Толщина стенки',g['tube-wall'],'мм'],['Межтрубное пространство',$('hot-fluid').selectedOptions[0].textContent,''],['Трубное пространство',$('cold-fluid').selectedOptions[0].textContent,''],['Температура на входе межтрубного пространства',r.thi,'°C'],['Температура на выходе межтрубного пространства',r.tho,'°C'],['Температура на входе трубного пространства',r.tci,'°C'],['Температура на выходе трубного пространства',r.tco,'°C'],['Абсолютное давление на входе межтрубного пространства',r.ph,'МПа'],['Абсолютное давление на входе трубного пространства',r.pc,'МПа'],['Массовый расход в межтрубном пространстве',r.mh,'кг/с'],['Массовый расход в трубном пространстве',r.mc,'кг/с'],['Расход на входе межтрубного пространства',Number(s.mh),flowUnitName(s['hot-flow-unit'])],['Расход на входе трубного пространства',massToFlow(r.mc,s['cold-flow-unit'],s.tci,s['cold-fluid']),flowUnitName(s['cold-flow-unit'])],['Теплоёмкость теплоносителя межтрубного пространства',r.cph,'кДж/(кг·К)'],['Теплоёмкость теплоносителя трубного пространства',r.cpc,'кДж/(кг·К)'],['Коэффициент теплопередачи',r.u,'Вт/(м²·К)'],['Тепловая нагрузка',r.q,'кВт'],['Температурный напор',r.dt,'К'],['Расчётная площадь без запаса',r.area,'м²'],['Требуемая площадь с запасом',r.designArea,'м²'],['Допущения','Постоянные cₚ и K, без фазового перехода и теплопотерь. Габариты и материал не определяют K автоматически. Гидравлика и геометрия вариантов — в таблице ниже.','']];rows.push(...variantExportRows());const csv='\uFEFF'+rows.map(row=>row.map(x=>'"'+String(typeof x==='number'?fmt(x,6):x).replaceAll('"','""')+'"').join(';')).join('\r\n');const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download='physnow-calculation.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Параметры аппарата и результаты экспортированы в CSV')});
@@ -472,26 +511,6 @@ function fitDiagram(){
 }
 new ResizeObserver(fitDiagram).observe(document.querySelector('.process'));
 
-function moveFlowPill(animate=false){
- const root=document.querySelector('.t-tabs'),pill=root?.querySelector('.t-tabs-pill'),active=root?.querySelector('[aria-selected="true"]');
- if(!pill||!active||!active.offsetWidth)return;
- const move=()=>{pill.style.transform='translateX('+active.offsetLeft+'px)';pill.style.width=active.offsetWidth+'px'};
- if(animate){move();return}
- const transition=pill.style.transition;pill.style.transition='none';move();void pill.offsetWidth;pill.style.transition=transition;
-}
-const flowTabButtons=[...document.querySelectorAll('.t-tab')];
-for(const button of flowTabButtons)button.addEventListener('keydown',event=>{
- if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
- event.preventDefault();const index=flowTabButtons.indexOf(button),count=flowTabButtons.length;
- const next=event.key==='Home'?0:event.key==='End'?count-1:(index+(event.key==='ArrowRight'?1:-1)+count)%count;
- flowTabButtons[next].click();flowTabButtons[next].focus();
-});
-new ResizeObserver(()=>moveFlowPill(false)).observe(document.querySelector('.t-tabs'));
-window.addEventListener('resize',()=>moveFlowPill(false));
-document.fonts.ready.then(()=>moveFlowPill(false));
-
-
-
 const animatedDropdowns=[];
 function syncDropdowns(){for(const dropdown of animatedDropdowns)dropdown.sync()}
 function createAnimatedDropdown(root){
@@ -510,7 +529,7 @@ function createAnimatedDropdown(root){
   if(root.dataset.value!==value)swap(active.querySelector('span').textContent,Boolean(root.dataset.value));root.dataset.value=value;
  }
  function position(){
-  const bounds=root.closest('.construction,.design-detail-panel').getBoundingClientRect(),anchor=root.getBoundingClientRect();menu.style.maxHeight='';
+  const bounds=root.closest('.construction-body,.construction,.design-detail-panel').getBoundingClientRect(),anchor=root.getBoundingClientRect();menu.style.maxHeight='';
   const height=menu.offsetHeight,below=Math.min(innerHeight-8,bounds.bottom-8)-anchor.bottom-8,above=anchor.top-Math.max(8,bounds.top+8)-8;
   const upward=below<height&&above>below;menu.dataset.origin=upward?'bottom-left':'top-left';
   if(height>(upward?above:below))menu.style.maxHeight=Math.max(60,upward?above:below)+'px';
@@ -695,7 +714,7 @@ function numericFieldErrors(state){
  const unknown=state.unknown===null?null:['thi','tho','tci','tco','mh','mc'].includes(state.unknown)?state.unknown:'mc';
  const errors={},numbers={};
  for(const id of [...thermalIds,...geometryIds]){
-  if(id===unknown)continue;
+  if(id===unknown||state['refine-dimensions']===false&&(id==='length'||id==='exchanger-diameter'))continue;
   if(state[id]===''||state[id]==null||!Number.isFinite(Number(state[id]))){errors[id]='Введите число';continue}
   const value=Number(state[id]);numbers[id]=value;
   if(['thi','tho','tci','tco'].includes(id)){
@@ -769,26 +788,37 @@ document.querySelector('main').addEventListener('keydown',event=>{
  event.preventDefault();event.target.blur();
 });
 
-function syncTubeRefinement(){
- const checkbox=$('refine-tubes');
- const checked=checkbox.getAttribute('aria-checked')==='true';
- $('tube-fields').hidden=!checked;
- checkbox.setAttribute('aria-expanded',String(checked));
- $('tube-refinement-box').setAttribute('aria-checked',String(checked));
+function setConstructionToggle(button, checked){
+ button.setAttribute('aria-checked',String(checked));
+ const panelId=button.getAttribute('aria-controls');
+ if(!panelId)return;
+ const panel=$(panelId);
+ button.setAttribute('aria-expanded',String(checked));
+ panel.classList.toggle('is-open',checked);
+ panel.inert=!checked;
 }
-$('refine-tubes').addEventListener('click',()=>{
- const checkbox=$('refine-tubes');
- checkbox.setAttribute('aria-checked',String(checkbox.getAttribute('aria-checked')!=='true'));
- syncTubeRefinement();update();
-});
-const tubeCheckPath=$('tube-refinement-box').querySelector('path');
-$('tube-refinement-box').style.setProperty('--check-len',Math.ceil(tubeCheckPath.getTotalLength())+1);
-$('refine-tubes').addEventListener('pointerdown',event=>{
- if(event.pointerType==='mouse')return;
- const row=event.currentTarget,start=performance.now();clearTimeout(row._tubePress);row.classList.add('is-pressed');
- const up=()=>{document.removeEventListener('pointerup',up,true);document.removeEventListener('pointercancel',up,true);row._tubePress=setTimeout(()=>row.classList.remove('is-pressed'),Math.max(0,150-(performance.now()-start)))};
- document.addEventListener('pointerup',up,true);document.addEventListener('pointercancel',up,true);
-},{passive:true});
+for(const id of constructionToggleIds){
+ const button=$(id);
+ button.addEventListener('click',()=>{
+  setConstructionToggle(button,button.getAttribute('aria-checked')!=='true');
+  update();
+ });
+ let pressTimer;
+ button.addEventListener('pointerdown',event=>{
+  if(event.pointerType==='mouse'||!event.isPrimary)return;
+  const start=performance.now();
+  clearTimeout(pressTimer);
+  button.classList.add('is-pressed');
+  const release=end=>{
+   if(end.pointerId!==event.pointerId)return;
+   document.removeEventListener('pointerup',release,true);
+   document.removeEventListener('pointercancel',release,true);
+   pressTimer=setTimeout(()=>button.classList.remove('is-pressed'),Math.max(0,150-(performance.now()-start)));
+  };
+  document.addEventListener('pointerup',release,true);
+  document.addEventListener('pointercancel',release,true);
+ },{passive:true});
+}
 
 
 
@@ -845,11 +875,18 @@ function exchangerCardData(candidate,r){
   ]}
  ];
 }
+function coilGeometrySourceLabel(){
+ if(coilVariantBinding?.manual)return 'Сохранённая ручная геометрия текущего листа · автоматический подбор её не заменяет';
+ if(coilProject.phase==='pending'||coilProject.phase==='selecting')return 'Геометрия редактора до завершения нового подбора';
+ if(currentVariants?.rows.length&&coilVariantBinding?.key===currentVariants.inputKey)return 'Результат автоматического подбора для текущего задания';
+ return 'Геометрия редактора · результат автоматического подбора не загружен';
+}
 function coilExchangerCardData(candidate,r){
  const g=calculateCoilGeometry(verificationState||candidate.design.geometry),s=candidate.inputs,value=(label,n,unit='',digits=6)=>[label,typeof n==='number'?fmt(n,digits):n,unit],snapshot=coilThermalUI?.snapshot;
- const groups=[{id:'construction',title:'Текущая змеевиковая конструкция',items:[value('Тип теплообменника','Змеевиковый с вытеснительной трубой'),value('Источник геометрии',coilVariantBinding?.manual?'Ручная геометрия текущего листа · требует собственной поверки':'Выбранная конструкция текущего листа'),value('Материал труб в проектном задании',materialNames[s['tube-material']]),value('Рабочая высота корпуса',g.height,'мм'),value('Внешний диаметр корпуса',g.diameter,'мм'),value('Стенка корпуса',g.shellWall,'мм'),value('Диаметр вытеснительной трубы',g.coreDiameter,'мм'),value('Длина вытеснительной трубы',g.coreLength,'мм'),value('Стенка вытеснительной трубы',g.coreWall,'мм'),value('Радиус отвода по оси',g.leadBendRadius,'мм'),value('Прямой участок после отвода',g.leadStraightLength,'мм'),value('Минимальный зазор между навивками',g.clearance,'мм'),value('Минимальный зазор до вытеснителя',g.coreClearance,'мм'),value('Минимальный зазор до корпуса',g.shellClearance,'мм'),value('Минимальный зазор между рядами',g.rowClearance,'мм'),value('Рядов',g.rows.length,'',0),value('Змеевиков всего',g.totalCount,'шт.',0),value('Наружный диаметр трубки',g.tubeDiameter,'мм'),value('Стенка трубки',g.tubeWall,'мм'),value('Внутренний диаметр трубки',g.tubeInside,'мм'),value('Длина навивки всего',g.totalLength,'м'),value('Наружная поверхность навивки без отводов',g.totalArea,'м²'),value('Внутренний объём труб',g.tubeVolume,'м³',9),value('Свободный объём корпуса',g.shellVolume,'м³',9),value('Объём металла труб',g.metalVolume,'м³',9),...g.rows.flatMap((row,i)=>[value('Ряд '+(i+1)+' · диаметр навивки',row.diameter,'мм'),value('Ряд '+(i+1)+' · змеевиков',row.count,'шт.',0),value('Ряд '+(i+1)+' · витков на змеевик',row.turns),value('Ряд '+(i+1)+' · шаг',row.pitch,'мм'),value('Ряд '+(i+1)+' · смещение по высоте',row.offset,'мм'),value('Ряд '+(i+1)+' · начальный угол 3D',row.phase,'°'),value('Ряд '+(i+1)+' · направление 3D',row.direction==='left'?'Левое':'Правое'),value('Ряд '+(i+1)+' · длина одного змеевика',row.coilLength,'м')])]},
+ const groups=[{id:'construction',title:'Текущая змеевиковая конструкция',items:[value('Тип теплообменника','Змеевиковый с вытеснительной трубой'),value('Источник геометрии',coilGeometrySourceLabel()),value('Материал труб в проектном задании',materialNames[s['tube-material']]),value('Рабочая высота корпуса',g.height,'мм'),value('Внешний диаметр корпуса',g.diameter,'мм'),value('Стенка корпуса',g.shellWall,'мм'),value('Диаметр вытеснительной трубы',g.coreDiameter,'мм'),value('Длина вытеснительной трубы',g.coreLength,'мм'),value('Стенка вытеснительной трубы',g.coreWall,'мм'),value('Радиус отвода по оси',g.leadBendRadius,'мм'),value('Прямой участок после отвода',g.leadStraightLength,'мм'),value('Минимальный зазор между навивками',g.clearance,'мм'),value('Минимальный зазор до вытеснителя',g.coreClearance,'мм'),value('Минимальный зазор до корпуса',g.shellClearance,'мм'),value('Минимальный зазор между рядами',g.rowClearance,'мм'),value('Рядов',g.rows.length,'',0),value('Змеевиков всего',g.totalCount,'шт.',0),value('Наружный диаметр трубки',g.tubeDiameter,'мм'),value('Стенка трубки',g.tubeWall,'мм'),value('Внутренний диаметр трубки',g.tubeInside,'мм'),value('Длина навивки всего',g.totalLength,'м'),value('Наружная поверхность навивки без отводов',g.totalArea,'м²'),value('Внутренний объём труб',g.tubeVolume,'м³',9),value('Свободный объём корпуса',g.shellVolume,'м³',9),value('Объём металла труб',g.metalVolume,'м³',9),...g.rows.flatMap((row,i)=>[value('Ряд '+(i+1)+' · диаметр навивки',row.diameter,'мм'),value('Ряд '+(i+1)+' · змеевиков',row.count,'шт.',0),value('Ряд '+(i+1)+' · витков на змеевик',row.turns),value('Ряд '+(i+1)+' · шаг',row.pitch,'мм'),value('Ряд '+(i+1)+' · смещение по высоте',row.offset,'мм'),value('Ряд '+(i+1)+' · начальный угол 3D',row.phase,'°'),value('Ряд '+(i+1)+' · направление 3D',row.direction==='left'?'Левое':'Правое'),value('Ряд '+(i+1)+' · длина одного змеевика',row.coilLength,'м')])]},
  {id:'thermal',title:'Teplo · состояние расчёта',items:[value('Состояние поверочного расчёта',snapshot?.message||'Расчёт запускается…'),value('Проектное задание и поверка','Баланс и входные потоки — CoolProp; K, UA и выходы конструкции — Teplo. Заданные выходы сверху остаются проектным заданием.')]}];
- if(r?.method==='Teplo')groups.push({id:'thermal',title:'Проектное задание · баланс Teplo / CoolProp',items:[value('Заданная тепловая нагрузка Q',r.q,'кВт'),value('Температурный напор задания',r.dt,'К'),value('Требуемая проводимость UA без запаса',r.requiredUA,'Вт/К'),value('Запас по UA',r.reservePercent,'%'),value('Требуемая проводимость UA с запасом',r.requiredUA*(1+r.reservePercent/100),'Вт/К'),value('Трубная cp при средней температуре',r.cph,'кДж/(кг·К)'),value('Межтрубная cp при средней температуре',r.cpc,'кДж/(кг·К)'),value('Невязка проектного баланса',r.heatBalanceError,'Вт'),value('Тип подбора','Полновысотные ряды снаружи внутрь до первого выполнения задания; постоянный K не задаётся'),value('Согласованное исключение','3 < R/dᵢ < 12 временно не ограничивает подбор; полная применимость Teplo не подтверждена')]});
+ groups.push({id:'construction',title:'Заготовки · полная длина с отводами',items:coilManufacturingItems().map(([label,n,unit])=>value(label,n,unit,6))});
+ if(r?.method==='Teplo')groups.push({id:'thermal',title:'Проектное задание · баланс Teplo / CoolProp',items:[value('Заданная тепловая нагрузка Q',r.q,'кВт'),value('Температурный напор задания',r.dt,'К'),value('Требуемая проводимость UA без запаса',r.requiredUA,'Вт/К'),value('Запас по UA · временно отключён',r.reservePercent,'%'),...coilDutyTargetItems(r).map(([label,n,unit])=>value(label,n,unit)),value('Требуемая проводимость UA с запасом',r.requiredUA*(1+r.reservePercent/100),'Вт/К'),value('Трубная cp при средней температуре',r.cph,'кДж/(кг·К)'),value('Межтрубная cp при средней температуре',r.cpc,'кДж/(кг·К)'),value('Невязка проектного баланса',r.heatBalanceError,'Вт'),value('Тип подбора',$('single-coil').checked?'Один змеевик без ограничения по длине заготовки':'Число параллельных трубок по расходу; сначала минимальная длина корпуса, затем диаметр среди проверенных компоновок'),value('Ограничения подбора','Q от задания до +1 %; выходы в допуске; запас UA 0 %; Re 15000…20000; 3 < R/dᵢ < 12; заготовки 1/3/6 м и остаток ≤20 % в обычном режиме')]});
  if(currentVariants?.shellCalculation)groups.push({id:'construction',title:'Предварительная стенка корпуса · проектный подбор, не ручная геометрия',items:coilShellCalculationItems().map(([label,n,unit])=>value(label,n,unit,9))});
  if(snapshot?.result)groups.push(...CoilThermalCard.sections(snapshot.result,snapshot.inputs,snapshot.version));
  else groups.push({id:'hydraulics',title:'Гидравлика',items:[value('Перепад давления','Не предусмотрен приложенной методикой')]});
@@ -900,6 +937,7 @@ function openExchangerCard(options={}){
  $('exchanger-card-search').focus();
 }
 $('view-exchanger-card').addEventListener('click',openExchangerCard);
+$('apply-coil-project').addEventListener('click',()=>{loadCoilVariant('balanced');coilThermalUI?.refresh()});
 $('close-exchanger-card').addEventListener('click',()=>$('exchanger-card-dialog').close());
 $('exchanger-card-search').addEventListener('input',renderExchangerCard);
 $('exchanger-card-dialog').addEventListener('close',()=>{document.documentElement.classList.remove('exchanger-card-open');coilThermalUI?.request(false);exchangerCardKind=null});
@@ -1200,14 +1238,23 @@ function coilSideSvg(g,highlightRow=coilHighlightedRow,dimOpacity=.12,compact=fa
  out+='<path class="coil-dimension-line" d="M'+(x-6)+' '+y0+'h14m-14 '+height+'h14M'+x+' '+y0+'v'+height+'"/><text class="coil-dimension-text" transform="translate('+(x+20)+','+(y0+height/2)+') rotate(90)" text-anchor="middle">H = '+fmt(g.height,1)+' мм</text><text class="coil-dimension-text" x="320" y="'+(compact?y0+height+36:562)+'" text-anchor="middle">Труба Ø '+fmt(g.tubeDiameter)+' × '+fmt(g.tubeWall)+' мм · '+g.totalCount+' змеевиков</text>';
  return out;
 }
-function syncDesignLayoutVisibility(){const panel=$('design-layout');if(panel)panel.hidden=$('detail-preview-mode').value!=='layout';designLayout3d?.setVisible(!!panel&&!panel.hidden&&!$('construction-page').hidden);syncCoilThermalVisibility()}
+function syncDesignLayoutVisibility(){
+ const drawing=$('apparatus-drawing');
+ if(drawing)drawing.hidden=$('detail-preview-mode').value!=='layout';
+ const panel=$('design-layout');
+ if(panel)panel.hidden=$('detail-preview-mode').value!=='model-3d';
+ const visible=!!panel&&!panel.hidden&&!$('construction-page').hidden;
+ designLayout3d?.setVisible(visible);
+ if(visible)ensureDesignLayout3d();
+ syncCoilThermalVisibility();
+}
 function designLayout3dStatus(state,message=''){
  const host=$('layout-main-3d');host.dataset.status=state;
  $('layout-main-3d-state').textContent=state==='error'?'Не удалось показать 3D. '+message:state==='loading'?'Обновление 3D…':'';
 }
 function ensureDesignLayout3d(){
  if(designLayout3dLoading||!designLayoutGeometry)return;
- designLayout3dLoading=import('./assets/coil-3d/design-view.js?v=sequential-20261024').then(module=>{
+ designLayout3dLoading=import('./assets/coil-3d/design-view.js?v=single-coil-20261104').then(module=>{
   designLayout3d=module.createDesignView($('layout-main-3d'),designLayout3dStatus);
   syncDesignLayoutVisibility();designLayout3d.update(designLayoutGeometry,designLayoutSectionMode,detailCoilRow);
  }).catch(error=>designLayout3dStatus('error',error.message));
@@ -1223,9 +1270,37 @@ function renderDesignRowVisibility(g){
  for(const button of list.children){const index=Number(button.dataset.layoutRow),shown=!g.rows[index].hidden;button.setAttribute('aria-pressed',String(shown));button.setAttribute('aria-label',(shown?'Скрыть':'Показать')+' ряд '+(index+1));button.style.setProperty('--row-color',coilRowColor(index))}
 }
 function renderDesignLayout(g,errorMessage=''){
- const panel=$('design-layout');if(!panel)return;syncDesignLayoutVisibility();
- designLayoutGeometry=g;renderDesignRowVisibility(g);designLayout3d?.update(g,designLayoutSectionMode,detailCoilRow);
+ const panel=$('design-layout');if(!panel)return;
+ designLayoutGeometry=g;syncDesignLayoutVisibility();renderDesignRowVisibility(g);designLayout3d?.update(g,designLayoutSectionMode,detailCoilRow);
  const message=$('design-layout-error');message.hidden=!!g;message.textContent=g?'':'Проверьте геометрию слева. '+errorMessage;$('design-layout-grid').hidden=!g;
+ renderApparatusDrawing(g,errorMessage);
+}
+function renderApparatusDrawing(g,errorMessage=''){
+ const content=$('apparatus-drawing-content'),message=$('apparatus-drawing-error');
+ content.hidden=!g;message.hidden=!!g;
+ message.textContent=g?'':'Проверьте геометрию слева. '+errorMessage;
+ const dialog=$('apparatus-drawing-dialog'),expanded=$('apparatus-dialog-content');
+ if(!g){
+  content.replaceChildren();
+  if(dialog.open)expanded.textContent=message.textContent;
+  return;
+ }
+ const markup=PhysNowApparatusDrawing.markup(g,g.rows.map(row=>coilRowColor(row.index)));
+ content.innerHTML=markup;
+ if(dialog.open)expanded.innerHTML=markup;
+}
+function initializeApparatusDrawing(){
+ const dialog=$('apparatus-drawing-dialog');
+ for(const id of ['apparatus-drawing-content','apparatus-dialog-content']){
+  const host=$(id);
+  host.addEventListener('click',event=>{
+   if(event.target.closest('[data-drawing-enlarge]')&&designLayoutGeometry){
+    $('apparatus-dialog-content').innerHTML=$('apparatus-drawing-content').innerHTML;
+    dialog.showModal();
+   }
+  });
+ }
+ $('close-apparatus-drawing').addEventListener('click',()=>dialog.close());
 }
 function initializeLayoutSidebar(){
  const slot=$('layout-main-slot'),toggle=$('layout-sidebar-toggle'),content=$('layout-sidebar-content'),storageKey='physnow-layout-sidebar-v1';
@@ -1254,7 +1329,7 @@ function syncPageView(){
  const actionsTarget=document.querySelector(verification?'.verification-heading-actions':construction?'.construction-heading-actions':'.calculator-overview>.heading .heading-actions');
  actionsTarget.append($('calculation-actions'));
  if(verification){if(!verificationState)verificationState=seedCoilGeometry(getState());fillVerificationInputs();document.title='PhysNow'}
- else{document.title='PhysNow';if(construction){if($('detail-preview-mode').value==='layout')ensureDesignLayout3d()}else requestAnimationFrame(fitDiagram)}
+ else{document.title='PhysNow';if(!construction)requestAnimationFrame(fitDiagram)}
 }
 function exportCoilGeometry(){
  const g=currentCoilGeometry;if(!g){toast('Проверьте геометрию перед экспортом');return}
@@ -1266,6 +1341,7 @@ function exportCoilGeometry(){
 initializeVerificationPage();
 initializeDesignGeometry();
 initializeDesignLayout();
+initializeApparatusDrawing();
 initializeCoilThermalMethod();
 
 function syncCoilThermalVisibility(){
@@ -1279,9 +1355,9 @@ function coilThermalSourceInputs(){
  if(flow!=='counter')throw Error('Методика Teplo описывает только противоток. Переключите схему движения в верхнем блоке.');
  const state=getState();if(!currentResult||lastError)throw Error('Исправьте исходные данные потоков в верхнем блоке проектировочного расчёта.');
  if(state['hot-fluid']!=='water'||state['cold-fluid']!=='water')throw Error('Для Teplo пока поддерживается вода в обоих контурах. Выберите среду в верхнем блоке.');
- const conductivity=Number(state['tube-conductivity']);if(state['tube-conductivity']===''||!Number.isFinite(conductivity)||conductivity<=0)throw Error('Задайте положительную теплопроводность стенки λw в верхнем блоке конструкции.');
+ const conductivity=Number(state['tube-conductivity']);if(state['tube-conductivity']===''||!Number.isFinite(conductivity)||conductivity<=0)throw Error('В сохранённых данных листа указана недопустимая теплопроводность стенки.');
  const result={hot_fluid:'Water',cold_fluid:'Water',t_hot_in_c:currentResult.thi,t_cold_in_c:currentResult.tci,p_hot_mpa:currentResult.ph,p_cold_mpa:currentResult.pc,wall_conductivity_w_mk:conductivity};
- for(const [side,key,unit] of [['hot','mh','hot-flow-unit'],['cold','mc','cold-flow-unit']]){const mode=state[unit],v=Number(state[key]);if(['kg-s','kg-h'].includes(mode)){result[side+'_flow_mode']='mass';result['mass_flow_'+side+'_kg_s']=currentResult[key]}else{result[side+'_flow_mode']='volume';result['volume_flow_'+side+'_m3_h']=v*(mode==='m3-s'?3600:mode==='l-s'?3.6:1)}}
+ for(const [side,key,unit] of [['hot','mh','hot-flow-unit'],['cold','mc','cold-flow-unit']]){const mode=state[unit],v=Number(state[key]);if(['kg-s','kg-h'].includes(mode)){result[side+'_flow_mode']='mass';result['mass_flow_'+side+'_kg_s']=currentResult[key]}else{result[side+'_flow_mode']='volume';result['volume_flow_'+side+'_m3_h']=v*(mode==='m3-s'?3600:mode==='l-s'?3.6:mode==='l-min'?.06:mode==='l-h'?.001:1)}}
  return result;
 }
 function initializeCoilThermalMethod(){
@@ -1290,8 +1366,14 @@ function initializeCoilThermalMethod(){
   change(){syncDetailThermalArrangement();refreshOpenExchangerCard()},
   card(){openExchangerCard({thermal:true})},
   geometry(){if(!verificationState)return null;return calculateCoilGeometry(verificationState)},
-  save(state){coilThermalInputs=state;save();if($('exchanger-type').value==='coil')updateCoilProject()},
-  assess(result){return currentResult?.method==='Teplo'?{meets:CoilProjectMethod.meets(result,currentResult),applicability:CoilProjectMethod.applicability(result,currentResult),target:currentResult}:null},
+  save(state){coilThermalInputs=state;markCoilVariantManual();save();if($('exchanger-type').value==='coil')updateCoilProject()},
+  assess(result){
+   if(currentResult?.method!=='Teplo')return null;
+   const layout=CoilProjectMethod.inlineLayout(verificationState),agreement=CoilProjectMethod.dutyAgreement(result,currentResult);
+   agreement.checks.push(...layout.checks);if(coilThermalUI?.arrangement!=='inline')agreement.checks.push('Оптимальная конструкция должна иметь коридорное расположение труб.');
+   agreement.allowed=!agreement.checks.length;
+   return {meets:CoilProjectMethod.meets(result,currentResult)&&agreement.allowed,applicability:CoilProjectMethod.applicability(result,currentResult),agreement,target:currentResult};
+  },
   source:coilThermalSourceInputs
  });
  coilThermalUI.setState(coilThermalInputs);syncCoilThermalVisibility();
