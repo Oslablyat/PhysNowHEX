@@ -4,9 +4,47 @@
 (function(root,factory){const common=typeof module==='object'&&module.exports,api=factory(common?require('./coil-thermal-method.js'):root.CoilThermalMethod,common?require('./coil-manufacturing.js'):root.CoilManufacturing);if(common)module.exports=api;else root.CoilProjectMethod=api})(globalThis,function(teplo,manufacturing){
  'use strict';
  const temperatures=['thi','tho','tci','tco'],flows=['mh','mc'],unknowns=[...temperatures,...flows];
- const algorithm='re-stock-full-height-v8';
+ const algorithm='re-stock-single-re-free-v12';
+ const objectives=Object.freeze([
+  {id:'length',name:'Минимальная длина',detail:'Сначала рабочая длина корпуса, затем его диаметр.',unit:'мм'},
+  {id:'tube-length',name:'Минимум метров трубы',detail:'Суммарная длина всех трубок с отводами и прямыми концами.',unit:'м'},
+  {id:'tube-count',name:'Минимум трубок',detail:'Число параллельных трубок при выполнении требований по Re.',unit:'шт.'},
+  {id:'rows',name:'Минимум рядов',detail:'Число концентрических рядов змеевиков.',unit:'шт.'},
+  {id:'volume',name:'Минимальный объём',detail:'Объём цилиндра корпуса πD²L/4; длина без выступающих выводов.',unit:'м³'},
+  {id:'diameter',name:'Минимальный диаметр',detail:'Наружный диаметр корпуса.',unit:'мм'}
+ ]);
+ function objectiveFor(state){const id=typeof state==='string'?state:state?.['design-objective'];return objectives.find(o=>o.id===id)??objectives[0]}
+ const leadLengthCache=new Map();
+ function fullTubeMetres(c){
+  const g=c.geometry;
+  if(c.manufacturing?.length)return c.manufacturing.reduce((s,m)=>s+m.count*m.totalMM,0)/1000;
+  return g.rows.reduce((sum,r)=>{
+   const key=[r.diameter,r.pitch,g.leadBendRadius,g.leadStraightLength].join('|');
+   if(!leadLengthCache.has(key)){
+    if(leadLengthCache.size>=4000)leadLengthCache.clear();
+    try{leadLengthCache.set(key,manufacturing.measure({...r,turns:0},g.leadBendRadius,g.leadStraightLength).totalMM)}catch{leadLengthCache.set(key,Infinity)}
+   }
+   return sum+r.count*(r.turns*Math.hypot(Math.PI*r.diameter,r.pitch)+leadLengthCache.get(key))/1000;
+  },0);
+ }
+ function objectiveValue(c,id='length'){
+  const g=c.geometry;switch(id){case 'tube-length':return fullTubeMetres(c);case 'tube-count':return c.n??g.rows.reduce((s,r)=>s+r.count,0);case 'rows':return g.rows.length;case 'volume':return Math.PI*g.diameter**2*g.height/4e9;case 'diameter':return g.diameter;default:return g.height}
+ }
  const profiles=[{id:'balanced',enabled:true,name:'Оптимальная конструкция',detail:'Re 15000…20000; заготовки 1/3/6 м; сначала длина, затем диаметр корпуса'},{id:'compact',enabled:false,name:'По габаритам',detail:'Временно отключено'},{id:'production',enabled:false,name:'По сложности производства',detail:'Временно отключено'}];
  const construction=Object.freeze({atmosphereMPa:.101325,allowableMPa:130,corrosionMM:.2,weldFactor:1,gapMM:3,maxRows:8,maxTurns:1000,reMin:15000,reMax:20000,maxWaste:.2,radiusStepMM:5,firstBatch:20,maxEvaluations:200,dutyExcessFraction:.01,outletNumericalToleranceC:.01});
+ // The axial section shows adjacent starts, not consecutive turns of one start.
+ // Its clear gap is pitch / starts - do; only this gap is an integer in mm.
+ function axialGap(d,pitch,count){
+  const spacing=pitch/count,gap=spacing-d;
+  return {spacing,gap,allowed:Number.isFinite(spacing)&&spacing>=1.1*d-1e-7&&spacing<=2*d+1e-7&&Math.abs(gap-Math.round(gap))<1e-7};
+ }
+ function axialGaps(d){return Array.from({length:Math.max(0,Math.floor(d+1e-9)-Math.ceil(.1*d-1e-9)+1)},(_,i)=>Math.ceil(.1*d-1e-9)+i)}
+ // Missing flag preserves the former behaviour of saved sheets and audit inputs.
+ function stockLengthsEnabled(state){return state['stock-lengths']!==false}
+ function unrestrictedLayout(f,pitch,turns){
+  const rows=f.rows.map(spec=>({diameter:spec.diameter,count:spec.count,turns,pitch,offset:0,phase:0,direction:'right',hidden:false}));
+  const geometry=buildGeometry(f,turns*pitch+f.d,rows);return geometry?{geometry,lengths:[]}:null;
+ }
  const parameterNames={thi:'температуру горячего потока на входе',tho:'температуру горячего потока на выходе',tci:'температуру холодного потока на входе',tco:'температуру холодного потока на выходе',mh:'расход горячего потока',mc:'расход холодного потока',ph:'абсолютное давление трубного пространства',pc:'абсолютное давление межтрубного пространства'};
  function inputError(message,fields=[],hint='',code='invalid-input'){const error=Error(message);error.fields=fields;error.hint=hint;error.code=code;return error}
  const finite=(v,label)=>{if(v===''||v==null||!Number.isFinite(Number(v)))throw inputError('Заполните '+(parameterNames[label]||label),parameterNames[label]?[label]:[],'Введите известные параметры, а для одного неизвестного выберите «Найти».','incomplete');return Number(v)};
@@ -41,7 +79,7 @@
   const r=evaluate(),imbalance=Math.abs(r.qh-r.qc)/Math.max(r.qh,r.qc);if(imbalance>.001)throw inputError('Тепловой баланс Teplo не сходится: '+(imbalance*100).toFixed(4)+' %.',[...unknowns],'Выберите один неизвестный параметр кнопкой «Найти» или исправьте известные температуры и расходы.','unbalanced');
   const d1=n.thi-n.tco,d2=n.tho-n.tci;if(d1<=0||d2<=0)throw Error('Температурные напоры противотока должны быть положительными.');
   const dt=Math.abs(d1-d2)<1e-8?(d1+d2)/2:(d1-d2)/Math.log(d1/d2),q=r.qh/1000,reservePercent=0; // Owner: test nominal duty with no UA reserve.
-  return {...n,mh:r.mh,mc:r.mc,displayFlowHot:n.mh,displayFlowCold:n.mc,cph:r.cph/1000,cpc:r.cpc/1000,rhoh:r.rhoh,rhoc:r.rhoc,q,dt,unknown,flow:'counter',imbalance,heatBalanceError:r.qh-r.qc,requiredUA:r.qh/dt,reservePercent,area:null,designArea:null,u:null,method:'Teplo',projectAlgorithm:algorithm,reMin:construction.reMin,reMax:construction.reMax};
+  return {...n,mh:r.mh,mc:r.mc,displayFlowHot:n.mh,displayFlowCold:n.mc,cph:r.cph/1000,cpc:r.cpc/1000,rhoh:r.rhoh,rhoc:r.rhoc,q,dt,unknown,flow:'counter',imbalance,heatBalanceError:r.qh-r.qc,requiredUA:r.qh/dt,reservePercent,area:null,designArea:null,u:null,method:'Teplo',projectAlgorithm:algorithm,singleCoil:state['single-coil']===true,reMin:construction.reMin,reMax:construction.reMax};
  }
  function source(state,r){
   if(state.flow!=='counter')throw Error('Методика Teplo поддерживает только противоток.');
@@ -50,13 +88,22 @@
   return {hot_fluid:'Water',cold_fluid:'Water',t_hot_in_c:r.thi,t_cold_in_c:r.tci,p_hot_mpa:r.ph,p_cold_mpa:r.pc,hot_flow_mode:'mass',cold_flow_mode:'mass',mass_flow_hot_kg_s:r.mh,mass_flow_cold_kg_s:r.mc,wall_conductivity_w_mk:lw,arrangement:'inline'};
  }
  function geometryInput(g){return {row_count:g.rows.length,shell_inner_diameter_m:(g.diameter-2*g.shellWall)/1000,displacer_outer_diameter_m:g.coreDiameter/1000,tube_outer_diameter_m:g.tubeDiameter/1000,tube_wall_thickness_m:g.tubeWall/1000,coil_rows:g.rows.map(r=>({count:r.count,radius_m:r.diameter/2000,pitch_m:r.pitch/1000,turns:r.turns,tube_outer_diameter_m:g.tubeDiameter/1000}))}}
+ function geometryKey(g){return JSON.stringify([g.diameter,g.height,g.shellWall,g.coreDiameter,g.coreLength??g.height,g.coreWall??2,g.tubeDiameter,g.tubeWall,g.leadBendRadius,g.leadStraightLength,g.rows.map(r=>[r.diameter,r.count,r.turns,r.pitch,r.offset??0,r.phase??0,r.direction??'right'])])}
  // Project constraints are additional checks; the supplied Teplo stays unchanged.
+ function singleCoilReUnrestricted(target){return target?.projectAlgorithm===algorithm&&target.singleCoil===true}
+ function tubeReCheck(message){return message.startsWith('Re трубного потока > Reкр:')||message.startsWith('При L/d < 50 нужно 10000 ≤ Re ≤ 1000000:')}
  function applicability(r,target={}){
   const ignored=[],blocking=[];
-  for(const c of r.coils){for(const message of c.tube_checks)blocking.push('Змеевик '+c.index+': '+message);if(target.projectAlgorithm===algorithm&&!(c.re_hot>=construction.reMin&&c.re_hot<=construction.reMax))blocking.push('Змеевик '+c.index+': требуется 15000 ≤ Re ≤ 20000; Re='+c.re_hot.toFixed(2))}
+  const requested=singleCoilReUnrestricted(target),single=requested&&r.coils.length===1&&r.rows.length===1&&r.rows[0].coil_count===1;
+  if(requested&&!single)blocking.push('В режиме «Только один змеевик» требуется ровно одна трубка.');
+  for(const c of r.coils){for(const message of c.tube_checks)(single&&tubeReCheck(message)?ignored:blocking).push('Змеевик '+c.index+': '+message);if(!single&&target.projectAlgorithm===algorithm&&!(c.re_hot>=construction.reMin&&c.re_hot<=construction.reMax))blocking.push('Змеевик '+c.index+': требуется 15000 ≤ Re ≤ 20000; Re='+c.re_hot.toFixed(2))}
   blocking.push(...r.shell.checks);
   if(target.projectAlgorithm===algorithm&&r.rows.some(row=>row.coil_count!==r.rows[0].coil_count||row.turns!==r.rows[0].turns||Math.abs(row.pitch_m-r.rows[0].pitch_m)>1e-10))blocking.push('Коридорная компоновка на полную высоту требует одинакового числа змеевиков, витков и общего шага во всех рядах.');
-  return {allowed:!blocking.length&&r.valid,ignored,blocking,fullyValid:r.valid};
+  if(target.projectAlgorithm===algorithm&&r.rows.some(row=>!axialGap(row.tube_outer_diameter_m*1000,row.pitch_m*1000,row.coil_count).allowed))blocking.push('Вертикальное межосевое расстояние должно быть 1,1…2 наружных диаметра; зазор между стенками — целое число миллиметров.');
+  // An owner-authorized Re exception is reported separately. Never rewrite
+  // the original methodology's valid flag or waive unrelated source failures.
+  const sourceAllowed=r.valid||(single&&ignored.length>0&&r.shell.valid&&r.coils.every(c=>c.tube_checks.every(tubeReCheck)));
+  return {allowed:!blocking.length&&!!sourceAllowed,ignored,blocking,fullyValid:r.valid,tubeReUnrestricted:single};
  }
  function dutyAgreement(r,target){
   const excess=construction.dutyExcessFraction,tol=construction.outletNumericalToleranceC,checks=[],fraction=r.heat_duty_kw/target.q-1;
@@ -83,7 +130,8 @@
   const {di}=tubeSize(state),mu=props('VISCOSITY','T',(target.thi+target.tho)/2+273.15,'P',target.ph*1e6,'Water');
   if(!Number.isFinite(mu)||mu<=0)throw Error('CoolProp: недопустимая вязкость');
   const factor=4*target.mh/(Math.PI*di/1000*mu),min=Math.max(1,Math.ceil(factor/construction.reMax)),max=Math.min(500,Math.floor(factor/construction.reMin));
-  const selected=min<=max?Math.max(min,Math.min(max,Math.round(factor/17500))):null;
+  if(state['single-coil']===true)return {target:{min:1,max:1},min:1,max:1,selected:1,estimatedRe:factor,counts:[1],fallbackCounts:[],fixedSingleCoil:true,tubeReUnrestricted:true};
+  const selected=min<=max?(objectiveFor(state).id==='tube-count'?min:Math.max(min,Math.min(max,Math.round(factor/17500)))):null;
   // Keep the preferred count, with at most four bounded reserve counts. Actual
   // Re is always checked by the unchanged full verification.
   const range={target:{min,max},min,max,selected,estimatedRe:selected?factor/selected:null,counts:selected?[selected]:[],fallbackCounts:[]};
@@ -100,7 +148,8 @@
   for(let rows=1;rows<=construction.maxRows;rows++){
    const upper=lastMax-(rows-1)*spacing,first=firstMin+Math.floor((upper-firstMin)/construction.radiusStepMM)*construction.radiusStepMM;if(first<firstMin)continue;
    const chord=Math.floor(Math.PI/Math.asin(Math.min(1,spacing/(2*first)))),span=height-d;
-   const axial=Math.floor(span/(spacing*Math.sqrt(1+(span/(2*Math.PI*first))**2))+1e-10);
+   const gaps=axialGaps(d),minAxial=d+gaps[0],maxAxial=d+gaps.at(-1),circ=2*Math.PI*first;
+   const axial=Math.floor(Math.min(span/minAxial,span/(d*Math.sqrt(1+(span/circ)**2)),circ/d*Math.sqrt(1-(d/maxAxial)**2))+1e-10);
    const min=Math.max(1,Math.ceil(range.min/rows)),max=Math.min(64,chord,axial,Math.floor(range.max/rows));if(min>max)continue;
    const preferred=Math.max(min,Math.min(max,Math.round(range.selected/rows)));
    for(const count of [preferred,preferred-1,preferred+1,min,max])if(count>=min&&count<=max){const n=count*rows;if(n!==range.selected)eligible.add(n)}
@@ -127,13 +176,15 @@
      {
       const counts=radii.map(()=>n/nr);if(counts.some((count,i)=>count>capacities[i]))continue;
       const key=radii.join(',')+';'+counts.join(',');if(seen.has(key))continue;seen.add(key);
-      const rows=radii.map((r,i)=>{const q=counts[i]*(d+gap)/(2*Math.PI*r);return {diameter:2*r,count:counts[i],minPitch:q<1?counts[i]*(d+gap)/Math.sqrt(1-q*q):Infinity}});
+      const rows=radii.map((r,i)=>{const q=counts[i]*d/(2*Math.PI*r);return {diameter:2*r,count:counts[i],minPitch:q<1?Math.max(counts[i]*(d+axialGaps(d)[0]),counts[i]*d/Math.sqrt(1-q*q)+1e-7):Infinity}});
+      const pitches=axialGaps(d).map(s=>counts[0]*(d+s)).filter(p=>rows.every(r=>p>=r.minPitch));
+      if(!pitches.length)continue;
       if(rows.some(r=>!Number.isFinite(r.minPitch)||r.minPitch+d>maxHeight))continue;
       let diameter=Math.ceil(2*radii.at(-1)+d+2*gap),shell;
       while(diameter<=maxDiameter){shell=shellSizing(diameter,state.pc);if(shell.innerMM+1e-9>=2*radii.at(-1)+d+2*gap)break;diameter++}
       if(diameter>maxDiameter)continue;
-      const minimum=Math.max(...rows.map(r=>r.minPitch+d));
-      list.push({rows,n,diameter,shell,minimum,coreDiameter:2*radii[0]-d-2*gap,d,w});
+      const minimum=pitches[0]+d;
+      list.push({rows,n,diameter,shell,minimum,pitches,coreDiameter:2*radii[0]-d-2*gap,d,w});
      }
     }
    }
@@ -146,6 +197,7 @@
   for(const stock of [6000,3000,1000].filter(s=>s<=cap)){
    let turns=Math.min(construction.maxTurns,Math.floor(span/spec.minPitch+1e-10),Math.floor(Math.sqrt(Math.max(0,(stock-2*straight)**2-span**2))/circ));
    for(;turns>=1;turns--){
+    if(!axialGap(d,span/turns,spec.count).allowed)continue;
     const row={diameter:spec.diameter,count:spec.count,turns,pitch:span/turns,offset:0,phase:0,direction:'right',hidden:false};
     // Cheap screen, followed by exactly the same 256-step integral as the 3D.
     const estimate=manufacturing.lengthFast(row,bend,straight);
@@ -159,7 +211,7 @@
   }
   return null;
  }
- function compactGeometry(f,height,cap){
+ function compactGeometry(f,height,cap,turnCount=null){
   if(height<f.minimum)return null;
   const span=height-f.d,capAt=i=>Array.isArray(cap)?cap[i]:cap,minPitch=Math.max(...f.rows.map(row=>row.minPitch));
   const straight=Math.max(40,2*f.d),bend=2*f.d;
@@ -167,8 +219,10 @@
   let lengths=null;
   // One common integer turn count and pitch: both ends of EVERY winding are
   // on the same levels. Stock constraints must never shorten individual rows.
-  for(let turns=bound;turns>=1;turns--){
+  if(turnCount!==null&&(!Number.isInteger(turnCount)||turnCount<1||turnCount>bound))return null;
+  for(let turns=turnCount??bound;turns>=(turnCount??1);turns--){
    const pitch=span/turns;
+   if(!axialGap(f.d,pitch,f.rows[0].count).allowed)continue;
    const trial=f.rows.map((spec,i)=>{
     const row={diameter:spec.diameter,count:spec.count,turns,pitch,offset:0,phase:0,direction:'right',hidden:false},estimate=manufacturing.lengthFast(row,bend,straight);
     if(![1000,3000,6000].some(stock=>stock<=capAt(i)&&estimate>=stock*.8-.1&&estimate<stock+.1))return null;
@@ -187,10 +241,13 @@
   const winding=rows.reduce((sum,row)=>sum+row.count*row.turns*Math.hypot(Math.PI*row.diameter,row.pitch),0);
   if(f.d**2*winding>=(f.shell.innerMM**2-f.coreDiameter**2)*height)return null;
   const gap=construction.gapMM;
-  return {diameter:f.diameter,height,shellWall:f.shell.wallMM,coreDiameter:f.coreDiameter,coreLength:height,coreWall:2,tubeDiameter:f.d,tubeWall:f.w,clearance:gap,coreClearance:gap,shellClearance:gap,rowClearance:gap,leadBendRadius:2*f.d,leadStraightLength:Math.max(40,2*f.d),rows};
+  // Normal clearance is checked for non-intersection; the specified vertical
+  // clear gap is separately constrained above. Radial gaps remain 3 mm.
+  const clearance=Math.max(0,Math.min(gap,...rows.map(r=>r.pitch/r.count/Math.sqrt(1+(r.pitch/(Math.PI*r.diameter))**2)-f.d)));
+  return {diameter:f.diameter,height,shellWall:f.shell.wallMM,coreDiameter:f.coreDiameter,coreLength:height,coreWall:2,tubeDiameter:f.d,tubeWall:f.w,clearance,coreClearance:gap,shellClearance:gap,rowClearance:gap,leadBendRadius:2*f.d,leadStraightLength:Math.max(40,2*f.d),rows};
  }
  function rowAtPitch(spec,pitch,maxTurns,d,cap){
-  if(pitch<spec.minPitch-1e-9)return null;
+  if(pitch<spec.minPitch-1e-9||!axialGap(d,pitch,spec.count).allowed)return null;
   const bend=2*d,straight=Math.max(40,2*d),unit=Math.hypot(Math.PI*spec.diameter,pitch);
   for(const stock of [6000,3000,1000].filter(s=>s<=cap)){
    const limit=Math.min(construction.maxTurns,maxTurns,Math.floor((stock-2*straight)/unit));
@@ -213,7 +270,12 @@
   }
   return {allowed:!checks.length,checks,axialPitchMM:first.pitch/first.count};
  }
- function compare(a,b){return a.geometry.height-b.geometry.height||a.geometry.diameter-b.geometry.diameter||a.wasteMM-b.wasteMM||a.n-b.n}
+ function compare(a,b,objective='length'){
+  const id=objectiveFor(objective).id;
+  if(id!=='length'){const primary=objectiveValue(a,id)-objectiveValue(b,id);if(Math.abs(primary)>1e-10)return primary}
+  const gap=g=>g.rows?.length?g.rows[0].pitch/g.rows[0].count-g.tubeDiameter:0;
+  return a.geometry.height-b.geometry.height||a.geometry.diameter-b.geometry.diameter||gap(a.geometry)-gap(b.geometry)||a.wasteMM-b.wasteMM||a.n-b.n;
+ }
  // A single property evaluation at the assignment means is used ONLY to rank
  // geometries. No iterative Teplo call, constant K or acceptance in this screen.
  function screeningModel(state,target,props){
@@ -241,26 +303,18 @@
   };
  }
  async function shortlist(search,state,target,props,stats,hooks){
-  const estimate=screeningModel(state,target,props),pool=[],seen=new Set(),required=target.requiredUA*(1+target.reservePercent/100);
+  const estimate=screeningModel(state,target,props),pool=[],seen=new Set(),required=target.requiredUA*(1+target.reservePercent/100),useStock=stockLengthsEnabled(state);
   for(let i=0;i<search.list.length;i++){
    const f=search.list[i];
-   for(const cap of [1000,3000,6000]){
-    const heights=new Set([Math.ceil(f.minimum),Math.floor(search.maxHeight)]);
-    for(const utilization of [.82,.9,.98]){
-     const rowHeights=f.rows.map(row=>{
-      const available=cap*utilization-2*Math.max(40,2*f.d)-Math.PI*2*f.d;
-      const turns=Math.max(1,Math.floor(available/Math.hypot(Math.PI*row.diameter,row.minPitch)));
-      return Math.ceil(turns*row.minPitch+f.d);
-     });
-     for(const h of rowHeights){heights.add(h);heights.add(h+10)}
-     heights.add(Math.max(...rowHeights));
-    }
-    for(const height of heights){
-     if(height<f.minimum||height>search.maxHeight)continue;
-     stats.geometryChecks++;const layout=compactGeometry(f,height,cap);if(!layout)continue;
-     const key=JSON.stringify(geometryInput(layout.geometry));if(seen.has(key))continue;seen.add(key);
-     const ua=estimate(layout.geometry);if(!Number.isFinite(ua)||ua<=0)continue;
-     pool.push({...layout,f,cap,estimatedUA:ua,ratio:ua/required});
+   // Enumerate only whole-mm clear gaps and whole common turn counts.
+   for(const pitch of f.pitches){
+    const bound=Math.min(construction.maxTurns,Math.floor((search.maxHeight-f.d)/pitch+1e-9),...(useStock?f.rows.map(row=>Math.floor((6000-2*Math.max(40,2*f.d))/Math.hypot(Math.PI*row.diameter,pitch))):[]));
+    for(let turns=1;turns<=bound;turns++){
+    const height=turns*pitch+f.d;
+    stats.geometryChecks++;const layout=useStock?compactGeometry(f,height,6000,turns):unrestrictedLayout(f,pitch,turns);if(!layout)continue;
+    const key=JSON.stringify(geometryInput(layout.geometry));if(seen.has(key))continue;seen.add(key);
+    const ua=estimate(layout.geometry);if(!Number.isFinite(ua)||ua<=0)continue;
+    pool.push({...layout,f,cap:6000,estimatedUA:ua,ratio:ua/required});
     }
    }
    if(i%4===0){hooks.progress?.({...stats,accepted:0,phase:'screening'});await(hooks.yield?.()??Promise.resolve());if(hooks.cancelled?.())return null}
@@ -269,21 +323,23 @@
   // This is a heuristic screen, not a proof or a thermal result for the UI.
   pool.sort((a,b)=>{
    const penalty=c=>Math.abs(Math.log(c.ratio/1.005));
-   return penalty(a)-penalty(b)||a.geometry.height-b.geometry.height||a.geometry.diameter-b.geometry.diameter;
+   return objectiveFor(state).id==='length'?penalty(a)-penalty(b)||a.geometry.height-b.geometry.height||a.geometry.diameter-b.geometry.diameter:Math.floor(penalty(a)/.03)-Math.floor(penalty(b)/.03)||compare(a,b,objectiveFor(state).id)||penalty(a)-penalty(b);
   });
   return pool;
  }
  async function select(state,target,props,hooks={}){
   if(hooks.cancelled?.())return null;
-  const singleCoil=state['single-coil']===true;
+  target={...target,singleCoil:state['single-coil']===true};
+  const objective=objectiveFor(state),rank=(a,b)=>compare(a,b,objective.id),layoutRank=(a,b)=>objective.id==='length'?a.geometry.height-b.geometry.height||a.geometry.diameter-b.geometry.diameter:rank(a,b),order=(a,b,pa,pb)=>objective.id==='length'?pa-pb||layoutRank(a,b):Math.floor(pa/.03)-Math.floor(pb/.03)||layoutRank(a,b)||pa-pb;
+  const singleCoil=state['single-coil']===true,useStock=stockLengthsEnabled(state);
   const base=source(state,target),search=families(state,target,props,singleCoil?[1]:null),stats={families:search.list.length,evaluations:0,errors:0,inapplicable:0,insufficient:0,geometryChecks:0,tubeCount:singleCoil?1:search.range.selected,maxEvaluations:construction.maxEvaluations,phases:{},testedCounts:[]},attempts=[];
   const pool=singleCoil?[]:await shortlist(search,state,target,props,stats,hooks);if(!pool||hooks.cancelled?.())return null;
-  const estimate=screeningModel(state,target,props),required=target.requiredUA,seen=new Set(),records=[],localCache=new Map();
+  const estimate=screeningModel(state,target,props),required=target.requiredUA,seen=new Set(),records=[],calculations=[],acceptedDesigns=[];
   let best=null,firstSuccess=null,fallbackPool=[],outsideBest=null,singleScreened=0;
   const key=l=>JSON.stringify(geometryInput(l.geometry));
-  const familyKey=l=>l.f.n+'|'+JSON.stringify(l.f.rows)+'|'+l.lengths.map(m=>m.stockMM).join(',');
+  const familyKey=l=>l.f.n+'|'+JSON.stringify(l.f.rows)+'|'+(useStock?l.lengths.map(m=>m.stockMM).join(','):'unrestricted');
   const waste=l=>l.lengths.reduce((s,m)=>s+m.wasteMM*m.count,0);
-  const improves=l=>!best||compare({geometry:l.geometry,wasteMM:l.lengths?waste(l):0,n:l.f.n},best)<0;
+  const improves=l=>!best||rank({geometry:l.geometry,manufacturing:l.lengths,wasteMM:l.lengths?waste(l):0,n:l.f.n},best)<0;
   const available=()=>!hooks.cancelled?.()&&stats.evaluations<construction.maxEvaluations;
   // Only order estimates are calibrated. No predicted value can accept a design.
   function calibration(){
@@ -293,27 +349,36 @@
   }
   async function verify(layout,phase,diagnostic=false){
    if(!available()||seen.has(key(layout))||!inlineLayout(layout.geometry).allowed)return false;
-   seen.add(key(layout));const f=layout.f,g=layout.geometry;stats.evaluations++;stats.phases[phase]=(stats.phases[phase]||0)+1;
+   seen.add(key(layout));const f=layout.f,g=layout.geometry;
+   if(!useStock&&!layout.lengths.length){
+    try{layout.lengths=g.rows.map((row,i)=>({row:i+1,count:row.count,...manufacturing.measure(row,g.leadBendRadius,g.leadStraightLength),stockMM:null,wasteMM:null,wasteFraction:null}))}catch{return false}
+   }
+   stats.evaluations++;stats.phases[phase]=(stats.phases[phase]||0)+1;
+   const calculation={id:stats.evaluations,phase,status:'error',height:g.height,diameter:g.diameter,count:f.n,rowCount:g.rows.length,tubeMetres:fullTubeMetres({geometry:g,manufacturing:layout.lengths}),volumeLitres:Math.PI*g.diameter**2*g.height/4e6,area:null,duty:null,excessPercent:null,reHot:null,reCold:null,hotOut:null,coldOut:null,ua:null,k:null,reason:'',warning:false};
+   calculations.push(calculation);
    if(!stats.testedCounts.includes(f.n))stats.testedCounts.push(f.n);
    try{
     const thermal=teplo.calculate({...base,...geometryInput(g)},props),check=applicability(thermal,target),accepted=meets(thermal,target);
+    const reasons=[...check.blocking,...dutyAgreement(thermal,target).checks];
+    if(thermal.ua_w_k<required*(1-1e-9))reasons.push('Недостаточный UA.');
+    Object.assign(calculation,{status:diagnostic?'outside':accepted?'accepted':'rejected',area:thermal.area_m2,duty:thermal.heat_duty_kw,excessPercent:(thermal.heat_duty_kw/target.q-1)*100,reHot:Math.min(...thermal.coils.map(c=>c.re_hot)),reCold:thermal.shell.re_cold,hotOut:thermal.t_hot_out_c,coldOut:thermal.t_cold_out_c,ua:thermal.ua_w_k,k:thermal.overall_u_w_m2k,warning:accepted&&check.ignored.length>0,reason:(diagnostic?['За пределами заданных габаритов.',...reasons]:reasons).join(' ')||(check.ignored.length?check.ignored.join(' '):accepted?'Все условия приёмки выполнены.':'Условия приёмки не выполнены.')});
     records.push({layout,thermal});
     if(!check.allowed)stats.inapplicable++;else if(!accepted)stats.insufficient++;
     attempts.push({height:g.height,diameter:g.diameter,count:f.n,phase,accepted:accepted&&!diagnostic,diagnostic,dutyRatio:thermal.heat_duty_kw/target.q,uaRatio:thermal.ua_w_k/required,estimatedRatio:layout.ratio,blocking:check.blocking.slice(0,3)});
     if(accepted){
      const totalLength=thermal.coils.reduce((s,c)=>s+c.length_m,0),wasteMM=layout.lengths.reduce((s,l)=>s+l.wasteMM*l.count,0);
-     const c={kind:'coil',geometry:g,shellCalculation:f.shell,length:g.height/1000,diameter:g.diameter/1000,dmm:f.d,wmm:f.w,n:f.n,rowCount:g.rows.length,totalTurns:g.rows.reduce((s,r)=>s+r.turns*r.count,0),area:thermal.area_m2,externalArea:Math.PI*f.d/1000*totalLength,totalLength,manufacturing:layout.lengths,wasteMM,thermal,thermalSource:base,ignoredCriteria:[]};
-     if(singleCoil)c.stockLimitWaived=true;
-     if(diagnostic){if(!outsideBest||compare(c,outsideBest)<0)outsideBest=c}
-     else{if(firstSuccess===null)firstSuccess=stats.evaluations;if(!best||compare(c,best)<0)best=c}
+     const c={kind:'coil',calculationId:calculation.id,geometry:g,shellCalculation:f.shell,length:g.height/1000,diameter:g.diameter/1000,dmm:f.d,wmm:f.w,n:f.n,rowCount:g.rows.length,totalTurns:g.rows.reduce((s,r)=>s+r.turns*r.count,0),area:thermal.area_m2,externalArea:Math.PI*f.d/1000*totalLength,totalLength,manufacturing:layout.lengths,wasteMM,thermal,thermalSource:base,ignoredCriteria:check.ignored};
+     if(!useStock)c.stockLimitWaived=true;
+     if(diagnostic){if(!outsideBest||rank(c,outsideBest)<0)outsideBest=c}
+     else{calculation.geometryKey=geometryKey(g);acceptedDesigns.push(c);if(firstSuccess===null)firstSuccess=stats.evaluations;if(!best||rank(c,best)<0)best=c}
     }
-   }catch(error){stats.errors++;attempts.push({height:g.height,diameter:g.diameter,count:f.n,phase,error:error.message})}
+   }catch(error){calculation.status='error';calculation.reason=error.message;stats.errors++;attempts.push({height:g.height,diameter:g.diameter,count:f.n,phase,error:error.message})}
    hooks.progress?.({...stats,accepted:best?1:0,phase});
    await(hooks.yield?.()??Promise.resolve());return true;
   }
   async function batch(candidates,count,phase,ordered=false){
    let choices=candidates.filter(l=>!seen.has(key(l))&&improves(l));
-   if(ordered){const factor=calibration();choices.sort((a,b)=>Math.abs(Math.log(a.ratio*factor/1.005))-Math.abs(Math.log(b.ratio*factor/1.005))||a.geometry.height-b.geometry.height||a.geometry.diameter-b.geometry.diameter)}
+   if(ordered){const factor=calibration();choices.sort((a,b)=>order(a,b,Math.abs(Math.log(a.ratio*factor/1.005)),Math.abs(Math.log(b.ratio*factor/1.005))))}
    let calls=0;for(const l of choices){if(!available()||calls>=count)break;if(!improves(l))continue;if(await verify(l,phase))calls++}
   }
   // Local, bounded geometry sampling around promising catalogue points. Integer
@@ -321,36 +386,21 @@
   async function refine(count){
    const end=Math.min(construction.maxEvaluations,stats.evaluations+count);
    while(available()&&stats.evaluations<end){
-    const factor=calibration(),seeds=[],familiesSeen=new Set();
-    const ordered=[...records].sort((a,b)=>Math.abs(Math.log(a.thermal.ua_w_k/required))-Math.abs(Math.log(b.thermal.ua_w_k/required)));
-    function seed(layout,scale){const k=familyKey(layout);if(familiesSeen.has(k))return;familiesSeen.add(k);seeds.push({layout,scale})}
-    for(const r of ordered){seed(r.layout,r.thermal.ua_w_k/r.layout.estimatedUA);if(seeds.length>=6)break}
-    const raw=[...pool,...fallbackPool].sort((a,b)=>Math.abs(Math.log(a.ratio*factor/1.005))-Math.abs(Math.log(b.ratio*factor/1.005)));
-    for(const l of raw){seed(l,factor);if(seeds.length>=10)break}
-    let queue=[];
-    for(const [seedIndex,{layout,scale}]of seeds.entries()){
-     if(hooks.cancelled?.())return;
-     // Retain each row's actual stock ceiling: a 1-m row must not suddenly
-     // jump to a 3-m blank when a tiny height change makes it fit.
-     const h=layout.geometry.height,span=Math.min(500,Math.max(160,Math.ceil(h*.15))),step=Math.max(2,Math.floor(span/60)),cap=layout.lengths.map(m=>m.stockMM);
-     const local=[];
-     function at(height){
-      if(height<layout.f.minimum||height>search.maxHeight)return;
-      const ck=familyKey(layout)+'|'+height;let l=localCache.get(ck);
-      if(l===undefined){stats.geometryChecks++;const compact=compactGeometry(layout.f,height,cap);const ua=compact?estimate(compact.geometry):0;l=compact&&Number.isFinite(ua)&&ua>0?{...compact,f:layout.f,cap,estimatedUA:ua,ratio:ua/required}:null;localCache.set(ck,l)}
-      if(l&&!seen.has(key(l))&&improves(l))local.push({l,penalty:Math.abs(Math.log(l.ratio*scale/1.003))});
-     }
-     for(let delta=-span;delta<=span;delta+=step)at(Math.round(h+delta));
-     local.sort((a,b)=>a.penalty-b.penalty||a.l.geometry.height-b.l.geometry.height);
-     const centre=local[0]?.l.geometry.height;if(centre!==undefined)for(let d=-step;d<=step;d++)at(centre+d);
-     local.sort((a,b)=>a.penalty-b.penalty||a.l.geometry.height-b.l.geometry.height);
-     queue.push(...local.slice(0,3).map((candidate,slot)=>({...candidate,slot,seedIndex})));
+    const factor=calibration(),groups=new Map();
+    for(const l of [...pool,...fallbackPool]){
+     if(seen.has(key(l))||!improves(l))continue;
+     const fk=familyKey(l),penalty=Math.abs(Math.log(l.ratio*factor/1.003));
+     if(!groups.has(fk))groups.set(fk,[]);
+     groups.get(fk).push({l,penalty});
     }
-    // Give each promising family a turn. A very accurate-looking estimate for
-    // one family must not starve a measured near miss in another family.
-    queue.sort((a,b)=>a.slot-b.slot||a.seedIndex-b.seedIndex||a.penalty-b.penalty);
+    const families=[...groups.values()];for(const group of families)group.sort((a,b)=>order(a.l,b.l,a.penalty,b.penalty));
+    families.sort((a,b)=>objective.id==='length'?a[0].penalty-b[0].penalty:order(a[0].l,b[0].l,a[0].penalty,b[0].penalty));
     const before=stats.evaluations;
-    for(const {l}of queue){if(!available()||stats.evaluations>=end||stats.evaluations-before>=8)break;if(improves(l))await verify(l,'refinement')}
+    // Reorder actual discrete neighbours using measured Teplo, without accepting estimates.
+    for(const group of families.slice(0,8)){
+     if(!available()||stats.evaluations>=end)break;
+     await verify(group[0].l,'refinement');
+    }
     if(before===stats.evaluations)break;
     await(hooks.yield?.()??Promise.resolve());
    }
@@ -358,46 +408,33 @@
   if(singleCoil){
    let options=[];
    for(const f of search.list){
-    const spec=f.rows[0],maxHeight=Math.floor(search.maxHeight);
-    const maxTurns=Math.min(construction.maxTurns,Math.floor((maxHeight-f.d)/spec.minPitch));
-    for(let turns=1;turns<=maxTurns;turns++){
-     const minHeight=Math.ceil(f.d+turns*spec.minPitch);
-     const sample=height=>{
+    const spec=f.rows[0],maxHeight=search.maxHeight;
+    for(const pitch of f.pitches){
+     const maxTurns=Math.min(construction.maxTurns,Math.floor((maxHeight-f.d)/pitch+1e-9),useStock?Math.floor((6000-2*Math.max(40,2*f.d))/Math.hypot(Math.PI*spec.diameter,pitch)):Infinity);
+     for(let turns=1;turns<=maxTurns;turns++){
       stats.geometryChecks++;
-      const row={diameter:spec.diameter,count:1,turns,pitch:(height-f.d)/turns,offset:0,phase:0,direction:'right',hidden:false};
-      const geometry=buildGeometry(f,height,[row]);if(!geometry)return null;
+      const height=f.d+turns*pitch,row={diameter:spec.diameter,count:1,turns,pitch,offset:0,phase:0,direction:'right',hidden:false};
+      const geometry=buildGeometry(f,height,[row]);if(!geometry)continue;
       const estimatedUA=estimate(geometry),ratio=estimatedUA/required;
-      if(!Number.isFinite(ratio)||ratio<=0)return null;
-      const layout={geometry,f,estimatedUA,ratio};
-      if(ratio>=.85&&ratio<=1.15)options.push(layout);
-      return layout;
-     };
-     const heights=[...new Set([minHeight,Math.round((minHeight+maxHeight)/2),maxHeight])];
-     const samples=heights.map(sample);
-     // Interpolate promising pitches at a fixed turn count. Verification still uses Teplo.
-     for(let i=1;i<samples.length;i++){
-      const a=samples[i-1],b=samples[i];if(!a||!b||a.ratio===b.ratio)continue;
-      for(const ratio of [.98,1.005,1.03]){
-       const fraction=(ratio-a.ratio)/(b.ratio-a.ratio);
-       if(fraction>0&&fraction<1)sample(Math.round(heights[i-1]+fraction*(heights[i]-heights[i-1])));
-      }
+      if(Number.isFinite(ratio)&&ratio>=.85&&ratio<=1.15)options.push({geometry,f,estimatedUA,ratio});
      }
     }
     await(hooks.yield?.()??Promise.resolve());if(hooks.cancelled?.())return null;
    }
-   // Keep all complete checks in the shared budget. Measure leads only for
-   // candidates sent to Teplo, because stock lengths do not screen this mode.
+   // The stock flag is independent of the one-coil count. Apply its exact
+   // length / waste screen before spending a full Teplo slot.
    singleScreened=options.length;
    while(available()&&options.length){
     options=options.filter(layout=>!seen.has(key(layout))&&improves(layout));
     if(!options.length)break;
     const factor=calibration();
     const penalty=layout=>Math.abs(Math.log(layout.ratio*factor/1.005));
-    options.sort((a,b)=>penalty(b)-penalty(a)||b.geometry.height-a.geometry.height||b.geometry.diameter-a.geometry.diameter);
+    options.sort((a,b)=>-order(a,b,penalty(a),penalty(b)));
     const layout=options.pop(),g=layout.geometry;
     let measured;
     try{measured=manufacturing.measure(g.rows[0],g.leadBendRadius,g.leadStraightLength)}catch{continue}
-    layout.lengths=[{row:1,count:1,...measured,stockMM:null,wasteMM:null,wasteFraction:null}];
+    const stock=useStock?manufacturing.stockFor(measured.totalMM):null;if(useStock&&!stock)continue;
+    layout.lengths=[{row:1,count:1,...measured,stockMM:stock,wasteMM:stock===null?null:stock-measured.totalMM,wasteFraction:stock===null?null:(stock-measured.totalMM)/stock}];
     await verify(layout,'single-coil');
    }
   }else{
@@ -406,7 +443,7 @@
    // Preserve broad discovery, then reserve calls for actual local improvement.
    await batch(pool,60,'catalogue',!!best);
    await refine(24);
-   if(!best&&available()&&search.range.fallbackCounts.length){
+   if((!best||objective.id!=='length')&&available()&&search.range.fallbackCounts.length){
     const groups=[],factor=calibration();stats.reserveScreenedCounts=[];
     for(const n of search.range.reserveOrder??search.range.fallbackCounts){
      if(hooks.cancelled?.())return null;
@@ -438,45 +475,34 @@
     const relaxed=families(expanded,target,props,counts),catalogue=await shortlist(relaxed,expanded,target,props,stats,hooks);
     if(!catalogue||hooks.cancelled?.())return null;
     const outside=l=>l.geometry.height>search.maxHeight||l.geometry.diameter>search.maxDiameter;
-    const options=catalogue.filter(outside),seeded=new Set(),factor=calibration();
-    for(const f of relaxed.list)for(const extra of [100,200,500]){
-     const height=search.maxHeight+extra;if(height>relaxed.maxHeight)continue;
-     stats.geometryChecks++;const compact=compactGeometry(f,height,6000);if(!compact||!outside(compact))continue;
-     const ua=estimate(compact.geometry);if(ua>0&&Number.isFinite(ua))options.push({...compact,f,cap:6000,estimatedUA:ua,ratio:ua/required});
-    }
-    for(const layout of [...options].sort((a,b)=>Math.abs(Math.log(a.ratio*factor/1.005))-Math.abs(Math.log(b.ratio*factor/1.005)))){
-     const fk=familyKey(layout);if(seeded.has(fk))continue;if(seeded.size>=6)break;seeded.add(fk);
-     const cap=layout.lengths.map(m=>m.stockMM),h=layout.geometry.height;
-     for(let height=Math.max(Math.ceil(layout.f.minimum),Math.round(h-500));height<=Math.min(relaxed.maxHeight,h+500);height+=10){
-      stats.geometryChecks++;const compact=compactGeometry(layout.f,height,cap);if(!compact||!outside(compact))continue;
-      const ua=estimate(compact.geometry);if(ua>0&&Number.isFinite(ua))options.push({...compact,f:layout.f,cap,estimatedUA:ua,ratio:ua/required});
-     }
-    }
+    const options=catalogue.filter(outside);
     const end=Math.min(construction.maxEvaluations,stats.evaluations+24);
     while(available()&&stats.evaluations<end){
      const scale=calibration();options.sort((a,b)=>Math.abs(Math.log(a.ratio*scale/1.005))-Math.abs(Math.log(b.ratio*scale/1.005))||a.geometry.height-b.geometry.height);
-     const layout=options.find(l=>!seen.has(key(l))&&(!outsideBest||compare({geometry:l.geometry,wasteMM:waste(l),n:l.f.n},outsideBest)<0));if(!layout)break;
+     const layout=options.find(l=>!seen.has(key(l))&&(!outsideBest||rank({geometry:l.geometry,manufacturing:l.lengths,wasteMM:waste(l),n:l.f.n},outsideBest)<0));if(!layout)break;
      await verify(layout,'diagnosis',true);
     }
    }
   }
   if(hooks.cancelled?.())return null;
   const stopped=best?(stats.evaluations===construction.maxEvaluations?'budget-success':'improved-success'):stats.evaluations===construction.maxEvaluations?'budget-exhausted':'catalogue-exhausted';
-  const result={kind:'coil',inputKey:JSON.stringify([algorithm,state,target.requiredUA]),algorithm,rows:[],candidates:best?[best]:[],attempts,stats,shellCalculation:best?.shellCalculation??null,countRange:search.range,searchGrid:{radiusMM:construction.radiusStepMM,radialGapMM:construction.gapMM,tubeCounts:stats.testedCounts,allocation:'equal starts per row; common pitch and phase',height:singleCoil?'single winding pitch samples':'stock-derived events + bounded local refinement'},searchBudget:{firstBatch:construction.firstBatch,maxEvaluations:construction.maxEvaluations,screened:singleCoil?singleScreened:pool.length+fallbackPool.length,stopped,firstSuccess},message:''};
-  if(best){result.rows=[{...profiles[0],design:best}];result.message='Проверено '+stats.evaluations+' из максимум 200. Подобрано '+best.n+' трубок, '+best.rowCount+' ряд(а). Мощность от задания до +1 %, выходы в допуске; запас UA 0 %. Лучшая длина, затем диаметр среди проверенных вариантов. Re 15000…20000; 3 < R/dᵢ < 12; остаток ≤20 %; зазор 3 мм.'}
+  const result={kind:'coil',inputKey:JSON.stringify([algorithm,state,target.requiredUA]),algorithm,objective:{...objective,value:best?objectiveValue(best,objective.id):null},calculations,acceptedDesigns,selectedCalculationId:best?.calculationId??null,rows:[],candidates:best?[best]:[],attempts,stats,shellCalculation:best?.shellCalculation??null,countRange:search.range,searchGrid:{radiusMM:construction.radiusStepMM,radialGapMM:construction.gapMM,tubeCounts:stats.testedCounts,allocation:'equal starts per row; common pitch and phase',axialSpacing:'1.1do…2do; whole-mm clear gaps',height:'integer clear gaps × starts × integer turns + do'},searchBudget:{firstBatch:construction.firstBatch,maxEvaluations:construction.maxEvaluations,screened:singleCoil?singleScreened:pool.length+fallbackPool.length,stopped,firstSuccess},message:''};
+  if(best){result.rows=[{...profiles[0],detail:objective.detail,design:best}];result.message='Проверено '+stats.evaluations+' из максимум 200. Подобрано '+best.n+' трубок, '+best.rowCount+' ряд(а). Мощность от задания до +1 %, выходы в допуске; запас UA 0 %. Цель: '+objective.name.toLowerCase()+' среди проверенных вариантов. Re 15000…20000; 3 < R/dᵢ < 12; остаток ≤20 %; радиальный зазор 3 мм, вертикальный — целый мм при межосевом 1,1…2d.'}
   else result.message=stopped==='budget-exhausted'?'Достигнут лимит 200 проверок Teplo. Подходящий вариант не найден; это не доказывает отсутствие решения.':'Нет конструкции в сокращённом наборе компоновок. '+(!search.range.counts.length?'Нет целого числа трубок для предварительного Re 15000…20000.':'Предварительно выбрано '+search.range.selected+' трубок. Итоговые Re, заготовки или тепловое задание не выполнены.');
   result.dimensionWitness=outsideBest?{geometry:outsideBest.geometry,manufacturing:outsideBest.manufacturing,q:outsideBest.thermal.heat_duty_kw,hot:outsideBest.thermal.t_hot_out_c,cold:outsideBest.thermal.t_cold_out_c,re:outsideBest.thermal.coils[0].re_hot,shellRe:outsideBest.thermal.shell.re_cold,valid:outsideBest.thermal.valid}:null;
   result.notifications=selectionNotifications(result,state,target,outsideBest);
   if(singleCoil){
-   if(best)result.message='Подобран один змеевик. Полная длина трубы '+(best.manufacturing[0].totalMM/1000).toLocaleString('ru-RU',{maximumFractionDigits:2})+' м. Тепловое задание и критерии Teplo выполнены.';
-   else{
-    const reOutside=search.range.min>1||search.range.max<1;
-    result.message=reOutside
-     ?'Один змеевик не подходит по числу Рейнольдса для заданного расхода. Выключите настройку «Только один змеевик».'
-     :'В текущих габаритах вариант с одним змеевиком не найден. Увеличьте габаритную длину или выключите настройку «Только один змеевик».';
+   if(best){
+    result.message='Подобран один змеевик. Полная длина трубы '+(best.manufacturing[0].totalMM/1000).toLocaleString('ru-RU',{maximumFractionDigits:2})+' м. '+(useStock?'Заготовка '+best.manufacturing[0].stockMM/1000+' м, остаток ≤20 %. ':'Без ограничения длины заготовки и остатка. ')+'Тепловое задание выполнено. Re в трубке не ограничен.';
+    if(!best.thermal.valid)result.notifications.push({level:'warning',code:'single-coil-re-method',text:'Нарушены условия применимости Teplo по Re трубного потока. Вариант подобран с отключённым ограничением Re; применимость корреляции не подтверждена.'});
+   }else{
+    result.message=useStock?'Вариант с одним змеевиком в текущих габаритах и с заданными заготовками не найден. Увеличьте габаритную длину, отключите учёт заготовок или настройку «Только один змеевик».':'В текущих габаритах вариант с одним змеевиком не найден. Увеличьте габаритную длину или выключите настройку «Только один змеевик».';
     result.notifications=[{level:'warning',code:'single-coil-unavailable',text:result.message},...result.notifications.filter(item=>item.code==='search-limit')];
    }
   }
+  result.stockLengthsApplied=useStock;
+  if(!useStock&&!singleCoil&&best)result.message=result.message.replace('остаток ≤20 %;','без ограничения длины заготовки и остатка;');
+  if(!useStock&&!singleCoil&&!best)result.message=result.message.replace('Итоговые Re, заготовки или тепловое задание не выполнены.','Итоговые Re, геометрия или тепловое задание не выполнены.');
   return result;
  }
  function selectionNotifications(result,state,target,outsideBest=null){
@@ -495,8 +521,9 @@
    else if(ratios.length&&Math.min(...ratios)>1.01)add('warning','duty-excess','Проверенные варианты превышают допустимую мощность: разрешено от задания до +1 %.');
    else if(ratios.length)add('warning','duty-match','Проверенные варианты не прошли допуски по мощности, выходным температурам или UA.');
    else if(!result.searchBudget.screened){
-    if(!result.stats.families)add('warning','layout-constraints','Не найдена компоновка с заданными габаритами, радиусом навивки и зазорами 3 мм.');
-    else add('warning','layout-stock','Не найдена полная компоновка с зазорами 3 мм и остатком заготовок не более 20 %.');
+    if(!result.stats.families)add('warning','layout-constraints','Не найдена компоновка с заданными габаритами, радиусом навивки и допустимыми зазорами.');
+    else if(stockLengthsEnabled(state))add('warning','layout-stock','Не найдена полная компоновка с допустимыми зазорами и остатком заготовок не более 20 %.');
+    else add('warning','layout-grid','Не найдена полная компоновка с допустимыми зазорами в проверенном каталоге.');
    }
    const blocks=result.attempts.flatMap(a=>a.blocking||[]);
    if(blocks.some(s=>s.includes('15000 ≤ Re ≤ 20000')))add('warning','tube-re','Часть вариантов не проходит Re в трубках: требуется 15 000…20 000.');
@@ -507,5 +534,5 @@
   if(result.stats.errors)add('warning','verification-errors','Не удалось рассчитать '+format(result.stats.errors)+' из проверенных вариантов.');
   return messages;
  }
- return {balance,source,geometryInput,applicability,dutyAgreement,meets,shellSizing,tubeSize,tubeCounts,inlineReserveCounts,families,compactGeometry,rowAtHeight,rowAtPitch,inlineLayout,compare,screeningModel,shortlist,select,selectionNotifications,profiles,construction,algorithm};
+ return {objectives,objectiveFor,objectiveValue,fullTubeMetres,balance,source,geometryInput,geometryKey,applicability,dutyAgreement,meets,shellSizing,tubeSize,tubeCounts,inlineReserveCounts,families,compactGeometry,buildGeometry,unrestrictedLayout,rowAtHeight,rowAtPitch,inlineLayout,compare,screeningModel,shortlist,select,selectionNotifications,profiles,construction,axialGap,axialGaps,stockLengthsEnabled,singleCoilReUnrestricted,algorithm};
 });

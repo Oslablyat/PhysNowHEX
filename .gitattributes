@@ -1,0 +1,16 @@
+.gitattributes text eol=lf
+# Stable source files on Windows, Linux and GitHub Pages.
+*.js text eol=lf
+*.cjs text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+
+# Immutable audit inputs have recorded hashes of their original raw bytes.
+tests/reference/coil-project-v12.js -text !eol whitespace=cr-at-eol
+tests/reference/coil-sequential-v2.js -text !eol
+tests/reference/coil-sequential-v3.js -text !eol
+tests/reference/coil-sequential-v5.js -text !eol
+docs/audits/coil-selection-v8-150.json -text !eol
+docs/audits/coil-selection-v9-150.json -text !eol

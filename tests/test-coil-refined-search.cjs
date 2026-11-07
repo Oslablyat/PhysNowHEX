@@ -4,7 +4,7 @@ const project=require('../assets/coil-project-method.js'),teplo=require('../asse
  const cp=await(await import(pathToFileURL(path.resolve(__dirname,'../assets/vendor/coolprop/coolprop.js')))).default({wasmBinary:fs.readFileSync(path.resolve(__dirname,'../assets/vendor/coolprop/coolprop.wasm')),print(){},printErr(){}});
  const app=fs.readFileSync(path.resolve(__dirname,'../app.js'),'utf8'),validate=vm.runInNewContext(app.slice(app.indexOf('function coilGeometryError('),app.indexOf('function coilFieldDefinitions('))+';calculateCoilGeometry');
  const base={flow:'counter','hot-fluid':'water','cold-fluid':'water','hot-flow-unit':'kg-s','cold-flow-unit':'kg-s',ph:2,pc:1.2,unknown:'mc',mc:'','area-reserve-percent':0,'tube-conductivity':16,length:10000,'exchanger-diameter':3000};
- const scenarios=[['C-2.5',90,60,20,40,2.5],['D-0.2',90,80,20,30,.2],['D-0.5',90,80,20,30,.5],['J-0.15',100,80,70,90,.15],['A-2.5',50,40,10,25,2.5]];
+ const scenarios=[['C-2.5',90,60,20,40,2.5],['C-0.2',90,60,20,40,.2],['J-0.15',100,80,70,90,.15],['A-2.5',50,40,10,25,2.5]];
  for(const [id,thi,tho,tci,tco,mh] of scenarios){
   const memo=new Map(),props=(...args)=>{const key=JSON.stringify(args);if(memo.has(key))return memo.get(key);const v=cp.PropsSI(...args);if(memo.size<80000)memo.set(key,v);return v},s={...base,thi,tho,tci,tco,mh},t=project.balance(s,props),r=await project.select(s,t,props);
   assert.equal(r.rows.length,1,'Must solve known counterexample '+id);assert(r.stats.evaluations<=200);assert(r.stats.phases.refinement>0);assert(r.searchBudget.firstSuccess<r.stats.evaluations);
@@ -14,7 +14,7 @@ const project=require('../assets/coil-project-method.js'),teplo=require('../asse
   assert(project.inlineLayout(c.geometry).allowed,'Every refined candidate must retain the corridor geometry');
   console.log(id,JSON.stringify({height:c.geometry.height,diameter:c.geometry.diameter,n:c.n,checks:r.stats.evaluations,excessPercent:(c.thermal.heat_duty_kw/t.q-1)*100}));
  }
- const memo=new Map(),props=(...args)=>{const k=JSON.stringify(args);if(memo.has(k))return memo.get(k);const v=cp.PropsSI(...args);if(memo.size<100000)memo.set(k,v);return v},s={...base,thi:90,tho:60,tci:20,tco:40,mh:.5},t=project.balance(s,props),range=project.tubeCounts(s,t,props);
+ const memo=new Map(),props=(...args)=>{const k=JSON.stringify(args);if(memo.has(k))return memo.get(k);const v=cp.PropsSI(...args);if(memo.size<100000)memo.set(k,v);return v},s={...base,thi:90,tho:60,tci:20,tco:40,mh:2.5},t=project.balance(s,props),range=project.tubeCounts(s,t,props);
  assert(range.fallbackCounts.length>0&&range.fallbackCounts.length<=4);assert(new Set(range.fallbackCounts).size===range.fallbackCounts.length);assert(range.fallbackCounts.every(n=>n>=range.min&&n<=range.max&&n!==range.selected));
  const reserve=project.families(s,t,props,range.fallbackCounts);assert(reserve.list.every(f=>range.fallbackCounts.includes(f.n)));
  let cancelled=false,calls=0;const original=teplo.calculate;

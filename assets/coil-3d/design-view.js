@@ -1,10 +1,10 @@
 import * as THREE from '../vendor/three-0.186.1/three.module.min.js';
 import {createModelLighting} from './lighting.js?v=bottom-fill-20261024';
-import {GeometryCache,buildDesignModel,disposeModel,setDesignRowVisible,setDesignPartVisible} from './design-model.js?v=re-stock-20261029';
+import {GeometryCache,buildDesignModel,disposeModel,setDesignRowVisible,setDesignPartVisible} from './design-model.js?v=audit-comparison-20261106';
 import {wheelZoom,zoomAtPoint,panByPixels,orbitByPixels,orbitFrame,DEFAULT_AZIMUTH,DEFAULT_POLAR} from './camera-controls.js?v=plane-panel-20261022';
 import {createOrientationGizmo,planeOrbit,ISOMETRIC_VIEW} from './orientation-gizmo.js?v=plane-panel-20261022';
 
-export function createDesignView(host,onStatus){
+export function createDesignView(host,onStatus,options={}){
   const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:'low-power'});
   renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.75));renderer.setClearColor(0x000000,0);renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.35;
   const canvas=renderer.domElement;canvas.setAttribute('role','img');canvas.setAttribute('aria-label','Продольный 3D-разрез змеевикового аппарата');host.prepend(canvas);
@@ -13,7 +13,7 @@ export function createDesignView(host,onStatus){
   scene.add(createModelLighting());
   const grid=new THREE.GridHelper(1800,18,0x435368,0x2a3442);grid.material.transparent=true;grid.material.opacity=.32;scene.add(grid);
   let latest=null,group=null,visible=false,allowed=true,timer=0,resizeFrame=0,version=0,renderedVersion=-1,lost=false,disposed=false,lastSize='';
-  let zoomState={zoom:1,x:0,y:0},zoomFrame=0,drag=null;host.dataset.zoom='1';host.dataset.panX='0';host.dataset.panY='0';
+  let zoomState={zoom:1,x:0,y:0},zoomFrame=0,drag=null,fitEnvelope=null;host.dataset.zoom='1';host.dataset.panX='0';host.dataset.panY='0';
   let orbitState={azimuth:DEFAULT_AZIMUTH,polar:DEFAULT_POLAR};host.dataset.azimuth=String(orbitState.azimuth);host.dataset.polar=String(orbitState.polar);
   const orientationGizmo=createOrientationGizmo(host,plane=>{endDrag();orbitState=plane==='iso'?{...ISOMETRIC_VIEW}:planeOrbit(plane,orbitState);redrawZoom();});orientationGizmo.update(orbitState);
   function syncRowVisibility(){host.dataset.hiddenRows=JSON.stringify(latest?.g.rows.flatMap((row,i)=>row.hidden?[i]:[])??[]);host.dataset.visibleCoilCount=String(latest?.g.rows.reduce((sum,row)=>sum+(row.hidden?0:row.count),0)??0);host.dataset.shellVisible=String(!!latest&&!latest.g.shellHidden);host.dataset.coreVisible=String(!!latest&&latest.g.coreDiameter>0&&!latest.g.coreHidden);}
@@ -26,14 +26,16 @@ export function createDesignView(host,onStatus){
     // Fit uses the original view, not the current orbit: rotation never silently
     // changes scale or recentres the detail the user has zoomed into.
     fitCamera.position.set(0,centerY,distance);fitCamera.lookAt(0,centerY,0);fitCamera.updateMatrixWorld(true);
-    let halfWidth=0,halfHeight=0;for(const x of [-d/2,d/2])for(const y of [centerY-h/2,centerY+h/2])for(const z of [-d/2,d/2]){const point=new THREE.Vector3(x,y,z).applyMatrix4(fitCamera.matrixWorldInverse);halfWidth=Math.max(halfWidth,Math.abs(point.x));halfHeight=Math.max(halfHeight,Math.abs(point.y));}
+    const fitH=Math.max(h,fitEnvelope?.height||0),fitD=Math.max(d,fitEnvelope?.diameter||0);
+    let halfWidth=0,halfHeight=0;for(const x of [-fitD/2,fitD/2])for(const y of [centerY-fitH/2,centerY+fitH/2])for(const z of [-fitD/2,fitD/2]){const point=new THREE.Vector3(x,y,z).applyMatrix4(fitCamera.matrixWorldInverse);halfWidth=Math.max(halfWidth,Math.abs(point.x));halfHeight=Math.max(halfHeight,Math.abs(point.y));}
     const extent=Math.max(halfHeight*1.18,halfWidth*1.2/aspect),panX=zoomState.x*extent*aspect,panY=zoomState.y*extent;camera.left=-extent*aspect+panX;camera.right=extent*aspect+panX;camera.top=extent+panY;camera.bottom=-extent+panY;camera.zoom=zoomState.zoom;camera.updateProjectionMatrix();
     grid.position.y=-shellHeight/2-3;grid.scale.setScalar(Math.max(d/600,.7));renderer.render(scene,camera);
   }
-  function redrawZoom(){
+  function redrawZoom(notify=true){
     host.dataset.zoom=String(zoomState.zoom);host.dataset.panX=String(zoomState.x);host.dataset.panY=String(zoomState.y);host.dataset.azimuth=String(orbitState.azimuth);host.dataset.polar=String(orbitState.polar);
     orientationGizmo.update(orbitState);
     if(!zoomFrame)zoomFrame=requestAnimationFrame(()=>{zoomFrame=0;if(visible)frame();});
+    if(notify)options.onCameraChange?.({zoom:{...zoomState},orbit:{...orbitState}});
   }
   function resetScale(){endDrag();zoomState={zoom:1,x:0,y:0};orbitState={azimuth:DEFAULT_AZIMUTH,polar:DEFAULT_POLAR};redrawZoom();}
   function startDrag(event){
@@ -70,7 +72,7 @@ export function createDesignView(host,onStatus){
     if(version===renderedVersion){frame();onStatus('ready','',group.userData);return;}
     const started=performance.now();cache.begin();
     try{
-      const next=buildDesignModel(latest.g,latest.mode,cache,latest.selectedRow);
+      const next=buildDesignModel(latest.g,latest.mode,cache,latest.selectedRow,options.modelQuality);
       if(group){scene.remove(group);disposeModel(group);}group=next;scene.add(group);cache.sweep();renderedVersion=version;
       canvas.setAttribute('aria-label',latest.mode==='section'?'Продольный разрез всех деталей: корпуса, закрытого вытеснителя и змеевиков':latest.mode==='full'?'Целая 3D-модель: корпус, вытеснительная труба и змеевики без разреза':'Вырез передней половины корпуса, целые змеевики и закрытый вытеснитель');
       host.dataset.mode=latest.mode;host.dataset.coilCount=String(group.userData.totalCount);host.dataset.selectedRow=String(latest.selectedRow);syncRowVisibility();frame();
@@ -84,6 +86,10 @@ export function createDesignView(host,onStatus){
   canvas.addEventListener('webglcontextlost',event=>{event.preventDefault();endDrag();lost=true;onStatus('error','WebGL приостановлен. Обновите страницу для восстановления 3D.');});
   canvas.addEventListener('webglcontextrestored',()=>{lost=false;renderedVersion=-1;schedule(0);});
   return {
+    getCameraState(){return {zoom:{...zoomState},orbit:{...orbitState}};},
+    setCameraState(state){if(!state||![state.zoom?.zoom,state.zoom?.x,state.zoom?.y,state.orbit?.azimuth,state.orbit?.polar].every(Number.isFinite))return;endDrag();zoomState={...state.zoom,zoom:Math.max(.5,Math.min(100,state.zoom.zoom))};orbitState={...state.orbit};redrawZoom(false);},
+    setFitEnvelope(value){fitEnvelope=value&&Number.isFinite(value.height)&&Number.isFinite(value.diameter)?{...value}:null;redrawZoom(false);},
+    resetView:resetScale,
     update(g,mode,selectedRow){version++;latest=g?{g,mode,selectedRow}:null;if(!g){endDrag();if(timer)clearTimeout(timer);timer=0;if(group){scene.remove(group);disposeModel(group);group=null;}cache.dispose();host.dataset.coilCount='0';syncRowVisibility();}else{onStatus('loading','');schedule();}},
     setRowVisible(rowIndex,shown){if(!latest?.g.rows[rowIndex])return;latest.g.rows[rowIndex].hidden=!shown;if(group)setDesignRowVisible(group,rowIndex,shown);syncRowVisibility();redrawZoom();},
     setPartVisible(name,shown){if(!latest||!['shell','core'].includes(name))return;latest.g[name+'Hidden']=!shown;if(group)setDesignPartVisible(group,name,shown);syncRowVisibility();redrawZoom();},

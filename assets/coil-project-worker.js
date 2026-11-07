@@ -1,10 +1,16 @@
 import createCoolProp from './vendor/coolprop/coolprop.js';
 import './coil-thermal-method.js';
 import './coil-manufacturing.js?v=re-stock-20261029';
-import './coil-project-method.js?v=single-coil-20261104';
-const library=createCoolProp({print:()=>{},printErr:()=>{}});let latest=0;
+import './coil-project-method.js?v=calculated-choice-20261107';
+const library=createCoolProp({print:()=>{},printErr:()=>{}});let latest=0,cachedId=null,acceptedDesigns=new Map();
 self.onmessage=async({data})=>{
+ if(data.selectCalculation){
+  if(data.id!==latest||data.id!==cachedId)return;
+  const design=acceptedDesigns.get(data.calculationId);
+  self.postMessage(design?{id:data.id,phase:'selected',selectionRequest:data.selectionRequest,design}:{id:data.id,phase:'selection-error',selectionRequest:data.selectionRequest,message:'Эта конструкция недоступна в текущем расчёте.'});return;
+ }
  latest=data.id;const cancelled=()=>latest!==data.id;
+ acceptedDesigns.clear();cachedId=null;
  if(data.cancel)return;
  let stage='runtime';
  try{
@@ -14,6 +20,7 @@ self.onmessage=async({data})=>{
   self.postMessage({id:data.id,phase:'balance',balance});
   stage='design';const variants=await self.CoilProjectMethod.select(data.state,balance,props,{cancelled,yield:()=>new Promise(resolve=>setTimeout(resolve,0)),progress:stats=>{if(!cancelled())self.postMessage({id:data.id,phase:'progress',stats})}});
   if(cancelled()||!variants)return;
+  acceptedDesigns=new Map((variants.acceptedDesigns??[]).map(c=>[c.calculationId,c]));cachedId=data.id;delete variants.acceptedDesigns;
   // Keep full verification for enabled winners, not thousands of duplicate
   // coil arrays in a postMessage or per-sheet snapshot.
   variants.candidates=variants.candidates.map(({thermal,thermalSource,...c})=>({...c,verified:thermal.valid,duty:thermal.heat_duty_kw,ua:thermal.ua_w_k}));

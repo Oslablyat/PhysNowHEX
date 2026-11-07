@@ -801,6 +801,8 @@ main{padding-top:0}
 }
 .construction-toggle-blue{--check-accent:#85afd9}
 .construction-toggle[hidden]{display:none}
+.construction-toggle:disabled{opacity:.45;cursor:not-allowed}
+.construction-toggle:disabled:is(:active,.is-pressed){transform:none}
 .construction-toggle:is(:active,.is-pressed){transform:scale(.99)}
 .construction-toggle:focus-visible{outline:1px solid #a3a3a3;outline-offset:1px}
 .construction-toggle .t-check{

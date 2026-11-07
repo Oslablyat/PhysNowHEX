@@ -19,15 +19,16 @@ const COIL_RADIAL_SEGMENTS=32,COIL_STEPS_PER_TURN=128;
 
 // Receives calculateCoilGeometry's validated result, not the standalone demo's
 // narrower input limits. The renderer never rewrites sheet data or geometry.
-export function designParameters(g){
+export function designParameters(g,quality={}){
   if(!g||!Array.isArray(g.rows)||!g.rows.length||g.rows.length>8)throw Error('Не задана геометрия аппарата.');
   for(const key of ['diameter','height','shellWall','tubeDiameter','tubeWall'])if(!Number.isFinite(g[key])||g[key]<=0)throw Error('Проверьте размеры аппарата.');
   const rows=g.rows.map((r,i)=>{
     if(![r.diameter,r.turns,r.pitch,r.count,r.offset??0,r.phase??0].every(Number.isFinite)||r.count<1||r.count>64||!Number.isInteger(r.count)||r.turns<.5||r.turns>1000)throw Error('Проверьте параметры ряда '+(i+1)+'.');
     return {coilDiameter:r.diameter,turns:r.turns,pitch:r.pitch,count:r.count,phase:(r.phase??0)*Math.PI/180,handedness:r.direction==='left'?-1:1,centerY:g.height/2-(r.offset??0)-g.tubeDiameter/2-r.turns*r.pitch/2,index:i};
   });
-  const stepsPerTurn=COIL_STEPS_PER_TURN;
-  return {shellDiameter:g.diameter,height:g.height,shellWall:g.shellWall,coreDiameter:g.coreDiameter,coreWall:g.coreWall,coreLength:g.coreLength,tubeDiameter:g.tubeDiameter,tubeWall:g.tubeWall,leadBendRadius:g.leadBendRadius??2*g.tubeDiameter,leadStraightLength:g.leadStraightLength??Math.max(40,2*g.tubeDiameter),rows,stepsPerTurn,totalCount:rows.reduce((sum,r)=>sum+r.count,0)};
+  const stepsPerTurn=Number.isFinite(quality.stepsPerTurn)?Math.max(32,Math.min(COIL_STEPS_PER_TURN,Math.round(quality.stepsPerTurn))):COIL_STEPS_PER_TURN;
+  const radialSegments=Number.isFinite(quality.radialSegments)?Math.max(12,Math.min(COIL_RADIAL_SEGMENTS,Math.round(quality.radialSegments))):COIL_RADIAL_SEGMENTS;
+  return {shellDiameter:g.diameter,height:g.height,shellWall:g.shellWall,coreDiameter:g.coreDiameter,coreWall:g.coreWall,coreLength:g.coreLength,tubeDiameter:g.tubeDiameter,tubeWall:g.tubeWall,leadBendRadius:g.leadBendRadius??2*g.tubeDiameter,leadStraightLength:g.leadStraightLength??Math.max(40,2*g.tubeDiameter),rows,stepsPerTurn,radialSegments,totalCount:rows.reduce((sum,r)=>sum+r.count,0)};
 }
 
 export function closedCoreGeometry(diameter,wall,height){
@@ -43,8 +44,8 @@ export function closedCoreGeometry(diameter,wall,height){
   outer.dispose();inner.dispose();const result=new THREE.BufferGeometry();result.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));result.setAttribute('normal',new THREE.Float32BufferAttribute(normals,3));return result;
 }
 
-export function buildDesignModel(g,mode='section',cache=new GeometryCache(),selectedRow=0){
-  const p=designParameters(g),group=new THREE.Group(),materials=new Map();
+export function buildDesignModel(g,mode='section',cache=new GeometryCache(),selectedRow=0,quality={}){
+  const p=designParameters(g,quality),group=new THREE.Group(),materials=new Map();
   const material=(key,color,selected=true)=>{
     if(!materials.has(key))materials.set(key,new THREE.MeshStandardMaterial({color,metalness:key==='cut'?.1:.35,roughness:key==='cut'?.65:.42,side:key==='cut'?THREE.DoubleSide:THREE.FrontSide}));
     const result=materials.get(key);if(key.startsWith('row')){result.emissive.setHex(selected?color:0x000000);result.emissiveIntensity=selected?.1:0;}return result;
@@ -58,8 +59,8 @@ export function buildDesignModel(g,mode='section',cache=new GeometryCache(),sele
       entryAngles[row.index]=Math.atan2(path.top.z,path.top.x);
       if(path.top.y+row.centerY<p.height/2||path.bottom.y+row.centerY>-p.height/2)portsInside+=row.count;
       bottom=Math.min(bottom,path.bottom.y+row.centerY-p.tubeDiameter/2);top=Math.max(top,path.top.y+row.centerY+p.tubeDiameter/2);
-      const key=['design-leaded-coil',p.tubeDiameter,p.tubeWall,row.coilDiameter,row.turns,row.pitch,row.handedness,path.steps,path.radius,path.top.y,path.bottom.y,COIL_RADIAL_SEGMENTS].join('|');
-      for(let j=0;j<row.count;j++)parts.push({name:'row-'+row.index+'-coil-'+j,key,color:COLORS[row.index],rowIndex:row.index,startIndex:j,phase:row.phase+2*Math.PI*j/row.count,y:row.centerY,create:()=>smoothHollowSweep(path,path.steps,p.tubeDiameter/2,p.tubeDiameter/2-p.tubeWall,COIL_RADIAL_SEGMENTS)});
+      const key=['design-leaded-coil',p.tubeDiameter,p.tubeWall,row.coilDiameter,row.turns,row.pitch,row.handedness,path.steps,path.radius,path.top.y,path.bottom.y,p.radialSegments].join('|');
+      for(let j=0;j<row.count;j++)parts.push({name:'row-'+row.index+'-coil-'+j,key,color:COLORS[row.index],rowIndex:row.index,startIndex:j,phase:row.phase+2*Math.PI*j/row.count,y:row.centerY,create:()=>smoothHollowSweep(path,path.steps,p.tubeDiameter/2,p.tubeDiameter/2-p.tubeWall,p.radialSegments)});
     }
     for(const part of parts){
       const geometry=cache.get(part.key,()=>({geometry:part.create()})).geometry,phase=part.phase??0;

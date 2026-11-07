@@ -24,8 +24,12 @@
   function render(r){
    const assessment=hooks.assess?.(r);element.dataset.status='ready';status.dataset.kind=r.valid&&assessment?.meets!==false?'valid':'warning';status.textContent=r.valid?(assessment?.meets===false?'Критерии применимости выполнены, но проектное задание или запас UA не выполнены. Конструкция не подтверждена.':assessment?.meets?'Проектное задание, запас UA и критерии применимости Teplo выполнены.':'Критерии применимости выполнены.'):'Есть невыполненные критерии применимости. Числа рассчитаны вне области корреляции — не считать конструкцию подтверждённой.';
    if(assessment?.target?.projectAlgorithm){status.dataset.kind=assessment.meets?'valid':'warning';status.textContent=assessment.meets?'Мощность от задания до +1 %, выходные температуры в допуске, Re 15000…20000 и критерии Teplo выполнены. Запас UA 0 %.':'Мощность должна быть от задания до +1 %, выходы — в допуске. Есть невыполненные условия задания, Re или методики Teplo. Запас UA 0 %.';}
+   if(assessment?.applicability?.tubeReUnrestricted){
+    status.dataset.kind=assessment.meets&&r.valid?'valid':'warning';
+    status.textContent=assessment.meets?(r.valid?'Тепловое задание выполнено. Один змеевик: Re трубного потока не ограничен. Остальные критерии Teplo выполнены.':'Тепловое задание выполнено с исключением по Re трубного потока. Применимость корреляции Teplo по Re не подтверждена.'):'Один змеевик: Re трубного потока не ограничен. Не выполнены тепловое задание или другие условия методики.';
+   }
    const sh=r.shell,checks=r.coils.flatMap(c=>c.tube_checks.map(message=>['Змеевик '+c.index+' · ряд '+c.row,message]));checks.push(...sh.checks.map(message=>['Межтрубная сторона',message]));
-   if(assessment?.target?.projectAlgorithm)for(const c of r.coils)if(c.re_hot<15000||c.re_hot>20000)checks.push(['Змеевик '+c.index+' · ряд '+c.row,'Проектное ограничение: 15000 ≤ Re ≤ 20000; Re='+f(c.re_hot)]);
+   if(assessment?.target?.projectAlgorithm&&!assessment?.applicability?.tubeReUnrestricted)for(const c of r.coils)if(c.re_hot<15000||c.re_hot>20000)checks.push(['Змеевик '+c.index+' · ряд '+c.row,'Проектное ограничение: 15000 ≤ Re ≤ 20000; Re='+f(c.re_hot)]);
    if(assessment?.agreement)checks.push(...assessment.agreement.checks.map(message=>['Соответствие проектному заданию',message]));
    output.innerHTML=metrics([['Мощность Q',f(r.heat_duty_kw,6),'кВт'],['Горячая · выход',f(r.t_hot_out_c,6),'°C'],['Холодная · выход',f(r.t_cold_out_c,6),'°C'],['Средний K',f(r.overall_u_w_m2k),'Вт/(м²·К)'],['Проводимость UA',f(r.ua_w_k),'Вт/К'],['F по среднему диаметру',f(r.area_m2,6),'м²']])+
     (checks.length?table('Невыполненные условия',['Объект','Условие и фактическое значение'],checks):'')+

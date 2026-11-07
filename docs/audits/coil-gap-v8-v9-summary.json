@@ -1,0 +1,94 @@
+{
+  "before": {
+    "total": 150,
+    "found": 53,
+    "auditFailures": 0,
+    "totalCalls": 12444,
+    "totalMS": 109501.06499999999
+  },
+  "after": {
+    "total": 150,
+    "found": 43,
+    "auditFailures": 0,
+    "totalCalls": 13304,
+    "totalMS": 98031.91949999997
+  },
+  "statusBefore": {
+    "no-N": 44,
+    "found": 53,
+    "no-family": 26,
+    "budget": 22,
+    "catalogue": 5
+  },
+  "statusAfter": {
+    "no-N": 44,
+    "found": 43,
+    "catalogue": 8,
+    "no-family": 26,
+    "budget": 29
+  },
+  "added": [
+    "B-0.15",
+    "D-2.5"
+  ],
+  "lost": [
+    "A-5",
+    "C-0.5",
+    "D-0.08",
+    "D-0.15",
+    "D-0.2",
+    "D-0.35",
+    "D-0.5",
+    "D-1",
+    "F-2.5",
+    "G-0.2",
+    "G-0.35",
+    "G-1"
+  ],
+  "common": 41,
+  "shorter": 37,
+  "longer": 4,
+  "equalLength": 0,
+  "lostWithOldAdmissibleWitness": [],
+  "oldGapRangeMM": [
+    3.055555555555557,
+    326.6470588235294
+  ],
+  "newGapRangeMM": [
+    2,
+    14
+  ],
+  "oldMedianGapMM": 12.86111111111111,
+  "newMedianGapMM": 3,
+  "oldMedianPositiveCalls": 186.5,
+  "newMedianPositiveCalls": 200,
+  "solverErrorsBefore": 19,
+  "solverErrorsAfter": 4,
+  "lostDueToBudget": [
+    "C-0.5",
+    "D-0.08",
+    "D-0.15",
+    "D-0.2",
+    "D-0.35",
+    "D-0.5",
+    "D-1",
+    "G-0.2",
+    "G-0.35",
+    "G-1"
+  ],
+  "lostOutsideNewSpacingRange": [
+    "A-5",
+    "C-0.5",
+    "D-0.08",
+    "D-0.15",
+    "D-0.2",
+    "D-0.35",
+    "D-0.5",
+    "D-1",
+    "F-2.5",
+    "G-0.2",
+    "G-0.35",
+    "G-1"
+  ],
+  "medianHeightReductionPercent": 6.501547987616096
+}

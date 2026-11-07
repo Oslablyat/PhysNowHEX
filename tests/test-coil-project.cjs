@@ -22,7 +22,7 @@ const project=require('../assets/coil-project-method.js'),teplo=require('../asse
  const shell=project.shellSizing(600,.4);assert.equal(shell.gaugeMPa,.4-.101325);assert.equal(shell.corrosionMM,.2);assert.equal(shell.weldFactor,1);assert.equal(shell.allowableMPa,130);assert(Math.abs(shell.rawMM-.88925)<1e-12);assert.equal(shell.wallMM,1);assert.equal(shell.innerMM,598);
  assert.equal(project.shellSizing(600,1).wallMM,3);for(const pressure of [0,.05,.101325])assert.throws(()=>project.shellSizing(600,pressure),/избыточное/);
  const manufacturing=require('../assets/coil-manufacturing.js');
- const singleState={...state,'single-coil':true,mh:.047,tci:55,tco:70};
+ const singleState={...state,'single-coil':true,'stock-lengths':false,mh:.047,tci:55,tco:70};
  const singleTarget=project.balance(singleState,memo);
  const single=await project.select(singleState,singleTarget,memo);
  const longCoil=single.rows[0]?.design;
@@ -39,9 +39,9 @@ const project=require('../assets/coil-project-method.js'),teplo=require('../asse
  assert(tooShort.notifications.some(item=>item.level==='warning'&&/Увеличьте габаритную длину или выключите/.test(item.text)));
  const singleAtHighFlow=await project.select({...state,'single-coil':true},r,memo);
  assert.equal(singleAtHighFlow.rows.length,0);
- assert.equal(singleAtHighFlow.stats.evaluations,0,'Do not fall back to multiple coils in single-coil mode');
- assert(singleAtHighFlow.notifications.some(item=>item.level==='warning'&&/числу Рейнольдса/.test(item.text)));
- assert.equal(project.algorithm,'re-stock-full-height-v8');assert(!r.ignoreRadiusRatio);
+ assert(singleAtHighFlow.stats.families>0,'High Re must not prevent forming single-coil geometry');assert(singleAtHighFlow.attempts.every(a=>a.count===1),'Do not fall back to multiple coils');
+ assert(!singleAtHighFlow.notifications.some(item=>/числу Рейнольдса/.test(item.text)));
+ assert.equal(project.algorithm,'re-stock-single-re-free-v12');assert(!r.ignoreRadiusRatio);
  for(const [length,stock]of [[799.99,null],[800,1000],[999.99,1000],[1000,null],[2399.99,null],[2400,3000],[2999.99,3000],[3000,null],[3200,null],[4800,6000],[5999.99,6000],[6000,null],[6001,null]])assert.equal(manufacturing.stockFor(length),stock,'stock '+length);
  const baseCounts=project.tubeCounts(state,r,memo),higher=project.tubeCounts(state,{...r,mh:5},memo);assert(higher.min>baseCounts.min);assert(higher.max>baseCounts.max);
  const bounds=project.tubeCounts(state,{...r,mh:Math.PI*.009*.001*17500},()=>.001);assert.deepEqual(bounds.target,{min:4,max:4});
@@ -56,7 +56,7 @@ const project=require('../assets/coil-project-method.js'),teplo=require('../asse
  for(const f of family.list){
   assert.equal(f.rows.reduce((s,row)=>s+row.count,0),f.n);assert(f.rows.every(row=>Number.isInteger(row.count)&&row.count>=1&&row.count<=64));
   assert(f.diameter<=Number(state['exchanger-diameter']));assert.equal(f.shell.wallMM,project.shellSizing(f.diameter,state.pc).wallMM);
-  f.rows.forEach((row,i)=>{assert(row.diameter/2/(f.d-2*f.w)>3);assert(row.diameter/2/(f.d-2*f.w)<12);if(i)assert(row.diameter>f.rows[i-1].diameter);assert(row.minPitch/row.count/Math.sqrt(1+(row.minPitch/(Math.PI*row.diameter))**2)>=f.d+3-1e-8)});
+  f.rows.forEach((row,i)=>{assert(row.diameter/2/(f.d-2*f.w)>3);assert(row.diameter/2/(f.d-2*f.w)<12);if(i)assert(row.diameter>f.rows[i-1].diameter);assert(row.minPitch/row.count/Math.sqrt(1+(row.minPitch/(Math.PI*row.diameter))**2)>=f.d-1e-8)});
  }
  const started=Date.now(),selected=await project.select(designState,target,memo);console.log('New compact search time:',Date.now()-started,'ms;',selected.stats);
  assert.equal(selected.rows.length,1);assert.equal(selected.rows[0].id,'balanced');assert.equal(selected.candidates.length,1);assert(project.profiles.filter(p=>p.enabled).every(p=>p.id==='balanced'));
@@ -77,6 +77,6 @@ const project=require('../assets/coil-project-method.js'),teplo=require('../asse
  assert.equal(await project.select(state,r,memo,{cancelled:()=>true}),null);
  let cancel=false;assert.equal(await project.select(designState,target,memo,{yield:async()=>{cancel=true},cancelled:()=>cancel}),null);
  const impossible=await project.select({...state,mh:10000},{...r,mh:10000},memo);assert.equal(impossible.rows.length,0);assert.match(impossible.message,/Нет конструкции/);
- assert(app.includes("'re-stock-full-height-v8'"));assert(app.includes('coilManufacturingItems()'));assert(app.includes('конструкция не найдена'));
+ assert(app.includes("'re-stock-single-re-free-v12'"));assert(app.includes('coilManufacturingItems()'));assert(app.includes('конструкция не найдена'));
  console.log('Teplo project passed: balance unknowns/units; pressure/ceil; Re-based counts; strict radius; full stock lengths/20% waste; compact lexicographic selection; inner-to-outer numbering; independent Teplo; guards/cancellation.');
 })().catch(e=>{console.error(e);process.exitCode=1});

@@ -1,7 +1,13 @@
 /* Reproducible 150-case audit of the production selector.
  * Writes measured evidence, not golden expected success rates. */
 const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),assert=require('node:assert/strict'),{pathToFileURL}=require('node:url');
-const project=require('../assets/coil-project-method.js'),teplo=require('../assets/coil-thermal-method.js'),manufacturing=require('../assets/coil-manufacturing.js');
+const {execFileSync}=require('node:child_process'),{createHash}=require('node:crypto'),Module=require('node:module');
+const engineFile=path.resolve(__dirname,'../assets/coil-project-method.js');
+const engineRef=process.argv.find(s=>s.startsWith('--engine-ref='))?.slice(13);
+if(engineRef)assert(/^[0-9a-f]{40}$/.test(engineRef),'Pin the baseline to a full commit hash');
+const engineCode=engineRef?execFileSync('git',['show',engineRef+':assets/coil-project-method.js'],{encoding:'utf8'}):fs.readFileSync(engineFile,'utf8');
+const engine=new Module(engineFile,module);engine.filename=engineFile;engine.paths=Module._nodeModulePaths(path.dirname(engineFile));engine._compile(engineCode,engineFile);
+const project=engine.exports,teplo=require('../assets/coil-thermal-method.js'),manufacturing=require('../assets/coil-manufacturing.js');
 const flows=[.02,.05,.08,.1,.15,.2,.35,.5,1,2.5,5,10,20,40,80];
 const regimes=[
  ['A',50,40,10,25],['B',70,50,15,35],['C',90,60,20,40],
@@ -10,7 +16,7 @@ const regimes=[
  ['J',100,80,70,90]
 ];
 const base={flow:'counter','hot-fluid':'water','cold-fluid':'water','hot-flow-unit':'kg-s','cold-flow-unit':'kg-s',ph:2,pc:1.2,unknown:'mc',mc:'','area-reserve-percent':0,'tube-conductivity':16,length:10000,'exchanger-diameter':3000};
-const reportName=process.argv.find(s=>s.startsWith('--output='))?.slice(9)||'coil-selection-v8-150.json';
+const reportName=process.argv.find(s=>s.startsWith('--output='))?.slice(9)||'coil-selection-v9-150.json';
 assert(/^[a-z0-9-]+\.json$/.test(reportName));
 const requested=process.argv.find(s=>s.startsWith('--cases='))?.slice(8).split(',');
 const output=path.resolve(__dirname,'../docs/audits',reportName);
@@ -25,24 +31,25 @@ function checkGeometry(c){
  assert(project.inlineLayout(g).allowed,'The selected geometry must be physically inline');
  assert(g.height<=base.length&&g.diameter<=base['exchanger-diameter']);
  assert.equal(g.rows.reduce((s,r)=>s+r.count,0),c.n);
+ if(project.axialGap)for(const row of g.rows)assert(project.axialGap(g.tubeDiameter,row.pitch,row.count).allowed,'Integer axial gap and 1.1do…2do required');
  g.rows.forEach((r,i)=>{assert(Number.isInteger(r.turns)&&r.turns<=1000);assert(r.count<=64);assert(r.diameter/2/(g.tubeDiameter-2*g.tubeWall)>3&&r.diameter/2/(g.tubeDiameter-2*g.tubeWall)<12);if(i)assert(Math.abs((r.diameter-g.rows[i-1].diameter)/2-g.tubeDiameter-3)<1e-8);const m=manufacturing.measure(r,g.leadBendRadius,g.leadStraightLength),stock=manufacturing.stockFor(m.totalMM);assert(stock);assert(m.totalMM<stock&&m.totalMM>=stock*.8-1e-7)});
 }
 (async()=>{
  const cp=await(await import(pathToFileURL(path.resolve(__dirname,'../assets/vendor/coolprop/coolprop.js')))).default({wasmBinary:fs.readFileSync(path.resolve(__dirname,'../assets/vendor/coolprop/coolprop.wasm')),print(){},printErr(){}});
- const report={algorithm:project.algorithm,created:new Date().toISOString(),base,flows,regimes:regimes.map(([id,thi,tho,tci,tco])=>({id,thi,tho,tci,tco})),cases:[]};
+ const report={algorithm:project.algorithm,engineSource:{commit:engineRef??null,sha256:createHash('sha256').update(engineCode).digest('hex')},created:new Date().toISOString(),base,flows,regimes:regimes.map(([id,thi,tho,tci,tco])=>({id,thi,tho,tci,tco})),cases:[]};
  fs.mkdirSync(path.dirname(output),{recursive:true});
  const save=()=>fs.writeFileSync(output,JSON.stringify(report,null,2)+'\n');
  const original=teplo.calculate;
  for(const [regime,thi,tho,tci,tco] of regimes)for(const mh of flows){
   if(requested&&!requested.includes(regime+'-'+mh))continue;
   const id=regime+'-'+mh,state={...base,thi,tho,tci,tco,mh},cache=new Map(),props=(...args)=>{const key=JSON.stringify(args);if(cache.has(key))return cache.get(key);const v=cp.PropsSI(...args);if(cache.size<80000)cache.set(key,v);return v},start=performance.now();
-  const row={id,regime,mh,state,passedAudit:true};let target,actualCalls=0;const observations=[];
+  const row={id,regime,mh,state,passedAudit:true};let target,actualCalls=0,duplicates=0;const observations=[],seen=new Set();
   try{
    target=project.balance(state,props);row.target={q:target.q,mc:target.mc,dt:target.dt,requiredUA:target.requiredUA,imbalance:target.imbalance};
-   teplo.calculate=(input,p)=>{actualCalls++;try{const r=original(input,p);observations.push(observation(r,target));return r}catch(e){observations.push({error:e.message});throw e}};
+   teplo.calculate=(input,p)=>{actualCalls++;const key=JSON.stringify(input);if(seen.has(key))duplicates++;seen.add(key);try{const r=original(input,p);observations.push(observation(r,target));return r}catch(e){observations.push({error:e.message});throw e}};
    const r=await project.select(state,target,props);row.stats=r.stats;row.budget=r.searchBudget;row.countRange=r.countRange;row.message=r.message;row.found=!!r.rows.length;if(process.argv.includes('--details'))row.attempts=r.attempts;
-   assert(actualCalls<=200);assert.equal(actualCalls,r.stats.evaluations);assert(target.imbalance<=.001);
-   if(row.found){const c=r.rows[0].design;checkGeometry(c);const independent=original({...project.source(state,target),...project.geometryInput(c.geometry)},props);assert(project.meets(independent,target));assert(Math.abs(independent.heat_duty_kw-c.thermal.heat_duty_kw)<1e-9);row.selected={...observation(independent,target),n:c.n,height:c.geometry.height,diameter:c.geometry.diameter,rowCount:c.rowCount,geometry:c.geometry,manufacturing:c.manufacturing};}
+   assert(actualCalls<=200);assert.equal(actualCalls,r.stats.evaluations);assert.equal(duplicates,0);assert(target.imbalance<=.001);
+   if(row.found){const c=r.rows[0].design;checkGeometry(c);const independent=original({...project.source(state,target),...project.geometryInput(c.geometry)},props);assert(project.meets(independent,target));assert(Math.abs(independent.heat_duty_kw-c.thermal.heat_duty_kw)<1e-9);row.selected={...observation(independent,target),n:c.n,height:c.geometry.height,diameter:c.geometry.diameter,rowCount:c.rowCount,axialGapsMM:c.geometry.rows.map(r=>r.pitch/r.count-c.geometry.tubeDiameter),axialSpacingRatios:c.geometry.rows.map(r=>r.pitch/r.count/c.geometry.tubeDiameter),geometry:c.geometry,manufacturing:c.manufacturing};}
    const valid=observations.filter(o=>o.applicable),close=[...valid].sort((a,b)=>Math.abs(a.ratio-1.005)-Math.abs(b.ratio-1.005));
    row.diagnostics={calls:actualCalls,errors:observations.filter(o=>o.error).length,applicable:valid.length,below:valid.filter(o=>o.ratio<1-1e-7).length,above:valid.filter(o=>o.ratio>1.01+1e-9).length,agreement:valid.filter(o=>o.agreement).length,tubeReFailures:observations.filter(o=>o.blocking?.some(s=>s.includes('15000'))).length,shellReFailures:observations.filter(o=>o.shellRe>=1e5).length,closest:close.slice(0,3)};
    if(process.argv.includes('--details'))row.observations=observations;

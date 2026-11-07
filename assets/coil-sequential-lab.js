@@ -1,0 +1,78 @@
+import {createDesignView} from './coil-3d/design-view.js?v=sequential-lab-20261106';
+const $=id=>document.getElementById(id),sides=['before','after'],views={},bounds={},form=$('lab-form');
+let report=null,pair=null,worker=null,request=0,mode='section',extraCases=[],profile='recommended';
+const profileNames={recommended:'Разумная конструкция',compact:'Самый короткий корпус',economical:'Минимум трубы',simplest:'Меньше рядов'};
+const tubeM=c=>c?c.manufacturing.reduce((s,t)=>s+t.totalMM*t.count,0)/1000:null;
+const gaps=g=>g?{radial:g.rows.length>1?(g.rows[1].diameter-g.rows[0].diameter)/2-g.tubeDiameter:null,shell:(g.diameter-2*g.shellWall-g.rows.at(-1).diameter-g.tubeDiameter)/2,core:(g.rows[0].diameter-g.tubeDiameter-g.coreDiameter)/2}:{};
+const displayedAfter=()=>pair?.after?.selection?.[profile]??pair?.after?.selected;
+function renderChoice(){
+ const selection=pair?.after?.selection,c=displayedAfter();
+ document.querySelectorAll('[data-profile]').forEach(b=>{b.disabled=!selection;b.setAttribute('aria-pressed',String(b.dataset.profile===profile))});
+ $('after-variant-title').textContent=profileNames[profile];
+ if(!selection||!c){$('choice-reason').textContent='После расчёта здесь появятся проверенные альтернативы и причина выбора.';return}
+ const base=selection.simplest,delta=(tubeM(c)/selection.referenceTubeM-1)*100,eligible=c.rowCount<=base.rowCount||tubeM(c)<=selection.tubeLimitM+1e-9;
+ $('choice-reason').textContent='Опорная компоновка: '+base.rowCount+' ряд(а), '+fmt(base.geometry.height,0)+' × Ø'+fmt(base.geometry.diameter,0)+' мм, '+fmt(selection.referenceTubeM,3)+' м трубы. Для дополнительных рядов предел +20 %: '+fmt(selection.tubeLimitM,3)+' м. Показано: '+c.rowCount+' ряд(а), '+fmt(tubeM(c),3)+' м ('+(delta>=0?'+':'')+fmt(delta)+' %). '+(eligible?'Правило дополнительных рядов выполнено.':'Это альтернатива: расход выше предела, поэтому по умолчанию она не выбрана.');
+}
+const fmt=(n,d=2)=>Number.isFinite(n)?new Intl.NumberFormat('ru-RU',{maximumFractionDigits:d}).format(n):'—';
+function el(tag,text){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;return e}
+function setBadge(side,text,kind){$(side+'-badge').textContent=text;$(side+'-badge').dataset.kind=kind}
+function extraTitle(c){return (c.state['single-coil']?'Один змеевик':'Обычный режим')+' · '+fmt(c.state.mh)+' кг/с'+(c.state.length<10000?' · L≤'+fmt(c.state.length,0):'')}
+function fit(){const meta=Object.values(bounds).filter(Boolean),envelope=$('common-scale').checked&&meta.length?{height:Math.max(...meta.map(v=>v.height)),diameter:Math.max(...meta.map(v=>v.diameter))}:null;for(const s of sides)views[s]?.setFitEnvelope(envelope)}
+for(const side of sides){try{views[side]=createDesignView($(side+'-view'),(status,message,meta)=>{if(!pair?.[side]?.found)return;$(side+'-view').dataset.status=status;$(side+'-message').textContent=status==='ready'?'':status==='loading'?'Строю модель…':message;if(meta){bounds[side]=meta;fit()}},{modelQuality:{stepsPerTurn:48,radialSegments:16},onCameraChange:state=>{if($('coupled').checked)views[side==='before'?'after':'before']?.setCameraState(state)}})}catch{$(side+'-message').textContent='3D недоступно в браузере.'}}
+function readState(){const s={flow:'counter','hot-fluid':'water','cold-fluid':'water','hot-flow-unit':'kg-s','cold-flow-unit':'kg-s',unknown:'mc','tube-conductivity':16,'area-reserve-percent':0,'single-coil':$('one-coil').checked,'stock-lengths':$('stock').checked};for(const input of form.querySelectorAll('input[type=number]'))s[input.name]=Number(input.value);return s}
+function writeState(s){for(const input of form.querySelectorAll('input[type=number]'))input.value=s[input.name];$('one-coil').checked=s['single-coil']===true;$('stock').checked=s['stock-lengths']!==false}
+function stop(){request++;worker?.terminate();worker=null;$('stop').disabled=true;$('run').disabled=false}
+function invalidate(){stop();pair=null;profile='recommended';renderChoice();for(const side of sides){views[side]?.update(null,mode,-1);$(side+'-view').dataset.found='false';$(side+'-message').textContent='Запустите сравнение';setBadge(side,'—','none');$(side+'-caption').textContent='—'}$('lab-parameters').replaceChildren();$('trace').replaceChildren();$('trace-count').textContent='';$('lab-balance').textContent='';$('calculated-cold-flow').value='—';$('run-status').textContent='Исходные данные изменены — нажмите «Сравнить подбор».'}
+function showModel(side,reset=true){const raw=pair?.[side],r=side==='after'&&raw?{...raw,selected:displayedAfter()}:raw,host=$(side+'-view');host.dataset.found=String(!!r?.found);bounds[side]=null;
+ if(!r?.found){views[side]?.update(null,mode,-1);$(side+'-message').textContent=r?'Конструкция не найдена\n'+(r.message||'Ограниченный поиск не дал результата.'):'Ожидает расчёта';setBadge(side,r?'Не найдена':'—','none');$(side+'-caption').textContent=r?fmt(r.stats.evaluations,0)+' Teplo · '+fmt(r.stats.geometryChecks,0)+' геометрических проверок':'—';return}
+ const g=structuredClone(r.selected.geometry);g.shellHidden=!$('show-shell').checked;
+ setBadge(side,'Найдена','found');if(views[side]){views[side].update(g,mode,-1);if(reset)views[side].resetView()}else $(side+'-message').textContent='3D недоступно в браузере.';
+ $(side+'-caption').textContent=fmt(r.stats.evaluations,0)+' Teplo · H '+fmt(g.height,0)+' × Ø'+fmt(g.diameter,0)+' мм · '+r.selected.n+' трубок';
+}
+function row(label,a,b,unit='',digits=2){const tr=el('tr');tr.append(el('th',label),el('td',typeof a==='string'?a:a==null?'—':fmt(a,digits)+(unit?' '+unit:'')),el('td',typeof b==='string'?b:b==null?'—':fmt(b,digits)+(unit?' '+unit:'')));return tr}
+function renderParameters(){
+ const a=pair?.before,b=pair?.after,c=a?.selected,d=displayedAfter(),g=c?.geometry,h=d?.geometry;
+ $('calculated-cold-flow').value=Number.isFinite(pair?.target?.mc)?fmt(pair.target.mc,4):'—';
+ $('lab-parameters').replaceChildren(...[
+ ['Расход трубного пространства',pair?.target?.mh,pair?.target?.mh,'кг/с',4],
+ ['Расход межтрубного пространства',pair?.target?.mc,pair?.target?.mc,'кг/с',4],
+ ['Общая длина всех трубок с отводами',tubeM(c),tubeM(d),'м',3],
+ ['Теплообменная площадь',c?.area,d?.area,'м²',3],
+ ['Зазор между рядами',gaps(g).radial,gaps(h).radial,'мм',3],
+ ['Зазор до корпуса',gaps(g).shell,gaps(h).shell,'мм',3],
+ ['Зазор до вытеснителя',gaps(g).core,gaps(h).core,'мм',3],
+ ['Рост трубы к опорной компоновке',null,d&&b?.selection?(tubeM(d)/b.selection.referenceTubeM-1)*100:null,'%',2],
+ ['Первый успех тестового поиска',null,b?.firstSuccess,'',0],
+ ['Принятых улучшений',null,b?.stats.improvements,'',0],
+ ['Допустимые заготовки, м',pair?.state?.['stock-lengths']===false?'Не ограничены':'1 / 3 / 6',pair?.state?.['stock-lengths']===false?'Не ограничены':'0,5 / 1 / 1,5 / 2 / 3 / 6'],
+ ['Заготовка первого ряда',c?.manufacturing[0].stockMM==null?null:c.manufacturing[0].stockMM/1000,d?.manufacturing[0].stockMM==null?null:d.manufacturing[0].stockMM/1000,'м',1],
+ ['Полных расчётов Teplo',a?.stats.evaluations,b?.stats.evaluations,'',0],['Геометрических проверок',a?.stats.geometryChecks,b?.stats.geometryChecks,'',0],['Время в этом прогоне',a?.elapsedMS,b?.elapsedMS,'мс',0],['Высота корпуса',g?.height,h?.height,'мм',0],['Наружный диаметр',g?.diameter,h?.diameter,'мм',0],['Трубок / рядов',c?c.n+' / '+c.rowCount:null,d?d.n+' / '+d.rowCount:null],['Вертикальный зазор',g?g.rows[0].pitch/g.rows[0].count-g.tubeDiameter:null,h?h.rows[0].pitch/h.rows[0].count-h.tubeDiameter:null,'мм',3],['Витков на трубку',g?.rows[0].turns,h?.rows[0].turns,'',0],['Фактическая мощность',c?.thermal.heat_duty_kw,d?.thermal.heat_duty_kw,'кВт',3],['Избыток мощности',c?(c.thermal.heat_duty_kw/pair.target.q-1)*100:null,d?(d.thermal.heat_duty_kw/pair.target.q-1)*100:null,'%',4],['Горячий выход',c?.thermal.t_hot_out_c,d?.thermal.t_hot_out_c,'°C',3],['Холодный выход',c?.thermal.t_cold_out_c,d?.thermal.t_cold_out_c,'°C',3],['Re трубного потока',c?.thermal.re_hot,d?.thermal.re_hot,'',0],['Re межтрубного потока',c?.thermal.re_cold,d?.thermal.re_cold,'',0],['Применимость исходной Teplo',c?(c.thermal.valid?'Подтверждена':'Есть исключение по Re'):null,d?(d.thermal.valid?'Подтверждена':'Есть исключение по Re'):null],['Полная длина одной трубки первого ряда',c?.manufacturing[0].totalMM/1000,d?.manufacturing[0].totalMM/1000,'м',3]
+ ].map(values=>row(...values)));
+}
+function renderTrace(entries){$('trace').replaceChildren(...entries.map(entry=>{const li=el('li',entry.message);li.dataset.kind=entry.kind;return li}));$('trace-count').textContent=entries.length+' шагов'}
+function renderPair(value){pair=value;profile='recommended';renderChoice();$('lab-title').textContent=value.id==='custom'?'Свои условия':extraCases.some(c=>c.id===value.id)?extraTitle(value):'Задание '+value.id;$('lab-balance').textContent='Задание '+fmt(value.target.q,3)+' кВт · межтрубный расход '+fmt(value.target.mc,4)+' кг/с · ΔT '+fmt(value.target.dt)+' К';for(const s of sides)showModel(s);fit();renderParameters();renderTrace(value.after?.trace??[]);
+ $('run-status').textContent=value.after?.found?'Выбрана разумная конструкция: дополнительные ряды при росте общей длины трубок не более 20 % к найденной простой компоновке. Полных проверок: '+value.after.stats.evaluations+'; первый успех: '+value.after.firstSuccess+'; у текущего алгоритма: '+(value.before?.stats.evaluations??'—')+'.':value.after?.message||'Выполняется сравнение…';
+ const badge=$('lab-badge');badge.textContent=value.after?.found?'Проверок: '+value.after.stats.evaluations+' Teplo':'Эксперимент';badge.dataset.kind=value.after?.found?'found':'none';
+}
+function choose(c){stop();$('scenario').value=c.id;writeState(c.state);renderPair(c);$('source-note').textContent=(extraCases.some(e=>e.id===c.id)?'Дополнительная проверка. ':'Снимок серии 150. ')+'Кнопка «Сравнить» выполняет оба алгоритма заново для текущих полей.';history.replaceState(null,'','#'+c.id);renderBatch()}
+function renderBatch(){if(!report)return;const filter=$('batch-filter').value,filtered=report.cases.filter(c=>filter==='all'||filter==='lost'&&c.before.found&&!c.after.found||filter==='gained'&&!c.before.found&&c.after.found||filter==='fast'&&c.after.found&&c.after.stats.evaluations<=20||filter==='longer'&&c.before.found&&c.after.found&&c.after.selected.geometry.height>c.before.selected.geometry.height);$('batch-count').textContent=filtered.length+' из 150';
+ $('batch-rows').replaceChildren(...filtered.map(c=>{const tr=el('tr'),td=el('td'),button=el('button',c.id);button.type='button';button.addEventListener('click',()=>{choose(c);$('run').focus()});td.append(button);tr.dataset.active=String(c.id===pair?.id);tr.append(td,el('td',c.before.found?'Есть':'—'),el('td',c.after.found?'Есть':'—'),el('td',c.before.stats.evaluations+' → '+c.after.stats.evaluations),el('td',(c.before.selected?fmt(c.before.selected.geometry.height,0):'—')+' → '+(c.after.selected?fmt(c.after.selected.geometry.height,0):'—')));return tr}));
+}
+$('scenario').addEventListener('change',()=>{const c=[...(report?.cases??[]),...extraCases].find(c=>c.id===$('scenario').value);if(c)choose(c);else invalidate()});$('batch-filter').addEventListener('change',renderBatch);
+for(const input of form.querySelectorAll('input'))input.addEventListener('input',()=>{$('scenario').value='custom';invalidate()});
+form.addEventListener('submit',event=>{event.preventDefault();stop();const state=readState(),id=++request,caseId=$('scenario').value;pair={id:caseId,state,target:{},before:null,after:null};profile='recommended';renderChoice();for(const s of sides)showModel(s);renderParameters();renderTrace([]);$('run').disabled=true;$('stop').disabled=false;$('run-status').textContent='Загружаю CoolProp…';
+ worker=new Worker(new URL('./coil-sequential-worker.js?v=gaps-v6',import.meta.url),{type:'module'});
+ worker.onmessage=({data})=>{if(data.id!==request)return;if(data.phase==='balance'){pair.target=data.target;renderPair(pair)}else if(data.phase==='start')$('run-status').textContent=data.side==='before'?'Считается текущий алгоритм…':'Считается последовательный алгоритм…';else if(data.phase==='progress'){$('run-status').textContent=(data.side==='before'?'Текущий':'Последовательный')+': '+data.stats.evaluations+' полных Teplo. '+(data.stats.message||'');if(data.side==='after'&&data.stats.entry){const li=el('li',data.stats.entry.message);li.dataset.kind=data.stats.entry.kind;$('trace').append(li);$('trace-count').textContent=$('trace').childElementCount+' шагов'}}else if(data.phase==='result'){pair[data.side]=data.result;showModel(data.side);fit();renderParameters()}else if(data.phase==='done'){const result={id:caseId,state,target:data.target,before:data.before,after:data.after};renderPair(result);stop()}else if(data.phase==='error'){$('run-status').textContent=data.error;stop()}};
+ worker.onerror=()=>{$('run-status').textContent='Не удалось выполнить расчёт. Проверьте доступность файлов и повторите.';stop()};worker.postMessage({id,state});
+ if(matchMedia('(max-width:720px)').matches)$('input-details').open=false;
+});
+$('stop').addEventListener('click',()=>{stop();$('run-status').textContent='Расчёт остановлен пользователем.'});
+document.querySelectorAll('[data-mode]').forEach(button=>button.addEventListener('click',()=>{mode=button.dataset.mode;document.querySelectorAll('[data-mode]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));for(const s of sides)showModel(s,false)}));
+document.querySelectorAll('[data-profile]').forEach(button=>button.addEventListener('click',()=>{if(!pair?.after?.selection)return;profile=button.dataset.profile;renderChoice();showModel('after');fit();renderParameters()}));
+$('common-scale').addEventListener('change',fit);$('show-shell').addEventListener('change',()=>{for(const s of sides)views[s]?.setPartVisible('shell',$('show-shell').checked)});$('view-reset').addEventListener('click',()=>{for(const s of sides)views[s]?.resetView()});$('coupled').addEventListener('change',()=>{if($('coupled').checked&&views.before)views.after?.setCameraState(views.before.getCameraState())});
+window.addEventListener('pagehide',()=>{stop();for(const s of sides)views[s]?.dispose()},{once:true});
+try{const response=await fetch('./coil-sequential-data.json?v=gaps-v6');if(!response.ok)throw Error('Серия ещё не загружена');report=await response.json();if(report.cases.length!==150)throw Error('Серия ещё не завершена');for(const c of report.cases){const option=el('option',c.id+' · '+fmt(c.state.mh)+' кг/с');option.value=c.id;$('scenario').append(option)}
+ try{const response=await fetch('./coil-sequential-focused-data.json?v=gaps-v6');if(response.ok)extraCases=(await response.json()).cases}catch{}
+ if(extraCases.length){const group=el('optgroup');group.label='Дополнительные режимы';for(const c of extraCases){const option=el('option',extraTitle(c)+(c.state['stock-lengths']===false?' · без заготовок':' · с заготовками')+' · '+c.state.thi+'→'+c.state.tho+' °C');option.value=c.id;group.append(option)}$('scenario').append(group)}
+ const s=report.summary;$('batch-summary').replaceChildren(...[[s.beforeFound+' → '+s.afterFound,'найдено из 150'],[s.beforeCalls+' → '+s.afterCalls,'полных проверок'],[s.acceptedWithin20,'весь поиск за ≤20 Teplo']].map(([n,label])=>{const div=el('div');div.append(el('strong',n),el('span',label));return div}));let hash='';try{hash=decodeURIComponent(location.hash.slice(1))}catch{}choose([...report.cases,...extraCases].find(c=>c.id===hash)||report.cases.find(c=>c.id==='C-2.5'));
+}catch(error){$('source-note').textContent=error.message+'. Можно запустить сравнение своих условий.';$('run-status').textContent='Введите условия и нажмите «Сравнить подбор».'}
