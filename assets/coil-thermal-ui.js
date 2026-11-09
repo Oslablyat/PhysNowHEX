@@ -23,7 +23,7 @@
   function metrics(entries){return '<div class="coil-thermal-metrics">'+entries.map(([name,value,unit])=>'<div><span>'+name+'</span><b>'+esc(value)+' <small>'+unit+'</small></b></div>').join('')+'</div>'}
   function render(r){
    const assessment=hooks.assess?.(r);element.dataset.status='ready';status.dataset.kind=r.valid&&assessment?.meets!==false?'valid':'warning';status.textContent=r.valid?(assessment?.meets===false?'Критерии применимости выполнены, но проектное задание или запас UA не выполнены. Конструкция не подтверждена.':assessment?.meets?'Проектное задание, запас UA и критерии применимости Teplo выполнены.':'Критерии применимости выполнены.'):'Есть невыполненные критерии применимости. Числа рассчитаны вне области корреляции — не считать конструкцию подтверждённой.';
-   if(assessment?.target?.projectAlgorithm){status.dataset.kind=assessment.meets?'valid':'warning';status.textContent=assessment.meets?'Мощность от задания до +1 %, выходные температуры в допуске, Re 15000…20000 и критерии Teplo выполнены. Запас UA 0 %.':'Мощность должна быть от задания до +1 %, выходы — в допуске. Есть невыполненные условия задания, Re или методики Teplo. Запас UA 0 %.';}
+   if(assessment?.target?.projectAlgorithm){const percent=(assessment.agreement?.limit??.01)*100;status.dataset.kind=assessment.meets?'valid':'warning';status.textContent=assessment.meets?'Мощность от задания до +'+percent+' %, выходные температуры в допуске, Re 15000…20000 и критерии Teplo выполнены. Запас UA 0 %.':'Мощность должна быть от задания до +'+percent+' %, выходы — в допуске. Есть невыполненные условия задания, Re или методики Teplo. Запас UA 0 %.';}
    if(assessment?.applicability?.tubeReUnrestricted){
     status.dataset.kind=assessment.meets&&r.valid?'valid':'warning';
     status.textContent=assessment.meets?(r.valid?'Тепловое задание выполнено. Один змеевик: Re трубного потока не ограничен. Остальные критерии Teplo выполнены.':'Тепловое задание выполнено с исключением по Re трубного потока. Применимость корреляции Teplo по Re не подтверждена.'):'Один змеевик: Re трубного потока не ограничен. Не выполнены тепловое задание или другие условия методики.';
@@ -43,6 +43,8 @@
   function run(){
    clearTimeout(timer);if(!active&&!requested)return;
    try{const inputs=geometryInput();root.CoilThermalMethod.buildLayout(inputs);lastInputs=inputs;
+    const cached=hooks.verified?.(inputs);
+    if(cached){result=cached.result;version=cached.version;render(result);return}
     if(!worker){worker=new Worker(new URL('coil-thermal-worker.js',new URL('assets/',document.baseURI)),{type:'module'});worker.onmessage=({data})=>{if(data.id!==id)return;if(data.error){fail(data.error);return}result=data.result;version=data.version;render(result)};worker.onerror=()=>{worker?.terminate();worker=null;fail('Не удалось загрузить CoolProp или выполнить расчёт. Проверьте доступность файлов сайта и повторите ввод.')};}
     status.textContent='Расчёт по методике · загрузка CoolProp при первом запуске…';worker.postMessage({id,inputs});
    }catch(error){fail(error.message)}

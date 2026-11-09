@@ -5,6 +5,7 @@
  'use strict';
  const temperatures=['thi','tho','tci','tco'],flows=['mh','mc'],unknowns=[...temperatures,...flows];
  const algorithm='re-stock-single-re-free-v12';
+ const multicriteria=Object.freeze({id:'pareto',algorithm:'inline-pareto-v2',name:'Компромисс по пяти показателям',detail:'Длина, диаметр, метры трубы, число трубок и рядов',maxEvaluations:1000,dutyExcessFraction:.03});
  const objectives=Object.freeze([
   {id:'length',name:'Минимальная длина',detail:'Сначала рабочая длина корпуса, затем его диаметр.',unit:'мм'},
   {id:'tube-length',name:'Минимум метров трубы',detail:'Суммарная длина всех трубок с отводами и прямыми концами.',unit:'м'},
@@ -13,7 +14,7 @@
   {id:'volume',name:'Минимальный объём',detail:'Объём цилиндра корпуса πD²L/4; длина без выступающих выводов.',unit:'м³'},
   {id:'diameter',name:'Минимальный диаметр',detail:'Наружный диаметр корпуса.',unit:'мм'}
  ]);
- function objectiveFor(state){const id=typeof state==='string'?state:state?.['design-objective'];return objectives.find(o=>o.id===id)??objectives[0]}
+ function objectiveFor(state){const id=typeof state==='string'?state:state?.['design-objective'];return id===multicriteria.id?multicriteria:objectives.find(o=>o.id===id)??objectives[0]}
  const leadLengthCache=new Map();
  function fullTubeMetres(c){
   const g=c.geometry;
@@ -79,7 +80,7 @@
   const r=evaluate(),imbalance=Math.abs(r.qh-r.qc)/Math.max(r.qh,r.qc);if(imbalance>.001)throw inputError('Тепловой баланс Teplo не сходится: '+(imbalance*100).toFixed(4)+' %.',[...unknowns],'Выберите один неизвестный параметр кнопкой «Найти» или исправьте известные температуры и расходы.','unbalanced');
   const d1=n.thi-n.tco,d2=n.tho-n.tci;if(d1<=0||d2<=0)throw Error('Температурные напоры противотока должны быть положительными.');
   const dt=Math.abs(d1-d2)<1e-8?(d1+d2)/2:(d1-d2)/Math.log(d1/d2),q=r.qh/1000,reservePercent=0; // Owner: test nominal duty with no UA reserve.
-  return {...n,mh:r.mh,mc:r.mc,displayFlowHot:n.mh,displayFlowCold:n.mc,cph:r.cph/1000,cpc:r.cpc/1000,rhoh:r.rhoh,rhoc:r.rhoc,q,dt,unknown,flow:'counter',imbalance,heatBalanceError:r.qh-r.qc,requiredUA:r.qh/dt,reservePercent,area:null,designArea:null,u:null,method:'Teplo',projectAlgorithm:algorithm,singleCoil:state['single-coil']===true,reMin:construction.reMin,reMax:construction.reMax};
+  return {...n,mh:r.mh,mc:r.mc,displayFlowHot:n.mh,displayFlowCold:n.mc,cph:r.cph/1000,cpc:r.cpc/1000,rhoh:r.rhoh,rhoc:r.rhoc,q,dt,unknown,flow:'counter',imbalance,heatBalanceError:r.qh-r.qc,requiredUA:r.qh/dt,reservePercent,area:null,designArea:null,u:null,method:'Teplo',projectAlgorithm:objectiveFor(state).id===multicriteria.id?multicriteria.algorithm:algorithm,singleCoil:state['single-coil']===true,reMin:construction.reMin,reMax:construction.reMax};
  }
  function source(state,r){
   if(state.flow!=='counter')throw Error('Методика Teplo поддерживает только противоток.');
@@ -90,30 +91,44 @@
  function geometryInput(g){return {row_count:g.rows.length,shell_inner_diameter_m:(g.diameter-2*g.shellWall)/1000,displacer_outer_diameter_m:g.coreDiameter/1000,tube_outer_diameter_m:g.tubeDiameter/1000,tube_wall_thickness_m:g.tubeWall/1000,coil_rows:g.rows.map(r=>({count:r.count,radius_m:r.diameter/2000,pitch_m:r.pitch/1000,turns:r.turns,tube_outer_diameter_m:g.tubeDiameter/1000}))}}
  function geometryKey(g){return JSON.stringify([g.diameter,g.height,g.shellWall,g.coreDiameter,g.coreLength??g.height,g.coreWall??2,g.tubeDiameter,g.tubeWall,g.leadBendRadius,g.leadStraightLength,g.rows.map(r=>[r.diameter,r.count,r.turns,r.pitch,r.offset??0,r.phase??0,r.direction??'right'])])}
  // Project constraints are additional checks; the supplied Teplo stays unchanged.
- function singleCoilReUnrestricted(target){return target?.projectAlgorithm===algorithm&&target.singleCoil===true}
+ function isMulticriteria(target){return target?.projectAlgorithm===multicriteria.algorithm||target?.projectAlgorithm==='inline-pareto-v1'}
+ function isProject(target){return target?.projectAlgorithm===algorithm||isMulticriteria(target)}
+ function dutyFractionFor(target){return isMulticriteria(target)?multicriteria.dutyExcessFraction:construction.dutyExcessFraction}
+ function radialGaps(d){
+  const first=Math.ceil(.2*d-1e-9),last=Math.floor(d+1e-9);
+  return Array.from({length:Math.max(0,last-first+1)},(_,i)=>(first+i)/2);
+ }
+ function singleCoilReUnrestricted(target){return isProject(target)&&target.singleCoil===true}
  function tubeReCheck(message){return message.startsWith('Re трубного потока > Reкр:')||message.startsWith('При L/d < 50 нужно 10000 ≤ Re ≤ 1000000:')}
  function applicability(r,target={}){
   const ignored=[],blocking=[];
   const requested=singleCoilReUnrestricted(target),single=requested&&r.coils.length===1&&r.rows.length===1&&r.rows[0].coil_count===1;
   if(requested&&!single)blocking.push('В режиме «Только один змеевик» требуется ровно одна трубка.');
-  for(const c of r.coils){for(const message of c.tube_checks)(single&&tubeReCheck(message)?ignored:blocking).push('Змеевик '+c.index+': '+message);if(!single&&target.projectAlgorithm===algorithm&&!(c.re_hot>=construction.reMin&&c.re_hot<=construction.reMax))blocking.push('Змеевик '+c.index+': требуется 15000 ≤ Re ≤ 20000; Re='+c.re_hot.toFixed(2))}
+  for(const c of r.coils){for(const message of c.tube_checks)(single&&tubeReCheck(message)?ignored:blocking).push('Змеевик '+c.index+': '+message);if(!single&&isProject(target)&&!(c.re_hot>=construction.reMin&&c.re_hot<=construction.reMax))blocking.push('Змеевик '+c.index+': требуется 15000 ≤ Re ≤ 20000; Re='+c.re_hot.toFixed(2))}
   blocking.push(...r.shell.checks);
-  if(target.projectAlgorithm===algorithm&&r.rows.some(row=>row.coil_count!==r.rows[0].coil_count||row.turns!==r.rows[0].turns||Math.abs(row.pitch_m-r.rows[0].pitch_m)>1e-10))blocking.push('Коридорная компоновка на полную высоту требует одинакового числа змеевиков, витков и общего шага во всех рядах.');
-  if(target.projectAlgorithm===algorithm&&r.rows.some(row=>!axialGap(row.tube_outer_diameter_m*1000,row.pitch_m*1000,row.coil_count).allowed))blocking.push('Вертикальное межосевое расстояние должно быть 1,1…2 наружных диаметра; зазор между стенками — целое число миллиметров.');
+  if(isProject(target)&&r.rows.some(row=>row.coil_count!==r.rows[0].coil_count||row.turns!==r.rows[0].turns||Math.abs(row.pitch_m-r.rows[0].pitch_m)>1e-10))blocking.push('Коридорная компоновка на полную высоту требует одинакового числа змеевиков, витков и общего шага во всех рядах.');
+  if(isProject(target)&&r.rows.some(row=>!axialGap(row.tube_outer_diameter_m*1000,row.pitch_m*1000,row.coil_count).allowed))blocking.push('Вертикальное межосевое расстояние должно быть 1,1…2 наружных диаметра; зазор между стенками — целое число миллиметров.');
+  if(isMulticriteria(target)){
+   const rows=[...r.rows].sort((a,b)=>a.radius_m-b.radius_m);
+   for(let i=1;i<rows.length;i++){
+    const d=rows[i].tube_outer_diameter_m*1000,spacing=(rows[i].radius_m-rows[i-1].radius_m)*1000,gap=spacing-d;
+    if(spacing<1.1*d-1e-7||spacing>1.5*d+1e-7||Math.abs(2*gap-Math.round(2*gap))>1e-7)blocking.push('Между рядами '+i+' и '+(i+1)+' нужен межосевой размер 1,1…1,5 диаметра и чистый зазор, кратный 0,5 мм.');
+   }
+  }
   // An owner-authorized Re exception is reported separately. Never rewrite
   // the original methodology's valid flag or waive unrelated source failures.
   const sourceAllowed=r.valid||(single&&ignored.length>0&&r.shell.valid&&r.coils.every(c=>c.tube_checks.every(tubeReCheck)));
   return {allowed:!blocking.length&&!!sourceAllowed,ignored,blocking,fullyValid:r.valid,tubeReUnrestricted:single};
  }
  function dutyAgreement(r,target){
-  const excess=construction.dutyExcessFraction,tol=construction.outletNumericalToleranceC,checks=[],fraction=r.heat_duty_kw/target.q-1;
+  const excess=dutyFractionFor(target),tol=construction.outletNumericalToleranceC,checks=[],fraction=r.heat_duty_kw/target.q-1;
   const hotTolerance=(target.thi-target.tho)*excess,coldTolerance=(target.tco-target.tci)*excess;
-  if(!Number.isFinite(fraction)||fraction < -1e-7||fraction>excess+1e-9)checks.push('Мощность должна быть от задания до +1 %; отклонение '+(fraction*100).toFixed(4)+' %.');
+  if(!Number.isFinite(fraction)||fraction < -1e-7||fraction>excess+1e-9)checks.push('Мощность должна быть от задания до +'+(excess*100)+' %; отклонение '+(fraction*100).toFixed(4)+' %.');
   if(!(r.t_hot_out_c<=target.tho+tol&&r.t_hot_out_c>=target.tho-hotTolerance-tol))checks.push('Горячий выход вне допустимого диапазона задания: '+(target.tho-hotTolerance).toFixed(4)+'…'+target.tho.toFixed(4)+' °C.');
   if(!(r.t_cold_out_c>=target.tco-tol&&r.t_cold_out_c<=target.tco+coldTolerance+tol))checks.push('Холодный выход вне допустимого диапазона задания: '+target.tco.toFixed(4)+'…'+(target.tco+coldTolerance).toFixed(4)+' °C.');
-  return {allowed:!checks.length,checks,fraction,hotTolerance,coldTolerance};
+  return {allowed:!checks.length,checks,fraction,limit:excess,hotTolerance,coldTolerance};
  }
- function meets(r,target){return applicability(r,target).allowed&&r.ua_w_k>=target.requiredUA*(1+target.reservePercent/100)*(1-1e-9)&&r.heat_duty_kw>=target.q*(1-1e-7)&&r.t_hot_out_c<=target.tho+.01&&r.t_cold_out_c>=target.tco-.01&&(target.projectAlgorithm!==algorithm||dutyAgreement(r,target).allowed)}
+ function meets(r,target,check=applicability(r,target)){return check.allowed&&r.ua_w_k>=target.requiredUA*(1+target.reservePercent/100)*(1-1e-9)&&r.heat_duty_kw>=target.q*(1-1e-7)&&r.t_hot_out_c<=target.tho+.01&&r.t_cold_out_c>=target.tco-.01&&(!isProject(target)||dutyAgreement(r,target).allowed)}
  function shellSizing(diameter,absolutePressure){
   const d=finite(diameter,'наружный диаметр корпуса'),p=finite(absolutePressure,'абсолютное давление межтрубного пространства'),gaugeMPa=p-construction.atmosphereMPa;
   if(d<=0||gaugeMPa<=0)throw Error('Для предварительной толщины корпуса нужно положительное избыточное межтрубное давление: pабс > 0,101325 МПа. Вакуум и внешнее давление этой формулой не проверяются.');
@@ -135,6 +150,9 @@
   // Keep the preferred count, with at most four bounded reserve counts. Actual
   // Re is always checked by the unchanged full verification.
   const range={target:{min,max},min,max,selected,estimatedRe:selected?factor/selected:null,counts:selected?[selected]:[],fallbackCounts:[]};
+  if(objectiveFor(state).id===multicriteria.id){
+   range.counts=Array.from({length:Math.max(0,max-min+1)},(_,i)=>min+i);return range;
+  }
   range.fallbackCounts=inlineReserveCounts(state,range,factor);return range;
  }
  function inlineReserveCounts(state,range,factor){
@@ -534,5 +552,5 @@
   if(result.stats.errors)add('warning','verification-errors','Не удалось рассчитать '+format(result.stats.errors)+' из проверенных вариантов.');
   return messages;
  }
- return {objectives,objectiveFor,objectiveValue,fullTubeMetres,balance,source,geometryInput,geometryKey,applicability,dutyAgreement,meets,shellSizing,tubeSize,tubeCounts,inlineReserveCounts,families,compactGeometry,buildGeometry,unrestrictedLayout,rowAtHeight,rowAtPitch,inlineLayout,compare,screeningModel,shortlist,select,selectionNotifications,profiles,construction,axialGap,axialGaps,stockLengthsEnabled,singleCoilReUnrestricted,algorithm};
+ return {multicriteria,radialGaps,dutyFractionFor,objectives,objectiveFor,objectiveValue,fullTubeMetres,balance,source,geometryInput,geometryKey,applicability,dutyAgreement,meets,shellSizing,tubeSize,tubeCounts,inlineReserveCounts,families,compactGeometry,buildGeometry,unrestrictedLayout,rowAtHeight,rowAtPitch,inlineLayout,compare,screeningModel,shortlist,select,selectionNotifications,profiles,construction,axialGap,axialGaps,stockLengthsEnabled,singleCoilReUnrestricted,algorithm};
 });

@@ -1,0 +1,625 @@
+[
+ {
+  "id": 1,
+  "single": false,
+  "pool": 368,
+  "tried": 368,
+  "calls": 368,
+  "errors": 0,
+  "invalid": 0,
+  "accepted": 4,
+  "front": 1,
+  "chosen": {
+   "metrics": [
+    398,
+    140,
+    12,
+    4,
+    1
+   ],
+   "radii": [
+    59
+   ],
+   "pitch": 64,
+   "turns": 6,
+   "duty": 25.148130536633257,
+   "hot": 59.98367487416294,
+   "cold": 40.01086072028383,
+   "warning": false,
+   "geometryKey": "[140,398,1,98,398,2,14,2.5,28,40,[[118,4,6,64,0,0,\"right\"]]]"
+  },
+  "siteGridCount": 0,
+  "siteGridAccepted": 0,
+  "superior": {
+   "metrics": [
+    398,
+    146,
+    12,
+    4,
+    1
+   ],
+   "radii": [
+    62
+   ],
+   "pitch": 64,
+   "turns": 6,
+   "duty": 25.662621702404778,
+   "hot": 59.36809318400067,
+   "cold": 40.42041020882706,
+   "warning": false,
+   "geometryKey": "[146,398,1,104,398,2,14,2.5,28,40,[[124,4,6,64,0,0,\"right\"]]]"
+  },
+  "prune": null,
+  "verification": {
+   "verified": true,
+   "reHotMin": 18714.998405548664,
+   "reHotMax": 18714.998405548664,
+   "reCold": 2375.859469738081,
+   "UA": 561.3378404563657,
+   "requiredUA": 560.8598710021937,
+   "lengthsMM": [
+    2418.527809216104
+   ]
+  }
+ },
+ {
+  "id": 3,
+  "single": false,
+  "pool": 311,
+  "tried": 311,
+  "calls": 311,
+  "errors": 0,
+  "invalid": 0,
+  "accepted": 0,
+  "front": 0,
+  "siteGridCount": 0,
+  "siteGridAccepted": 0,
+  "bracket": null,
+  "prune": null
+ },
+ {
+  "id": 4,
+  "single": true,
+  "pool": 5454,
+  "tried": 5454,
+  "calls": 5454,
+  "errors": 0,
+  "invalid": 0,
+  "accepted": 45,
+  "front": 3,
+  "chosen": {
+   "metrics": [
+    494,
+    82,
+    6,
+    1,
+    1
+   ],
+   "radii": [
+    30
+   ],
+   "pitch": 16,
+   "turns": 30,
+   "duty": 25.466771191974633,
+   "hot": 59.602431570943665,
+   "cold": 40.26450783822243,
+   "warning": false,
+   "geometryKey": "[82,494,1,40,494,2,14,2.5,28,40,[[60,1,30,16,0,0,\"right\"]]]"
+  },
+  "siteGridCount": 1,
+  "siteGridBest": {
+   "metrics": [
+    510,
+    78,
+    6,
+    1,
+    1
+   ],
+   "radii": [
+    28
+   ],
+   "pitch": 16,
+   "turns": 31,
+   "duty": 25.242857752569083,
+   "hot": 59.870338837381816,
+   "cold": 40.08626638325761,
+   "warning": false,
+   "geometryKey": "[78,510,1,36,510,2,14,2.5,28,40,[[56,1,31,16,0,0,\"right\"]]]"
+  },
+  "siteGridAccepted": 13,
+  "bracket": {
+   "calls": 2343,
+   "kept": 45,
+   "missed": 0,
+   "reversals": 0,
+   "families": 1040
+  },
+  "prune": {
+   "skipped": 676,
+   "remaining": 4778,
+   "exact": true
+  },
+  "verification": {
+   "verified": true,
+   "reHotMin": 74673.72695234691,
+   "reHotMax": 74673.72695234691,
+   "reCold": 4685.140887891871,
+   "UA": 572.5862184256697,
+   "requiredUA": 560.8598710021937,
+   "lengthsMM": [
+    5866.570725752788
+   ]
+  }
+ },
+ {
+  "id": 6,
+  "single": false,
+  "pool": 649,
+  "tried": 649,
+  "calls": 649,
+  "errors": 0,
+  "invalid": 0,
+  "accepted": 0,
+  "front": 0,
+  "siteGridCount": 0,
+  "siteGridAccepted": 0,
+  "prune": null
+ },
+ {
+  "id": 7,
+  "single": false,
+  "pool": 12081,
+  "tried": 1200,
+  "calls": 1200,
+  "errors": 0,
+  "invalid": 0,
+  "accepted": 8,
+  "front": 1,
+  "chosen": {
+   "metrics": [
+    654,
+    135,
+    26.918612423425376,
+    10,
+    2
+   ],
+   "radii": [
+    41,
+    56.5
+   ],
+   "pitch": 80,
+   "turns": 8,
+   "duty": 63.27497716384035,
+   "hot": 59.79001575721493,
+   "cold": 40.13970630579219,
+   "warning": false,
+   "geometryKey": "[135,654,1,62,654,2,14,2.5,28,40,[[82,5,8,80,0,0,\"right\"],[113,5,8,80,0,0,\"right\"]]]"
+  },
+  "siteGridCount": 0,
+  "siteGridAccepted": 0,
+  "superior": {
+   "metrics": [
+    654,
+    139,
+    27.65178729416249,
+    10,
+    2
+   ],
+   "radii": [
+    42,
+    58.5
+   ],
+   "pitch": 80,
+   "turns": 8,
+   "duty": 63.58734672075772,
+   "hot": 59.64051810242147,
+   "cold": 40.23916832132875,
+   "warning": false,
+   "geometryKey": "[139,654,1,64,654,2,14,2.5,28,40,[[84,5,8,80,0,0,\"right\"],[117,5,8,80,0,0,\"right\"]]]"
+  },
+  "prune": null,
+  "verification": {
+   "verified": true,
+   "reHotMin": 18691.298819160646,
+   "reHotMax": 18691.298819160646,
+   "reCold": 2240.8126427711622,
+   "UA": 1417.57765996375,
+   "requiredUA": 1402.149677505484,
+   "lengthsMM": [
+    2314.0477177562434,
+    3069.674766928832
+   ]
+  }
+ },
+ {
+  "id": 9,
+  "single": true,
+  "pool": 5454,
+  "tried": 5454,
+  "calls": 5454,
+  "errors": 0,
+  "invalid": 0,
+  "accepted": 0,
+  "front": 0,
+  "siteGridCount": 0,
+  "siteGridAccepted": 0,
+  "bracket": {
+   "calls": 2335,
+   "kept": 0,
+   "missed": 0,
+   "reversals": 0,
+   "families": 1040
+  },
+  "prune": {
+   "skipped": 0,
+   "remaining": 5454,
+   "exact": true
+  }
+ },
+ {
+  "id": 11,
+  "single": false,
+  "pool": 1399,
+  "tried": 1200,
+  "calls": 1200,
+  "errors": 0,
+  "invalid": 0,
+  "accepted": 9,
+  "front": 1,
+  "chosen": {
+   "metrics": [
+    1808,
+    203,
+    156,
+    52,
+    2
+   ],
+   "radii": [
+    75,
+    90.5
+   ],
+   "pitch": 598,
+   "turns": 3,
+   "duty": 315.677295228286,
+   "hot": 59.87866501904047,
+   "cold": 40.080731472208136,
+   "warning": false,
+   "geometryKey": "[203,1808,1,130,1808,2,14,2.5,28,40,[[150,26,3,598,0,0,\"right\"],[181,26,3,598,0,0,\"right\"]]]"
+  },
+  "siteGridCount": 0,
+  "siteGridAccepted": 0,
+  "superior": {
+   "metrics": [
+    1808,
+    208,
+    156,
+    52,
+    2
+   ],
+   "radii": [
+    77,
+    93
+   ],
+   "pitch": 598,
+   "turns": 3,
+   "duty": 316.2491945479477,
+   "hot": 59.823964232276055,
+   "cold": 40.11712718025306,
+   "warning": false,
+   "geometryKey": "[208,1808,1,134,1808,2,14,2.5,28,40,[[154,26,3,598,0,0,\"right\"],[186,26,3,598,0,0,\"right\"]]]"
+  },
+  "prune": null,
+  "verification": {
+   "verified": true,
+   "reHotMin": 18000.532850914966,
+   "reHotMax": 18000.532850914966,
+   "reCold": 6298.824222818451,
+   "UA": 7060.358634309031,
+   "requiredUA": 7015.828146651248,
+   "lengthsMM": [
+    2401.5405622477674,
+    2598.2534813743005
+   ]
+  }
+ },
+ {
+  "id": 16,
+  "single": false,
+  "pool": 291,
+  "tried": 291,
+  "calls": 291,
+  "errors": 0,
+  "invalid": 0,
+  "accepted": 3,
+  "front": 1,
+  "chosen": {
+   "metrics": [
+    142,
+    212,
+    6,
+    2,
+    1
+   ],
+   "radii": [
+    95
+   ],
+   "pitch": 32,
+   "turns": 4,
+   "duty": 6.536227836392586,
+   "hot": 51.97990427851634,
+   "cold": 25.02010702437408,
+   "warning": false,
+   "geometryKey": "[212,142,1,170,142,2,14,2.5,28,40,[[190,2,4,32,0,0,\"right\"]]]"
+  },
+  "siteGridCount": 0,
+  "siteGridAccepted": 0,
+  "superior": {
+   "metrics": [
+    142,
+    216,
+    6,
+    2,
+    1
+   ],
+   "radii": [
+    97
+   ],
+   "pitch": 32,
+   "turns": 4,
+   "duty": 6.601550317971819,
+   "hot": 51.84969739013826,
+   "cold": 25.1503900699834,
+   "warning": false,
+   "geometryKey": "[216,142,1,174,142,2,14,2.5,28,40,[[194,2,4,32,0,0,\"right\"]]]"
+  },
+  "prune": null,
+  "verification": {
+   "verified": true,
+   "reHotMin": 17796.071754978002,
+   "reHotMax": 17796.071754978002,
+   "reCold": 451.27755234133076,
+   "UA": 163.4878541685884,
+   "requiredUA": 163.1536464964239,
+   "lengthsMM": [
+    2557.370355765329
+   ]
+  }
+ },
+ {
+  "id": 19,
+  "single": true,
+  "pool": 5454,
+  "tried": 5454,
+  "calls": 5454,
+  "errors": 0,
+  "invalid": 0,
+  "accepted": 90,
+  "front": 4,
+  "chosen": {
+   "metrics": [
+    206,
+    92,
+    3,
+    1,
+    1
+   ],
+   "radii": [
+    35
+   ],
+   "pitch": 16,
+   "turns": 12,
+   "duty": 6.576694489156586,
+   "hot": 51.899242541602185,
+   "cold": 25.100815708374142,
+   "warning": false,
+   "geometryKey": "[92,206,1,50,206,2,14,2.5,28,40,[[70,1,12,16,0,0,\"right\"]]]"
+  },
+  "siteGridCount": 1,
+  "siteGridBest": {
+   "metrics": [
+    238,
+    78,
+    3,
+    1,
+    1
+   ],
+   "radii": [
+    28
+   ],
+   "pitch": 16,
+   "turns": 14,
+   "duty": 6.709140757589943,
+   "hot": 51.635234749704445,
+   "cold": 25.364979658099408,
+   "warning": false,
+   "geometryKey": "[78,238,1,36,238,2,14,2.5,28,40,[[56,1,14,16,0,0,\"right\"]]]"
+  },
+  "siteGridAccepted": 5,
+  "bracket": {
+   "calls": 2742,
+   "kept": 90,
+   "missed": 0,
+   "reversals": 0,
+   "families": 1040
+  },
+  "prune": {
+   "skipped": 3485,
+   "remaining": 1969,
+   "exact": true
+  },
+  "verification": {
+   "verified": true,
+   "reHotMin": 35570.119694205336,
+   "reHotMax": 35570.119694205336,
+   "reCold": 1226.1324745037418,
+   "UA": 164.832685308747,
+   "requiredUA": 163.1536464964239,
+   "lengthsMM": [
+    2824.700196211972
+   ]
+  }
+ },
+ {
+  "id": 21,
+  "single": false,
+  "pool": 8407,
+  "tried": 4000,
+  "calls": 4000,
+  "errors": 0,
+  "invalid": 0,
+  "accepted": 0,
+  "front": 0,
+  "siteGridCount": 0,
+  "siteGridAccepted": 0,
+  "bracket": null,
+  "prune": null
+ },
+ {
+  "id": 34,
+  "single": true,
+  "pool": 5454,
+  "tried": 5454,
+  "calls": 5454,
+  "errors": 0,
+  "invalid": 0,
+  "accepted": 85,
+  "front": 4,
+  "chosen": {
+   "metrics": [
+    222,
+    82,
+    3,
+    1,
+    1
+   ],
+   "radii": [
+    30
+   ],
+   "pitch": 16,
+   "turns": 13,
+   "duty": 2.279076631649466,
+   "hot": 45.91473122662924,
+   "cold": 31.15168893850652,
+   "warning": false,
+   "geometryKey": "[82,222,1,40,222,2,14,2.5,28,40,[[60,1,13,16,0,0,\"right\"]]]"
+  },
+  "siteGridCount": 0,
+  "siteGridAccepted": 0,
+  "bracket": {
+   "calls": 2727,
+   "kept": 85,
+   "missed": 0,
+   "reversals": 0,
+   "families": 1040
+  },
+  "prune": {
+   "skipped": 3565,
+   "remaining": 1889,
+   "exact": true
+  },
+  "verification": {
+   "verified": true,
+   "reHotMin": 15649.553857078721,
+   "reHotMax": 15649.553857078721,
+   "reCold": 448.9187694428868,
+   "UA": 83.70074340543458,
+   "requiredUA": 82.54558293607533,
+   "lengthsMM": [
+    2650.6228998555202
+   ]
+  }
+ },
+ {
+  "id": 49,
+  "single": true,
+  "pool": 5454,
+  "tried": 5454,
+  "calls": 5454,
+  "errors": 0,
+  "invalid": 0,
+  "accepted": 195,
+  "front": 3,
+  "chosen": {
+   "metrics": [
+    174,
+    172,
+    6,
+    1,
+    1
+   ],
+   "radii": [
+    75
+   ],
+   "pitch": 16,
+   "turns": 10,
+   "duty": 8.40442779165569,
+   "hot": 69.97047933809966,
+   "cold": 45.04128191431798,
+   "warning": false,
+   "geometryKey": "[172,174,1,130,174,2,14,2.5,28,40,[[150,1,10,16,0,0,\"right\"]]]"
+  },
+  "siteGridCount": 3,
+  "siteGridBest": {
+   "metrics": [
+    174,
+    178,
+    6,
+    1,
+    1
+   ],
+   "radii": [
+    78
+   ],
+   "pitch": 16,
+   "turns": 10,
+   "duty": 8.531419945701003,
+   "hot": 69.59136881684401,
+   "cold": 45.571383324656296,
+   "warning": false,
+   "geometryKey": "[178,174,1,136,174,2,14,2.5,28,40,[[156,1,10,16,0,0,\"right\"]]]"
+  },
+  "siteGridAccepted": 39,
+  "superior": {
+   "metrics": [
+    174,
+    172,
+    6,
+    1,
+    1
+   ],
+   "radii": [
+    75
+   ],
+   "pitch": 16,
+   "turns": 10,
+   "duty": 8.40442779165569,
+   "hot": 69.97047933809966,
+   "cold": 45.04128191431798,
+   "warning": false,
+   "geometryKey": "[172,174,1,130,174,2,14,2.5,28,40,[[150,1,10,16,0,0,\"right\"]]]"
+  },
+  "bracket": {
+   "calls": 2766,
+   "kept": 195,
+   "missed": 0,
+   "reversals": 0,
+   "families": 1040
+  },
+  "prune": {
+   "skipped": 1135,
+   "remaining": 4319,
+   "exact": true
+  },
+  "verification": {
+   "verified": true,
+   "reHotMin": 32946.3293217279,
+   "reHotMax": 32946.3293217279,
+   "reCold": 337.81102687317724,
+   "UA": 153.3310788139786,
+   "requiredUA": 153.05051479403534,
+   "lengthsMM": [
+    4883.513219320802
+   ]
+  }
+ }
+]

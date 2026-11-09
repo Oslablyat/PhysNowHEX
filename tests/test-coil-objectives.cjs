@@ -8,10 +8,9 @@ for(const [id,expected]of [['length',short],['tube-length',long],['tube-count',l
 assert.equal(p.objectiveFor({}).id,'length');assert.equal(p.objectiveFor('bad').id,'length');assert.equal(p.fullTubeMetres(long),20);
 const app=fs.readFileSync(path.join(root,'app.js'),'utf8'),html=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const cacheKey=vm.runInNewContext(app.slice(app.indexOf('function coilProjectKey('),app.indexOf('function setCalculationIssue('))+';coilProjectKey',{calculationSheets:{activeId:'objective-test'}}),state={'coil-thermal-inputs':{arrangement:'inline'}};
-assert.notEqual(cacheKey(state),cacheKey({...state,'design-objective':'rows'}),'New objective invalidates the previous result');
-assert(app.includes("const selectIds = ['design-objective',"));assert(app.includes("'design-objective':'length'"));
-for(const o of p.objectives)assert(html.includes('data-value="'+o.id+'"')&&html.includes(o.name));
-assert(html.indexOf('id="design-objective"')>html.indexOf('id="flow-choice"')&&html.indexOf('id="design-objective"')<html.indexOf('id="refine-dimensions"'));
+assert.equal(cacheKey(state),cacheKey({...state,'design-objective':'rows'}),'Removed saved objective does not change the main-site key');
+assert(!html.includes('id="design-objective"'));assert(!html.includes('objective-setting'));assert(!app.includes("$('design-objective')"));
+const mainState=vm.runInNewContext(app.slice(app.indexOf('function coilProjectState('),app.indexOf('function coilProjectKey('))+';coilProjectState',{withDesignDimensions:s=>s,getState:()=>({'design-objective':'tube-length'}),fieldIds:[],flow:'counter',unknownParameter:'mc'});assert.equal(mainState()['design-objective'],'pareto','Main Worker always receives pareto, regardless of an old saved objective');
 const g={diameter:200,height:500,tubeDiameter:14,leadBendRadius:28,leadStraightLength:40,rows:[{diameter:140,count:3,pitch:60,turns:8},{diameter:174,count:3,pitch:60,turns:8}]};
 const exact=g.rows.reduce((s,r)=>s+r.count*m.measure(r,28,40).totalMM,0)/1000;assert(Math.abs(p.fullTubeMetres({geometry:g})-exact)<1e-10,'Screen and accepted metric count the same full physical tube');
 (async()=>{
@@ -31,5 +30,5 @@ const exact=g.rows.reduce((s,r)=>s+r.count*m.measure(r,28,40).totalMM,0)/1000;as
  const legacy=await previous.select(base,previous.balance(base,props),props);assert.equal(JSON.stringify(defaultDesign.geometry),JSON.stringify(legacy.rows[0].design.geometry),'Default objective preserves prior accepted geometry');
  assert(new Set(outputs.map(o=>[o.H,o.D,o.N,o.rows].join('|'))).size>=3,'Real objectives must change chosen designs');
  for(const single of [false,true]){const s={...base,mh:.2,'single-coil':single,'stock-lengths':true,'design-objective':'tube-length'},t=p.balance(s,props),r=await p.select(s,t,props);assert(r.stats.evaluations<=200);assert(r.rows.length);const c=r.rows[0].design;if(single)assert.equal(c.n,1);assert(p.meets(c.thermal,t));for(const tube of c.manufacturing){assert(tube.totalMM<tube.stockMM);assert(tube.wasteFraction<=.2+1e-9)}}
- console.table(outputs);console.log('Main-site objectives passed: six distinct criteria, full tube/count/volume metrics, unchanged default, original Teplo/duty/Re/stock/inline constraints, single-coil and real 200-call/dedup budget.');
+ console.table(outputs);console.log('Historical v12 objectives passed: six distinct criteria, full tube/count/volume metrics, unchanged default, original Teplo/duty/Re/stock/inline constraints, single-coil and real 200-call/dedup budget.');
 })().catch(e=>{console.error(e);process.exitCode=1});

@@ -1,12 +1,13 @@
 import createCoolProp from './vendor/coolprop/coolprop.js';
 import './coil-thermal-method.js';
 import './coil-manufacturing.js?v=re-stock-20261029';
-import './coil-project-method.js?v=calculated-choice-20261107';
+import './coil-project-method.js?v=inline-pareto-v2';
+import './coil-project-multicriteria.js?v=inline-pareto-v2';
 const library=createCoolProp({print:()=>{},printErr:()=>{}});let latest=0,cachedId=null,acceptedDesigns=new Map();
 self.onmessage=async({data})=>{
  if(data.selectCalculation){
   if(data.id!==latest||data.id!==cachedId)return;
-  const design=acceptedDesigns.get(data.calculationId);
+  const design=self.CoilMulticriteria.materialize(acceptedDesigns.get(data.calculationId));
   self.postMessage(design?{id:data.id,phase:'selected',selectionRequest:data.selectionRequest,design}:{id:data.id,phase:'selection-error',selectionRequest:data.selectionRequest,message:'Эта конструкция недоступна в текущем расчёте.'});return;
  }
  latest=data.id;const cancelled=()=>latest!==data.id;
@@ -15,10 +16,12 @@ self.onmessage=async({data})=>{
  let stage='runtime';
  try{
   const cp=await library;if(cancelled())return;stage='balance';
-  const cache=new Map(),props=(...args)=>{const key=JSON.stringify(args);if(cache.has(key))return cache.get(key);const value=cp.PropsSI(...args);if(cache.size<100000)cache.set(key,value);return value};
-  const balance=self.CoilProjectMethod.balance(data.state,props);stage='inputs';self.CoilProjectMethod.source(data.state,balance);
+  const cache=new Map(),props=(...args)=>{const key=JSON.stringify(args);if(cache.has(key))return cache.get(key);const value=cp.PropsSI(...args);if(cache.size>=150000)cache.clear();cache.set(key,value);return value};
+  const state={...data.state,'design-objective':'pareto'};
+  const balance=self.CoilProjectMethod.balance(state,props);stage='inputs';self.CoilProjectMethod.source(state,balance);
   self.postMessage({id:data.id,phase:'balance',balance});
-  stage='design';const variants=await self.CoilProjectMethod.select(data.state,balance,props,{cancelled,yield:()=>new Promise(resolve=>setTimeout(resolve,0)),progress:stats=>{if(!cancelled())self.postMessage({id:data.id,phase:'progress',stats})}});
+  stage='design';let lastProgress=0;
+  const variants=await self.CoilMulticriteria.select(state,balance,props,{cancelled,yield:()=>new Promise(resolve=>setTimeout(resolve,0)),progress:stats=>{if(!cancelled()&&Date.now()-lastProgress>=500){lastProgress=Date.now();self.postMessage({id:data.id,phase:'progress',stats})}}});
   if(cancelled()||!variants)return;
   acceptedDesigns=new Map((variants.acceptedDesigns??[]).map(c=>[c.calculationId,c]));cachedId=data.id;delete variants.acceptedDesigns;
   // Keep full verification for enabled winners, not thousands of duplicate

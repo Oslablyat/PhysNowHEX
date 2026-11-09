@@ -1,0 +1,3764 @@
+[
+ {
+  "id": 51,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 84,
+   "tho": 57,
+   "tci": 21,
+   "tco": 39,
+   "mh": 0.168,
+   "ph": 2.04,
+   "pc": 1.22,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 2000,
+   "exchanger-diameter": 600
+  },
+  "target": 18.98838326080872,
+  "calls": 1096,
+  "errors": 0,
+  "accepted": 26,
+  "front": 2,
+  "sampled": false,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 118,
+    "height": 398,
+    "shellWall": 1,
+    "coreDiameter": 76,
+    "coreLength": 398,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.801127874422269,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 96,
+      "count": 3,
+      "turns": 8,
+      "pitch": 48,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 9,
+   "duty": 19.106218635236033,
+   "valid": true,
+   "metrics": [
+    398,
+    118,
+    9,
+    3,
+    1
+   ],
+   "key": "[118,398,1,76,398,2,14,2.5,28,40,[[96,3,8,48,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": true,
+    "retained": 2
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 2
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 2
+   },
+   {
+    "limit": 2000,
+    "calls": 1096,
+    "found": true,
+    "same": true,
+    "retained": 2
+   },
+   {
+    "limit": 4000,
+    "calls": 1096,
+    "found": true,
+    "same": true,
+    "retained": 2
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 52,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 88,
+   "tho": 59,
+   "tci": 18,
+   "tco": 37,
+   "mh": 0.188,
+   "ph": 2.08,
+   "pc": 1.24,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": false,
+   "length": 2000,
+   "exchanger-diameter": 600
+  },
+  "target": 22.8325730489458,
+  "calls": 10000,
+  "errors": 0,
+  "accepted": 3005,
+  "front": 15,
+  "sampled": true,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 139,
+    "height": 334,
+    "shellWall": 1,
+    "coreDiameter": 66,
+    "coreLength": 334,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.8889411625000552,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 1.5,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 86,
+      "count": 2,
+      "turns": 10,
+      "pitch": 32,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     },
+     {
+      "diameter": 117,
+      "count": 2,
+      "turns": 10,
+      "pitch": 32,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 13.491220492492866,
+   "duty": 23.256697051000806,
+   "valid": true,
+   "metrics": [
+    334,
+    139,
+    13.491220492492866,
+    4,
+    2
+   ],
+   "key": "[139,334,1,66,334,2,14,2.5,28,40,[[86,2,10,32,0,0,\"right\"],[117,2,10,32,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": false,
+    "retained": 6
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": false,
+    "retained": 6
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": false,
+    "retained": 6
+   },
+   {
+    "limit": 2000,
+    "calls": 2000,
+    "found": true,
+    "same": false,
+    "retained": 7
+   },
+   {
+    "limit": 4000,
+    "calls": 4000,
+    "found": true,
+    "same": true,
+    "retained": 11
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 53,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 93,
+   "tho": 61,
+   "tci": 22,
+   "tco": 41,
+   "mh": 0.216,
+   "ph": 2.12,
+   "pc": 1.26,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 250,
+   "exchanger-diameter": 200
+  },
+  "target": 28.962574125711576,
+  "calls": 25,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": true,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 25,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 25,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 25,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 2000,
+    "calls": 25,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 4000,
+    "calls": 25,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "duty-shortage",
+    "text": "Максимум среди проверенных применимых вариантов 14.64 кВт при задании 28.96 кВт.",
+    "level": "warning"
+   },
+   {
+    "code": "length-limit",
+    "text": "За пределом длины найден вариант 574 мм при заданном максимуме 250 мм.",
+    "level": "warning"
+   },
+   {
+    "code": "diameter-limit",
+    "text": "За пределом диаметра найден вариант Ø210 мм при заданном максимуме Ø200 мм.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 54,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 97,
+   "tho": 63,
+   "tci": 23,
+   "tco": 44,
+   "mh": 0.242,
+   "ph": 2.16,
+   "pc": 1.28,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": true,
+   "length": 700,
+   "exchanger-diameter": 250
+  },
+  "target": 34.49400042857501,
+  "calls": 1116,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": false,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 2000,
+    "calls": 1116,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 4000,
+    "calls": 1116,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "duty-shortage",
+    "text": "Максимум среди проверенных применимых вариантов 31.49 кВт при задании 34.49 кВт.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 55,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 84,
+   "tho": 57,
+   "tci": 21,
+   "tco": 39,
+   "mh": 0.42,
+   "ph": 2.04,
+   "pc": 1.22,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": false,
+   "length": 2000,
+   "exchanger-diameter": 600
+  },
+  "target": 47.4709581520218,
+  "calls": 10000,
+  "errors": 11,
+  "accepted": 3498,
+  "front": 24,
+  "sampled": true,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 119,
+    "height": 654,
+    "shellWall": 1,
+    "coreDiameter": 46,
+    "coreLength": 654,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.2882819473560563,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 1.5,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 66,
+      "count": 4,
+      "turns": 10,
+      "pitch": 64,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     },
+     {
+      "diameter": 97,
+      "count": 4,
+      "turns": 10,
+      "pitch": 64,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 22.41927055832823,
+   "duty": 48.73297409397844,
+   "valid": true,
+   "metrics": [
+    654,
+    119,
+    22.41927055832823,
+    8,
+    2
+   ],
+   "key": "[119,654,1,46,654,2,14,2.5,28,40,[[66,4,10,64,0,0,\"right\"],[97,4,10,64,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": false,
+    "retained": 9
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": false,
+    "retained": 9
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": false,
+    "retained": 9
+   },
+   {
+    "limit": 2000,
+    "calls": 2000,
+    "found": true,
+    "same": false,
+    "retained": 13
+   },
+   {
+    "limit": 4000,
+    "calls": 4000,
+    "found": true,
+    "same": true,
+    "retained": 14
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 56,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 88,
+   "tho": 59,
+   "tci": 18,
+   "tco": 37,
+   "mh": 0.47,
+   "ph": 2.08,
+   "pc": 1.24,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 250,
+   "exchanger-diameter": 200
+  },
+  "target": 57.081432622364495,
+  "calls": 24,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": true,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 24,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 24,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 24,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 2000,
+    "calls": 24,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 4000,
+    "calls": 24,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "layout-grid",
+    "text": "В проверенной сетке нет компоновки, удовлетворяющей габаритам, навивке и заготовкам.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 57,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 93,
+   "tho": 61,
+   "tci": 22,
+   "tco": 41,
+   "mh": 0.54,
+   "ph": 2.12,
+   "pc": 1.26,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": true,
+   "length": 700,
+   "exchanger-diameter": 250
+  },
+  "target": 72.40643531427895,
+  "calls": 1116,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": false,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 2000,
+    "calls": 1116,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 4000,
+    "calls": 1116,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "duty-shortage",
+    "text": "Максимум среди проверенных применимых вариантов 45.17 кВт при задании 72.41 кВт.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 58,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 97,
+   "tho": 63,
+   "tci": 23,
+   "tco": 44,
+   "mh": 0.605,
+   "ph": 2.16,
+   "pc": 1.28,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": false,
+   "length": 350,
+   "exchanger-diameter": 200
+  },
+  "target": 86.23500107143754,
+  "calls": 2588,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": false,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 2000,
+    "calls": 2000,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 4000,
+    "calls": 2588,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "duty-shortage",
+    "text": "Максимум среди проверенных применимых вариантов 68.30 кВт при задании 86.24 кВт.",
+    "level": "warning"
+   },
+   {
+    "code": "length-limit",
+    "text": "За пределом длины найден вариант 847 мм при заданном максимуме 350 мм.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 59,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 84,
+   "tho": 57,
+   "tci": 21,
+   "tco": 39,
+   "mh": 2.1,
+   "ph": 0.64,
+   "pc": 0.42,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 250,
+   "exchanger-diameter": 200
+  },
+  "target": 237.52696206864326,
+  "calls": 24,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": true,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 24,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 24,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 24,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 2000,
+    "calls": 24,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 4000,
+    "calls": 24,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "layout-grid",
+    "text": "В проверенной сетке нет компоновки, удовлетворяющей габаритам, навивке и заготовкам.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 60,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 88,
+   "tho": 59,
+   "tci": 18,
+   "tco": 37,
+   "mh": 2.35,
+   "ph": 0.68,
+   "pc": 0.44,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": true,
+   "length": 700,
+   "exchanger-diameter": 250
+  },
+  "target": 285.6138843992001,
+  "calls": 1116,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": false,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 2000,
+    "calls": 1116,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 4000,
+    "calls": 1116,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "duty-shortage",
+    "text": "Максимум среди проверенных применимых вариантов 67.55 кВт при задании 285.61 кВт.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 61,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 93,
+   "tho": 61,
+   "tci": 22,
+   "tco": 41,
+   "mh": 2.7,
+   "ph": 0.72,
+   "pc": 0.46,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": false,
+   "length": 350,
+   "exchanger-diameter": 200
+  },
+  "target": 362.2944715823542,
+  "calls": 2611,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": false,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 2000,
+    "calls": 2000,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 4000,
+    "calls": 2611,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "duty-shortage",
+    "text": "Максимум среди проверенных применимых вариантов 120.30 кВт при задании 362.29 кВт.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 62,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 97,
+   "tho": 63,
+   "tci": 23,
+   "tco": 44,
+   "mh": 3.025,
+   "ph": 0.76,
+   "pc": 0.48,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 2000,
+   "exchanger-diameter": 600
+  },
+  "target": 431.4879661329032,
+  "calls": 2530,
+  "errors": 0,
+  "accepted": 195,
+  "front": 4,
+  "sampled": true,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 230,
+    "height": 1958,
+    "shellWall": 1,
+    "coreDiameter": 126,
+    "coreLength": 1958,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.5990511966695387,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 1.5,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 146,
+      "count": 24,
+      "turns": 3,
+      "pitch": 648,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     },
+     {
+      "diameter": 177,
+      "count": 24,
+      "turns": 3,
+      "pitch": 648,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     },
+     {
+      "diameter": 208,
+      "count": 24,
+      "turns": 3,
+      "pitch": 648,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 216,
+   "duty": 432.33496264300953,
+   "valid": true,
+   "metrics": [
+    1958,
+    230,
+    216,
+    72,
+    3
+   ],
+   "key": "[230,1958,1,126,1958,2,14,2.5,28,40,[[146,24,3,648,0,0,\"right\"],[177,24,3,648,0,0,\"right\"],[208,24,3,648,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": false,
+    "retained": 3
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 4
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 4
+   },
+   {
+    "limit": 2000,
+    "calls": 2000,
+    "found": true,
+    "same": true,
+    "retained": 4
+   },
+   {
+    "limit": 4000,
+    "calls": 2530,
+    "found": true,
+    "same": true,
+    "retained": 4
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 63,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 59,
+   "tho": 49,
+   "tci": 13,
+   "tco": 24,
+   "mh": 0.1008,
+   "ph": 0.54,
+   "pc": 0.32,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": true,
+   "length": 700,
+   "exchanger-diameter": 250
+  },
+  "target": 4.215062347567412,
+  "calls": 1092,
+  "errors": 0,
+  "accepted": 39,
+  "front": 3,
+  "sampled": false,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 98,
+    "height": 190,
+    "shellWall": 1,
+    "coreDiameter": 56,
+    "coreLength": 190,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.964195030088936,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 76,
+      "count": 1,
+      "turns": 11,
+      "pitch": 16,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 3,
+   "duty": 4.319095028298127,
+   "valid": true,
+   "metrics": [
+    190,
+    98,
+    3,
+    1,
+    1
+   ],
+   "key": "[98,190,1,56,190,2,14,2.5,28,40,[[76,1,11,16,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": true,
+    "retained": 3
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 3
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 3
+   },
+   {
+    "limit": 2000,
+    "calls": 1092,
+    "found": true,
+    "same": true,
+    "retained": 3
+   },
+   {
+    "limit": 4000,
+    "calls": 1092,
+    "found": true,
+    "same": true,
+    "retained": 3
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 64,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 63,
+   "tho": 51,
+   "tci": 10,
+   "tco": 22,
+   "mh": 0.1128,
+   "ph": 0.58,
+   "pc": 0.34,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": false,
+   "length": 350,
+   "exchanger-diameter": 200
+  },
+  "target": 5.661620125135268,
+  "calls": 2587,
+  "errors": 0,
+  "accepted": 78,
+  "front": 14,
+  "sampled": false,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 88,
+    "height": 190,
+    "shellWall": 1,
+    "coreDiameter": 46,
+    "coreLength": 190,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.9525749199221565,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 66,
+      "count": 1,
+      "turns": 11,
+      "pitch": 16,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 2.4695261070273413,
+   "duty": 5.714140589183039,
+   "valid": true,
+   "metrics": [
+    190,
+    88,
+    2.4695261070273413,
+    1,
+    1
+   ],
+   "key": "[88,190,1,46,190,2,14,2.5,28,40,[[66,1,11,16,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": true,
+    "retained": 14
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 14
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 14
+   },
+   {
+    "limit": 2000,
+    "calls": 2000,
+    "found": true,
+    "same": true,
+    "retained": 14
+   },
+   {
+    "limit": 4000,
+    "calls": 2587,
+    "found": true,
+    "same": true,
+    "retained": 14
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 65,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 68,
+   "tho": 53,
+   "tci": 14,
+   "tco": 26,
+   "mh": 0.1296,
+   "ph": 0.62,
+   "pc": 0.36,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 2000,
+   "exchanger-diameter": 600
+  },
+  "target": 8.133744072063378,
+  "calls": 1349,
+  "errors": 0,
+  "accepted": 13,
+  "front": 1,
+  "sampled": false,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 178,
+    "height": 174,
+    "shellWall": 1,
+    "coreDiameter": 136,
+    "coreLength": 174,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.966001868795928,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 156,
+      "count": 2,
+      "turns": 5,
+      "pitch": 32,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 6,
+   "duty": 8.1911613869897,
+   "valid": true,
+   "metrics": [
+    174,
+    178,
+    6,
+    2,
+    1
+   ],
+   "key": "[178,174,1,136,174,2,14,2.5,28,40,[[156,2,5,32,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": true,
+    "retained": 1
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 1
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 1
+   },
+   {
+    "limit": 2000,
+    "calls": 1349,
+    "found": true,
+    "same": true,
+    "retained": 1
+   },
+   {
+    "limit": 4000,
+    "calls": 1349,
+    "found": true,
+    "same": true,
+    "retained": 1
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 66,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 72,
+   "tho": 55,
+   "tci": 15,
+   "tco": 29,
+   "mh": 0.1452,
+   "ph": 0.66,
+   "pc": 0.38,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": false,
+   "length": 850,
+   "exchanger-diameter": 240
+  },
+  "target": 10.331101867845108,
+  "calls": 10000,
+  "errors": 0,
+  "accepted": 5137,
+  "front": 7,
+  "sampled": false,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 118,
+    "height": 284,
+    "shellWall": 1,
+    "coreDiameter": 76,
+    "coreLength": 284,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 3,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 96,
+      "count": 3,
+      "turns": 5,
+      "pitch": 54,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 5.084242804809559,
+   "duty": 10.333915619431473,
+   "valid": true,
+   "metrics": [
+    284,
+    118,
+    5.084242804809559,
+    3,
+    1
+   ],
+   "key": "[118,284,1,76,284,2,14,2.5,28,40,[[96,3,5,54,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": true,
+    "retained": 4
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 4
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 4
+   },
+   {
+    "limit": 2000,
+    "calls": 2000,
+    "found": true,
+    "same": true,
+    "retained": 4
+   },
+   {
+    "limit": 4000,
+    "calls": 4000,
+    "found": true,
+    "same": true,
+    "retained": 4
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 67,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 72,
+   "tho": 53,
+   "tci": 19,
+   "tco": 34,
+   "mh": 0.2688,
+   "ph": 0.84,
+   "pc": 0.47,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": false,
+   "length": 350,
+   "exchanger-diameter": 200
+  },
+  "target": 21.370894229559166,
+  "calls": 2587,
+  "errors": 0,
+  "accepted": 24,
+  "front": 7,
+  "sampled": false,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 158,
+    "height": 302,
+    "shellWall": 1,
+    "coreDiameter": 116,
+    "coreLength": 302,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.9887928314752887,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 136,
+      "count": 1,
+      "turns": 18,
+      "pitch": 16,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 7.8647646145710075,
+   "duty": 21.720122847670076,
+   "valid": true,
+   "metrics": [
+    302,
+    158,
+    7.8647646145710075,
+    1,
+    1
+   ],
+   "key": "[158,302,1,116,302,2,14,2.5,28,40,[[136,1,18,16,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": true,
+    "retained": 7
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 7
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 7
+   },
+   {
+    "limit": 2000,
+    "calls": 2000,
+    "found": true,
+    "same": true,
+    "retained": 7
+   },
+   {
+    "limit": 4000,
+    "calls": 2587,
+    "found": true,
+    "same": true,
+    "retained": 7
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 68,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 76,
+   "tho": 55,
+   "tci": 16,
+   "tco": 32,
+   "mh": 0.3008,
+   "ph": 0.88,
+   "pc": 0.49,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 2000,
+   "exchanger-diameter": 600
+  },
+  "target": 26.441326671313718,
+  "calls": 1841,
+  "errors": 0,
+  "accepted": 4,
+  "front": 1,
+  "sampled": true,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 198,
+    "height": 374,
+    "shellWall": 1,
+    "coreDiameter": 156,
+    "coreLength": 374,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 3,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 176,
+      "count": 5,
+      "turns": 4,
+      "pitch": 90,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 15,
+   "duty": 27.1511887115,
+   "valid": true,
+   "metrics": [
+    374,
+    198,
+    15,
+    5,
+    1
+   ],
+   "key": "[198,374,1,156,374,2,14,2.5,28,40,[[176,5,4,90,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": true,
+    "retained": 1
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 1
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 1
+   },
+   {
+    "limit": 2000,
+    "calls": 1841,
+    "found": true,
+    "same": true,
+    "retained": 1
+   },
+   {
+    "limit": 4000,
+    "calls": 1841,
+    "found": true,
+    "same": true,
+    "retained": 1
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 69,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 81,
+   "tho": 57,
+   "tci": 20,
+   "tco": 36,
+   "mh": 0.3456,
+   "ph": 0.92,
+   "pc": 0.51,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": false,
+   "length": 850,
+   "exchanger-diameter": 240
+  },
+  "target": 34.73447169995914,
+  "calls": 10000,
+  "errors": 1,
+  "accepted": 3906,
+  "front": 18,
+  "sampled": true,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 142,
+    "height": 446,
+    "shellWall": 1,
+    "coreDiameter": 66,
+    "coreLength": 446,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.7533161503847854,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 86,
+      "count": 3,
+      "turns": 9,
+      "pitch": 48,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     },
+     {
+      "diameter": 120,
+      "count": 3,
+      "turns": 9,
+      "pitch": 48,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 18.655329781885197,
+   "duty": 35.76268892579302,
+   "valid": true,
+   "metrics": [
+    446,
+    142,
+    18.655329781885197,
+    6,
+    2
+   ],
+   "key": "[142,446,1,66,446,2,14,2.5,28,40,[[86,3,9,48,0,0,\"right\"],[120,3,9,48,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": false,
+    "retained": 10
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": false,
+    "retained": 10
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": false,
+    "retained": 10
+   },
+   {
+    "limit": 2000,
+    "calls": 2000,
+    "found": true,
+    "same": false,
+    "retained": 11
+   },
+   {
+    "limit": 4000,
+    "calls": 4000,
+    "found": true,
+    "same": true,
+    "retained": 13
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 70,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 85,
+   "tho": 59,
+   "tci": 21,
+   "tco": 39,
+   "mh": 0.3872,
+   "ph": 0.96,
+   "pc": 0.53,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 250,
+   "exchanger-diameter": 200
+  },
+  "target": 42.17556574772173,
+  "calls": 4,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": true,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 4,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 4,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 4,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 2000,
+    "calls": 4,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 4000,
+    "calls": 4,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "length-limit",
+    "text": "За пределом длины найден вариант 462 мм при заданном максимуме 250 мм.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 71,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 99,
+   "tho": 72,
+   "tci": 33,
+   "tco": 57,
+   "mh": 0.672,
+   "ph": 1.64,
+   "pc": 0.92,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 2000,
+   "exchanger-diameter": 600
+  },
+  "target": 76.16459629001366,
+  "calls": 1791,
+  "errors": 0,
+  "accepted": 62,
+  "front": 3,
+  "sampled": true,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 159,
+    "height": 1070,
+    "shellWall": 1,
+    "coreDiameter": 86,
+    "coreLength": 1070,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 3,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 1.5,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 106,
+      "count": 8,
+      "turns": 6,
+      "pitch": 176,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     },
+     {
+      "diameter": 137,
+      "count": 8,
+      "turns": 6,
+      "pitch": 176,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 48,
+   "duty": 78.28573255751677,
+   "valid": true,
+   "metrics": [
+    1070,
+    159,
+    48,
+    16,
+    2
+   ],
+   "key": "[159,1070,1,86,1070,2,14,2.5,28,40,[[106,8,6,176,0,0,\"right\"],[137,8,6,176,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": true,
+    "retained": 2
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 3
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 3
+   },
+   {
+    "limit": 2000,
+    "calls": 1791,
+    "found": true,
+    "same": true,
+    "retained": 3
+   },
+   {
+    "limit": 4000,
+    "calls": 1791,
+    "found": true,
+    "same": true,
+    "retained": 3
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 72,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 103,
+   "tho": 74,
+   "tci": 30,
+   "tco": 55,
+   "mh": 0.752,
+   "ph": 1.68,
+   "pc": 0.94,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": false,
+   "length": 850,
+   "exchanger-diameter": 240
+  },
+  "target": 91.60060173784154,
+  "calls": 10000,
+  "errors": 31,
+  "accepted": 3380,
+  "front": 18,
+  "sampled": true,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 190,
+    "height": 590,
+    "shellWall": 1,
+    "coreDiameter": 86,
+    "coreLength": 590,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.3739178155527405,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 1.5,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 106,
+      "count": 6,
+      "turns": 6,
+      "pitch": 96,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     },
+     {
+      "diameter": 137,
+      "count": 6,
+      "turns": 6,
+      "pitch": 96,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     },
+     {
+      "diameter": 168,
+      "count": 6,
+      "turns": 6,
+      "pitch": 96,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 50.49531604675786,
+   "duty": 93.67509282357194,
+   "valid": true,
+   "metrics": [
+    590,
+    190,
+    50.49531604675786,
+    18,
+    3
+   ],
+   "key": "[190,590,1,86,590,2,14,2.5,28,40,[[106,6,6,96,0,0,\"right\"],[137,6,6,96,0,0,\"right\"],[168,6,6,96,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": false,
+    "retained": 2
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": false,
+    "retained": 3
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": false,
+    "retained": 4
+   },
+   {
+    "limit": 2000,
+    "calls": 2000,
+    "found": true,
+    "same": true,
+    "retained": 7
+   },
+   {
+    "limit": 4000,
+    "calls": 4000,
+    "found": true,
+    "same": true,
+    "retained": 9
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 73,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 108,
+   "tho": 76,
+   "tci": 34,
+   "tco": 59,
+   "mh": 0.864,
+   "ph": 1.72,
+   "pc": 0.96,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 250,
+   "exchanger-diameter": 200
+  },
+  "target": 116.21872761726581,
+  "calls": 5,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": true,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 5,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 5,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 5,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 2000,
+    "calls": 5,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 4000,
+    "calls": 5,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "layout-grid",
+    "text": "В проверенной сетке нет компоновки, удовлетворяющей габаритам, навивке и заготовкам.",
+    "level": "warning"
+   },
+   {
+    "code": "length-limit",
+    "text": "За пределом длины найден вариант 718 мм при заданном максимуме 250 мм.",
+    "level": "warning"
+   },
+   {
+    "code": "diameter-limit",
+    "text": "За пределом диаметра найден вариант Ø229 мм при заданном максимуме Ø200 мм.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 74,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 112,
+   "tho": 78,
+   "tci": 35,
+   "tco": 62,
+   "mh": 0.968,
+   "ph": 1.76,
+   "pc": 0.98,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": true,
+   "length": 700,
+   "exchanger-diameter": 250
+  },
+  "target": 138.44204452757953,
+  "calls": 1116,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": false,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 2000,
+    "calls": 1116,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 4000,
+    "calls": 1116,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "duty-shortage",
+    "text": "Максимум среди проверенных применимых вариантов 58.88 кВт при задании 138.44 кВт.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 75,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 49,
+   "tho": 43,
+   "tci": 16,
+   "tco": 30,
+   "mh": 0.0504,
+   "ph": 0.39,
+   "pc": 0.27,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": false,
+   "length": 850,
+   "exchanger-diameter": 240
+  },
+  "target": 1.2639308478192641,
+  "calls": 0,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": false,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 2000,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 4000,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "tube-count",
+    "text": "При заданном расходе нет целого числа трубок для предварительного Re 15 000…20 000.",
+    "level": "error"
+   }
+  ]
+ },
+ {
+  "id": 76,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 53,
+   "tho": 45,
+   "tci": 13,
+   "tco": 28,
+   "mh": 0.0564,
+   "ph": 0.43,
+   "pc": 0.29,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 250,
+   "exchanger-diameter": 200
+  },
+  "target": 1.8861539453980798,
+  "calls": 0,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": false,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 2000,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 4000,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "tube-count",
+    "text": "При заданном расходе нет целого числа трубок для предварительного Re 15 000…20 000.",
+    "level": "error"
+   }
+  ]
+ },
+ {
+  "id": 77,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 58,
+   "tho": 47,
+   "tci": 17,
+   "tco": 32,
+   "mh": 0.0648,
+   "ph": 0.47,
+   "pc": 0.31,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": true,
+   "length": 700,
+   "exchanger-diameter": 250
+  },
+  "target": 2.9804022516341497,
+  "calls": 1092,
+  "errors": 0,
+  "accepted": 6,
+  "front": 1,
+  "sampled": false,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 78,
+    "height": 359,
+    "shellWall": 1,
+    "coreDiameter": 36,
+    "coreLength": 359,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 3,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 56,
+      "count": 1,
+      "turns": 15,
+      "pitch": 23,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 3,
+   "duty": 2.981106493928909,
+   "valid": true,
+   "metrics": [
+    359,
+    78,
+    3,
+    1,
+    1
+   ],
+   "key": "[78,359,1,36,359,2,14,2.5,28,40,[[56,1,15,23,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": true,
+    "retained": 1
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 1
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 1
+   },
+   {
+    "limit": 2000,
+    "calls": 1092,
+    "found": true,
+    "same": true,
+    "retained": 1
+   },
+   {
+    "limit": 4000,
+    "calls": 1092,
+    "found": true,
+    "same": true,
+    "retained": 1
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 78,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 62,
+   "tho": 49,
+   "tci": 18,
+   "tco": 35,
+   "mh": 0.0726,
+   "ph": 0.51,
+   "pc": 0.33,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": false,
+   "length": 350,
+   "exchanger-diameter": 200
+  },
+  "target": 3.9471788364892646,
+  "calls": 2587,
+  "errors": 0,
+  "accepted": 68,
+  "front": 9,
+  "sampled": false,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 108,
+    "height": 238,
+    "shellWall": 1,
+    "coreDiameter": 66,
+    "coreLength": 238,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.9720170940002948,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 86,
+      "count": 1,
+      "turns": 14,
+      "pitch": 16,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 3.962030318126297,
+   "duty": 3.9927265771718283,
+   "valid": true,
+   "metrics": [
+    238,
+    108,
+    3.962030318126297,
+    1,
+    1
+   ],
+   "key": "[108,238,1,66,238,2,14,2.5,28,40,[[86,1,14,16,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": true,
+    "retained": 9
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 9
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 9
+   },
+   {
+    "limit": 2000,
+    "calls": 2000,
+    "found": true,
+    "same": true,
+    "retained": 9
+   },
+   {
+    "limit": 4000,
+    "calls": 2587,
+    "found": true,
+    "same": true,
+    "retained": 9
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 79,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 109,
+   "tho": 77,
+   "tci": 26,
+   "tco": 51,
+   "mh": 1.176,
+   "ph": 2.04,
+   "pc": 1.02,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 250,
+   "exchanger-diameter": 200
+  },
+  "target": 158.19672376797564,
+  "calls": 24,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": true,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 24,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 24,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 24,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 2000,
+    "calls": 24,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 4000,
+    "calls": 24,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "layout-grid",
+    "text": "В проверенной сетке нет компоновки, удовлетворяющей габаритам, навивке и заготовкам.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 80,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 113,
+   "tho": 79,
+   "tci": 23,
+   "tco": 49,
+   "mh": 1.316,
+   "ph": 2.08,
+   "pc": 1.04,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": true,
+   "length": 700,
+   "exchanger-diameter": 250
+  },
+  "target": 188.2270244309162,
+  "calls": 1116,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": false,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 2000,
+    "calls": 1116,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 4000,
+    "calls": 1116,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "duty-shortage",
+    "text": "Максимум среди проверенных применимых вариантов 75.41 кВт при задании 188.23 кВт.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 81,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 118,
+   "tho": 81,
+   "tci": 27,
+   "tco": 53,
+   "mh": 1.512,
+   "ph": 2.12,
+   "pc": 1.06,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": false,
+   "length": 350,
+   "exchanger-diameter": 200
+  },
+  "target": 235.5508656896781,
+  "calls": 2592,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": false,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 2000,
+    "calls": 2000,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 4000,
+    "calls": 2592,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "duty-shortage",
+    "text": "Максимум среди проверенных применимых вариантов 126.18 кВт при задании 235.55 кВт.",
+    "level": "warning"
+   },
+   {
+    "code": "length-limit",
+    "text": "За пределом длины найден вариант 830 мм при заданном максимуме 350 мм.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 82,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 122,
+   "tho": 83,
+   "tci": 28,
+   "tco": 56,
+   "mh": 1.694,
+   "ph": 2.16,
+   "pc": 1.08,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 2000,
+   "exchanger-diameter": 600
+  },
+  "target": 278.39322181935484,
+  "calls": 2956,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": true,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 2000,
+    "calls": 2000,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 4000,
+    "calls": 2956,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "tube-re",
+    "text": "Проверка Re каждой трубки 15 000…20 000 отклонила вариантов: 964.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 83,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 79,
+   "tho": 62,
+   "tci": 31,
+   "tco": 49,
+   "mh": 0.0084,
+   "ph": 0.64,
+   "pc": 0.42,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": true,
+   "length": 700,
+   "exchanger-diameter": 250
+  },
+  "target": 0.5982160526173236,
+  "calls": 1116,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": false,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 2000,
+    "calls": 1116,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 4000,
+    "calls": 1116,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "no-design",
+    "text": "Поверок Teplo: 1 116. Подходящих конструкций: 0. На фронте Парето: 0. Среди проверенных конструкций подходящей не найдено.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 84,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 83,
+   "tho": 64,
+   "tci": 28,
+   "tco": 47,
+   "mh": 0.0094,
+   "ph": 0.68,
+   "pc": 0.44,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": false,
+   "length": 350,
+   "exchanger-diameter": 200
+  },
+  "target": 0.7485053522185933,
+  "calls": 2587,
+  "errors": 0,
+  "accepted": 33,
+  "front": 9,
+  "sampled": false,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 118,
+    "height": 94,
+    "shellWall": 1,
+    "coreDiameter": 76,
+    "coreLength": 94,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.9775315979109092,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 96,
+      "count": 1,
+      "turns": 5,
+      "pitch": 16,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 1.6813859628256218,
+   "duty": 0.74899701692027,
+   "valid": false,
+   "metrics": [
+    94,
+    118,
+    1.6813859628256218,
+    1,
+    1
+   ],
+   "key": "[118,94,1,76,94,2,14,2.5,28,40,[[96,1,5,16,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": true,
+    "retained": 9
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 9
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 9
+   },
+   {
+    "limit": 2000,
+    "calls": 2000,
+    "found": true,
+    "same": true,
+    "retained": 9
+   },
+   {
+    "limit": 4000,
+    "calls": 2587,
+    "found": true,
+    "same": true,
+    "retained": 9
+   }
+  ],
+  "notes": [
+   {
+    "code": "single-coil-re-method",
+    "text": "Рекомендация с исключением по Re одного змеевика. Применимость трубной корреляции Teplo не подтверждена.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 85,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 88,
+   "tho": 66,
+   "tci": 32,
+   "tco": 51,
+   "mh": 0.0108,
+   "ph": 0.72,
+   "pc": 0.46,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 2000,
+   "exchanger-diameter": 600
+  },
+  "target": 0.996309796851474,
+  "calls": 0,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": false,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 2000,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 4000,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "tube-count",
+    "text": "При заданном расходе нет целого числа трубок для предварительного Re 15 000…20 000.",
+    "level": "error"
+   }
+  ]
+ },
+ {
+  "id": 86,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 92,
+   "tho": 68,
+   "tci": 33,
+   "tco": 54,
+   "mh": 0.0121,
+   "ph": 0.76,
+   "pc": 0.48,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": false,
+   "length": 850,
+   "exchanger-diameter": 240
+  },
+  "target": 1.2183189631987854,
+  "calls": 0,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": false,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 2000,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 4000,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "tube-count",
+    "text": "При заданном расходе нет целого числа трубок для предварительного Re 15 000…20 000.",
+    "level": "error"
+   }
+  ]
+ },
+ {
+  "id": 87,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 89,
+   "tho": 67,
+   "tci": 11,
+   "tco": 44,
+   "mh": 0.0672,
+   "ph": 0.79,
+   "pc": 0.52,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": false,
+   "length": 350,
+   "exchanger-diameter": 200
+  },
+  "target": 6.2000834615451845,
+  "calls": 2587,
+  "errors": 0,
+  "accepted": 82,
+  "front": 11,
+  "sampled": false,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 108,
+    "height": 222,
+    "shellWall": 1,
+    "coreDiameter": 66,
+    "coreLength": 222,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.9720170940002948,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 86,
+      "count": 1,
+      "turns": 13,
+      "pitch": 16,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 3.6913800010186737,
+   "duty": 6.316402040655664,
+   "valid": true,
+   "metrics": [
+    222,
+    108,
+    3.6913800010186737,
+    1,
+    1
+   ],
+   "key": "[108,222,1,66,222,2,14,2.5,28,40,[[86,1,13,16,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": true,
+    "retained": 10
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 11
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 11
+   },
+   {
+    "limit": 2000,
+    "calls": 2000,
+    "found": true,
+    "same": true,
+    "retained": 11
+   },
+   {
+    "limit": 4000,
+    "calls": 2587,
+    "found": true,
+    "same": true,
+    "retained": 11
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 88,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 93,
+   "tho": 69,
+   "tci": 8,
+   "tco": 42,
+   "mh": 0.0752,
+   "ph": 0.83,
+   "pc": 0.54,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 2000,
+   "exchanger-diameter": 600
+  },
+  "target": 7.572797388833831,
+  "calls": 1349,
+  "errors": 0,
+  "accepted": 13,
+  "front": 1,
+  "sampled": false,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 178,
+    "height": 174,
+    "shellWall": 1,
+    "coreDiameter": 136,
+    "coreLength": 174,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.966001868795928,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 156,
+      "count": 2,
+      "turns": 5,
+      "pitch": 32,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 6,
+   "duty": 7.679257342503337,
+   "valid": true,
+   "metrics": [
+    174,
+    178,
+    6,
+    2,
+    1
+   ],
+   "key": "[178,174,1,136,174,2,14,2.5,28,40,[[156,2,5,32,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": true,
+    "retained": 1
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 1
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 1
+   },
+   {
+    "limit": 2000,
+    "calls": 1349,
+    "found": true,
+    "same": true,
+    "retained": 1
+   },
+   {
+    "limit": 4000,
+    "calls": 1349,
+    "found": true,
+    "same": true,
+    "retained": 1
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 89,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 98,
+   "tho": 71,
+   "tci": 12,
+   "tco": 46,
+   "mh": 0.0864,
+   "ph": 0.87,
+   "pc": 0.56,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": false,
+   "length": 850,
+   "exchanger-diameter": 240
+  },
+  "target": 9.794570995007936,
+  "calls": 10000,
+  "errors": 0,
+  "accepted": 1096,
+  "front": 14,
+  "sampled": false,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 138,
+    "height": 238,
+    "shellWall": 1,
+    "coreDiameter": 96,
+    "coreLength": 238,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.9386701967345061,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 116,
+      "count": 2,
+      "turns": 7,
+      "pitch": 32,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 5.455173628521727,
+   "duty": 9.990125612662867,
+   "valid": true,
+   "metrics": [
+    238,
+    138,
+    5.455173628521727,
+    2,
+    1
+   ],
+   "key": "[138,238,1,96,238,2,14,2.5,28,40,[[116,2,7,32,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": true,
+    "retained": 3
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 5
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 5
+   },
+   {
+    "limit": 2000,
+    "calls": 2000,
+    "found": true,
+    "same": true,
+    "retained": 5
+   },
+   {
+    "limit": 4000,
+    "calls": 4000,
+    "found": true,
+    "same": true,
+    "retained": 8
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 90,
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 102,
+   "tho": 73,
+   "tci": 13,
+   "tco": 49,
+   "mh": 0.0968,
+   "ph": 0.91,
+   "pc": 0.58,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 250,
+   "exchanger-diameter": 200
+  },
+  "target": 11.793395046089044,
+  "calls": 0,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": false,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 250,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 2000,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 4000,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "tube-count",
+    "text": "При заданном расходе нет целого числа трубок для предварительного Re 15 000…20 000.",
+    "level": "error"
+   }
+  ]
+ }
+]

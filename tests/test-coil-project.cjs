@@ -77,6 +77,6 @@ const project=require('../assets/coil-project-method.js'),teplo=require('../asse
  assert.equal(await project.select(state,r,memo,{cancelled:()=>true}),null);
  let cancel=false;assert.equal(await project.select(designState,target,memo,{yield:async()=>{cancel=true},cancelled:()=>cancel}),null);
  const impossible=await project.select({...state,mh:10000},{...r,mh:10000},memo);assert.equal(impossible.rows.length,0);assert.match(impossible.message,/Нет конструкции/);
- assert(app.includes("'re-stock-single-re-free-v12'"));assert(app.includes('coilManufacturingItems()'));assert(app.includes('конструкция не найдена'));
+ assert(app.includes("'inline-pareto-v2'"));assert(app.includes('coilManufacturingItems()'));assert(app.includes('конструкция не найдена'));
  console.log('Teplo project passed: balance unknowns/units; pressure/ceil; Re-based counts; strict radius; full stock lengths/20% waste; compact lexicographic selection; inner-to-outer numbering; independent Teplo; guards/cancellation.');
 })().catch(e=>{console.error(e);process.exitCode=1});

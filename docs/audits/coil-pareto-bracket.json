@@ -1,0 +1,52 @@
+[
+ {
+  "id": 1,
+  "full": 1191,
+  "accepted": 29,
+  "calls": 790,
+  "kept": 29,
+  "missed": 0,
+  "reversals": 0,
+  "families": 413
+ },
+ {
+  "id": 6,
+  "full": 1757,
+  "accepted": 2,
+  "calls": 1576,
+  "kept": 2,
+  "missed": 0,
+  "reversals": 0,
+  "families": 1177
+ },
+ {
+  "id": 11,
+  "full": 2061,
+  "accepted": 249,
+  "calls": 1840,
+  "kept": 249,
+  "missed": 0,
+  "reversals": 0,
+  "families": 1707
+ },
+ {
+  "id": 16,
+  "full": 1349,
+  "accepted": 13,
+  "calls": 823,
+  "kept": 13,
+  "missed": 0,
+  "reversals": 0,
+  "families": 422
+ },
+ {
+  "id": 26,
+  "full": 2482,
+  "accepted": 191,
+  "calls": 2482,
+  "kept": 191,
+  "missed": 0,
+  "reversals": 0,
+  "families": 2020
+ }
+]

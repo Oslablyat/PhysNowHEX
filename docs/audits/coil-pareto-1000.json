@@ -1,0 +1,8109 @@
+[
+ {
+  "id": 1,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [
+   {
+    "metrics": [
+     334,
+     180,
+     12,
+     4,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     354,
+     178,
+     12,
+     4,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     542,
+     138,
+     12,
+     4,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     686,
+     136,
+     12,
+     4,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     398,
+     140,
+     12,
+     4,
+     1
+    ],
+    "warning": false
+   }
+  ],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 90,
+   "tho": 60,
+   "tci": 20,
+   "tco": 40,
+   "mh": 0.2,
+   "ph": 2,
+   "pc": 1.2,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 2000,
+   "exchanger-diameter": 600
+  },
+  "target": 25.134487091336265,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 135,
+  "front": 5,
+  "sampled": true,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 140,
+    "height": 398,
+    "shellWall": 1,
+    "coreDiameter": 98,
+    "coreLength": 398,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.7667572958708107,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 118,
+      "count": 4,
+      "turns": 6,
+      "pitch": 64,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 12,
+   "duty": 25.148130536633257,
+   "valid": true,
+   "metrics": [
+    398,
+    140,
+    12,
+    4,
+    1
+   ],
+   "key": "[140,398,1,98,398,2,14,2.5,28,40,[[118,4,6,64,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": true,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 5
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": true,
+    "same": true,
+    "retained": 5
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 5
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 2,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [
+   {
+    "metrics": [
+     206,
+     209,
+     21.577769739852666,
+     4,
+     4
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     526,
+     98,
+     8.550702853778825,
+     4,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     462,
+     116,
+     9.102929594704978,
+     4,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     238,
+     173,
+     19.117773642384364,
+     4,
+     4
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     590,
+     84,
+     8.02353345499975,
+     4,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     806,
+     80,
+     7.885430086336604,
+     4,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     334,
+     180,
+     10.659687984959062,
+     4,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     222,
+     189,
+     20.38834943026583,
+     4,
+     4
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     698,
+     82,
+     7.93847814571525,
+     4,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     878,
+     78,
+     7.801239151178714,
+     4,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     398,
+     140,
+     9.674111236864416,
+     4,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     354,
+     178,
+     10.543629801237708,
+     4,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     388,
+     133,
+     13.958699785939213,
+     4,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     334,
+     151,
+     14.989413016767022,
+     4,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     366,
+     135,
+     14.224775119554023,
+     4,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     302,
+     171,
+     15.809210867087819,
+     4,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     398,
+     111,
+     11.896775384871434,
+     4,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     270,
+     209,
+     17.636052737534584,
+     4,
+     2
+    ],
+    "warning": false
+   }
+  ],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 90,
+   "tho": 60,
+   "tci": 20,
+   "tco": 40,
+   "mh": 0.2,
+   "ph": 2,
+   "pc": 1.2,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": false,
+   "length": 2000,
+   "exchanger-diameter": 600
+  },
+  "target": 25.134487091336265,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 772,
+  "front": 18,
+  "sampled": true,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 111,
+    "height": 398,
+    "shellWall": 1,
+    "coreDiameter": 38,
+    "coreLength": 398,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.758827618481524,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 1.5,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 58,
+      "count": 2,
+      "turns": 12,
+      "pitch": 32,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     },
+     {
+      "diameter": 89,
+      "count": 2,
+      "turns": 12,
+      "pitch": 32,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 11.896775384871434,
+   "duty": 25.271233593824988,
+   "valid": true,
+   "metrics": [
+    398,
+    111,
+    11.896775384871434,
+    4,
+    2
+   ],
+   "key": "[111,398,1,38,398,2,14,2.5,28,40,[[58,2,12,32,0,0,\"right\"],[89,2,12,32,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": true,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": false,
+    "retained": 4
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": true,
+    "same": false,
+    "retained": 12
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 18
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 3,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 90,
+   "tho": 60,
+   "tci": 20,
+   "tco": 40,
+   "mh": 0.2,
+   "ph": 2,
+   "pc": 1.2,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 250,
+   "exchanger-diameter": 200
+  },
+  "target": 25.134487091336265,
+  "calls": 312,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": true,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 312,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 800,
+    "calls": 312,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 312,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "duty-shortage",
+    "text": "Максимум среди проверенных применимых вариантов 19.10 кВт при задании 25.13 кВт.",
+    "level": "warning"
+   },
+   {
+    "code": "length-limit",
+    "text": "За пределом длины найден вариант 454 мм при заданном максимуме 250 мм.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 4,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [
+   {
+    "metrics": [
+     494,
+     82,
+     6,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     510,
+     78,
+     6,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     478,
+     84,
+     6,
+     1,
+     1
+    ],
+    "warning": false
+   }
+  ],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 90,
+   "tho": 60,
+   "tci": 20,
+   "tco": 40,
+   "mh": 0.2,
+   "ph": 2,
+   "pc": 1.2,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": true,
+   "length": 700,
+   "exchanger-diameter": 250
+  },
+  "target": 25.134487091336265,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 45,
+  "front": 3,
+  "sampled": false,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 82,
+    "height": 494,
+    "shellWall": 1,
+    "coreDiameter": 40,
+    "coreLength": 494,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.9426691234583604,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 60,
+      "count": 1,
+      "turns": 30,
+      "pitch": 16,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 6,
+   "duty": 25.466771191974633,
+   "valid": true,
+   "metrics": [
+    494,
+    82,
+    6,
+    1,
+    1
+   ],
+   "key": "[82,494,1,40,494,2,14,2.5,28,40,[[60,1,30,16,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": true,
+    "same": true,
+    "retained": 3
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": true,
+    "retained": 3
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 3
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": true,
+    "same": true,
+    "retained": 3
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 3
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 5,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [
+   {
+    "metrics": [
+     318,
+     140,
+     7.219486907805705,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     350,
+     122,
+     6.7767337061260156,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     254,
+     196,
+     8.276930677092732,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     302,
+     150,
+     7.412983478396682,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     286,
+     162,
+     7.650578138566282,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     270,
+     176,
+     7.913448199409086,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     334,
+     130,
+     6.963498950288949,
+     1,
+     1
+    ],
+    "warning": false
+   }
+  ],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 90,
+   "tho": 60,
+   "tci": 20,
+   "tco": 40,
+   "mh": 0.2,
+   "ph": 2,
+   "pc": 1.2,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": false,
+   "length": 350,
+   "exchanger-diameter": 200
+  },
+  "target": 25.134487091336265,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 108,
+  "front": 7,
+  "sampled": false,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 150,
+    "height": 302,
+    "shellWall": 1,
+    "coreDiameter": 108,
+    "coreLength": 302,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.9873498702925865,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 128,
+      "count": 1,
+      "turns": 18,
+      "pitch": 16,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 7.412983478396682,
+   "duty": 25.228120137225424,
+   "valid": true,
+   "metrics": [
+    302,
+    150,
+    7.412983478396682,
+    1,
+    1
+   ],
+   "key": "[150,302,1,108,302,2,14,2.5,28,40,[[128,1,18,16,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": true,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": true,
+    "retained": 7
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 7
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": true,
+    "same": true,
+    "retained": 7
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 7
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 6,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [
+   {
+    "metrics": [
+     590,
+     169,
+     36,
+     12,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     698,
+     167,
+     36,
+     12,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     806,
+     165,
+     36,
+     12,
+     2
+    ],
+    "warning": false
+   }
+  ],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 90,
+   "tho": 60,
+   "tci": 20,
+   "tco": 40,
+   "mh": 0.5,
+   "ph": 2,
+   "pc": 1.2,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 2000,
+   "exchanger-diameter": 600
+  },
+  "target": 62.83621772834066,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 12,
+  "front": 3,
+  "sampled": true,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 167,
+    "height": 698,
+    "shellWall": 1,
+    "coreDiameter": 94,
+    "coreLength": 698,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 3,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 1.5,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 114,
+      "count": 6,
+      "turns": 6,
+      "pitch": 114,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     },
+     {
+      "diameter": 145,
+      "count": 6,
+      "turns": 6,
+      "pitch": 114,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 36,
+   "duty": 63.191967235472795,
+   "valid": true,
+   "metrics": [
+    698,
+    167,
+    36,
+    12,
+    2
+   ],
+   "key": "[167,698,1,94,698,2,14,2.5,28,40,[[114,6,6,114,0,0,\"right\"],[145,6,6,114,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": true,
+    "same": true,
+    "retained": 3
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": true,
+    "retained": 3
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 3
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": true,
+    "same": true,
+    "retained": 3
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 3
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 7,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [
+   {
+    "metrics": [
+     949,
+     110,
+     19.85371488785775,
+     11,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     782,
+     142,
+     22.020383780140524,
+     12,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     914,
+     124,
+     19.784194754239238,
+     10,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     782,
+     118,
+     27.42885005110049,
+     12,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     302,
+     235,
+     47.50196595597931,
+     12,
+     6
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     446,
+     171,
+     37.210917014125386,
+     12,
+     4
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1094,
+     94,
+     18.662761083973855,
+     10,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1154,
+     88,
+     18.150810431892456,
+     10,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     762,
+     154,
+     21.614864790441974,
+     11,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     398,
+     237,
+     42.63753252795723,
+     12,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     718,
+     156,
+     21.693389795702643,
+     11,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     830,
+     109,
+     25.539591036229975,
+     12,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1274,
+     82,
+     18.149539138258085,
+     10,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     334,
+     212,
+     41.41780085442432,
+     10,
+     5
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     814,
+     128,
+     19.91815354295999,
+     10,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     964,
+     120,
+     19.472432070963368,
+     10,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1014,
+     118,
+     19.457838621934126,
+     10,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1059,
+     102,
+     19.410103380835494,
+     11,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     590,
+     214,
+     24.38821498418253,
+     12,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     494,
+     201,
+     32.4287189168589,
+     10,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     654,
+     172,
+     21.414483733618194,
+     10,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     542,
+     232,
+     24.025681240057597,
+     11,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     864,
+     126,
+     19.841812575958723,
+     10,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1004,
+     106,
+     19.609980350111584,
+     11,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1049,
+     111,
+     24.750555487660044,
+     10,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     398,
+     193,
+     39.23085341890824,
+     12,
+     4
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     644,
+     162,
+     29.57326961032031,
+     10,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     462,
+     192,
+     37.729347798139024,
+     12,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1004,
+     113,
+     25.073250078089224,
+     10,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     350,
+     229,
+     43.48050221590951,
+     12,
+     4
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     959,
+     115,
+     25.162829031664945,
+     10,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     526,
+     166,
+     35.1210851078259,
+     12,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     914,
+     116,
+     25.128679224619837,
+     10,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     654,
+     135,
+     26.918612423425376,
+     10,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     574,
+     163,
+     29.760581088882425,
+     10,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     869,
+     116,
+     25.224341958004114,
+     10,
+     2
+    ],
+    "warning": false
+   }
+  ],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 90,
+   "tho": 60,
+   "tci": 20,
+   "tco": 40,
+   "mh": 0.5,
+   "ph": 2,
+   "pc": 1.2,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": false,
+   "length": 2000,
+   "exchanger-diameter": 600
+  },
+  "target": 62.83621772834066,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 740,
+  "front": 36,
+  "sampled": true,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 135,
+    "height": 654,
+    "shellWall": 1,
+    "coreDiameter": 62,
+    "coreLength": 654,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.280154761126079,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 1.5,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 82,
+      "count": 5,
+      "turns": 8,
+      "pitch": 80,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     },
+     {
+      "diameter": 113,
+      "count": 5,
+      "turns": 8,
+      "pitch": 80,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 26.918612423425376,
+   "duty": 63.27497716384035,
+   "valid": true,
+   "metrics": [
+    654,
+    135,
+    26.918612423425376,
+    10,
+    2
+   ],
+   "key": "[135,654,1,62,654,2,14,2.5,28,40,[[82,5,8,80,0,0,\"right\"],[113,5,8,80,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": true,
+    "same": false,
+    "retained": 4
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": false,
+    "retained": 8
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": false,
+    "retained": 11
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": true,
+    "same": false,
+    "retained": 14
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 36
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 8,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 90,
+   "tho": 60,
+   "tci": 20,
+   "tco": 40,
+   "mh": 0.5,
+   "ph": 2,
+   "pc": 1.2,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 250,
+   "exchanger-diameter": 200
+  },
+  "target": 62.83621772834066,
+  "calls": 17,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": true,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 17,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 17,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 17,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 800,
+    "calls": 17,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 17,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "duty-shortage",
+    "text": "Максимум среди проверенных применимых вариантов 26.09 кВт при задании 62.84 кВт.",
+    "level": "warning"
+   },
+   {
+    "code": "length-limit",
+    "text": "За пределом длины найден вариант 590 мм при заданном максимуме 250 мм.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 9,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 90,
+   "tho": 60,
+   "tci": 20,
+   "tco": 40,
+   "mh": 0.5,
+   "ph": 2,
+   "pc": 1.2,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": true,
+   "length": 700,
+   "exchanger-diameter": 250
+  },
+  "target": 62.83621772834066,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": false,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "duty-shortage",
+    "text": "Максимум среди проверенных применимых вариантов 41.81 кВт при задании 62.84 кВт.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 10,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 90,
+   "tho": 60,
+   "tci": 20,
+   "tco": 40,
+   "mh": 0.5,
+   "ph": 2,
+   "pc": 1.2,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": false,
+   "length": 350,
+   "exchanger-diameter": 200
+  },
+  "target": 62.83621772834066,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": false,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "duty-shortage",
+    "text": "Максимум среди проверенных применимых вариантов 56.20 кВт при задании 62.84 кВт.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 11,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [
+   {
+    "metrics": [
+     1814,
+     198,
+     162,
+     54,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1958,
+     184,
+     162,
+     54,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1782,
+     200,
+     153,
+     51,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1850,
+     194,
+     153,
+     51,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1918,
+     186,
+     153,
+     51,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1808,
+     203,
+     156,
+     52,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1886,
+     197,
+     156,
+     52,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1496,
+     237,
+     156,
+     52,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1814,
+     237,
+     144,
+     48,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1886,
+     229,
+     144,
+     48,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1958,
+     221,
+     144,
+     48,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1664,
+     233,
+     150,
+     50,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1730,
+     213,
+     156,
+     52,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1652,
+     221,
+     156,
+     52,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1574,
+     229,
+     156,
+     52,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1964,
+     195,
+     156,
+     52,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1634,
+     223,
+     162,
+     54,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1796,
+     209,
+     162,
+     54,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1739,
+     225,
+     150,
+     50,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1964,
+     197,
+     150,
+     50,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1814,
+     217,
+     150,
+     50,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1553,
+     232,
+     162,
+     54,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1715,
+     216,
+     162,
+     54,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1889,
+     209,
+     150,
+     50,
+     2
+    ],
+    "warning": false
+   }
+  ],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 90,
+   "tho": 60,
+   "tci": 20,
+   "tco": 40,
+   "mh": 2.5,
+   "ph": 0.6,
+   "pc": 0.4,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 2000,
+   "exchanger-diameter": 600
+  },
+  "target": 314.40873398901044,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 380,
+  "front": 24,
+  "sampled": true,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 203,
+    "height": 1808,
+    "shellWall": 1,
+    "coreDiameter": 130,
+    "coreLength": 1808,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 0.2356898759728452,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 1.5,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 150,
+      "count": 26,
+      "turns": 3,
+      "pitch": 598,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     },
+     {
+      "diameter": 181,
+      "count": 26,
+      "turns": 3,
+      "pitch": 598,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 156,
+   "duty": 315.677295228286,
+   "valid": true,
+   "metrics": [
+    1808,
+    203,
+    156,
+    52,
+    2
+   ],
+   "key": "[203,1808,1,130,1808,2,14,2.5,28,40,[[150,26,3,598,0,0,\"right\"],[181,26,3,598,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": true,
+    "same": false,
+    "retained": 5
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": true,
+    "retained": 8
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 10
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": true,
+    "same": true,
+    "retained": 11
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 24
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 12,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [
+   {
+    "metrics": [
+     1154,
+     212,
+     141.85774517908004,
+     50,
+     5
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1715,
+     215,
+     135.62612957290088,
+     54,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1214,
+     210,
+     141.5478817621115,
+     50,
+     5
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1730,
+     209,
+     129.0689185290924,
+     52,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1184,
+     209,
+     137.90329406125053,
+     52,
+     4
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1808,
+     201,
+     129.33820458220492,
+     52,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1634,
+     223,
+     135.6314330588269,
+     54,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1274,
+     206,
+     139.72238846411423,
+     50,
+     5
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1119,
+     219,
+     143.70899960864483,
+     52,
+     4
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1652,
+     227,
+     132.69586366178035,
+     52,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1334,
+     204,
+     139.63761280488634,
+     50,
+     5
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1886,
+     197,
+     131.11461754385525,
+     52,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1553,
+     231,
+     135.91399930580624,
+     54,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1310,
+     212,
+     136.27776418704306,
+     54,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1670,
+     186,
+     134.32564279307704,
+     54,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1454,
+     202,
+     141.28832717366853,
+     50,
+     5
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1918,
+     182,
+     134.21212324981124,
+     51,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1964,
+     195,
+     133.63328666559607,
+     52,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1742,
+     184,
+     136.0881860588952,
+     54,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1814,
+     182,
+     137.955450574841,
+     54,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1678,
+     234,
+     141.93808227574561,
+     48,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1249,
+     203,
+     135.26759238486528,
+     52,
+     4
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1526,
+     196,
+     134.2493475154531,
+     54,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1314,
+     201,
+     135.6086452276121,
+     52,
+     4
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1454,
+     202,
+     135.06769558389928,
+     54,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1806,
+     228,
+     142.7287076814641,
+     48,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1382,
+     206,
+     135.01155902806238,
+     54,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1598,
+     190,
+     133.67761910565173,
+     54,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     974,
+     229,
+     136.93478437331964,
+     48,
+     4
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1444,
+     195,
+     135.30167714854448,
+     52,
+     4
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1742,
+     232,
+     142.76898133781648,
+     48,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1442,
+     226,
+     139.86033512649666,
+     51,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1714,
+     208,
+     138.79429639350514,
+     51,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1739,
+     229,
+     131.1966479158825,
+     50,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1850,
+     194,
+     136.915582268495,
+     51,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1306,
+     227,
+     136.66078658711973,
+     51,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1964,
+     199,
+     129.67468610893928,
+     50,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1664,
+     233,
+     130.11909608834196,
+     50,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1782,
+     196,
+     135.4080931553993,
+     51,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1814,
+     217,
+     129.73857747166628,
+     50,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1238,
+     229,
+     136.10691859750972,
+     51,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1639,
+     187,
+     136.47819406160687,
+     52,
+     4
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1510,
+     220,
+     138.069025671935,
+     51,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1170,
+     233,
+     136.80480467071175,
+     51,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1574,
+     217,
+     141.96269477171407,
+     48,
+     4
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1694,
+     207,
+     139.19921337956023,
+     48,
+     4
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1889,
+     209,
+     129.89138593004196,
+     50,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1634,
+     211,
+     139.89403307451465,
+     48,
+     4
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1578,
+     212,
+     136.45961562125885,
+     51,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1886,
+     231,
+     131.46388626819459,
+     48,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1958,
+     223,
+     131.4136485111833,
+     48,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1454,
+     228,
+     145.05176216709177,
+     48,
+     4
+    ],
+    "warning": false
+   }
+  ],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 90,
+   "tho": 60,
+   "tci": 20,
+   "tco": 40,
+   "mh": 2.5,
+   "ph": 0.6,
+   "pc": 0.4,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": false,
+   "length": 2000,
+   "exchanger-diameter": 600
+  },
+  "target": 314.40873398901044,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 474,
+  "front": 52,
+  "sampled": true,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 212,
+    "height": 1578,
+    "shellWall": 1,
+    "coreDiameter": 108,
+    "coreLength": 1578,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 2.489935240917532,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 1.5,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 128,
+      "count": 17,
+      "turns": 4,
+      "pitch": 391,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     },
+     {
+      "diameter": 159,
+      "count": 17,
+      "turns": 4,
+      "pitch": 391,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     },
+     {
+      "diameter": 190,
+      "count": 17,
+      "turns": 4,
+      "pitch": 391,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 136.45961562125885,
+   "duty": 315.1304998550698,
+   "valid": true,
+   "metrics": [
+    1578,
+    212,
+    136.45961562125885,
+    51,
+    3
+   ],
+   "key": "[212,1578,1,108,1578,2,14,2.5,28,40,[[128,17,4,391,0,0,\"right\"],[159,17,4,391,0,0,\"right\"],[190,17,4,391,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": true,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": false,
+    "retained": 9
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": false,
+    "retained": 25
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": true,
+    "same": false,
+    "retained": 32
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 52
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 13,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 90,
+   "tho": 60,
+   "tci": 20,
+   "tco": 40,
+   "mh": 2.5,
+   "ph": 0.6,
+   "pc": 0.4,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 250,
+   "exchanger-diameter": 200
+  },
+  "target": 314.40873398901044,
+  "calls": 24,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": true,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 24,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 24,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 24,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 800,
+    "calls": 24,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 24,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "layout-grid",
+    "text": "В проверенной сетке нет компоновки, удовлетворяющей габаритам, навивке и заготовкам.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 14,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 90,
+   "tho": 60,
+   "tci": 20,
+   "tco": 40,
+   "mh": 2.5,
+   "ph": 0.6,
+   "pc": 0.4,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": true,
+   "length": 700,
+   "exchanger-diameter": 250
+  },
+  "target": 314.40873398901044,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": false,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "duty-shortage",
+    "text": "Максимум среди проверенных применимых вариантов 68.52 кВт при задании 314.41 кВт.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 15,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 90,
+   "tho": 60,
+   "tci": 20,
+   "tco": 40,
+   "mh": 2.5,
+   "ph": 0.6,
+   "pc": 0.4,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": false,
+   "length": 350,
+   "exchanger-diameter": 200
+  },
+  "target": 314.40873398901044,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": false,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "duty-shortage",
+    "text": "Максимум среди проверенных применимых вариантов 114.06 кВт при задании 314.41 кВт.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 16,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [
+   {
+    "metrics": [
+     142,
+     212,
+     6,
+     2,
+     1
+    ],
+    "warning": false
+   }
+  ],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 65,
+   "tho": 52,
+   "tci": 12,
+   "tco": 25,
+   "mh": 0.12,
+   "ph": 0.5,
+   "pc": 0.3,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 2000,
+   "exchanger-diameter": 600
+  },
+  "target": 6.526145859856956,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 78,
+  "front": 1,
+  "sampled": false,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 212,
+    "height": 142,
+    "shellWall": 1,
+    "coreDiameter": 170,
+    "coreLength": 142,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.977057111631483,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 190,
+      "count": 2,
+      "turns": 4,
+      "pitch": 32,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 6,
+   "duty": 6.536227836392586,
+   "valid": true,
+   "metrics": [
+    142,
+    212,
+    6,
+    2,
+    1
+   ],
+   "key": "[212,142,1,170,142,2,14,2.5,28,40,[[190,2,4,32,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 1
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": true,
+    "same": true,
+    "retained": 1
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 1
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 17,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [
+   {
+    "metrics": [
+     190,
+     109,
+     5.34372999311497,
+     2,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     201,
+     109,
+     5.342758574908472,
+     2,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     238,
+     86,
+     3.201291183508583,
+     2,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     206,
+     106,
+     3.5276825773012432,
+     2,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     336,
+     84,
+     3.140761423524184,
+     2,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     174,
+     156,
+     4.55484637418454,
+     2,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     142,
+     212,
+     5.114740711530658,
+     2,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     126,
+     193,
+     7.179673935143183,
+     2,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     174,
+     119,
+     5.484284440041479,
+     2,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     158,
+     135,
+     5.864836623519752,
+     2,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     142,
+     159,
+     6.45171020226549,
+     2,
+     2
+    ],
+    "warning": false
+   }
+  ],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 65,
+   "tho": 52,
+   "tci": 12,
+   "tco": 25,
+   "mh": 0.12,
+   "ph": 0.5,
+   "pc": 0.3,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": false,
+   "length": 850,
+   "exchanger-diameter": 240
+  },
+  "target": 6.526145859856956,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 623,
+  "front": 11,
+  "sampled": false,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 106,
+    "height": 206,
+    "shellWall": 1,
+    "coreDiameter": 64,
+    "coreLength": 206,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.8836479235468175,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 84,
+      "count": 2,
+      "turns": 6,
+      "pitch": 32,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 3.5276825773012432,
+   "duty": 6.57134018646116,
+   "valid": true,
+   "metrics": [
+    206,
+    106,
+    3.5276825773012432,
+    2,
+    1
+   ],
+   "key": "[106,206,1,64,206,2,14,2.5,28,40,[[84,2,6,32,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": true,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": false,
+    "retained": 2
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 4
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": true,
+    "same": true,
+    "retained": 7
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 11
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 18,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 65,
+   "tho": 52,
+   "tci": 12,
+   "tco": 25,
+   "mh": 0.12,
+   "ph": 0.5,
+   "pc": 0.3,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 250,
+   "exchanger-diameter": 200
+  },
+  "target": 6.526145859856956,
+  "calls": 876,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": false,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 876,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "no-design",
+    "text": "Поверок Teplo: 876. Подходящих конструкций: 0. На фронте Парето: 0. Среди проверенных конструкций подходящей не найдено.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 19,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [
+   {
+    "metrics": [
+     222,
+     82,
+     3,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     238,
+     78,
+     3,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     206,
+     92,
+     3,
+     1,
+     1
+    ],
+    "warning": false
+   }
+  ],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 65,
+   "tho": 52,
+   "tci": 12,
+   "tco": 25,
+   "mh": 0.12,
+   "ph": 0.5,
+   "pc": 0.3,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": true,
+   "length": 700,
+   "exchanger-diameter": 250
+  },
+  "target": 6.526145859856956,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 64,
+  "front": 3,
+  "sampled": false,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 82,
+    "height": 222,
+    "shellWall": 1,
+    "coreDiameter": 40,
+    "coreLength": 222,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.9426691234583604,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 60,
+      "count": 1,
+      "turns": 13,
+      "pitch": 16,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 3,
+   "duty": 6.535337050362538,
+   "valid": true,
+   "metrics": [
+    222,
+    82,
+    3,
+    1,
+    1
+   ],
+   "key": "[82,222,1,40,222,2,14,2.5,28,40,[[60,1,13,16,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": true,
+    "retained": 3
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 3
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": true,
+    "same": true,
+    "retained": 3
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 3
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 20,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [
+   {
+    "metrics": [
+     206,
+     92,
+     2.824700196211972,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     190,
+     104,
+     3.0130380632194704,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     222,
+     82,
+     2.65062289985552,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     158,
+     160,
+     4.073211199315014,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     142,
+     188,
+     4.342142131544305,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     174,
+     138,
+     3.817347106068153,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     238,
+     78,
+     2.6893211746704,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     252,
+     78,
+     2.688233107993328,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     266,
+     78,
+     2.6873610879146654,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     280,
+     78,
+     2.686690132465032,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     294,
+     78,
+     2.686207539307684,
+     1,
+     1
+    ],
+    "warning": false
+   }
+  ],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 65,
+   "tho": 52,
+   "tci": 12,
+   "tco": 25,
+   "mh": 0.12,
+   "ph": 0.5,
+   "pc": 0.3,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": false,
+   "length": 350,
+   "exchanger-diameter": 200
+  },
+  "target": 6.526145859856956,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 338,
+  "front": 11,
+  "sampled": false,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 104,
+    "height": 190,
+    "shellWall": 1,
+    "coreDiameter": 62,
+    "coreLength": 190,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.9692285308979969,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 82,
+      "count": 1,
+      "turns": 11,
+      "pitch": 16,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 3.0130380632194704,
+   "duty": 6.589001654627681,
+   "valid": true,
+   "metrics": [
+    190,
+    104,
+    3.0130380632194704,
+    1,
+    1
+   ],
+   "key": "[104,190,1,62,190,2,14,2.5,28,40,[[82,1,11,16,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": true,
+    "retained": 3
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 11
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": true,
+    "same": true,
+    "retained": 11
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 11
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 21,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 78,
+   "tho": 56,
+   "tci": 18,
+   "tco": 35,
+   "mh": 0.32,
+   "ph": 0.8,
+   "pc": 0.45,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 2000,
+   "exchanger-diameter": 600
+  },
+  "target": 29.47539959269675,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": true,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "tube-re",
+    "text": "Проверка Re каждой трубки 15 000…20 000 отклонила вариантов: 288.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 22,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [
+   {
+    "metrics": [
+     686,
+     86,
+     10.250009164726896,
+     6,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     366,
+     140,
+     19.22206534140865,
+     6,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     494,
+     109,
+     14.80783252230873,
+     6,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     574,
+     114,
+     11.900833593258286,
+     7,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     728,
+     84,
+     10.111998720811084,
+     6,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     494,
+     134,
+     11.875646472490214,
+     6,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     770,
+     82,
+     9.986448721385765,
+     6,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     286,
+     204,
+     23.827567350133528,
+     6,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     462,
+     154,
+     13.11259528650136,
+     7,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     590,
+     104,
+     10.809835613881088,
+     6,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     524,
+     132,
+     11.736269006683857,
+     6,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     812,
+     80,
+     9.873909796491041,
+     6,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     350,
+     226,
+     14.77691015309497,
+     7,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     662,
+     102,
+     10.741499888175863,
+     6,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     490,
+     152,
+     12.988172245179895,
+     7,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     398,
+     178,
+     12.93767327324383,
+     6,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     584,
+     130,
+     11.651304628486916,
+     6,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     398,
+     143,
+     17.06351494157599,
+     6,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     334,
+     154,
+     20.153409385847972,
+     6,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     350,
+     175,
+     19.241076470472603,
+     6,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     270,
+     207,
+     24.023227346911906,
+     6,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     320,
+     215,
+     21.145086857095883,
+     6,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     302,
+     219,
+     21.588349051161973,
+     6,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     446,
+     121,
+     15.400110015188176,
+     6,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     320,
+     176,
+     21.95055558622629,
+     6,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     302,
+     180,
+     22.28139183040767,
+     6,
+     3
+    ],
+    "warning": false
+   }
+  ],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 78,
+   "tho": 56,
+   "tci": 18,
+   "tco": 35,
+   "mh": 0.32,
+   "ph": 0.8,
+   "pc": 0.45,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": false,
+   "length": 850,
+   "exchanger-diameter": 240
+  },
+  "target": 29.47539959269675,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 620,
+  "front": 26,
+  "sampled": true,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 134,
+    "height": 494,
+    "shellWall": 1,
+    "coreDiameter": 92,
+    "coreLength": 494,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.43579093558923,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 112,
+      "count": 6,
+      "turns": 5,
+      "pitch": 96,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 11.875646472490214,
+   "duty": 29.678681310725857,
+   "valid": true,
+   "metrics": [
+    494,
+    134,
+    11.875646472490214,
+    6,
+    1
+   ],
+   "key": "[134,494,1,92,494,2,14,2.5,28,40,[[112,6,5,96,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": true,
+    "same": false,
+    "retained": 1
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": false,
+    "retained": 5
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 7
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": true,
+    "same": true,
+    "retained": 17
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 26
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 23,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 78,
+   "tho": 56,
+   "tci": 18,
+   "tco": 35,
+   "mh": 0.32,
+   "ph": 0.8,
+   "pc": 0.45,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 250,
+   "exchanger-diameter": 200
+  },
+  "target": 29.47539959269675,
+  "calls": 117,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": true,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 117,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 117,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 800,
+    "calls": 117,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 117,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "duty-shortage",
+    "text": "Максимум среди проверенных применимых вариантов 17.41 кВт при задании 29.48 кВт.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 24,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 78,
+   "tho": 56,
+   "tci": 18,
+   "tco": 35,
+   "mh": 0.32,
+   "ph": 0.8,
+   "pc": 0.45,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": true,
+   "length": 700,
+   "exchanger-diameter": 250
+  },
+  "target": 29.47539959269675,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": false,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "duty-shortage",
+    "text": "Максимум среди проверенных применимых вариантов 27.33 кВт при задании 29.48 кВт.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 25,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [
+   {
+    "metrics": [
+     334,
+     156,
+     8.594364259594405,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     350,
+     146,
+     8.356794503104872,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     286,
+     194,
+     9.358112209679796,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     318,
+     166,
+     8.769312484305745,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     302,
+     178,
+     8.994588583635375,
+     1,
+     1
+    ],
+    "warning": false
+   }
+  ],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 78,
+   "tho": 56,
+   "tci": 18,
+   "tco": 35,
+   "mh": 0.32,
+   "ph": 0.8,
+   "pc": 0.45,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": false,
+   "length": 350,
+   "exchanger-diameter": 200
+  },
+  "target": 29.47539959269675,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 52,
+  "front": 5,
+  "sampled": false,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 166,
+    "height": 318,
+    "shellWall": 1,
+    "coreDiameter": 124,
+    "coreLength": 318,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.9900023479280584,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 144,
+      "count": 1,
+      "turns": 19,
+      "pitch": 16,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 8.769312484305745,
+   "duty": 29.5491709255587,
+   "valid": true,
+   "metrics": [
+    318,
+    166,
+    8.769312484305745,
+    1,
+    1
+   ],
+   "key": "[166,318,1,124,318,2,14,2.5,28,40,[[144,1,19,16,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": true,
+    "same": false,
+    "retained": 2
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": true,
+    "retained": 5
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 5
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": true,
+    "same": true,
+    "retained": 5
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 5
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 26,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [
+   {
+    "metrics": [
+     654,
+     237,
+     60,
+     20,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     734,
+     191,
+     54,
+     18,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1229,
+     185,
+     54,
+     18,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     914,
+     189,
+     54,
+     18,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1094,
+     187,
+     54,
+     18,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     718,
+     223,
+     66,
+     22,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1064,
+     186,
+     60,
+     20,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1114,
+     183,
+     60,
+     20,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1364,
+     170,
+     60,
+     20,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1414,
+     168,
+     60,
+     20,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1264,
+     178,
+     60,
+     20,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1164,
+     180,
+     60,
+     20,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     1314,
+     176,
+     60,
+     20,
+     2
+    ],
+    "warning": false
+   }
+  ],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 105,
+   "tho": 75,
+   "tci": 32,
+   "tco": 58,
+   "mh": 0.8,
+   "ph": 1.6,
+   "pc": 0.9,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 2000,
+   "exchanger-diameter": 600
+  },
+  "target": 100.84499197669184,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 184,
+  "front": 13,
+  "sampled": true,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 191,
+    "height": 734,
+    "shellWall": 1,
+    "coreDiameter": 118,
+    "coreLength": 734,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.18431710061623,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 1.5,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 138,
+      "count": 9,
+      "turns": 5,
+      "pitch": 144,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     },
+     {
+      "diameter": 169,
+      "count": 9,
+      "turns": 5,
+      "pitch": 144,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 54,
+   "duty": 101.21661029410794,
+   "valid": true,
+   "metrics": [
+    734,
+    191,
+    54,
+    18,
+    2
+   ],
+   "key": "[191,734,1,118,734,2,14,2.5,28,40,[[138,9,5,144,0,0,\"right\"],[169,9,5,144,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": true,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 6
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": true,
+    "same": true,
+    "retained": 7
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 13
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 27,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [
+   {
+    "metrics": [
+     842,
+     234,
+     39.2262381579448,
+     23,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     782,
+     140,
+     44.639733288720265,
+     18,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     734,
+     191,
+     48.06312798405878,
+     18,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     654,
+     237,
+     54.85079528485706,
+     20,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     718,
+     211,
+     53.74944822651334,
+     22,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     494,
+     223,
+     62.27742480535733,
+     20,
+     4
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     814,
+     169,
+     47.30568948449326,
+     20,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     462,
+     229,
+     65.97972662449023,
+     20,
+     5
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     686,
+     164,
+     48.44775504972649,
+     18,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     609,
+     187,
+     56.73173815987336,
+     20,
+     4
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     518,
+     220,
+     63.97057980109844,
+     20,
+     5
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     574,
+     222,
+     60.30631014251458,
+     21,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     574,
+     190,
+     57.236205785479626,
+     20,
+     4
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     590,
+     202,
+     54.482222998709936,
+     18,
+     3
+    ],
+    "warning": false
+   }
+  ],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 105,
+   "tho": 75,
+   "tci": 32,
+   "tco": 58,
+   "mh": 0.8,
+   "ph": 1.6,
+   "pc": 0.9,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": false,
+   "length": 850,
+   "exchanger-diameter": 240
+  },
+  "target": 100.84499197669184,
+  "calls": 1000,
+  "errors": 1,
+  "accepted": 421,
+  "front": 14,
+  "sampled": true,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 164,
+    "height": 686,
+    "shellWall": 1,
+    "coreDiameter": 60,
+    "coreLength": 686,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 0.9467285862741104,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 1.5,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 80,
+      "count": 6,
+      "turns": 7,
+      "pitch": 96,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     },
+     {
+      "diameter": 111,
+      "count": 6,
+      "turns": 7,
+      "pitch": 96,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     },
+     {
+      "diameter": 142,
+      "count": 6,
+      "turns": 7,
+      "pitch": 96,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 48.44775504972649,
+   "duty": 101.18198069952062,
+   "valid": true,
+   "metrics": [
+    686,
+    164,
+    48.44775504972649,
+    18,
+    3
+   ],
+   "key": "[164,686,1,60,686,2,14,2.5,28,40,[[80,6,7,96,0,0,\"right\"],[111,6,7,96,0,0,\"right\"],[142,6,7,96,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": true,
+    "same": false,
+    "retained": 1
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": false,
+    "retained": 4
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": false,
+    "retained": 6
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": true,
+    "same": false,
+    "retained": 8
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 14
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 28,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 105,
+   "tho": 75,
+   "tci": 32,
+   "tco": 58,
+   "mh": 0.8,
+   "ph": 1.6,
+   "pc": 0.9,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 250,
+   "exchanger-diameter": 200
+  },
+  "target": 100.84499197669184,
+  "calls": 2,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": true,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 2,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 2,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 2,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 800,
+    "calls": 2,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 2,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "layout-grid",
+    "text": "В проверенной сетке нет компоновки, удовлетворяющей габаритам, навивке и заготовкам.",
+    "level": "warning"
+   },
+   {
+    "code": "length-limit",
+    "text": "За пределом длины найден вариант 734 мм при заданном максимуме 250 мм.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 29,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 105,
+   "tho": 75,
+   "tci": 32,
+   "tco": 58,
+   "mh": 0.8,
+   "ph": 1.6,
+   "pc": 0.9,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": true,
+   "length": 700,
+   "exchanger-diameter": 250
+  },
+  "target": 100.84499197669184,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": false,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "duty-shortage",
+    "text": "Максимум среди проверенных применимых вариантов 50.94 кВт при задании 100.84 кВт.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 30,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 105,
+   "tho": 75,
+   "tci": 32,
+   "tco": 58,
+   "mh": 0.8,
+   "ph": 1.6,
+   "pc": 0.9,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": false,
+   "length": 350,
+   "exchanger-diameter": 200
+  },
+  "target": 100.84499197669184,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": false,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "duty-shortage",
+    "text": "Максимум среди проверенных применимых вариантов 72.21 кВт при задании 100.84 кВт.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 31,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [
+   {
+    "metrics": [
+     222,
+     82,
+     3,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     352,
+     80,
+     3,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     190,
+     102,
+     3,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     206,
+     90,
+     3,
+     1,
+     1
+    ],
+    "warning": false
+   }
+  ],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 55,
+   "tho": 46,
+   "tci": 15,
+   "tco": 31,
+   "mh": 0.06,
+   "ph": 0.35,
+   "pc": 0.25,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 2000,
+   "exchanger-diameter": 600
+  },
+  "target": 2.2576933645346715,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 85,
+  "front": 4,
+  "sampled": false,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 82,
+    "height": 222,
+    "shellWall": 1,
+    "coreDiameter": 40,
+    "coreLength": 222,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.9426691234583604,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 60,
+      "count": 1,
+      "turns": 13,
+      "pitch": 16,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 3,
+   "duty": 2.279076631649466,
+   "valid": true,
+   "metrics": [
+    222,
+    82,
+    3,
+    1,
+    1
+   ],
+   "key": "[82,222,1,40,222,2,14,2.5,28,40,[[60,1,13,16,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": true,
+    "retained": 2
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 4
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": true,
+    "same": true,
+    "retained": 4
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 4
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 32,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [
+   {
+    "metrics": [
+     126,
+     196,
+     3.9961451821337906,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     142,
+     160,
+     3.639376269630525,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     190,
+     102,
+     2.944618070500292,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     174,
+     116,
+     3.1289937449865137,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     222,
+     82,
+     2.65062289985552,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     158,
+     134,
+     3.3398317626350646,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     206,
+     90,
+     2.7509215148125015,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     352,
+     80,
+     2.5810740064184707,
+     1,
+     1
+    ],
+    "warning": false
+   }
+  ],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 55,
+   "tho": 46,
+   "tci": 15,
+   "tco": 31,
+   "mh": 0.06,
+   "ph": 0.35,
+   "pc": 0.25,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": false,
+   "length": 850,
+   "exchanger-diameter": 240
+  },
+  "target": 2.2576933645346715,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 356,
+  "front": 8,
+  "sampled": false,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 102,
+    "height": 190,
+    "shellWall": 1,
+    "coreDiameter": 60,
+    "coreLength": 190,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.967675442988508,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 80,
+      "count": 1,
+      "turns": 11,
+      "pitch": 16,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 2.944618070500292,
+   "duty": 2.2774461930931365,
+   "valid": true,
+   "metrics": [
+    190,
+    102,
+    2.944618070500292,
+    1,
+    1
+   ],
+   "key": "[102,190,1,60,190,2,14,2.5,28,40,[[80,1,11,16,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": false,
+    "retained": 3
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 8
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": true,
+    "same": true,
+    "retained": 8
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 8
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 33,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [
+   {
+    "metrics": [
+     222,
+     82,
+     3,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     190,
+     102,
+     3,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     206,
+     90,
+     3,
+     1,
+     1
+    ],
+    "warning": false
+   }
+  ],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 55,
+   "tho": 46,
+   "tci": 15,
+   "tco": 31,
+   "mh": 0.06,
+   "ph": 0.35,
+   "pc": 0.25,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 250,
+   "exchanger-diameter": 200
+  },
+  "target": 2.2576933645346715,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 24,
+  "front": 3,
+  "sampled": false,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 90,
+    "height": 206,
+    "shellWall": 1,
+    "coreDiameter": 48,
+    "coreLength": 206,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.9553121008168919,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 68,
+      "count": 1,
+      "turns": 12,
+      "pitch": 16,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 3,
+   "duty": 2.266867186333217,
+   "valid": true,
+   "metrics": [
+    206,
+    90,
+    3,
+    1,
+    1
+   ],
+   "key": "[90,206,1,48,206,2,14,2.5,28,40,[[68,1,12,16,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": true,
+    "same": false,
+    "retained": 2
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": true,
+    "retained": 3
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 3
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": true,
+    "same": true,
+    "retained": 3
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 3
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 34,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [
+   {
+    "metrics": [
+     222,
+     82,
+     3,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     352,
+     80,
+     3,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     190,
+     102,
+     3,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     206,
+     90,
+     3,
+     1,
+     1
+    ],
+    "warning": false
+   }
+  ],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 55,
+   "tho": 46,
+   "tci": 15,
+   "tco": 31,
+   "mh": 0.06,
+   "ph": 0.35,
+   "pc": 0.25,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": true,
+   "length": 700,
+   "exchanger-diameter": 250
+  },
+  "target": 2.2576933645346715,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 85,
+  "front": 4,
+  "sampled": false,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 82,
+    "height": 222,
+    "shellWall": 1,
+    "coreDiameter": 40,
+    "coreLength": 222,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.9426691234583604,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 60,
+      "count": 1,
+      "turns": 13,
+      "pitch": 16,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 3,
+   "duty": 2.279076631649466,
+   "valid": true,
+   "metrics": [
+    222,
+    82,
+    3,
+    1,
+    1
+   ],
+   "key": "[82,222,1,40,222,2,14,2.5,28,40,[[60,1,13,16,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": true,
+    "retained": 2
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 4
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": true,
+    "same": true,
+    "retained": 4
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 4
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 35,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [
+   {
+    "metrics": [
+     126,
+     196,
+     3.9961451821337906,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     142,
+     160,
+     3.639376269630525,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     190,
+     102,
+     2.944618070500292,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     174,
+     116,
+     3.1289937449865137,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     222,
+     82,
+     2.65062289985552,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     158,
+     134,
+     3.3398317626350646,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     206,
+     90,
+     2.7509215148125015,
+     1,
+     1
+    ],
+    "warning": false
+   }
+  ],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 55,
+   "tho": 46,
+   "tci": 15,
+   "tco": 31,
+   "mh": 0.06,
+   "ph": 0.35,
+   "pc": 0.25,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": false,
+   "length": 350,
+   "exchanger-diameter": 200
+  },
+  "target": 2.2576933645346715,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 295,
+  "front": 7,
+  "sampled": false,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 116,
+    "height": 174,
+    "shellWall": 1,
+    "coreDiameter": 74,
+    "coreLength": 174,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.9765674460907583,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 94,
+      "count": 1,
+      "turns": 10,
+      "pitch": 16,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 3.1289937449865137,
+   "duty": 2.2735278621285837,
+   "valid": true,
+   "metrics": [
+    174,
+    116,
+    3.1289937449865137,
+    1,
+    1
+   ],
+   "key": "[116,174,1,74,174,2,14,2.5,28,40,[[94,1,10,16,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": false,
+    "retained": 2
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 7
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": true,
+    "same": true,
+    "retained": 7
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 7
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 36,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 115,
+   "tho": 80,
+   "tci": 25,
+   "tco": 52,
+   "mh": 1.4,
+   "ph": 2,
+   "pc": 1,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 2000,
+   "exchanger-diameter": 600
+  },
+  "target": 206.21830610507274,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": true,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "duty-excess",
+    "text": "Все проверенные применимые варианты превысили допуск +3 % по мощности.",
+    "level": "warning"
+   },
+   {
+    "code": "tube-re",
+    "text": "Проверка Re каждой трубки 15 000…20 000 отклонила вариантов: 135.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 37,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [
+   {
+    "metrics": [
+     779,
+     187,
+     78.1353867523525,
+     36,
+     4
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     762,
+     203,
+     88.08220191160709,
+     44,
+     4
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     782,
+     196,
+     75.75040921296281,
+     36,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     824,
+     179,
+     74.66340080900423,
+     36,
+     4
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     734,
+     204,
+     87.2967972748971,
+     40,
+     5
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     774,
+     202,
+     86.74830624812687,
+     40,
+     5
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     734,
+     228,
+     87.6342734884483,
+     45,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     779,
+     226,
+     87.64033458779083,
+     45,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     830,
+     192,
+     74.75896959288772,
+     36,
+     3
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     654,
+     217,
+     85.12171383071204,
+     40,
+     4
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     574,
+     222,
+     84.03480016125133,
+     35,
+     5
+    ],
+    "warning": false
+   }
+  ],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 115,
+   "tho": 80,
+   "tci": 25,
+   "tco": 52,
+   "mh": 1.4,
+   "ph": 2,
+   "pc": 1,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": false,
+   "length": 850,
+   "exchanger-diameter": 240
+  },
+  "target": 206.21830610507274,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 370,
+  "front": 11,
+  "sampled": true,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 217,
+    "height": 654,
+    "shellWall": 1,
+    "coreDiameter": 82,
+    "coreLength": 654,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 0.31478589805436563,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 1.5,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 102,
+      "count": 10,
+      "turns": 4,
+      "pitch": 160,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     },
+     {
+      "diameter": 133,
+      "count": 10,
+      "turns": 4,
+      "pitch": 160,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     },
+     {
+      "diameter": 164,
+      "count": 10,
+      "turns": 4,
+      "pitch": 160,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     },
+     {
+      "diameter": 195,
+      "count": 10,
+      "turns": 4,
+      "pitch": 160,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 85.12171383071204,
+   "duty": 206.52567509796845,
+   "valid": true,
+   "metrics": [
+    654,
+    217,
+    85.12171383071204,
+    40,
+    4
+   ],
+   "key": "[217,654,1,82,654,2,14,2.5,28,40,[[102,10,4,160,0,0,\"right\"],[133,10,4,160,0,0,\"right\"],[164,10,4,160,0,0,\"right\"],[195,10,4,160,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": true,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": false,
+    "retained": 6
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": false,
+    "retained": 9
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": true,
+    "same": true,
+    "retained": 10
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 11
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 38,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 115,
+   "tho": 80,
+   "tci": 25,
+   "tco": 52,
+   "mh": 1.4,
+   "ph": 2,
+   "pc": 1,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 250,
+   "exchanger-diameter": 200
+  },
+  "target": 206.21830610507274,
+  "calls": 24,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": true,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 24,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 24,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 24,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 800,
+    "calls": 24,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 24,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "layout-grid",
+    "text": "В проверенной сетке нет компоновки, удовлетворяющей габаритам, навивке и заготовкам.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 39,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 115,
+   "tho": 80,
+   "tci": 25,
+   "tco": 52,
+   "mh": 1.4,
+   "ph": 2,
+   "pc": 1,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": true,
+   "length": 700,
+   "exchanger-diameter": 250
+  },
+  "target": 206.21830610507274,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": false,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "duty-shortage",
+    "text": "Максимум среди проверенных применимых вариантов 76.79 кВт при задании 206.22 кВт.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 40,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 115,
+   "tho": 80,
+   "tci": 25,
+   "tco": 52,
+   "mh": 1.4,
+   "ph": 2,
+   "pc": 1,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": false,
+   "length": 350,
+   "exchanger-diameter": 200
+  },
+  "target": 206.21830610507274,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": false,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "duty-shortage",
+    "text": "Максимум среди проверенных применимых вариантов 118.83 кВт при задании 206.22 кВт.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 41,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 85,
+   "tho": 65,
+   "tci": 30,
+   "tco": 50,
+   "mh": 0.01,
+   "ph": 0.6,
+   "pc": 0.4,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 2000,
+   "exchanger-diameter": 600
+  },
+  "target": 0.8384232906373613,
+  "calls": 0,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": false,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 800,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "tube-count",
+    "text": "При заданном расходе нет целого числа трубок для предварительного Re 15 000…20 000.",
+    "level": "error"
+   }
+  ]
+ },
+ {
+  "id": 42,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 85,
+   "tho": 65,
+   "tci": 30,
+   "tco": 50,
+   "mh": 0.01,
+   "ph": 0.6,
+   "pc": 0.4,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": false,
+   "length": 850,
+   "exchanger-diameter": 240
+  },
+  "target": 0.8384232906373613,
+  "calls": 0,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": false,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 800,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "tube-count",
+    "text": "При заданном расходе нет целого числа трубок для предварительного Re 15 000…20 000.",
+    "level": "error"
+   }
+  ]
+ },
+ {
+  "id": 43,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 85,
+   "tho": 65,
+   "tci": 30,
+   "tco": 50,
+   "mh": 0.01,
+   "ph": 0.6,
+   "pc": 0.4,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 250,
+   "exchanger-diameter": 200
+  },
+  "target": 0.8384232906373613,
+  "calls": 0,
+  "errors": 0,
+  "accepted": 0,
+  "front": 0,
+  "sampled": false,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": null,
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 800,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 1000,
+    "calls": 0,
+    "found": false,
+    "same": false,
+    "retained": 0
+   }
+  ],
+  "notes": [
+   {
+    "code": "tube-count",
+    "text": "При заданном расходе нет целого числа трубок для предварительного Re 15 000…20 000.",
+    "level": "error"
+   }
+  ]
+ },
+ {
+  "id": 44,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [
+   {
+    "metrics": [
+     78,
+     200,
+     3,
+     1,
+     1
+    ],
+    "warning": true
+   }
+  ],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 85,
+   "tho": 65,
+   "tci": 30,
+   "tco": 50,
+   "mh": 0.01,
+   "ph": 0.6,
+   "pc": 0.4,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": true,
+   "length": 700,
+   "exchanger-diameter": 250
+  },
+  "target": 0.8384232906373613,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 47,
+  "front": 1,
+  "sampled": false,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 200,
+    "height": 78,
+    "shellWall": 1,
+    "coreDiameter": 158,
+    "coreLength": 78,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.9934547890283394,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 178,
+      "count": 1,
+      "turns": 4,
+      "pitch": 16,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 3,
+   "duty": 0.8527903814967458,
+   "valid": false,
+   "metrics": [
+    78,
+    200,
+    3,
+    1,
+    1
+   ],
+   "key": "[200,78,1,158,78,2,14,2.5,28,40,[[178,1,4,16,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": true,
+    "same": true,
+    "retained": 1
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": true,
+    "retained": 1
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 1
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": true,
+    "same": true,
+    "retained": 1
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 1
+   }
+  ],
+  "notes": [
+   {
+    "code": "single-coil-re-method",
+    "text": "Рекомендация с исключением по Re одного змеевика. Применимость трубной корреляции Teplo не подтверждена.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 45,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [
+   {
+    "metrics": [
+     78,
+     194,
+     2.330432247863887,
+     1,
+     1
+    ],
+    "warning": true
+   },
+   {
+    "metrics": [
+     110,
+     106,
+     1.7596367368762271,
+     1,
+     1
+    ],
+    "warning": true
+   },
+   {
+    "metrics": [
+     94,
+     136,
+     1.9622010012646782,
+     1,
+     1
+    ],
+    "warning": true
+   },
+   {
+    "metrics": [
+     126,
+     86,
+     1.5960570570207324,
+     1,
+     1
+    ],
+    "warning": true
+   },
+   {
+    "metrics": [
+     122,
+     104,
+     1.7227029079320693,
+     1,
+     1
+    ],
+    "warning": true
+   },
+   {
+    "metrics": [
+     154,
+     84,
+     1.555193074865535,
+     1,
+     1
+    ],
+    "warning": true
+   }
+  ],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 85,
+   "tho": 65,
+   "tci": 30,
+   "tco": 50,
+   "mh": 0.01,
+   "ph": 0.6,
+   "pc": 0.4,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": false,
+   "length": 350,
+   "exchanger-diameter": 200
+  },
+  "target": 0.8384232906373613,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 209,
+  "front": 6,
+  "sampled": false,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 106,
+    "height": 110,
+    "shellWall": 1,
+    "coreDiameter": 64,
+    "coreLength": 110,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.9706724164538407,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 84,
+      "count": 1,
+      "turns": 6,
+      "pitch": 16,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 1.7596367368762271,
+   "duty": 0.8456663260771111,
+   "valid": false,
+   "metrics": [
+    110,
+    106,
+    1.7596367368762271,
+    1,
+    1
+   ],
+   "key": "[106,110,1,64,110,2,14,2.5,28,40,[[84,1,6,16,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": true,
+    "same": false,
+    "retained": 1
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": false,
+    "retained": 4
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 6
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": true,
+    "same": true,
+    "retained": 6
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 6
+   }
+  ],
+  "notes": [
+   {
+    "code": "single-coil-re-method",
+    "text": "Рекомендация с исключением по Re одного змеевика. Применимость трубной корреляции Teplo не подтверждена.",
+    "level": "warning"
+   }
+  ]
+ },
+ {
+  "id": 46,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [
+   {
+    "metrics": [
+     238,
+     124,
+     6,
+     2,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     174,
+     194,
+     6,
+     2,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     206,
+     150,
+     6,
+     2,
+     1
+    ],
+    "warning": false
+   }
+  ],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 95,
+   "tho": 70,
+   "tci": 10,
+   "tco": 45,
+   "mh": 0.08,
+   "ph": 0.75,
+   "pc": 0.5,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 2000,
+   "exchanger-diameter": 600
+  },
+  "target": 8.394537513027105,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 150,
+  "front": 3,
+  "sampled": false,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 150,
+    "height": 206,
+    "shellWall": 1,
+    "coreDiameter": 108,
+    "coreLength": 206,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.9495787544052678,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 128,
+      "count": 2,
+      "turns": 6,
+      "pitch": 32,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 6,
+   "duty": 8.409713798175499,
+   "valid": true,
+   "metrics": [
+    206,
+    150,
+    6,
+    2,
+    1
+   ],
+   "key": "[150,206,1,108,206,2,14,2.5,28,40,[[128,2,6,32,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": false,
+    "retained": 1
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": false,
+    "retained": 2
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": true,
+    "same": false,
+    "retained": 2
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 3
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 47,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [
+   {
+    "metrics": [
+     334,
+     78,
+     3.9539598702914094,
+     2,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     222,
+     109,
+     6.244613461358839,
+     2,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     235,
+     109,
+     6.243949316933712,
+     2,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     248,
+     109,
+     6.243543107218725,
+     2,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     261,
+     109,
+     6.2433798381968995,
+     2,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     238,
+     122,
+     4.75583938301576,
+     2,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     302,
+     88,
+     4.12471919382838,
+     2,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     174,
+     194,
+     5.745645260062271,
+     2,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     206,
+     150,
+     5.173861184106828,
+     2,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     270,
+     102,
+     4.392738600480281,
+     2,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     190,
+     131,
+     6.817203791316049,
+     2,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     206,
+     117,
+     6.362533370913046,
+     2,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     174,
+     149,
+     7.353566145920222,
+     2,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     158,
+     173,
+     8.005591432822662,
+     2,
+     2
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     142,
+     207,
+     8.860148389539777,
+     2,
+     2
+    ],
+    "warning": false
+   }
+  ],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 95,
+   "tho": 70,
+   "tci": 10,
+   "tco": 45,
+   "mh": 0.08,
+   "ph": 0.75,
+   "pc": 0.5,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": false,
+   "length": 850,
+   "exchanger-diameter": 240
+  },
+  "target": 8.394537513027105,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 704,
+  "front": 15,
+  "sampled": false,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 122,
+    "height": 238,
+    "shellWall": 1,
+    "coreDiameter": 80,
+    "coreLength": 238,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.9176380320200064,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 100,
+      "count": 2,
+      "turns": 7,
+      "pitch": 32,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 4.75583938301576,
+   "duty": 8.426698514923377,
+   "valid": true,
+   "metrics": [
+    238,
+    122,
+    4.75583938301576,
+    2,
+    1
+   ],
+   "key": "[122,238,1,80,238,2,14,2.5,28,40,[[100,2,7,32,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": false,
+    "retained": 5
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": false,
+    "retained": 5
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": true,
+    "same": true,
+    "retained": 10
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 15
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 48,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [
+   {
+    "metrics": [
+     238,
+     124,
+     6,
+     2,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     206,
+     150,
+     6,
+     2,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     174,
+     194,
+     6,
+     2,
+     1
+    ],
+    "warning": false
+   }
+  ],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 95,
+   "tho": 70,
+   "tci": 10,
+   "tco": 45,
+   "mh": 0.08,
+   "ph": 0.75,
+   "pc": 0.5,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": false,
+   "stock-lengths": true,
+   "length": 250,
+   "exchanger-diameter": 200
+  },
+  "target": 8.394537513027105,
+  "calls": 852,
+  "errors": 0,
+  "accepted": 55,
+  "front": 3,
+  "sampled": false,
+  "stop": "catalogue-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 150,
+    "height": 206,
+    "shellWall": 1,
+    "coreDiameter": 108,
+    "coreLength": 206,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.9495787544052678,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 128,
+      "count": 2,
+      "turns": 6,
+      "pitch": 32,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 6,
+   "duty": 8.409713798175499,
+   "valid": true,
+   "metrics": [
+    206,
+    150,
+    6,
+    2,
+    1
+   ],
+   "key": "[150,206,1,108,206,2,14,2.5,28,40,[[128,2,6,32,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": true,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": true,
+    "retained": 3
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 3
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": true,
+    "same": true,
+    "retained": 3
+   },
+   {
+    "limit": 1000,
+    "calls": 852,
+    "found": true,
+    "same": true,
+    "retained": 3
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 49,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [
+   {
+    "metrics": [
+     190,
+     156,
+     6,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     158,
+     202,
+     6,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     174,
+     172,
+     6,
+     1,
+     1
+    ],
+    "warning": false
+   }
+  ],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 95,
+   "tho": 70,
+   "tci": 10,
+   "tco": 45,
+   "mh": 0.08,
+   "ph": 0.75,
+   "pc": 0.5,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": true,
+   "length": 700,
+   "exchanger-diameter": 250
+  },
+  "target": 8.394537513027105,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 181,
+  "front": 3,
+  "sampled": false,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 172,
+    "height": 174,
+    "shellWall": 1,
+    "coreDiameter": 130,
+    "coreLength": 174,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.9907854868783073,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 150,
+      "count": 1,
+      "turns": 10,
+      "pitch": 16,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 6,
+   "duty": 8.40442779165569,
+   "valid": true,
+   "metrics": [
+    174,
+    172,
+    6,
+    1,
+    1
+   ],
+   "key": "[172,174,1,130,174,2,14,2.5,28,40,[[150,1,10,16,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": false,
+    "retained": 1
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": true,
+    "same": true,
+    "retained": 3
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 3
+   }
+  ],
+  "notes": []
+ },
+ {
+  "id": 50,
+  "algorithm": "inline-pareto-v2",
+  "frontMetrics": [
+   {
+    "metrics": [
+     286,
+     86,
+     3.613032506223375,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     302,
+     80,
+     3.4907548002642064,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     254,
+     100,
+     3.858545945788455,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     270,
+     92,
+     3.7066712756955376,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     206,
+     134,
+     4.396497678838187,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     222,
+     120,
+     4.178849668231616,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     238,
+     108,
+     3.962030318126297,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     174,
+     172,
+     4.883513219320802,
+     1,
+     1
+    ],
+    "warning": false
+   },
+   {
+    "metrics": [
+     190,
+     150,
+     4.595889172757455,
+     1,
+     1
+    ],
+    "warning": false
+   }
+  ],
+  "state": {
+   "flow": "counter",
+   "hot-fluid": "water",
+   "cold-fluid": "water",
+   "thi": 95,
+   "tho": 70,
+   "tci": 10,
+   "tco": 45,
+   "mh": 0.08,
+   "ph": 0.75,
+   "pc": 0.5,
+   "unknown": "mc",
+   "tube-conductivity": 16,
+   "design-objective": "pareto",
+   "single-coil": true,
+   "stock-lengths": false,
+   "length": 350,
+   "exchanger-diameter": 200
+  },
+  "target": 8.394537513027105,
+  "calls": 1000,
+  "errors": 0,
+  "accepted": 321,
+  "front": 9,
+  "sampled": false,
+  "stop": "budget-exhausted",
+  "issues": [],
+  "geometry": {
+   "g": {
+    "diameter": 120,
+    "height": 222,
+    "shellWall": 1,
+    "coreDiameter": 78,
+    "coreLength": 222,
+    "coreWall": 2,
+    "tubeDiameter": 14,
+    "tubeWall": 2.5,
+    "clearance": 1.9784374835111453,
+    "coreClearance": 3,
+    "shellClearance": 3,
+    "rowClearance": 3,
+    "leadBendRadius": 28,
+    "leadStraightLength": 40,
+    "rows": [
+     {
+      "diameter": 98,
+      "count": 1,
+      "turns": 13,
+      "pitch": 16,
+      "offset": 0,
+      "phase": 0,
+      "direction": "right",
+      "hidden": false
+     }
+    ]
+   },
+   "meters": 4.178849668231616,
+   "duty": 8.445617525030917,
+   "valid": true,
+   "metrics": [
+    222,
+    120,
+    4.178849668231616,
+    1,
+    1
+   ],
+   "key": "[120,222,1,78,222,2,14,2.5,28,40,[[98,1,13,16,0,0,\"right\"]]]"
+  },
+  "budgets": [
+   {
+    "limit": 100,
+    "calls": 100,
+    "found": false,
+    "same": false,
+    "retained": 0
+   },
+   {
+    "limit": 250,
+    "calls": 250,
+    "found": true,
+    "same": false,
+    "retained": 4
+   },
+   {
+    "limit": 500,
+    "calls": 500,
+    "found": true,
+    "same": true,
+    "retained": 9
+   },
+   {
+    "limit": 800,
+    "calls": 800,
+    "found": true,
+    "same": true,
+    "retained": 9
+   },
+   {
+    "limit": 1000,
+    "calls": 1000,
+    "found": true,
+    "same": true,
+    "retained": 9
+   }
+  ],
+  "notes": []
+ }
+]

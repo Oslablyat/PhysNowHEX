@@ -12,7 +12,7 @@ const root=path.resolve(__dirname,'..'),p=require('../assets/coil-project-method
  // Exercise the real Worker dispatch with the real solved designs. Selection
  // returns the existing object, without invoking another selector or Teplo.
  const messages=[],self={postMessage:m=>messages.push(structuredClone(m))};let searches=0;
- self.CoilProjectMethod={balance:()=>target,source:()=>({}),select:async()=>{searches++;return structuredClone(result)}};
+ self.CoilProjectMethod={balance:()=>target,source:()=>({})};self.CoilMulticriteria={materialize:design=>design,select:async()=>{searches++;return structuredClone(result)}};
  const worker=fs.readFileSync(path.join(root,'assets/coil-project-worker.js'),'utf8').replace(/^import .*;\r?\n/gm,'');
  vm.runInNewContext(worker,{self,createCoolProp:async()=>({get_global_param_string:()=> '8.0.0'}),setTimeout,Map});
  await self.onmessage({data:{id:5,state}});const publicResult=messages.find(m=>m.phase==='variants');assert(publicResult);assert(!('acceptedDesigns'in publicResult.variants),'Do not post every full coil array to the page');
