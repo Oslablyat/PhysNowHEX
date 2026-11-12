@@ -1514,6 +1514,7 @@ function initializeCoilThermalMethod(){
   change(){syncDetailThermalArrangement();refreshOpenExchangerCard()},
   card(){openExchangerCard({thermal:true})},
   geometry(){if(!verificationState)return null;return calculateCoilGeometry(verificationState)},
+  cardSections(){return coilExchangerCardData({design:{geometry:verificationState},inputs:getState()},currentResult)},
   save(state){coilThermalInputs=state;markCoilVariantManual();save();if($('exchanger-type').value==='coil')updateCoilProject()},
   assess(result){
    if(currentResult?.method!=='Teplo')return null;
