@@ -357,11 +357,11 @@
    const totalLength=thermal.coils.reduce((sum,c)=>sum+c.length_m,0);
    const tubeMetres=lengths.reduce((sum,m)=>sum+m.totalMM*m.count,0)/1000;
    const stockMetres=useStock?lengths.reduce((sum,m)=>sum+m.stockMM*m.count,0)/1000:null;
-   calculations.push({id,status:'accepted',geometryKey:project.geometryKey(g),height:g.height,diameter:g.diameter,count:s.f.n,rowCount:g.rows.length,
+   calculations.push({id,status:'accepted',geometryKey:project.geometryKey(g),height:g.height,diameter:g.diameter,tubeDiameter:g.tubeDiameter,tubeWall:g.tubeWall,count:s.f.n,rowCount:g.rows.length,
     materialMetres:stockMetres??tubeMetres,stockMetres,tubeMetres,lengthSpread:(Math.max(...lengths.map(m=>m.totalMM))-Math.min(...lengths.map(m=>m.totalMM)))/1000,
     volumeLitres:Math.PI*g.diameter**2*g.height/4e6,area:thermal.area_m2,duty:thermal.heat_duty_kw,
     excessPercent:(thermal.heat_duty_kw/target.q-1)*100,reHot:Math.min(...thermal.coils.map(c=>c.re_hot)),
-    reCold:thermal.shell.re_cold,ua:thermal.ua_w_k,k:thermal.overall_u_w_m2k,hotOut:thermal.t_hot_out_c,coldOut:thermal.t_cold_out_c,warning:!thermal.valid});
+    reCold:thermal.shell.re_cold,velocityHot:thermal.hot_velocity_m_s,velocityCold:thermal.shell.velocity_m_s,ua:thermal.ua_w_k,k:thermal.overall_u_w_m2k,hotOut:thermal.t_hot_out_c,coldOut:thermal.t_cold_out_c,warning:!thermal.valid});
    acceptedDesigns.push({kind:'coil',calculationId:id,geometry:g,shellCalculation:s.f.shell,length:g.height/1000,diameter:g.diameter/1000,
     dmm:s.f.d,wmm:s.f.w,n:s.f.n,rowCount:g.rows.length,totalTurns:turns*s.f.n,area:thermal.area_m2,externalArea:Math.PI*s.f.d/1000*totalLength,
     totalLength,manufacturing:lengths,wasteMM:lengths.reduce((sum,m)=>sum+(m.wasteMM??0)*m.count,0),

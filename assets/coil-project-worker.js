@@ -1,8 +1,8 @@
 import createCoolProp from './vendor/coolprop/coolprop.js';
 import './coil-thermal-method.js';
 import './coil-manufacturing.js?v=re-stock-20261029';
-import './coil-project-method.js?v=inline-pareto-v2';
-import './coil-project-multicriteria.js?v=inline-pareto-v2';
+import './coil-project-method.js?v=table-flow-summary-20261111';
+import './coil-project-multicriteria.js?v=table-flow-summary-20261111';
 const library=createCoolProp({print:()=>{},printErr:()=>{}});let latest=0,cachedId=null,acceptedDesigns=new Map();
 self.onmessage=async({data})=>{
  if(data.selectCalculation){

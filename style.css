@@ -471,16 +471,34 @@ footer{color:#737373}
 .thermal .find-button .find-tick{display:none;width:9px;height:9px;fill:none;stroke:currentColor;stroke-width:1.8}.thermal .find-button[aria-pressed=true] .find-tick{display:block}
 .thermal .find-field.is-find>.input-wrap{background:#18212c;border-color:#4a9eff77;border-style:solid}.thermal .find-field.is-find input{color:#c5dfff}
 .thermal .port-card .input-wrap .flow-unit{flex-basis:55px;width:55px;max-width:55px}
+.thermal .port-card .flow-input-wrap{overflow:visible}
+.thermal .port-card:has(.dropdown-field.is-active){z-index:21}
+.flow-unit-field{position:relative;flex:0 0 65px;min-width:0;height:100%;padding:0 2px}
+.flow-unit-field .dd{height:100%}
+.flow-unit-field .dd .dd-trigger{display:flex;justify-content:space-between;gap:3px;width:100%!important;max-width:100%;height:100%;padding:0 4px;border-radius:5px;background:transparent;font-size:11px;font-weight:400;color:#b7b7b7}
+.flow-unit-field .dd .dd-trigger .hi{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.flow-unit-field .dd-menu{left:auto;right:0;width:132px;max-width:calc(100vw - 32px);transform-origin:top right}
+.flow-unit-field .dd-menu[data-origin="bottom-left"]{transform-origin:bottom right}
+.flow-unit-field .dd .dd-item{height:32px;font-size:12px;font-weight:500}
+.dd .dd-item:disabled{opacity:.35;cursor:default;background:transparent}
+.thermal .port-card .flow-unit[hidden]{display:none}
+.fluid-dropdown-field{position:relative;display:block;flex:0 1 96px;min-width:0}
+.fluid-dropdown-field .dd{height:24px}
+.fluid-dropdown-field .dd .dd-trigger{display:flex;justify-content:space-between;gap:6px;width:100%!important;height:100%;padding:2px 6px;border:1px solid #343434;border-radius:7px;background:#1e1e1e;font-size:10px;line-height:18px;font-weight:400}
+.fluid-dropdown-field .dd .dd-trigger .hi{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.fluid-dropdown-field .dd-menu{left:auto;right:0;width:174px;max-width:calc(100vw - 32px);transform-origin:top right}
+.fluid-dropdown-field .dd-menu[data-origin="bottom-left"]{transform-origin:bottom right}
+.fluid-dropdown-field .dd .dd-item{height:32px;font-size:12px;font-weight:500}
+@media(max-width:1250px){.fluid-dropdown-field{flex-basis:80px}}
+@media(max-width:560px){.fluid-dropdown-field{flex-basis:100%}}
 .port-card{container-type:inline-size}
 @container(max-width:285px){.port-card .fields{grid-template-columns:minmax(0,1fr)}}
 
 /* Explicit handoff of the selected construction, scoped to the table header. */
 .variants-heading{align-items:center;flex-wrap:wrap}
-.verification-choice{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:34px;max-width:100%;padding:7px 12px;border:1px solid #414141;border-radius:8px;background:#292929;color:#f0f0f0;font:inherit;font-size:11px;line-height:18px;cursor:pointer;touch-action:manipulation;transition:background-color 150ms,border-color 150ms}
+.verification-choice{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:34px;max-width:100%;padding:7px 12px;font:inherit;font-size:11px;line-height:18px;cursor:pointer;touch-action:manipulation}
 .verification-choice svg{width:16px;height:16px;flex:none;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-.verification-choice:hover:not(:disabled){background:#353535;border-color:#626262}
-.verification-choice:focus-visible{outline:2px solid #4a9eff;outline-offset:3px}
-.verification-choice:disabled{cursor:default;color:#777;background:#202020;border-color:#303030}
+.verification-choice:active:not(:disabled){transform:translateY(1px)}
 .verification-choice.is-chosen{color:#c4dfff;background:#1f2b39;border-color:#3e5877}
 @media(max-width:560px){.verification-choice{width:100%}}
 @media(prefers-reduced-motion:reduce){.verification-choice{transition:none}}
@@ -498,12 +516,9 @@ footer{color:#737373}
 .exchanger-card-search input{flex:1;min-width:0;width:100%;padding:4px 0;border:0;outline:none;box-shadow:none;background:transparent;color:#eee;font:inherit;font-size:16px;line-height:24px}
 .exchanger-card-search input::placeholder{color:#929292}
 .exchanger-card-search input::-webkit-search-cancel-button{cursor:pointer}
-.exchanger-card-search button{flex:none;padding:3px 7px;background:#343434;color:#aaa;border:1px solid #3a3a3a;border-radius:6px;font:inherit;font-size:12px;line-height:18px;cursor:pointer}
-.exchanger-card-search button:hover{color:#fff;background:#424242}
+.exchanger-card-search button{flex:none;padding:3px 7px;font:inherit;font-size:12px;line-height:18px;cursor:pointer}
 .exchanger-card-categories{display:flex;flex-wrap:wrap;gap:8px;padding:16px 18px 12px;flex-shrink:0}
-.exchanger-card-categories button{padding:9px 16px;border:1px solid #3b3b3b;border-radius:24px;background:#292929;color:#c5c5c5;font:inherit;font-size:12px;font-weight:500;line-height:18px;cursor:pointer;touch-action:manipulation}
-.exchanger-card-categories button[aria-selected=true]{background:#414141;border-color:#505050;color:#fff}
-.exchanger-card-categories button:hover{background:#383838;color:#fff}
+.exchanger-card-categories button{padding:9px 16px;font:inherit;font-size:12px;font-weight:500;line-height:18px;cursor:pointer;touch-action:manipulation}
 .exchanger-card-dialog button:focus-visible,.exchanger-card-dialog [role=tabpanel]:focus-visible{outline:2px solid #4a9eff;outline-offset:2px}
 .exchanger-card-search:focus-within>svg{stroke:#c4c4c4}
 .exchanger-card-body{min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:8px 20px 22px;scrollbar-width:thin;scrollbar-color:#666 #262626}
@@ -526,18 +541,23 @@ footer{color:#737373}
 /* A separate geometry workspace. The design calculator keeps its existing layout. */
 #design-page{display:flex;flex-direction:column;gap:10px;min-width:0}
 #design-page[hidden],#construction-page[hidden],#verification-page[hidden]{display:none!important}
-#construction-page{display:flex;flex-direction:column;gap:10px;min-width:0;height:calc(100dvh - var(--cad-header-height) - 25px)}
-#construction-page>.design-detail-workspace{flex:1;height:auto;min-height:0}
+#construction-page{display:flex;flex-direction:column;gap:10px;min-width:0;min-height:calc(100dvh - var(--cad-header-height) - 25px)}
+#construction-page>.design-detail-workspace{flex:none;height:calc(100dvh - var(--cad-header-height) - 102.2px);min-height:420px}
 .construction-heading-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
 .construction-heading-actions>[hidden]{display:none!important}
-@media(max-width:780px){#construction-page{height:auto}.construction-heading-actions{width:100%;justify-content:flex-start}}
+@media(max-width:780px){#construction-page>.design-detail-workspace{height:auto;min-height:0}.construction-heading-actions{width:100%;justify-content:flex-start}}
 /* Fit the final section below the sticky header at the end of page scrolling:
    section heading 67.2px, section gap 10px, footer gap 6px, footer 11px,
    page bottom padding 8px. */
-.design-detail-workspace{flex:none;height:calc(100dvh - var(--cad-header-height) - 67.2px - 16px - 11px - 8px);min-height:0}
+.design-detail-workspace{position:relative;flex:none;grid-template-columns:minmax(0,var(--design-table-width,1fr)) minmax(0,var(--design-preview-width,1fr));height:calc(100dvh - var(--cad-header-height) - 67.2px - 16px - 11px - 8px);min-height:0}
+.design-workspace-splitter{position:absolute;top:0;bottom:0;left:50%;width:10px;z-index:3;cursor:col-resize;touch-action:none;outline:none}
+.design-workspace-splitter:focus-visible{outline:1px solid #88b9e6;outline-offset:-4px}
+html.design-workspace-resizing,html.design-workspace-resizing *{cursor:col-resize!important;user-select:none!important}
+@media(max-width:780px){.design-workspace-splitter{display:none}}
 .design-detail-panel{min-width:0;border-radius:18px;background:#191919;outline:1px solid #2b2b2b;outline-offset:-1px;overflow:hidden}
 .design-detail-settings{position:relative;z-index:1;overflow:visible;display:flex;flex-direction:column;min-height:0}
 .design-detail-settings>.construction-heading{flex:none}
+#detail-mode-value{font-family:"Golos Text",Arial,sans-serif;font-size:12px;font-weight:500;line-height:normal;letter-spacing:normal;color:#f4f4f4}
 .detail-geometry{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#444 transparent;padding:0 14px 14px;border-radius:0 0 18px 18px}
 .detail-geometry[hidden]{display:none}
 .detail-geometry-caption{margin:13px 0 0;color:#858585;font-size:10px;line-height:1.6}
@@ -556,12 +576,10 @@ footer{color:#737373}
 .detail-geometry-table select{width:100%;height:28px;min-height:28px;padding:3px 5px;background:#222;color:#ddd;border:1px solid #343434;border-radius:5px;font-size:11px}
 .detail-row-toolbar{display:flex;align-items:center;gap:6px;margin:0 0 10px;color:#999;font-size:10px}
 .detail-row-toolbar>span{margin-right:auto}
-.detail-row-toolbar button{display:grid;place-items:center;width:27px;height:27px;border:1px solid #383838;border-radius:7px;background:#232323;font-size:16px;line-height:1}
-.detail-row-toolbar button:disabled{opacity:.35;cursor:default}
+.detail-row-toolbar button{display:grid;place-items:center;width:27px;height:27px;font-size:16px;line-height:1;cursor:pointer}
+.detail-row-toolbar button:active{transform:translateY(1px)}
 .detail-row-tabs{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px}
-.detail-row-tabs button{min-width:28px;height:27px;padding:3px 7px;border:1px solid #333;border-radius:7px;background:#212121;color:#999;font-size:11px}
-.detail-row-tabs button[aria-pressed=true]{color:#eee;background:#333;border-color:#565656}
-.detail-row-toolbar button:hover:not(:disabled),.detail-row-tabs button:hover{background:#303030}
+.detail-row-tabs button{min-width:28px;height:27px;padding:3px 7px;font-size:11px;cursor:pointer}
 .detail-row-caption{margin:0 0 8px;color:#888;font-size:10px;line-height:1.5}
 .detail-geometry-note{margin:12px 0 0;color:#818181;font-size:10px;line-height:1.6}
 .detail-geometry-error{margin:12px 0 0;padding:8px;border:1px solid #6b4444;border-radius:7px;background:#302121;color:#e0b4b4;font-size:10px;line-height:1.5}
@@ -642,15 +660,12 @@ footer{color:#737373}
 .coil-row-editor-heading h3 i{width:8px;height:8px;border:1.5px solid var(--row-color);border-radius:50%;background:transparent}
 .coil-row-editor-heading button{display:grid;place-items:center;width:24px;height:24px;border:0;border-radius:6px;background:transparent;color:#838383;font-size:19px}
 .coil-row-editor-heading button:hover:not(:disabled){color:#eee;background:#2b2b2b}
-.coil-row-editor-heading button:disabled{opacity:.3;cursor:default}
-.coil-row-fields{padding-top:10px;gap:10px}
-.coil-add-row{display:flex;align-items:center;justify-content:center;gap:8px;min-height:34px;margin:4px 16px 13px;width:calc(100% - 32px);padding:7px 10px;background:#242424;color:#c7c7c7;border:1px solid #383838;border-radius:8px;font-size:11px}
-.coil-add-row>span{font-size:17px;line-height:14px}.coil-add-row:hover:not(:disabled){background:#303030;color:#fff}.coil-add-row:disabled{opacity:.4;cursor:default}
+.coil-row-editor-heading button:disabled{opacity:.3;cursor:default}.coil-row-fields{padding-top:10px;gap:10px}
+.coil-add-row{display:flex;align-items:center;justify-content:center;gap:8px;min-height:34px;margin:4px 16px 13px;width:calc(100% - 32px);padding:7px 10px;color:#c7c7c7;font-size:11px;cursor:pointer}
+.coil-add-row>span{font-size:17px;line-height:14px}.coil-add-row:active{transform:translateY(1px)}
 .coil-preview-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 20px}
 .coil-preview-heading h2{font-size:14px}.coil-preview-heading p{font-size:10px;color:#858585;margin:4px 0 0}
-.coil-view-tabs{display:flex;align-items:center;padding:3px;border:1px solid #333;border-radius:9px;background:#141414;flex:none}
-.coil-view-tabs button{border:0;border-radius:6px;padding:6px 12px;background:transparent;color:#929292;font:inherit;font-size:10px}
-.coil-view-tabs button[aria-selected=true]{background:#333;color:#eee}.coil-view-tabs button:focus-visible{outline-color:#4a9eff}
+.coil-view-tabs{display:flex;align-items:center;flex:none}
 .coil-summary{display:grid;grid-template-columns:.7fr .9fr 1.2fr 1.2fr;padding:14px 20px;border-top:1px solid #2a2a2a;border-bottom:1px solid #2a2a2a;background:#171717}
 .coil-summary>div{display:flex;flex-direction:column;gap:6px;min-width:0;padding:0 16px;border-left:1px solid #303030}.coil-summary>div:first-child{padding-left:0;border:0}
 .coil-summary>div>span{font-size:10px;color:#929292}.coil-summary b{display:flex;align-items:baseline;gap:6px;font-size:24px;line-height:28px;font-weight:450;letter-spacing:-.5px;color:#f0f0f0;font-variant-numeric:tabular-nums}.coil-summary small{font-size:11px;font-weight:400;color:#858585;letter-spacing:0}
@@ -776,6 +791,7 @@ main{padding-top:0}
 }
 .construction-group>h3{margin:0 0 2px;padding:0 0 6px;border-bottom:1px solid #343434;color:#eee;font-size:11px}
 .construction-group .dropdown-field,.construction-group .reserve-factor-field,
+.construction-group .pressure-drop-field,
 .construction-group .dimension-grid>label,.construction-group .tube-grid>label{
   display:grid;grid-template-columns:var(--field-columns);align-items:center;gap:7px;
   grid-area:auto;min-width:0;margin:0;color:#b8b8b8;font-size:11px;
@@ -792,6 +808,9 @@ main{padding-top:0}
 .construction-group .dimension-grid[hidden]{display:none}
 .construction-group .input-wrap{margin:0;min-width:0}
 .construction-group .input-wrap input{text-align:left}
+.pressure-drop-settings #pressure-drop-note{margin:3px 0 0;color:#929292;font-size:10px;line-height:1.5}
+.pressure-drop-settings input::placeholder{color:#737373;font-size:11px}
+.pressure-drop-settings .input-wrap:has(input:invalid){border-color:#c97979}
 .construction-toggle{
   --check-ease:cubic-bezier(.22,1,.36,1);--check-accent:#ededed;
   display:flex;align-items:center;gap:8px;width:100%;min-height:26px;padding:5px 0;margin:0;
@@ -858,7 +877,7 @@ main{padding-top:0}
 .coil-thermal-heading{display:flex;align-items:flex-start;justify-content:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
 .coil-thermal h2{font-size:18px;font-weight:600;margin:0 0 7px}.coil-thermal h3{font-size:14px;margin:22px 0 10px}
 .coil-thermal-heading p,.coil-thermal-note,.coil-thermal-method p{color:#919aab;font-size:12px;line-height:1.65;margin:8px 0 16px}
-.coil-thermal-actions{display:flex;gap:8px;flex-wrap:wrap}.coil-thermal-actions button{background:#282828;border:1px solid #3b3b3b;color:#c9d3e0;border-radius:7px;padding:8px 11px;font:inherit;font-size:12px;cursor:pointer}.coil-thermal-actions button:hover{border-color:#7ca4d6}.coil-thermal-actions button:disabled{opacity:.45;cursor:default}
+.coil-thermal-actions{display:flex;gap:8px;flex-wrap:wrap}.coil-thermal-actions button{padding:8px 11px;font:inherit;font-size:12px}
 .coil-thermal-inputs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin:24px 0}
 .coil-thermal fieldset{border:0;border-top:1px solid #363636;padding:16px 0 0;margin:0;min-width:0}.coil-thermal legend{font-size:13px;font-weight:600;padding-right:8px}
 .coil-thermal-field{display:block;margin:0 0 12px;min-width:0}.coil-thermal-field>span{display:block;font-size:12px;color:#a5adba;margin-bottom:7px}.coil-thermal-field .input-wrap{height:36px}.coil-thermal input{width:100%;min-width:0}.coil-thermal select{width:100%;height:36px;background:#161616;border:1px solid #383838;color:#d5dae3;border-radius:6px;padding:0 9px;font:inherit;font-size:13px}
@@ -869,3 +888,63 @@ main{padding-top:0}
 .coil-thermal [hidden],#coil-thermal-design[hidden],#coil-thermal-verification[hidden]{display:none!important}
 @media(max-width:1100px){.coil-thermal-inputs{grid-template-columns:repeat(2,minmax(0,1fr))}.coil-thermal-inputs fieldset:last-child{grid-column:1/-1}}
 @media(max-width:600px){.coil-thermal{padding:15px}.coil-thermal-inputs{grid-template-columns:1fr}.coil-thermal-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.coil-thermal-metrics b{font-size:17px}.coil-thermal-actions{width:100%}.coil-thermal-actions button{flex:1}.coil-thermal td,.coil-thermal th{padding:9px}}
+
+/* ─── Unified control kit ─────────────────────────────────────────────────
+   One system for every interactive control: action buttons, segmented tabs,
+   checkboxes, radios, selects and focus rings share the same tokens. */
+:root{
+  --ctl-radius:7px;
+  --ctl-bg:#232323;--ctl-bg-hover:#303030;
+  --ctl-border:#3a3a3a;--ctl-border-hover:#585858;
+  --ctl-ink:#dcdcdc;--ctl-ink-active:#f4f4f4;--ctl-ink-disabled:#6f6f6f;
+  --ctl-selected-bg:#333333;--ctl-selected-border:#575757;
+  --ctl-accent:#4a9eff;
+  --ctl-focus:2px solid var(--ctl-accent);
+  --ctl-transition:background-color .15s ease-out,border-color .15s ease-out,color .15s ease-out;
+}
+/* Secondary action buttons: identical surface, border, hover and press. */
+.verification-choice,.coil-thermal-actions button,.coil-add-row,
+.detail-row-toolbar button,.exchanger-card-search button{
+  background:var(--ctl-bg);border:1px solid var(--ctl-border);
+  border-radius:var(--ctl-radius);color:var(--ctl-ink);
+  transition:var(--ctl-transition);
+}
+.verification-choice:hover:not(:disabled),.coil-thermal-actions button:hover:not(:disabled),
+.coil-add-row:hover:not(:disabled),.detail-row-toolbar button:hover:not(:disabled),
+.exchanger-card-search button:hover{
+  background:var(--ctl-bg-hover);border-color:var(--ctl-border-hover);
+  color:var(--ctl-ink-active);
+}
+.verification-choice:disabled,.coil-thermal-actions button:disabled,
+.coil-add-row:disabled,.detail-row-toolbar button:disabled{
+  opacity:.45;cursor:default;background:var(--ctl-bg);
+  border-color:var(--ctl-border);color:var(--ctl-ink-disabled);
+}
+/* Segmented controls: one tab look for view switchers, row pickers and filters. */
+.coil-view-tabs{border:1px solid #343434;border-radius:var(--ctl-radius);background:#141414;padding:2px}
+.coil-view-tabs button{height:26px;padding:5px 11px;border:0;background:transparent;border-radius:calc(var(--ctl-radius) - 3px);color:var(--ctl-ink-disabled);font:inherit;font-size:10px;cursor:pointer;transition:var(--ctl-transition)}
+.coil-view-tabs button:hover{color:var(--ctl-ink)}
+.coil-view-tabs button[aria-selected=true]{background:var(--ctl-selected-bg);color:var(--ctl-ink-active);box-shadow:0 0 0 1px #454545}
+.detail-row-tabs button{border:1px solid var(--ctl-border);border-radius:var(--ctl-radius);background:#212121;color:var(--ctl-ink-disabled);transition:var(--ctl-transition)}
+.detail-row-tabs button:hover{background:var(--ctl-bg-hover);border-color:var(--ctl-border-hover);color:var(--ctl-ink)}
+.detail-row-tabs button[aria-pressed=true]{background:var(--ctl-selected-bg);border-color:var(--ctl-selected-border);color:var(--ctl-ink-active)}
+.exchanger-card-categories button{border:1px solid var(--ctl-border);border-radius:var(--ctl-radius);background:var(--ctl-bg);color:var(--ctl-ink);transition:var(--ctl-transition)}
+.exchanger-card-categories button:hover{background:var(--ctl-bg-hover);border-color:var(--ctl-border-hover);color:var(--ctl-ink-active)}
+.exchanger-card-categories button[aria-selected=true]{background:var(--ctl-selected-bg);border-color:var(--ctl-selected-border);color:var(--ctl-ink-active)}
+#coil-row-legend button[aria-pressed=true]{border-color:var(--ctl-selected-border);background:var(--ctl-selected-bg)}
+/* Checkboxes: the 3D sidebar matches the construction-panel t-check. */
+.layout-row-check{border:1px solid #616161;border-radius:4px;background:#141414}
+.layout-row-visibility button[aria-pressed=true] .layout-row-check{background:#d9d9d9;border-color:#d9d9d9}
+.layout-row-check svg{stroke:#171717;stroke-width:1.6}
+/* One focus ring everywhere, including the accent «Найти» toggles. */
+.verification-choice:focus-visible,.coil-thermal-actions button:focus-visible,
+.coil-add-row:focus-visible,.detail-row-toolbar button:focus-visible,
+.detail-row-tabs button:focus-visible,.coil-view-tabs button:focus-visible,
+.exchanger-card-categories button:focus-visible,.thermal .find-button:focus-visible{
+  outline:var(--ctl-focus);outline-offset:2px;
+}
+@media(prefers-reduced-motion:reduce){
+  .verification-choice,.coil-thermal-actions button,.coil-add-row,
+  .detail-row-toolbar button,.exchanger-card-search button,
+  .coil-view-tabs button,.detail-row-tabs button,.exchanger-card-categories button{transition:none}
+}

@@ -372,14 +372,14 @@
     try{layout.lengths=g.rows.map((row,i)=>({row:i+1,count:row.count,...manufacturing.measure(row,g.leadBendRadius,g.leadStraightLength),stockMM:null,wasteMM:null,wasteFraction:null}))}catch{return false}
    }
    stats.evaluations++;stats.phases[phase]=(stats.phases[phase]||0)+1;
-   const calculation={id:stats.evaluations,phase,status:'error',height:g.height,diameter:g.diameter,count:f.n,rowCount:g.rows.length,tubeMetres:fullTubeMetres({geometry:g,manufacturing:layout.lengths}),volumeLitres:Math.PI*g.diameter**2*g.height/4e6,area:null,duty:null,excessPercent:null,reHot:null,reCold:null,hotOut:null,coldOut:null,ua:null,k:null,reason:'',warning:false};
+   const calculation={id:stats.evaluations,phase,status:'error',height:g.height,diameter:g.diameter,tubeDiameter:g.tubeDiameter,tubeWall:g.tubeWall,count:f.n,rowCount:g.rows.length,tubeMetres:fullTubeMetres({geometry:g,manufacturing:layout.lengths}),volumeLitres:Math.PI*g.diameter**2*g.height/4e6,area:null,duty:null,excessPercent:null,reHot:null,reCold:null,hotOut:null,coldOut:null,ua:null,k:null,reason:'',warning:false};
    calculations.push(calculation);
    if(!stats.testedCounts.includes(f.n))stats.testedCounts.push(f.n);
    try{
     const thermal=teplo.calculate({...base,...geometryInput(g)},props),check=applicability(thermal,target),accepted=meets(thermal,target);
     const reasons=[...check.blocking,...dutyAgreement(thermal,target).checks];
     if(thermal.ua_w_k<required*(1-1e-9))reasons.push('Недостаточный UA.');
-    Object.assign(calculation,{status:diagnostic?'outside':accepted?'accepted':'rejected',area:thermal.area_m2,duty:thermal.heat_duty_kw,excessPercent:(thermal.heat_duty_kw/target.q-1)*100,reHot:Math.min(...thermal.coils.map(c=>c.re_hot)),reCold:thermal.shell.re_cold,hotOut:thermal.t_hot_out_c,coldOut:thermal.t_cold_out_c,ua:thermal.ua_w_k,k:thermal.overall_u_w_m2k,warning:accepted&&check.ignored.length>0,reason:(diagnostic?['За пределами заданных габаритов.',...reasons]:reasons).join(' ')||(check.ignored.length?check.ignored.join(' '):accepted?'Все условия приёмки выполнены.':'Условия приёмки не выполнены.')});
+    Object.assign(calculation,{status:diagnostic?'outside':accepted?'accepted':'rejected',area:thermal.area_m2,duty:thermal.heat_duty_kw,excessPercent:(thermal.heat_duty_kw/target.q-1)*100,reHot:Math.min(...thermal.coils.map(c=>c.re_hot)),reCold:thermal.shell.re_cold,velocityHot:thermal.hot_velocity_m_s,velocityCold:thermal.shell.velocity_m_s,hotOut:thermal.t_hot_out_c,coldOut:thermal.t_cold_out_c,ua:thermal.ua_w_k,k:thermal.overall_u_w_m2k,warning:accepted&&check.ignored.length>0,reason:(diagnostic?['За пределами заданных габаритов.',...reasons]:reasons).join(' ')||(check.ignored.length?check.ignored.join(' '):accepted?'Все условия приёмки выполнены.':'Условия приёмки не выполнены.')});
     records.push({layout,thermal});
     if(!check.allowed)stats.inapplicable++;else if(!accepted)stats.insufficient++;
     attempts.push({height:g.height,diameter:g.diameter,count:f.n,phase,accepted:accepted&&!diagnostic,diagnostic,dutyRatio:thermal.heat_duty_kw/target.q,uaRatio:thermal.ua_w_k/required,estimatedRatio:layout.ratio,blocking:check.blocking.slice(0,3)});

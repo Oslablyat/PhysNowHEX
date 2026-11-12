@@ -9,6 +9,7 @@ for(const match of html.matchAll(/<(\/?)([a-z][\w:-]*)\b([^>]*)>/gi)){
  if(!voidTags.has(tag)&&!attrs.endsWith('/'))stack.push({tag,id});
 }
 for(const id of ['detail-geometry','apparatus-drawing','design-layout','layout-main-3d','detail-preview-mode','view-exchanger-card','choose-verification'])assert(parents.get(id).includes('construction-page'),`${id} belongs to construction tab`);
+assert(parents.get('calculated-designs').includes('detail-variants'),'Variants table belongs to the parameter panel');
 assert(!parents.has('variant-status'),'Removed the long automatic-selection notice from construction page');
 for(const id of ['thi','tci','result-q','exchanger-type'])assert(parents.get(id).includes('design-page'));
 assert(!parents.get('construction-page').includes('design-page'));assert(!parents.get('verification-page').includes('construction-page'));
