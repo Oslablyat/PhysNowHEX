@@ -140,7 +140,7 @@
    if(firsts.length)groups.push({n,nr,k,firsts,span,series:[],factors:[],neighbours:[],neighbourIndex:0});
   }
   // Bound the cheap catalogue separately from the number of real verifications.
-  const seriesPerGroup=Math.max(1,Math.floor(65000/Math.max(1,groups.length)));
+  const seriesPerGroup=Math.max(1,Math.floor((state._catalogueLimit??65000)/Math.max(1,groups.length)));
   const termsCache=new Map(),shells=new Map();
   let lastYield=Date.now();
   for(const group of groups){
@@ -317,7 +317,12 @@
   state={...state,'design-objective':config.id};
   target={...target,projectAlgorithm:config.algorithm,singleCoil:state['single-coil']===true};
   const base=project.source(state,target),bounds=dimensions(state),useStock=project.stockLengthsEnabled(state);
-  const range=project.tubeCounts(state,target,props),estimate=project.screeningModel(state,target,props);
+  const sizes=project.tubeSizes(state),searches=sizes.map(size=>{
+   const input={...state,'tube-diameter':size.d,'tube-wall':size.w,_catalogueLimit:Math.floor(65000/sizes.length)};
+   return {state:input,size,range:project.tubeCounts(input,target,props),estimate:project.screeningModel(input,target,props)};
+  });
+  const feasibleRanges=searches.filter(s=>s.range.min<=s.range.max);
+  const range=searches.length===1?searches[0].range:{min:feasibleRanges.length?Math.min(...feasibleRanges.map(s=>s.range.min)):1,max:feasibleRanges.length?Math.max(...feasibleRanges.map(s=>s.range.max)):0,sizes:searches.map(s=>({...s.size,...s.range}))};
   const stats={evaluations:0,maxEvaluations:config.maxEvaluations,errors:0,accepted:0,inapplicable:0,insufficient:0,
    screened:0,families:0,sampled:false,phases:{},testedCounts:[]};
   const calculations=[],acceptedDesigns=[],seen=new Set();
@@ -388,7 +393,7 @@
      if(radii.some((r,i)=>i&&r-radii[i-1]<1.1*d-epsilon))continue;
      const f=family(radii,k,d,g.tubeWall,state.pc,shells,bounds.diameter);if(!f)continue;
      const terms=f.rows.map(r=>rowTerms(r.diameter,pitch,d,leads));if(terms.some(t=>!t))continue;
-     const group=groups.find(x=>x.n===seed.count&&x.nr===seed.rowCount);
+     const group=groups.find(x=>x.n===seed.count&&x.nr===seed.rowCount&&x.d===d&&x.w===g.tubeWall);
      verify({f,pitch,terms,used:new Set(),unitRatio:0},row.turns,group,'polish');
      if(Date.now()-lastProgress>=100){hooks.progress?.({...stats,phase:'polish'});await hooks.yield?.();lastProgress=Date.now()}
     }
@@ -414,8 +419,14 @@
     active=remaining;if(hooks.cancelled?.())return;
    }
   }
-  const groups=await catalogue(state,target,range,estimate,stats,hooks);
-  if(!groups||hooks.cancelled?.())return null;
+  const groups=[];
+  for(const search of searches){
+   const found=await catalogue(search.state,target,search.range,search.estimate,stats,hooks);
+   if(!found||hooks.cancelled?.())return null;
+   found.forEach((group,i)=>{group.d=search.size.d;group.w=search.size.w;group.sizeGroupIndex=i;groups.push(group)})
+  }
+  groups.sort((a,b)=>a.sizeGroupIndex-b.sizeGroupIndex);
+  if(hooks.cancelled?.())return null;
   for(const [phase,end] of [['discovery',100],['refinement',450],['refinement',700],['coverage',800]]){
    await run(groups,end,phase);
    if(hooks.cancelled?.())return null;
@@ -435,8 +446,14 @@
   if(!stats.accepted&&stats.evaluations<config.maxEvaluations&&range.min<=range.max&&(bounds.height<10000||bounds.diameter<3000)){
    const expanded={...state,length:Math.min(10000,Math.max(bounds.height+500,bounds.height*1.5)),
     'exchanger-diameter':Math.min(3000,Math.max(bounds.diameter+100,bounds.diameter*1.5))};
-   const outside=await catalogue(expanded,target,range,estimate,stats,hooks,bounds);
-   if(!outside||hooks.cancelled?.())return null;
+   const outside=[];
+   for(const search of searches){
+    const found=await catalogue({...expanded,'tube-diameter':search.size.d,'tube-wall':search.size.w,_catalogueLimit:search.state._catalogueLimit},target,search.range,search.estimate,stats,hooks,bounds);
+    if(!found||hooks.cancelled?.())return null;
+    found.forEach((group,i)=>{group.sizeGroupIndex=i;outside.push(group)});
+   }
+   outside.sort((a,b)=>a.sizeGroupIndex-b.sizeGroupIndex);
+   if(hooks.cancelled?.())return null;
    await run(outside,Math.min(config.maxEvaluations,stats.evaluations+24),'diagnosis');
   }
   if(hooks.cancelled?.())return null;

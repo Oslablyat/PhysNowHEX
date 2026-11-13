@@ -141,6 +141,12 @@
   if(w<=0||d<=2*w||d>100)throw Error('Проверьте диаметр и стенку трубки.');
   return {d,w,di:d-2*w};
  }
+ function tubeSizes(state){
+  if(state['refine-tubes']!==true)return [tubeSize(state)];
+  const rows=state['tube-sizes']??[{d:state['tube-diameter'],w:state['tube-wall']}];
+  if(!Array.isArray(rows)||!rows.length||rows.length>20)throw Error('Укажите от 1 до 20 типоразмеров труб.');
+  return [...new Map(rows.map((row,i)=>{try{const size=tubeSize({...state,'tube-diameter':row.d,'tube-wall':row.w});return [size.d+'x'+size.w,size]}catch{throw Error('Типоразмер '+(i+1)+': диаметр должен быть больше двух толщин стенки; диаметр до 100 мм, стенка больше нуля.')}})).values()];
+ }
  function tubeCounts(state,target,props){
   const {di}=tubeSize(state),mu=props('VISCOSITY','T',(target.thi+target.tho)/2+273.15,'P',target.ph*1e6,'Water');
   if(!Number.isFinite(mu)||mu<=0)throw Error('CoolProp: недопустимая вязкость');
@@ -552,5 +558,5 @@
   if(result.stats.errors)add('warning','verification-errors','Не удалось рассчитать '+format(result.stats.errors)+' из проверенных вариантов.');
   return messages;
  }
- return {multicriteria,radialGaps,dutyFractionFor,objectives,objectiveFor,objectiveValue,fullTubeMetres,balance,source,geometryInput,geometryKey,applicability,dutyAgreement,meets,shellSizing,tubeSize,tubeCounts,inlineReserveCounts,families,compactGeometry,buildGeometry,unrestrictedLayout,rowAtHeight,rowAtPitch,inlineLayout,compare,screeningModel,shortlist,select,selectionNotifications,profiles,construction,axialGap,axialGaps,stockLengthsEnabled,singleCoilReUnrestricted,algorithm};
+ return {multicriteria,radialGaps,dutyFractionFor,objectives,objectiveFor,objectiveValue,fullTubeMetres,balance,source,geometryInput,geometryKey,applicability,dutyAgreement,meets,shellSizing,tubeSize,tubeSizes,tubeCounts,inlineReserveCounts,families,compactGeometry,buildGeometry,unrestrictedLayout,rowAtHeight,rowAtPitch,inlineLayout,compare,screeningModel,shortlist,select,selectionNotifications,profiles,construction,axialGap,axialGaps,stockLengthsEnabled,singleCoilReUnrestricted,algorithm};
 });

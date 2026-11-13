@@ -7,8 +7,7 @@
  function create(hooks){
   let state={...base},worker=null,id=0,timer=null,result=null,lastInputs=null,version='',active=false,requested=false;
   const element=document.createElement('section');element.className='coil-thermal';element.id='coil-thermal-panel';element.setAttribute('aria-label','Теплогидравлические характеристики');
-  element.innerHTML='<header class="coil-thermal-heading"><div class="coil-thermal-actions"></div></header>'+
-   '<p class="coil-thermal-status" id="coil-thermal-status" role="status" aria-live="polite"></p><div id="coil-thermal-results"></div>'+
+  element.innerHTML='<p class="coil-thermal-status" id="coil-thermal-status" role="status" aria-live="polite"></p><div id="coil-thermal-results"></div>'+
    '<details class="coil-thermal-method"><summary>Формулы и границы расчёта</summary><p>Fᵢ = πdₘLᵢ; Lᵢ = nᵢ√((2πRᵢ)² + hᵢ²). Общий трубный расход делится поровну между змеевиками. Aс = min[π(Ds² − Dd²)/4 − 2πRᵣdₒ,ᵣ]. Одна кольцевая полоса на радиальный ряд, без умножения на число змеевиков.</p><p>Nuₕ,ᵢ = 0,021 Reₕ,ᵢ⁰·⁸ Prₕ⁰·⁴³ (1 + 1,77dᵢ/Rᵢ) εL,ᵢ εT,h. При Reс &lt; 1000: Nuс = 0,56 Reс⁰·⁵ Prс⁰·³⁶ εT,c εb. Иначе: Nuс = C Reсᵐ Prс⁰·³³ εT,c εb εs; C/m = 0,26/0,65 либо 0,41/0,6.</p><p>Осредняется только трубная α по Fᵢ. Межтрубные Nu и α — общие для аппарата. Kₗ,ᵢ = π/[1/(αсdₒ) + ln(dₒ/dᵢ)/(2λw) + 1/(ᾱₕdᵢ)]; UA = ΣKᵢFᵢ. Выходы вычисляются методом ε–NTU для противотока, с пределом Cmin/Cmax → 1.</p><p>Свойства потоков и Pr у стенки — CoolProp 8.0.0 при текущих температурах и абсолютном давлении. Масса фиксируется по плотности на входе. Два вложенных цикла: до 200 итераций каждый, допуск 0,01 °C по стенке и обоим выходам. Проверки: Reₕ &gt; 2300 + 10500(dᵢ/R)⁰·³; 3 &lt; R/dᵢ &lt; 12; Reс &lt; 100000; область таблицы εL. Нарушение применимости сохраняет численный результат с предупреждением. Геометрическая ошибка или отсутствие сходимости блокирует результат.</p><p>Принят эквивалентный общий UA, без пошагового температурного профиля по рядам. Потери давления, загрязнения, прочность и фазовые переходы не рассчитываются. Источник переноса — METHODOLOGY.md и heat_exchanger_method.py из Teplo.zip; старый teplo_report.txt не используется как эталон.</p><a href="assets/teplo-methodology.md" target="_blank" rel="noopener">Полное описание приложенной методики</a></details>';
   const status=element.querySelector('#coil-thermal-status'),output=element.querySelector('#coil-thermal-results');
   function notify(){hooks.change?.()}
@@ -49,13 +48,6 @@
   function refresh(){invalidate();clearTimeout(timer);if(active||requested)timer=setTimeout(run,250)}
   function commit(){hooks.save({...state});refresh()}
   function setArrangement(value){if(!['inline','staggered'].includes(value))return;if(state.arrangement===value)return;state.arrangement=value;commit()}
-  element.addEventListener('click',event=>{
-   const action=event.target.closest('[data-thermal-action]')?.dataset.thermalAction;
-   try{
-    if(action==='card')hooks.card?.();
-   }catch(error){fail(error.message)}
-  });
-  const cardButton=document.createElement('button');cardButton.type='button';cardButton.dataset.thermalAction='card';cardButton.textContent='Карточка теплообменника';element.querySelector('.coil-thermal-actions').prepend(cardButton);
   return {setArrangement,get arrangement(){return state.arrangement},mount(host,visible){const changed=element.parentElement!==host||active!==visible;host.append(element);active=visible;element.hidden=!visible;if(changed&&visible)refresh()},setState(saved){state={...base,arrangement:saved?.arrangement==='staggered'?'staggered':'inline'};refresh()},refresh,element,get result(){return result},get inputs(){return lastInputs},get snapshot(){return {result,inputs:lastInputs,version,status:element.dataset.status,message:status.textContent}},request(value=true){requested=value;if(value&&!result){clearTimeout(timer);run()}},dispose(){clearTimeout(timer);worker?.terminate()}};
  }
  root.PhysNowCoilThermalUI={create};

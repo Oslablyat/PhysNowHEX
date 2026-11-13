@@ -31,7 +31,7 @@ const project=require('../assets/coil-project-method.js'),teplo=require('../asse
  // A waived source criterion must remain orange, never a false green Teplo pass.
  const ui=fs.readFileSync(path.resolve(__dirname,'../assets/coil-thermal-ui.js'),'utf8'),renderCode=ui.slice(ui.indexOf('  function render(r){'),ui.indexOf('  function run(){'));
  for(const sample of [low,high,{t:target,thermal:c.thermal}]){
-  const tables=[],context={hooks:{assess:r=>({target:sample.t,meets:project.meets(r,sample.t),applicability:project.applicability(r,sample.t),agreement:project.dutyAgreement(r,sample.t)})},element:{dataset:{}},status:{dataset:{},textContent:''},output:{innerHTML:''},version:'8.0.0',f:v=>String(v),esc:String,metrics:()=>'',table:(title,headers,rows)=>{tables.push({title,rows});return ''},notify(){}};
+  const tables=[],context={root:{CoilTemperatureChart:{markup:()=>'',bind(){}}},lastInputs:{},cardGroups:()=>'',hooks:{assess:r=>({target:sample.t,meets:project.meets(r,sample.t),applicability:project.applicability(r,sample.t),agreement:project.dutyAgreement(r,sample.t)})},element:{dataset:{}},status:{dataset:{},textContent:''},output:{innerHTML:''},version:'8.0.0',f:v=>String(v),esc:String,metrics:()=>'',table:(title,headers,rows)=>{tables.push({title,rows});return ''},notify(){}};
   vm.runInNewContext(renderCode+';render(data)',{...context,data:sample.thermal});
   if(sample===low){assert.equal(context.status.dataset.kind,'warning');assert.match(context.status.textContent,/применимость.*не подтверждена/i)}
   if(sample===high){assert.equal(context.status.dataset.kind,'valid');assert.match(context.status.textContent,/Re трубного потока не ограничен/)}
